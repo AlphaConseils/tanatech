@@ -7,7 +7,7 @@
     'website': 'https://www.nexources.com/',
     'sequence': 999,
     'depends': [
-        'crm',
+        'sale_crm',
         'tanatech_sale'
     ],
     'description': "",

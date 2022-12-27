@@ -58,4 +58,15 @@
             </field>
         </field>
     </record>
+
+    <record id="tanatech_crm_case_kanban_view_leads" model="ir.ui.view">
+        <field name="name"></field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[@t-esc='record.partner_id.value']" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
