@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tanatech_report_deliveryslip">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="stock.report_delivery_document" t-lang="o.partner_id.lang" />
+        </t>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="stock.report_delivery_document" t-lang="o.partner_id.lang" />
+        </t>
+    </template>
+
+    <record id="tanatech_action_report_delivery" model="ir.actions.report">
+        <field name="name">Delivery Slip(A5)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">tanatech_stock.tanatech_report_deliveryslip</field>
+        <field name="report_file">tanatech_stock.tanatech_report_deliveryslip</field>
+        <field name="print_report_name">'Delivery Slip - %s - %s' % (object.partner_id.name or
+            '',object.name)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="tanatech_base.tanatech_paperformat" />
+    </record>
+
+</odoo>

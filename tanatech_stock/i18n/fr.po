@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20221103\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-27 09:06+0000\n"
+"PO-Revision-Date: 2022-12-27 09:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_stock
+#: model:ir.actions.report,print_report_name:tanatech_stock.tanatech_action_report_delivery
+msgid ""
+"'Delivery Slip - %s - %s' % (object.partner_id.name or\n"
+"            '',object.name)"
+msgstr ""
+"'Bon de livraison - %s - %s' % (object.partner_id.name or\n"
+"            '',object.name)"
+
+#. module: tanatech_stock
+#: model:ir.actions.report,name:tanatech_stock.tanatech_action_report_delivery
+msgid "Delivery Slip(A5)"
+msgstr "Bon de livraison (A5)"
