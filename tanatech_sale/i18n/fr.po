@@ -6,14 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20221103\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-26 10:23+0000\n"
-"PO-Revision-Date: 2022-12-26 10:23+0000\n"
+"POT-Creation-Date: 2022-12-27 09:04+0000\n"
+"PO-Revision-Date: 2022-12-27 09:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tanatech_sale
+#: model:ir.actions.report,print_report_name:tanatech_sale.action_report_pro_forma_invoice
+msgid "'PRO-FORMA - %s' % (object.name)"
+msgstr ""
+
+#. module: tanatech_sale
+#: model:ir.actions.report,print_report_name:tanatech_sale.action_report_saleorder
+msgid ""
+"(object.state in ('draft', 'sent') and 'Quotation - %s' %\n"
+"            (object.name)) or 'Order - %s' % (object.name)"
+msgstr ""
 
 #. module: tanatech_sale
 #: model:res.groups,name:tanatech_sale.commercial_group
@@ -53,9 +65,19 @@ msgid "Office design"
 msgstr "Bureau d'étude"
 
 #. module: tanatech_sale
+#: model:ir.actions.report,name:tanatech_sale.action_report_pro_forma_invoice
+msgid "PRO-FORMA Invoice(A5)"
+msgstr "Facture PRO-FORMA (A5)"
+
+#. module: tanatech_sale
 #: model:ir.model.fields,field_description:tanatech_sale.field_sale_order__pricelist_id
 msgid "Pricelist"
 msgstr "Liste de prix"
+
+#. module: tanatech_sale
+#: model:ir.actions.report,name:tanatech_sale.action_report_saleorder
+msgid "Quotation / Order(A5)"
+msgstr "Devis / Commande (A5)"
 
 #. module: tanatech_sale
 #: model:ir.model,name:tanatech_sale.model_sale_order

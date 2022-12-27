@@ -9,6 +9,7 @@
     'sequence': 999,
     'depends': [
         'sale',
+        'tanatech_base'
     ],
     'description': "",
     'data': [
@@ -18,7 +19,10 @@
         'security/res_groups.xml',
 
         # views
-        'views/sale_order_views.xml'
+        'views/sale_order_views.xml',
+
+        # report
+        'report/sale_report.xml'
     ],
     'installable': True,
     'auto_install': False,
