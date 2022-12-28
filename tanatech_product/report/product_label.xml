@@ -5,19 +5,19 @@
             <xpath expr="//div[hasclass('o_label_full')]" position="replace">
                 <div class="o_label_full"
                     t-att-style="table_style+'width:53mm !important; height: 40mm !important; float:left'">
-                    <div class="o_label_name" style="width:100%; overflow: hidden;">
+                    <div class="o_label_name" style="width:100%; overflow: hidden; height: 20px !important">
                         <div style="text-align: center">
-                            <img src="/web/binary/company_logo" style="height: 30px; width: 95px"
+                            <img src="/web/binary/company_logo" style="height: 10px"
                                 alt="Logo" />
                         </div>
                     </div>
-                    <div class="text-center">
-                        <p style="font-size: 12px">
+                    <div class="text-center mt-2">
+                        <p style="font-size: 10px">
                             <t t-esc="product.default_code" />
                             <br />
                             <t t-esc="product.name" />
                         </p>
-                        <p>
+                        <p style="font-size: 12px">
                             <strong><t t-esc="product.list_price" t-options="{'widget': 'float', 'precision': 2}"/> Ar</strong><br/>
                             <span><t t-esc="product.list_price * 5" t-options="{'widget': 'float', 'precision': 2}"/> Fmg</span>
                         </p>
