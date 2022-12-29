@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" style="margin-bottom: 0">
             <div class="row" style="border-top: 1px solid black; font-family: Calibri;">
                 <div class="col-4">
                     <span t-esc="o.name" class="text-right" />
@@ -45,8 +45,6 @@
 
                 </div>
             </div>
-
-
         </div>
 
         <div
