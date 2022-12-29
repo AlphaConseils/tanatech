@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20221103\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 09:04+0000\n"
-"PO-Revision-Date: 2022-12-27 09:04+0000\n"
+"POT-Creation-Date: 2022-12-29 08:20+0000\n"
+"PO-Revision-Date: 2022-12-29 08:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,12 +28,74 @@ msgid ""
 msgstr ""
 
 #. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Total\n"
+"                                    Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Prix\n"
+"                                    Total</span>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<span>Disc.%</span>"
+msgstr "<span>Rem.%</span>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<span>Pro-Forma Invoice # </span>"
+msgstr "<span>Facture Pro-Forma # </span>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Sous-total</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Expiration:</strong>"
+msgstr "<strong>Echéance:</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Fiscal Position Remark:</strong>"
+msgstr "<strong>Remarque sur la position budgétaire:</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Order Date:</strong>"
+msgstr "<strong>Date de la commande</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Quotation Date:</strong>"
+msgstr "<strong>Date du Devis:</strong"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Salesperson:</strong>"
+msgstr "<strong>Vendeur:</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Shipping Address:</strong>"
+msgstr "<strong>Adresse de Livraison:</strong>"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "<strong>Your Reference:</strong>"
+msgstr "<strong>Votre Référence:</strong>"
+
+#. module: tanatech_sale
 #: model:res.groups,name:tanatech_sale.commercial_group
 msgid "Commercial"
 msgstr ""
 
 #. module: tanatech_sale
 #: model:ir.model.fields,field_description:tanatech_sale.field_sale_order__partner_id
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
 msgid "Customer"
 msgstr "Client"
 
@@ -41,6 +103,11 @@ msgstr "Client"
 #: model:ir.model.fields,field_description:tanatech_sale.field_sale_order__partner_shipping_id
 msgid "Delivery Address"
 msgstr "Adresse de livraison"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Description"
+msgstr ""
 
 #. module: tanatech_sale
 #: model:ir.model.fields,help:tanatech_sale.field_sale_order__pricelist_id
@@ -55,6 +122,24 @@ msgid "Invoice Address"
 msgstr "Adresse de facturation"
 
 #. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid ""
+"Invoicing\n"
+"                        Address:"
+msgstr ""
+"Facturation\n"
+"                        Adresse:"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid ""
+"Invoicing and\n"
+"                        Shipping Address:"
+msgstr ""
+"Facturation et\n"
+"                        Adresse de livraison:"
+
+#. module: tanatech_sale
 #: model:ir.model.fields,field_description:tanatech_sale.field_sale_order__is_commercial
 msgid "Is Commercial"
 msgstr ""
@@ -63,6 +148,11 @@ msgstr ""
 #: model:res.groups,name:tanatech_sale.office_design_group
 msgid "Office design"
 msgstr "Bureau d'étude"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Order #"
+msgstr "Bon de Commande N°"
 
 #. module: tanatech_sale
 #: model:ir.actions.report,name:tanatech_sale.action_report_pro_forma_invoice
@@ -75,11 +165,36 @@ msgid "Pricelist"
 msgstr "Liste de prix"
 
 #. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Quotation #"
+msgstr "Devis N°"
+
+#. module: tanatech_sale
 #: model:ir.actions.report,name:tanatech_sale.action_report_saleorder
 msgid "Quotation / Order(A5)"
 msgstr "Devis / Commande (A5)"
 
 #. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Responsable"
+msgstr ""
+
+#. module: tanatech_sale
 #: model:ir.model,name:tanatech_sale.model_sale_order
 msgid "Sales Order"
 msgstr "Bon de commande"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Taxes"
+msgstr "TVA"
+
+#. module: tanatech_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
+msgid "Unit Price"
+msgstr "Prix Unitaire"
