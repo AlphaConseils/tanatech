@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         # report
-        'report/a5.xml'
+        'report/a5.xml',
+        'report/external_layout_standard.xml'
     ],
 }
