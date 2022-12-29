@@ -31,7 +31,7 @@
                     </t>
                 </t>
             </t>
-            <div class="page text-secondary">
+            <div class="page text-secondary" style="font-size: 12px">
                 <div class="oe_structure" />
                 <div class="row">
                     <div class="col-6">
@@ -41,7 +41,7 @@
                         <t t-esc="address" />
                     </div>
                 </div>
-                <h2 class="mt16">
+                <h2 class="mt16 h3 text-secondary">
                     <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                         <span t-if="doc.state not in ['draft','sent']">Order # </span>
                         <span t-if="doc.state in ['draft','sent']">Quotation # </span>
