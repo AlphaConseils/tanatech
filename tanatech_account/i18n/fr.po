@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20221103\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 09:03+0000\n"
-"PO-Revision-Date: 2022-12-27 09:03+0000\n"
+"POT-Creation-Date: 2022-12-29 06:29+0000\n"
+"PO-Revision-Date: 2022-12-29 06:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,137 @@ msgid "(object._get_report_base_filename())"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Total\n"
+"                                    Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Prix\n"
+"                                    Total</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<span>Description</span>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<span>Disc.%</span>"
+msgstr "<span>Rem.%</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<span>Quantity</span>"
+msgstr "<span>Quantité</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<span>Taxes</span>"
+msgstr "<span>TVA</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>Prix Unitaire</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Sous-total</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid ""
+"<strong class=\"text-center\">Scan me with your banking app.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+msgstr ""
+"<strong class=\"text-center\">Scannez moi avec votre appli. bancaire.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Amount Due</strong>"
+msgstr "<strong>Montant Dûe</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Credit Note Date:</strong>"
+msgstr "<strong>Date d'avoir:</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Customer Code: </strong>"
+msgstr "<strong>Code Client: </strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Date:</strong>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Due Date:</strong>"
+msgstr "<strong>Date due:</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Incoterm: </strong>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Invoice Date:</strong>"
+msgstr "<strong>Date de la facture:</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Receipt Date:</strong>"
+msgstr "<strong>Date de la reception:</strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Reference: </strong>"
+msgstr "<strong>Référence: </strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "<strong>Source: </strong>"
+msgstr "<strong>Origine: </strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid ""
+"Cancelled\n"
+"                        Invoice"
+msgstr ""
+"Facture\n"
+"                        Annulée"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Credit Note"
+msgstr "Avoir"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Customer"
+msgstr "Client"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Draft Invoice"
+msgstr "Facture Brouillon"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: tanatech_account
 #: model:ir.actions.report,name:tanatech_account.tanatech_account_invoices
 msgid "Invoices (A5)"
 msgstr "Factures TVA (A5)"
@@ -30,3 +161,41 @@ msgstr "Factures TVA (A5)"
 #: model:ir.actions.report,name:tanatech_account.account_invoices_without_payment
 msgid "Invoices without Payment(A5)"
 msgstr "Factures sans paiment (A5)"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid ""
+"Paid\n"
+"                                                        on"
+msgstr ""
+"Payé\n"
+"                                                        le"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid ""
+"Please use the following communication for your\n"
+"                    payment :"
+msgstr ""
+"PMerci de préciser la référence suivante lors de votre :\n"
+"                    règlement :"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Responsable"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Tax ID"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Vendor Bill"
+msgstr "Facture fournisseur"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Vendor Credit Note"
+msgstr "Avoir fournisseur"
