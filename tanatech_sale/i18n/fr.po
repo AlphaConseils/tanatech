@@ -46,7 +46,7 @@ msgstr "<span>Rem.%</span>"
 #. module: tanatech_sale
 #: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
 msgid "<span>Pro-Forma Invoice # </span>"
-msgstr "<span>Facture Pro-Forma # </span>"
+msgstr "<span>Facture Pro-Forma N° </span>"
 
 #. module: tanatech_sale
 #: model_terms:ir.ui.view,arch_db:tanatech_sale.tanatech_report_saleorder_document
