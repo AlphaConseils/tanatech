@@ -177,7 +177,7 @@ msgid ""
 "Please use the following communication for your\n"
 "                    payment :"
 msgstr ""
-"PMerci de préciser la référence suivante lors de votre :\n"
+"Merci de préciser la référence suivante lors de votre :\n"
 "                    règlement :"
 
 #. module: tanatech_account
