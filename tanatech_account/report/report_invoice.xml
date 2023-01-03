@@ -7,18 +7,22 @@
             <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
-                <address t-field="o.partner_id"
-                    t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
-                <div t-if="o.partner_id.vat" class="mt16">
-                    <t t-if="o.company_id.account_fiscal_country_id.vat_label"
-                        t-esc="o.company_id.account_fiscal_country_id.vat_label"
-                        id="inv_tax_id_label" />
-                    <t t-else="">Tax ID</t>: <span
-                        t-field="o.partner_id.vat" /></div>
+                <div class="row">
+                    <div class="col-4">
+                        <address t-field="o.partner_id"
+                            t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
+                    </div>
+                    <div class="col-3">
+                        <div t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
+                                t-field="o.partner_id.x_studio_nif_1" /></div>
+                        <div t-if="o.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span
+                                t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
+                    </div>
+                </div>
             </t>
             <div class="page text-secondary" style="font-size: 12px">
                 <div>
-                    <t t-esc="address"/>
+                    <t t-esc="address" />
                 </div>
                 <h2 class="h3 text-secondary">
                     <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
