@@ -7,11 +7,18 @@
             <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
-                <div t-field="doc.partner_id"
-                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
-                <p t-if="doc.partner_id.vat"><t
-                        t-esc="doc.company_id.account_fiscal_country_id.vat_label or 'Tax ID'" />: <span
-                        t-field="doc.partner_id.vat" /></p>
+                <div class="row">
+                    <div class="col-4">
+                        <address t-field="doc.partner_id"
+                            t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
+                    </div>
+                    <div class="col-3">
+                        <div t-if="doc.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
+                                t-field="doc.partner_id.x_studio_nif_1" /></div>
+                        <div t-if="doc.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span
+                                t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
+                    </div>
+                </div>
             </t>
             <t
                 t-if="doc.partner_shipping_id == doc.partner_invoice_id
