@@ -3,8 +3,7 @@
     <data>
         <template id="report_product_inherit" inherit_id="product.report_simple_label2x7">
             <xpath expr="//div[hasclass('o_label_full')]" position="replace">
-                <div class="o_label_full"
-                    t-att-style="table_style+'width:53mm !important; height: 40mm !important; float:left; background-color: white !important'">
+                <div class="o_label_full" t-att-style="table_style+'width:53mm !important; height: 40mm !important; float:left; background-color: white !important'">
                     <div class="text-center" style="width:100%; overflow: hidden; height: 25px !important">
                         <img src="/web/binary/company_logo" height="24px" alt="Logo" />
                     </div>
@@ -15,8 +14,24 @@
                             <t t-esc="product.name" />
                         </p>
                         <p style="font-size: 12px">
-                            <strong><t t-esc="product.list_price" t-options="{'widget': 'float', 'precision': 2}"/> Ar</strong><br/>
-                            <span><t t-esc="product.list_price * 5" t-options="{'widget': 'float', 'precision': 2}"/> Fmg</span>
+                            <t t-if="product.is_product_variant">
+                                <strong>
+                                    <t t-esc="product.product_tmpl_id.get_price_unit_tax_incl()" t-options="{'widget': 'float', 'precision': 2}"/>
+ Ar</strong>
+                                <br/>
+                                <span>
+                                    <t t-esc="product.product_tmpl_id.get_price_unit_tax_incl() * 5" t-options="{'widget': 'float', 'precision': 2}"/>
+ Fmg</span>
+                            </t>
+                            <t t-else="">
+                                <strong>
+                                    <t t-esc="product.get_price_unit_tax_incl()" t-options="{'widget': 'float', 'precision': 2}"/>
+ Ar</strong>
+                                <br/>
+                                <span>
+                                    <t t-esc="product.get_price_unit_tax_incl() * 5" t-options="{'widget': 'float', 'precision': 2}"/>
+ Fmg</span>
+                            </t>
                         </p>
                     </div>
                     <div class="o_label_clear" />
