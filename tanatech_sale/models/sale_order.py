@@ -10,7 +10,12 @@ class SaleOrder(models.Model):
     partner_shipping_id = fields.Many2one(required=False)
     pricelist_id = fields.Many2one(required=False)
     is_commercial = fields.Boolean(compute='_compute_is_commercial')
+    is_office_design = fields.Boolean(compute='_compute_is_office_design')
 
     def _compute_is_commercial(self):
         for rec in self:
             rec.is_commercial = self.env.user.has_group('tanatech_sale.commercial_group')
+
+    def _compute_is_office_design(self):
+        for rec in self:
+            rec.is_office_design = self.env.user.has_group('tanatech_sale.office_design_group')

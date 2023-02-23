@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.rule" id="journal_user_restrict">
+        <field name="name">Restrict journal account for certain users</field>
+        <field name="model_id" ref="model_account_journal"/>
+        <field name="domain_force">['|', ('user_ids','=', False), ('id','in', user.get_allowed_journal())]</field>
+    </record>
+</odoo>

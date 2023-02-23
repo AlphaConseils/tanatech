@@ -24,6 +24,7 @@
             </group>
             <group name="partner_details" position="before">
                 <field name="is_commercial" invisible="1"/>
+                <field name="is_office_design" invisible="1"/>
             </group>
             <field name="partner_id" position="attributes">
                 <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
@@ -37,6 +38,9 @@
             <field name="pricelist_id" position="attributes">
                 <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
             </field>
+            <button name="preview_sale_order" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_office_design', '=', True)]}</attribute>
+            </button>
         </field>
     </record>
 </odoo>
