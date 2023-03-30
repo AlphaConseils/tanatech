@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <function model="ir.translation" name="_set_ids" eval="('ir.ui.menu,name', 'model', 'fr_FR', [ref('project.menu_main_pm')], 'Chantier', 'Project')"/>
+</odoo>

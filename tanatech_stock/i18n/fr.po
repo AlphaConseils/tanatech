@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20221103\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-29 11:30+0000\n"
+"PO-Revision-Date: 2022-12-29 11:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_stock
+#: model:ir.actions.report,print_report_name:tanatech_stock.tanatech_action_report_delivery
+msgid ""
+"'Delivery Slip - %s - %s' % (object.partner_id.name or\n"
+"            '',object.name)"
+msgstr ""
+"'Bon de livraison - %s - %s' % (object.partner_id.name or\n"
+"            '',object.name)"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span style=\"text-decoration: underline\">Customer</span>"
+msgstr "<span style=\"text-decoration: underline\">Client</span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span style=\"text-decoration: underline\">Responsable</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid ""
+"<span style=\"text-decoration: underline\">Storekeeper in charge or "
+"responsible</span>"
+msgstr ""
+"<span style=\"text-decoration: underline\">Le récepteur (magasinier ou responsable) "
+"logistique</span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span><strong>Customer Address:</strong></span>"
+msgstr "<span><strong>Adresse du client:</strong></span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span><strong>Delivery Address:</strong></span>"
+msgstr "<span><strong>Adresse de livraison:</strong></span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span><strong>Vendor Address:</strong></span>"
+msgstr "<span><strong>Adresse du fournisseur:</strong></span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span><strong>Warehouse Address:</strong></span>"
+msgstr "<span><strong>Adresse de l'entrepôt:</strong></span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span>Remaining quantities not yet delivered:</span>"
+msgstr "<span>Quantités restantes non encore livrées</span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<strong>Delivered</strong>"
+msgstr "<strong>Délivré</strong>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<strong>Ordered</strong>"
+msgstr "<strong>Commandé</strong>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<strong>Product</strong>"
+msgstr "<strong>Produit</strong>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Quantité</strong>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<strong>Shipping Date:</strong>"
+msgstr "<strong>Adresse de livraison:</strong>"
+
+#. module: tanatech_stock
+#: model:ir.actions.report,name:tanatech_stock.tanatech_action_report_delivery
+msgid "Delivery Slip(A5)"
+msgstr "Bon de livraison (A5)"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "Deliveryslip Reference:"
+msgstr "Bon de livraison Référence: "
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "Lot/Serial Number"
+msgstr "Numéro de Lot/Série"
