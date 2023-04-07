@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="crm_lead_view_form_inherited" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='lead_partner']" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+            <xpath expr="//group[@name='lead_info']" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='lead']/group[1]/group[1]" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quick_create_opportunity_form_inherit" model="ir.ui.view">
+        <field name="name">tanatech.crm.create.opportunity.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+            <field name="email_from" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+            <field name="phone" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="crm_case_tree_view_oppor_inherited" model="ir.ui.view">
+        <field name="name">tanatech.crm.case.tree.view.oppor.inherited</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="contact_name" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+            <field name="phone" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+            <field name="email_from" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="tanatech_crm_case_kanban_view_leads" model="ir.ui.view">
+        <field name="name"></field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[@t-esc='record.partner_id.value']" position="attributes">
+                <attribute name="groups">tanatech_sale.commercial_group</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

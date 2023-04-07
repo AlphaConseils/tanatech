@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="office_design_group" model="res.groups">
+        <field name="name">Office design</field>
+    </record>
+    <record id="commercial_group" model="res.groups">
+        <field name="name">Commercial</field>
+    </record>
+</odoo>
