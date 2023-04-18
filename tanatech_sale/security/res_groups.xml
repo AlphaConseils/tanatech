@@ -7,4 +7,7 @@
     <record id="commercial_group" model="res.groups">
         <field name="name">Commercial</field>
     </record>
+    <record id="pricelist_group" model="res.groups">
+        <field name="name">Liste de prix</field>
+    </record>
 </odoo>
