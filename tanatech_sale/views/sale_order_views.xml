@@ -25,6 +25,7 @@
             <group name="partner_details" position="before">
                 <field name="is_commercial" invisible="1"/>
                 <field name="is_office_design" invisible="1"/>
+                <field name="can_edit_pricelist" invisible="1"/>
             </group>
             <field name="partner_id" position="attributes">
                 <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
@@ -36,8 +37,17 @@
                 <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
             </field>
             <field name="pricelist_id" position="attributes">
-                <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
+                <attribute name="attrs">{
+                    'required': [('is_commercial', '=', True),('can_edit_pricelist', '=', True)], 
+                    'readonly': [('can_edit_pricelist', '=', False)], 
+                    'invisible': [('is_commercial', '=', False)]
+                }</attribute>
             </field>
+            <xpath expr="//label[@for='pricelist_id']" position="attributes">
+                <attribute name="attrs">{
+                    'invisible': [('is_commercial', '=', False)]
+                }</attribute>
+            </xpath>
             <button name="preview_sale_order" position="attributes">
                 <attribute name="attrs">{'invisible': [('is_office_design', '=', True)]}</attribute>
             </button>
