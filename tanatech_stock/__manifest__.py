@@ -2,20 +2,21 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Tanatech Inventory',
-    'version': '1.1',
-    'summary': 'Manage your stock and logistics activities',
-    'description': "",
-    'website': 'https://www.nexources.com/',
-    'depends': ['stock', 'tanatech_base'],
-    'category': 'Inventory/Inventory',
-    'sequence': 25,
-    'data': [
+    "name": "Tanatech Inventory",
+    "version": "1.1",
+    "summary": "Manage your stock and logistics activities",
+    "description": "",
+    "website": "https://www.nexources.com/",
+    "depends": ["stock", "tanatech_base"],
+    "category": "Inventory/Inventory",
+    "sequence": 25,
+    "data": [
         # report
-        'report/stock_report_views.xml'
+        "report/stock_report_views.xml",
+        "report/deliveryslip_dispatch.xml",
     ],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-    'license': 'LGPL-3',
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+    "license": "LGPL-3",
 }
