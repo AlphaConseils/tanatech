@@ -22,12 +22,17 @@
             <div class="mt-2">
                 <div class="row">
                     <div class="col-1">
-                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
-                            style="max-height: 65px;" alt="Logo" />
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 65px;" alt="Logo" />
                     </div>
                     <div class="col-1"></div>
                     <div class="col-10 text-left" name="moto">
                         <div name="company_address" style="vertical-align: center">
+                            <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
+                                <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
+                                <font style="font-size: 10px">
+                                    <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
+                                </font>
+                            </p>
                             <span t-if="company.company_details" t-field="company.company_details"></span>
                         </div>
                     </div>
@@ -39,21 +44,18 @@
                 <div class="col-4">
                     <span t-esc="o.name" class="text-right" />
                 </div>
-                <div class="col-4 text-center"> PAGE: <span class="page" /> / <span class="topage" />
-                </div>
-                <div class="col-4">
+                <div class="col-4 text-center"> PAGE: <span class="page" />
+ /                <span class="topage" />
+            </div>
+            <div class="col-4">
 
-                </div>
             </div>
         </div>
+    </div>
 
-        <div
-            t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
-            t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
-            t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
-            t-att-data-oe-lang="o and o.env.context.get('lang')">
+    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
 
-            <t t-out="0" />
-        </div>
-    </template>
+        <t t-out="0" />
+    </div>
+</template>
 </odoo>
