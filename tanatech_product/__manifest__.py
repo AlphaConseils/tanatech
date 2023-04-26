@@ -2,11 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Tanatech Products',
-    'version': '1.2',
-    'category': 'Sales/Sales',
-    'depends': ['product'],
-    'description': """
+    "name": "Tanatech Products",
+    "version": "1.2",
+    "category": "Sales/Sales",
+    "depends": ["product"],
+    "description": """
 This is the base module for managing products and pricelists in Odoo.
 ========================================================================
 
@@ -26,8 +26,9 @@ Pricelists preferences by product and/or partners.
 
 Print product labels with barcode.
     """,
-    'data': [
-        'report/product_label.xml'
+    "data": [
+        "report/product_label.xml",
+        "security/ir.model.access.csv",
     ],
-    'license': 'LGPL-3',
+    "license": "LGPL-3",
 }
