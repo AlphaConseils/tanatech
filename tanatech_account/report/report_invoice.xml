@@ -14,10 +14,10 @@
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
                     </div>
                     <div class="col-3">
-                        <div t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
-                                t-field="o.partner_id.x_studio_nif_1" /></div>
-                        <div t-if="o.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span
-                                t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
+                        <div t-if="o.partner_id.x_studio_nif_1 and o.journal_id.name != 'Factures clients NA'" class="mt16"> NIF: <span
+                                t-field="o.partner_id.x_studio_nif_1 and o.journal_id.name != 'Factures clients NA'" /></div>
+                        <div t-if="o.partner_id.x_studio_char_field_d3loF and o.journal_id.name != 'Factures clients NA'" class="mt16"> STAT: <span
+                                t-field="o.partner_id.x_studio_char_field_d3loF and o.journal_id.name != 'Factures clients NA'" /></div>
                     </div>
                 </div>
             </t>
