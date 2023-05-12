@@ -14,6 +14,8 @@
         # report
         "report/stock_report_views.xml",
         "report/deliveryslip_dispatch.xml",
+        # views
+        "views/stock_picking_views.xml"
     ],
     "installable": True,
     "application": True,
