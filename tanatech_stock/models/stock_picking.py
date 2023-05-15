@@ -48,12 +48,13 @@ class Picking(models.Model):
     #
     #     return values
     def button_2n_validate(self):
-        return 1
+        return self.button_validate()
 
     def button_validate(self):
-        user_has_group = self.env.user.has_group('base.group_system')
-        secnd = self.button_validate
-        if user_has_group:
+        user_has_group_syst = self.env.user.has_group('base.group_system')
+        user_has_group_stock = self.env.user.has_group('stock.group_stock_user')
+
+        if user_has_group_syst:
             # Clean-up the context key at validation to avoid forcing the creation of immediate
             # transfers.
             ctx = dict(self.env.context)
@@ -141,6 +142,6 @@ class Picking(models.Model):
                         action = self.action_view_reception_report()
                         action['context'] = {'default_picking_ids': self.ids}
                         return action
-            else:
-                self.state = 'second_validate'
-        return True
+            return True
+        elif user_has_group_stock:
+            self.state = 'second_validate'
