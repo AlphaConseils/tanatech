@@ -64,7 +64,6 @@ class SaleOrder(models.Model):
                     'price_unit': float(json.loads(self.tax_totals_json)['amount_untaxed']) * product_tmplt.percentage_service_charge,
                     'order_id': order.id,
                     'name': 'Frais de service',
-                    'tax_id': False,
                     'check_belongs_order': True,
                 })
             else:
@@ -82,7 +81,6 @@ class SaleOrder(models.Model):
                     'price_unit': float(json.loads(self.tax_totals_json)['amount_untaxed']) * charge_service_product.percentage_service_charge,
                     'order_id': order.id,
                     'name': 'Frais de service',
-                    'tax_id': False,
                     'check_belongs_order': True,
                 })
             order.show_action_add_service_charge = False
