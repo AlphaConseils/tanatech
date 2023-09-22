@@ -16,9 +16,16 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//button[8]" position="after">
+                <field name="show_action_add_service_charge" invisible="1" />
+                <button name="action_add_service_charge" type="object" string="Ajout frais de service" attrs="{'invisible': [('show_action_add_service_charge', '=', False)]}"/>
+            </xpath>
             <xpath expr="//header" position="attributes">
                 <attribute name="groups">tanatech_sale.commercial_group</attribute>
             </xpath>
+            <!--<xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Pourcentage frais de service"/>
+            </xpath>-->
             <group name="partner_details" position="attributes">
                 <attribute name="groups">tanatech_sale.commercial_group</attribute>
             </group>

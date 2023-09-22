@@ -10,4 +10,7 @@
     <record id="pricelist_group" model="res.groups">
         <field name="name">Liste de prix</field>
     </record>
+    <record id="percentage_service_charge_group" model="res.groups">
+        <field name="name">Pourcentage frais de service vente</field>
+    </record>
 </odoo>

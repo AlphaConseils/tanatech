@@ -29,6 +29,7 @@ Print product labels with barcode.
     "data": [
         "report/product_label.xml",
         "security/ir.model.access.csv",
+        "views/product_template_views.xml",
     ],
     "license": "LGPL-3",
 }
