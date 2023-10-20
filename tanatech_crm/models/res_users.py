@@ -5,7 +5,7 @@ from odoo import models,api,fields
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    only_authorized_pipeline = fields.Boolean(string="Only authorized pipelines",default=True)
+    only_authorized_pipeline = fields.Boolean(string="Only authorized pipelines",default=False)
     user_id = fields.Many2many('res.users','res_users_rel','res_user_id','user_id',string="Authorized")
 
     @api.model_create_multi
