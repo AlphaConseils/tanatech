@@ -15,9 +15,11 @@
         # data
 
         # security
+        'security/crm_security.xml',
 
         # views
-        'views/crm_lead_views.xml'
+        'views/crm_lead_views.xml',
+        'views/res_users_views.xml',
     ],
     'installable': True,
     'auto_install': False,

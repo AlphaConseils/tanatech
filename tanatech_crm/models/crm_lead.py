@@ -10,6 +10,7 @@ class CRMLead(models.Model):
     contact_name = fields.Char(tracking=False)
     email_from = fields.Char(tracking=False)
     phone = fields.Char(tracking=False)
+    is_authorized_pipeline = fields.Boolean(default=True)
 
     def action_view_sale_quotation(self):
         action = super(CRMLead, self).action_view_sale_quotation()
