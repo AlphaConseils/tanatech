@@ -4,7 +4,7 @@
     'summary': "menu personnaliser",
     'version': '1.0',
     'category': 'Uncategorized',
-    'author': "Nazirah",
+    'author': "Nexources",
     'depends': ['point_of_sale'],
     'data': [
        # WIZARD
