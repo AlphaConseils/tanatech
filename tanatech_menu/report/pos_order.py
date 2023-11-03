@@ -6,13 +6,13 @@ from datetime import timedelta
 
 import pytz
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.osv.expression import AND
 
-class ReportSaleDetails(models.AbstractModel):
-    _name = 'report.point_of_sale.report_saledetails_bis'
-    _description = 'Point of Sale Details'
 
+class ReportSaleDetails(models.AbstractModel):
+    _name = 'report.tanatech_menu.report_sale_details_bis'
+    _description = 'Point of Sale Details'
 
     @api.model
     def get_sale_details(self, date_start=False, date_stop=False, config_ids=False, session_ids=False):
@@ -29,7 +29,7 @@ class ReportSaleDetails(models.AbstractModel):
 
         :returns: dict -- Serialised sales.
         """
-        domain = [('state', 'in', ['paid','invoiced','done'])]
+        domain = [('state', 'in', ['paid', 'invoiced', 'done'])]
 
         if (session_ids):
             domain = AND([domain, [('session_id', 'in', session_ids)]])
@@ -38,8 +38,10 @@ class ReportSaleDetails(models.AbstractModel):
                 date_start = fields.Datetime.from_string(date_start)
             else:
                 # start by default today 00:00:00
-                user_tz = pytz.timezone(self.env.context.get('tz') or self.env.user.tz or 'UTC')
-                today = user_tz.localize(fields.Datetime.from_string(fields.Date.context_today(self)))
+                user_tz = pytz.timezone(self.env.context.get(
+                    'tz') or self.env.user.tz or 'UTC')
+                today = user_tz.localize(fields.Datetime.from_string(
+                    fields.Date.context_today(self)))
                 date_start = today.astimezone(pytz.timezone('UTC'))
 
             if date_stop:
@@ -52,9 +54,9 @@ class ReportSaleDetails(models.AbstractModel):
                 date_stop = date_start + timedelta(days=1, seconds=-1)
 
             domain = AND([domain,
-                [('date_order', '>=', fields.Datetime.to_string(date_start)),
-                ('date_order', '<=', fields.Datetime.to_string(date_stop))]
-            ])
+                          [('date_order', '>=', fields.Datetime.to_string(date_start)),
+                           ('date_order', '<=', fields.Datetime.to_string(date_stop))]
+                          ])
 
             if config_ids:
                 domain = AND([domain, [('config_id', 'in', config_ids)]])
@@ -80,16 +82,20 @@ class ReportSaleDetails(models.AbstractModel):
                 products_sold[key] += line.qty
 
                 if line.tax_ids_after_fiscal_position:
-                    line_taxes = line.tax_ids_after_fiscal_position.sudo().compute_all(line.price_unit * (1-(line.discount or 0.0)/100.0), currency, line.qty, product=line.product_id, partner=line.order_id.partner_id or False)
+                    line_taxes = line.tax_ids_after_fiscal_position.sudo().compute_all(line.price_unit * (1-(line.discount or 0.0)/100.0),
+                                                                                       currency, line.qty, product=line.product_id, partner=line.order_id.partner_id or False)
                     for tax in line_taxes['taxes']:
-                        taxes.setdefault(tax['id'], {'name': tax['name'], 'tax_amount':0.0, 'base_amount':0.0})
+                        taxes.setdefault(
+                            tax['id'], {'name': tax['name'], 'tax_amount': 0.0, 'base_amount': 0.0})
                         taxes[tax['id']]['tax_amount'] += tax['amount']
                         taxes[tax['id']]['base_amount'] += tax['base']
                 else:
-                    taxes.setdefault(0, {'name': _('No Taxes'), 'tax_amount':0.0, 'base_amount':0.0})
+                    taxes.setdefault(
+                        0, {'name': _('No Taxes'), 'tax_amount': 0.0, 'base_amount': 0.0})
                     taxes[0]['base_amount'] += line.price_subtotal_incl
 
-        payment_ids = self.env["pos.payment"].search([('pos_order_id', 'in', orders.ids)]).ids
+        payment_ids = self.env["pos.payment"].search(
+            [('pos_order_id', 'in', orders.ids)]).ids
         if payment_ids:
             self.env.cr.execute("""
                 SELECT method.name, sum(amount) total
@@ -124,5 +130,6 @@ class ReportSaleDetails(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         data = dict(data or {})
         configs = self.env['pos.config'].browse(data['config_ids'])
-        data.update(self.get_sale_details(data['date_start'], data['date_stop'], configs.ids))
+        data.update(self.get_sale_details(
+            data['date_start'], data['date_stop'], configs.ids))
         return data

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<openerp>
     <data>
-        <template id="report_saledetails">
+        <template id="report_sale_details_bis">
             <t t-set="company" t-value="env.company" />
             <t t-call="web.html_container">
                 <t t-call="web.internal_layout">
@@ -99,12 +99,12 @@
                         <br />
                         <br />
 
-                        <!-- <strong>Total: <t t-esc='total_paid'
-                                t-options="{'widget': 'float', 'precision': currency_precision}" /></strong> -->
+                        <strong>Total: <t t-esc='total_paid'
+                                t-options="{'widget': 'float', 'precision': currency_precision}" /></strong>
 
                     </div>
                 </t>
             </t>
         </template>
     </data>
-</odoo>
+</openerp>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
-    <record id="sale_details_report_bis" model="ir.actions.report">
+    <record id="sale_details_report" model="ir.actions.report">
         <field name="name">Sales Details</field>
-        <field name="model">report.point_of_sale.report_saledetails_bis</field>
+        <field name="model">report.tanatech_menu.report_sale_details_bis</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">tanatech_menu.report_saledetails</field>
+        <field name="report_name">tanatech_menu.report_sale_details_bis</field>
     </record>
 </odoo>
