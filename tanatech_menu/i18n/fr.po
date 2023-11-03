@@ -101,7 +101,7 @@ msgstr "N° reçu"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Payments"
-msgstr "Payments"
+msgstr "Paiements"
 
 #. module: tanatech_menu
 #: model:ir.model,name:tanatech_menu.model_report_tanatech_menu_report_sale_details_bis
@@ -142,7 +142,7 @@ msgstr "Résumé des ventes"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Tax Amount"
-msgstr ""
+msgstr "Montant"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
