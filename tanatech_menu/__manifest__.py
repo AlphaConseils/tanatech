@@ -1,6 +1,6 @@
 # __manifest__.py
 {
-    'name': "Module menu",
+    'name': "Tanatech Menu",
     'summary': "menu personnaliser",
     'version': '1.0',
     'category': 'Uncategorized',
@@ -16,6 +16,7 @@
         # REPORT
        'report/report_saledetails_bis.xml',
        'report/ir_actions_report.xml',
+
     ],
     'installable': True,
     'application': True,

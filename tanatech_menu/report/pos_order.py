@@ -9,6 +9,7 @@ import pytz
 from odoo import api, fields, models, _
 from odoo.osv.expression import AND
 
+REFUND_IDENTIFICATION = 'REMBOURSEMENT'
 
 class ReportSaleDetails(models.AbstractModel):
     _name = 'report.tanatech_menu.report_sale_details_bis'
@@ -62,6 +63,9 @@ class ReportSaleDetails(models.AbstractModel):
                 domain = AND([domain, [('config_id', 'in', config_ids)]])
 
         orders = self.env['pos.order'].search(domain)
+        
+        refunds = orders.filtered(lambda order: REFUND_IDENTIFICATION in order.name)
+        refund_total = sum(refunds.mapped('amount_total'))
 
         user_currency = self.env.company.currency_id
 
@@ -115,6 +119,8 @@ class ReportSaleDetails(models.AbstractModel):
             'payments': payments,
             'company_name': self.env.company.name,
             'taxes': list(taxes.values()),
+            'refunds': refunds,
+            'refund_total': refund_total,
             'products': sorted([{
                 'product_id': product.id,
                 'product_name': product.name,
