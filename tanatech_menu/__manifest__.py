@@ -16,6 +16,7 @@
         # REPORT
        'report/report_saledetails_bis.xml',
        'report/ir_actions_report.xml',
+       'report/report_saledetails.xml'
 
     ],
     'installable': True,

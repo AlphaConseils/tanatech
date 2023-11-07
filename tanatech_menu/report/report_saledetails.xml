@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <template id="report_saledetails_inherit" inherit_id="point_of_sale.report_saledetails">
+    <xpath expr="//h2[1]" position="replace">
+        <h2>Sales summary</h2>
+    </xpath>
+   </template>
+</odoo>

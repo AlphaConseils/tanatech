@@ -27,6 +27,7 @@
                                     <td>
                                         <t t-esc="payment['name']" />
                                     </td>
+                                    
                                     <td>
                                         <t t-esc="payment['total']"
                                             t-options="{'widget': 'float', 'precision': currency_precision}" />
@@ -72,6 +73,7 @@
                                     <th>N° order </th>
                                     <th>N° receive</th>
                                     <th>Customer</th>
+                                    <th>Payment method</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -83,9 +85,14 @@
                                     <td>
                                         <t t-esc="refund.pos_reference" />
                                     </td>
+                                    
                                     <td>
                                         <span t-field="refund.partner_id" />
                                     </td>
+                                    <td>
+                                        <t t-esc="', '.join(refund.payment_ids.mapped('payment_method_id').mapped('name'))" />
+                                    </td>
+
                                     <td>
                                         <t t-esc="abs(refund.amount_total)"
                                             t-options="{'widget': 'float', 'precision': currency_precision}" />
