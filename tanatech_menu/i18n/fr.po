@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20231030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 12:53+0000\n"
-"PO-Revision-Date: 2023-11-07 12:53+0000\n"
+"POT-Creation-Date: 2023-11-10 08:25+0000\n"
+"PO-Revision-Date: 2023-11-10 08:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,13 @@ msgstr ""
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Amount"
 msgstr "Montant"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Base Amount"
 msgstr "Montant de base"
 
@@ -42,6 +44,7 @@ msgstr "Créé sur"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Customer"
 msgstr "Client"
 
@@ -73,11 +76,12 @@ msgstr "Dernière mise à jour le"
 #. module: tanatech_menu
 #: model:ir.model,name:tanatech_menu.model_menu_menu
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__name
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Name"
 msgstr "Nom"
 
@@ -90,21 +94,25 @@ msgstr "Pas de taxes"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "N° order"
 msgstr "N° commande"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "N° receive"
 msgstr "N° reçu"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Payment method"
 msgstr "Méthode de paiement"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Payments"
 msgstr "Paiements"
 
@@ -125,6 +133,7 @@ msgstr "Imprimer"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Refunds"
 msgstr "Remboursements"
 
@@ -147,20 +156,24 @@ msgstr "Résumé des ventes"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Tax Amount"
 msgstr "Montant"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Taxes"
-msgstr "Taxes"
+msgstr ""
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Total"
 msgstr "Totale"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Total:"
 msgstr "Totale"
