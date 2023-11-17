@@ -25,7 +25,7 @@
                             <tbody>
                                 <tr t-foreach='payments' t-as='payment'>
                                     <td>
-                                        <t t-esc="abs(payment['name'])" />
+                                        <t t-esc="payment['name']" />
                                     </td>
                                     
                                     <td>
