@@ -104,8 +104,7 @@
                         <br />
                         <br />
 
-                        <strong>Total: <t t-esc="abs(refund_total)"
-                                t-options="{'widget': 'float', 'precision': currency_precision}" /></strong>
+                                <strong>Total: <t t-esc='total_paid' t-options="{'widget': 'float', 'precision': currency_precision}"/></strong>
 
                     </div>
                 </t>
