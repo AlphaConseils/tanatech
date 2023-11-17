@@ -164,12 +164,12 @@ msgstr "Total"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Total payments:"
-msgstr "Total de paiements"
+msgstr "Total de paiements:"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Total refund:"
-msgstr "Total de remboursement"
+msgstr "Total de remboursement:"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
