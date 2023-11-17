@@ -100,11 +100,15 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <strong>Total refund: <t t-esc="abs(refund_total)"
+                            t-options="{'widget': 'float', 'precision': currency_precision}" /></strong>
 
                         <br />
                         <br />
 
-                                <strong>Total: <t t-esc='total_paid' t-options="{'widget': 'float', 'precision': currency_precision}"/></strong>
+                       
+
+                                <strong>Total payments: <t t-esc='total_paid' t-options="{'widget': 'float', 'precision': currency_precision}"/></strong>
 
                     </div>
                 </t>
