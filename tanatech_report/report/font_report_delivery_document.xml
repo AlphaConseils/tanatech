@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="custom_purchase_order_report" inherit_id="purchase.report_purchasequotation_document">
+        <template id="custom_stock_delivery_report" inherit_id="stock.report_delivery_document">
             <xpath expr="//tbody" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
