@@ -13,9 +13,9 @@
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
                     </div>
                     <div class="col-3">
-                        <div t-if="doc.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
+                        <div style="color: black!important;" t-if="doc.partner_id.x_studio_nif_1" class="mt16"> NIF: <span style="color: black!important;"
                                 t-field="doc.partner_id.x_studio_nif_1" /></div>
-                        <div t-if="doc.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span
+                        <div style="color: black!important;" t-if="doc.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span style="color: black!important;"
                                 t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
                     </div>
                 </div>
@@ -25,14 +25,14 @@
                                  and doc.partner_invoice_id != doc.partner_id
                                  or doc.partner_shipping_id != doc.partner_invoice_id">
                 <t t-set="information_block">
-                    <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and
+                    <strong style="color: black!important;" t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and
                         Shipping Address:</strong>
-                    <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing
+                    <strong style="color: black!important;" t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing
                         Address:</strong>
                     <div style="color: black;" t-field="doc.partner_invoice_id"
                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
                     <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
-                        <strong>Shipping Address:</strong>
+                        <strong style="color: black!important;">Shipping Address:</strong>
                         <div t-field="doc.partner_shipping_id"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
                     </t>
@@ -52,38 +52,38 @@
                 </div>
                 <h2 style="color: black" class="mt16 h3 text-secondary">
                     <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
-                        <span t-if="doc.state not in ['draft','sent']">Order # </span>
-                        <span t-if="doc.state in ['draft','sent']">Quotation # </span>
+                        <span style="color: black!important;" t-if="doc.state not in ['draft','sent']">Order # </span>
+                        <span style="color: black!important;" t-if="doc.state in ['draft','sent']">Quotation # </span>
                     </t>
                     <t t-if="env.context.get('proforma', False) or is_pro_forma">
-                        <span>Pro-Forma Invoice # </span>
+                        <span style="color: black!important;">Pro-Forma Invoice # </span>
                     </t>
-                    <span t-field="doc.name" />
+                    <span style="color: black!important;" t-field="doc.name" />
                 </h2>
 
                 <div style="color: black;" class="row mt32 mb32" id="informations">
                     <div t-if="doc.client_order_ref" class="col-auto col-3 mw-100 mb-2">
-                        <strong>Your Reference:</strong>
-                        <p class="m-0" t-field="doc.client_order_ref" />
+                        <strong style="color: black!important;">Your Reference:</strong>
+                        <p style="color: black!important;" class="m-0" t-field="doc.client_order_ref" />
                     </div>
                     <div style="color: black" t-if="doc.date_order and doc.state not in ['draft','sent']"
                         class="col-auto col-3 mw-100 mb-2">
-                        <strong>Order Date:</strong>
-                        <p class="m-0" t-field="doc.date_order" />
+                        <strong style="color: black!important;">Order Date:</strong>
+                        <p style="color: black!important;" class="m-0" t-field="doc.date_order" />
                     </div>
                     <div style="color: black" t-if="doc.date_order and doc.state in ['draft','sent']"
                         class="col-auto col-3 mw-100 mb-2">
-                        <strong>Quotation Date:</strong>
-                        <p class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}' />
+                        <strong style="color: black!important;">Quotation Date:</strong>
+                        <p style="color: black!important;" class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}' />
                     </div>
                     <div style="color: black" t-if="doc.validity_date and doc.state in ['draft', 'sent']"
                         class="col-auto col-3 mw-100 mb-2" name="expiration_date">
-                        <strong>Expiration:</strong>
-                        <p class="m-0" t-field="doc.validity_date" />
+                        <strong style="color: black!important;">Expiration:</strong>
+                        <p style="color: black!important;" class="m-0" t-field="doc.validity_date" />
                     </div>
                     <div style="color: black" t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
-                        <strong>Salesperson:</strong>
-                        <p class="m-0" t-field="doc.user_id" />
+                        <strong style="color: black!important;">Salesperson:</strong>
+                        <p style="color: black!important;" class="m-0" t-field="doc.user_id" />
                     </div>
                 </div>
 
@@ -99,12 +99,12 @@
                             <th name="th_priceunit" class="text-right">Unit Price</th>
                             <th name="th_discount" t-if="display_discount" class="text-right"
                                 groups="product.group_discount_per_so_line">
-                                <span>Disc.%</span>
+                                <span style="color: black!important;">Disc.%</span>
                             </th>
                             <th name="th_taxes" class="text-right">Taxes</th>
                             <th style="color: black;" name="th_subtotal" class="text-right">
-                                <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
-                                <span groups="account.group_show_line_subtotals_tax_included">Total
+                                <span style="color: black!important;" groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                <span style="color: black!important;" groups="account.group_show_line_subtotals_tax_included">Total
                                     Price</span>
                             </th>
                         </tr>
@@ -126,44 +126,44 @@
                                 t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                 <t t-if="not line.display_type">
                                     <td name="td_name">
-                                        <span t-field="line.name" />
+                                        <span style="color: black!important;" t-field="line.name" />
                                     </td>
                                     <td name="td_quantity" class="text-right">
-                                        <span t-field="line.product_uom_qty" />
-                                        <span t-field="line.product_uom" />
+                                        <span style="color: black!important;" t-field="line.product_uom_qty" />
+                                        <span style="color: black!important;" t-field="line.product_uom" />
                                     </td>
                                     <td name="td_priceunit" class="text-right">
-                                        <span t-field="line.price_unit"
+                                        <span style="color: black!important;" t-field="line.price_unit"
                                             t-options='{"widget": "monetary", "display_currency": currency_id}'
                                         />
                                     </td>
                                     <td t-if="display_discount" class="text-right"
                                         groups="product.group_discount_per_so_line">
-                                        <span t-field="line.discount" />
+                                        <span style="color: black!important;" t-field="line.discount" />
                                     </td>
                                     <td name="td_taxes" class="text-right">
-                                        <span
+                                        <span style="color: black!important;"
                                             t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_id))" />
                                     </td>
                                     <td name="td_subtotal" class="text-right o_price_total">
-                                        <span t-field="line.price_subtotal"
+                                        <span style="color: black!important;" t-field="line.price_subtotal"
                                             t-options='{"widget": "monetary", "display_currency": currency_id}'
                                             groups="account.group_show_line_subtotals_tax_excluded" />
-                                        <span t-field="line.price_total"
+                                        <span style="color: black!important;" t-field="line.price_total"
                                             t-options='{"widget": "monetary", "display_currency": currency_id}'
                                             groups="account.group_show_line_subtotals_tax_included" />
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
                                     <td name="td_section_line" colspan="99">
-                                        <span t-field="line.name" />
+                                        <span style="color: black!important;" t-field="line.name" />
                                     </td>
                                     <t t-set="current_section" t-value="line" />
                                     <t t-set="current_subtotal" t-value="0" />
                                 </t>
                                 <t t-if="line.display_type == 'line_note'">
                                     <td name="td_note_line" colspan="99">
-                                        <span t-field="line.name" />
+                                        <span style="color: black!important;" t-field="line.name" />
                                     </td>
                                 </t>
                             </tr>
@@ -172,8 +172,8 @@
                                 t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td name="td_section_subtotal" colspan="99">
-                                        <strong class="mr16">Subtotal</strong>
-                                        <span
+                                        <strong style="color: black!important;" class="mr16">Subtotal</strong>
+                                        <span style="color: black!important;"
                                             t-esc="current_subtotal"
                                             t-options='{"widget": "monetary", "display_currency": currency_id}'
                                         />
@@ -200,14 +200,14 @@
 
                 <div class="oe_structure" />
 
-                <p t-field="doc.note" />
-                <p t-if="not is_html_empty(doc.payment_term_id.note)">
-                    <span t-field="doc.payment_term_id.note" />
+                <p style="color: black!important;" t-field="doc.note" />
+                <p style="color: black!important;" t-if="not is_html_empty(doc.payment_term_id.note)">
+                    <span style="color: black!important;" t-field="doc.payment_term_id.note" />
                 </p>
-                <p id="fiscal_position_remark"
+                <p style="color: black!important;" id="fiscal_position_remark"
                     t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)">
-                    <strong>Fiscal Position Remark:</strong>
-                    <span t-field="doc.fiscal_position_id.sudo().note" />
+                    <strong style="color: black!important;">Fiscal Position Remark:</strong>
+                    <span style="color: black!important;" t-field="doc.fiscal_position_id.sudo().note" />
                 </p>
             </div>
 

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>      
-         <template id="custom_purchaseorder_order_report" inherit_id="purchase.report_purchaseorder_document">
+         <template id="custom_account_report_1" inherit_id="account.report_invoice_document">
            <xpath expr="//tbody" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
             <xpath expr="//span" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//p" position="attributes">
+            <xpath expr="//address" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//p[@name='payment_communication']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
             <xpath expr="//td" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//b" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
              <xpath expr="//strong" position="attributes">
@@ -20,15 +26,16 @@
              <xpath expr="//div" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//t" position="attributes">
+            <xpath expr="//td" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-             <xpath expr="//div[@id='informations']" position="attributes">
+            <xpath expr="//h2" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//div[@name='purchase_shipping_address']" position="attributes">
+              <xpath expr="//div[@id='informations']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-        </template>
-    </data> 
+        </template> 
+    </data>
 </odoo>
+

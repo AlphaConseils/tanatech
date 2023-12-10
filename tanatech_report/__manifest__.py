@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale', 'purchase', 'stock','sale_management'],
+    'depends': ['base','account', 'sale', 'purchase', 'stock','sale_management','tanatech_account'],
 
     # always loaded
     'data': [
@@ -28,7 +28,8 @@
         'report/font_purchaseorder_report.xml',
         'report/font_stockpicking_report.xml',
         'report/font_sale_managment.xml',
-        'report/font_report_delivery_document.xml'
+        'report/font_report_delivery_document.xml',
+        'report/font_report_account_document.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
