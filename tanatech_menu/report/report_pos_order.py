@@ -1,19 +1,14 @@
 # coding: utf-8
 
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 from datetime import timedelta
-
 import pytz
 
 from odoo import api, fields, models, _
 from odoo.osv.expression import AND
 
-REFUND_IDENTIFICATION = 'REMBOURSEMENT'
 
-class ReportSaleDetails(models.AbstractModel):
-    _name = 'report.tanatech_menu.report_sale_details_bis'
-    _description = 'Point of Sale Details'
+class ReportPointOfSaleDetails(models.AbstractModel):
+    _inherit = "report.point_of_sale.report_saledetails"
 
     @api.model
     def get_sale_details(self, date_start=False, date_stop=False, config_ids=False, session_ids=False):
@@ -64,9 +59,6 @@ class ReportSaleDetails(models.AbstractModel):
 
         orders = self.env['pos.order'].search(domain)
         
-        refunds = orders.filtered(lambda order: REFUND_IDENTIFICATION in order.name)
-        refund_total = sum(refunds.mapped('amount_total'))
-
         user_currency = self.env.company.currency_id
 
         total = 0.0
@@ -123,8 +115,6 @@ class ReportSaleDetails(models.AbstractModel):
             'payments': payments,
             'company_name': self.env.company.name,
             'taxes': list(taxes.values()),
-            'refunds': refunds,
-            'refund_total': refund_total,
             'products': sorted([{
                 'product_id': product.id,
                 'product_name': product.name,
@@ -135,11 +125,3 @@ class ReportSaleDetails(models.AbstractModel):
                 'uom': product.uom_id.name
             } for (product, price_unit, discount), qty in products_sold.items()], key=lambda l: l['product_name'])
         }
-
-    @api.model
-    def _get_report_values(self, docids, data=None):
-        data = dict(data or {})
-        configs = self.env['pos.config'].browse(data['config_ids'])
-        data.update(self.get_sale_details(
-            data['date_start'], data['date_stop'], configs.ids))
-        return data

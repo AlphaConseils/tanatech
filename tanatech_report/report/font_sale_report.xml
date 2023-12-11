@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_sale_order_report" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//tbody" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//span" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//p" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//td" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+             <xpath expr="//strong" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+             <xpath expr="//div" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//t" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20231030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-17 12:29+0000\n"
-"PO-Revision-Date: 2023-11-17 12:29+0000\n"
+"POT-Creation-Date: 2023-11-07 12:27+0000\n"
+"PO-Revision-Date: 2023-11-07 12:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,22 +23,22 @@ msgstr "Montant"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Base Amount"
-msgstr "Montant de base"
+msgstr ""
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.pos_details_wizard_view_form
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Annulé"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Crée par"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__create_date
 msgid "Created on"
-msgstr "Créé sur"
+msgstr "Crée sur"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
@@ -48,17 +48,17 @@ msgstr "Client"
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__display_name
 msgid "Display Name"
-msgstr "Afficher un nom"
+msgstr "Affichage du nom"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu____last_update
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr "Dernière modification sur"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__write_uid
@@ -68,12 +68,12 @@ msgstr "Dernière mise à jour par"
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Dernière mise à jour sur"
 
 #. module: tanatech_menu
 #: model:ir.model,name:tanatech_menu.model_menu_menu
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #. module: tanatech_menu
 #: model:ir.model.fields,field_description:tanatech_menu.field_menu_menu__name
@@ -82,12 +82,11 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: tanatech_menu
-#: code:addons/report/pos_order.py:0 code:addons/report/report_pos_order.py:0
+#: code:addons/report/pos_order.py:0
 #: code:addons/tanatech_menu/report/pos_order.py:0
-#: code:addons/tanatech_menu/report/report_pos_order.py:0
 #, python-format
 msgid "No Taxes"
-msgstr "Pas de taxes"
+msgstr "Pas d'impôt"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
@@ -102,23 +101,22 @@ msgstr "N° reçu"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Payment method"
-msgstr "Méthode de paiement"
+msgstr "Methode de paiement"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Payments"
-msgstr "Paiements"
+msgstr "Paiement"
 
 #. module: tanatech_menu
-#: model:ir.model,name:tanatech_menu.model_report_point_of_sale_report_saledetails
 #: model:ir.model,name:tanatech_menu.model_report_tanatech_menu_report_sale_details_bis
 msgid "Point of Sale Details"
-msgstr "Détails du PdV"
+msgstr "Détails du point de vente"
 
 #. module: tanatech_menu
 #: model:ir.model,name:tanatech_menu.model_pos_details_wizard
 msgid "Point of Sale Details Report"
-msgstr "Rapport détaillé du PdV"
+msgstr "Rapport Détails du point de vente"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.pos_details_wizard_view_form
@@ -128,13 +126,13 @@ msgstr "Imprimer"
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Refunds"
-msgstr "Remboursements"
+msgstr "Remboursement"
 
 #. module: tanatech_menu
 #: model:ir.actions.act_window,name:tanatech_menu.action_report_pos_details
 #: model:ir.actions.report,name:tanatech_menu.sale_details_report
 msgid "Sales Details"
-msgstr "détails des ventes"
+msgstr "Détails des ventes"
 
 #. module: tanatech_menu
 #: model:ir.ui.menu,name:tanatech_menu.sale_details_bis_menu
@@ -143,35 +141,26 @@ msgstr "Détails des ventes bis"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
+#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
 msgid "Sales summary"
 msgstr "Résumé des ventes"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Tax Amount"
-msgstr "Montant"
+msgstr "Montant Taxe"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Taxes"
-msgstr ""
+msgstr "Taxes"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
 msgid "Total"
-msgstr "Total"
+msgstr "Totale"
 
 #. module: tanatech_menu
 #: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
-msgid "Total payments:"
-msgstr "Total de paiements:"
-
-#. module: tanatech_menu
-#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_sale_details_bis
-msgid "Total refund:"
-msgstr "Total de remboursement:"
-
-#. module: tanatech_menu
-#: model_terms:ir.ui.view,arch_db:tanatech_menu.report_saledetails_inherit
-msgid "sales summary"
-msgstr "Résumé des ventes"
+msgid "Total:"
+msgstr ""
