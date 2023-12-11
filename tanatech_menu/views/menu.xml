@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <menuitem
+        id="sale_details_bis_menu"
+        name="Sales details bis"
+        action="action_report_pos_details"
+        parent="point_of_sale.menu_point_rep"
+        sequence="5"/>
+    
+</odoo>
