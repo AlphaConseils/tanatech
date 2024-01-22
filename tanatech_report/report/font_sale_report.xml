@@ -5,22 +5,13 @@
             <xpath expr="//tbody" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//span" position="attributes">
+            <xpath expr="//div[@t-field='doc.partner_id']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//p" position="attributes">
+            <xpath expr="//div[@class='page']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//td" position="attributes">
-                <attribute name="style">color: black!important;</attribute>
-            </xpath>
-             <xpath expr="//strong" position="attributes">
-                <attribute name="style">color: black!important;</attribute>
-            </xpath>
-             <xpath expr="//div" position="attributes">
-                <attribute name="style">color: black!important;</attribute>
-            </xpath>
-            <xpath expr="//t" position="attributes">
+            <xpath expr="//div[@class='clearfix']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
         </template>

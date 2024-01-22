@@ -17,7 +17,13 @@
              <xpath expr="//strong" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-             <xpath expr="//div" position="attributes">
+            <xpath expr="//div[@class='page']" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//div[@name='div_outgoing_address']" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//div[@name='div_incoming_address']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
             <xpath expr="//t" position="attributes">

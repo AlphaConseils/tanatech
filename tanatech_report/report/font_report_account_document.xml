@@ -32,7 +32,7 @@
             <xpath expr="//h2" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-              <xpath expr="//div[@id='informations']" position="attributes">
+              <xpath expr="//div[@class='page']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
         </template> 

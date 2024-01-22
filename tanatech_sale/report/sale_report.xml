@@ -7,7 +7,7 @@
             <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
-                <div class="row">
+                <div class="row" style="color: black!important">
                     <div class="col-4" style="color: black;">
                         <address t-field="doc.partner_id"
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
@@ -38,7 +38,7 @@
                     </t>
                 </t>
             </t>
-            <div class="page text-secondary" style="font-size: 12px">
+            <div class="page text-secondary" style="font-size: 12px;color: black!important">
                 <t t-set="currency_id"
                     t-value="doc.env.company.currency_id if not doc.pricelist_id else doc.pricelist_id.currency_id" />
                 <div class="oe_structure" />
@@ -184,7 +184,7 @@
                     </tbody>
                 </table>
 
-                <div style="color: black;v" class="clearfix" name="so_total_summary">
+                <div style="color: black;" class="clearfix" name="so_total_summary">
                     <div id="total" class="row" name="total">
                         <div
                             t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">

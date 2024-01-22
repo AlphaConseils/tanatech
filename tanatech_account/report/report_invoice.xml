@@ -8,76 +8,76 @@
             <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
-                <div class="row">
-                    <div style="color: black!important;" class="col-4">
-                        <address style="color: black!important;" t-field="o.partner_id"
+                <div class="row" style="color: black!important">
+                    <div  class="col-4">
+                        <address  t-field="o.partner_id"
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
                     </div>
-                    <div style="color: black!important;" class="col-3">
+                    <div  class="col-3">
                         <t t-if="o.journal_id.name!='Factures clients NA'">
-                            <div style="color: black!important;" t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span style="color: black!important;"
+                            <div  t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span 
                                     t-field="o.partner_id.x_studio_nif_1" /></div>
-                            <div style="color: black!important;" t-if="o.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span style="color: black!important;"
+                            <div  t-if="o.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span 
                                     t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
                         </t>
                     </div>
                 </div>
             </t>
-            <div class="page text-secondary" style="font-size: 12px; color: black!important;">
-                <div>
+            <div class="page text-secondary" style="font-size: 12px;">
+                <div style="color: black!important;">
                     <t t-esc="address" />
                 </div>
-                <h2 class="h3 text-secondary">
-                    <span style="color: black!important;" t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
-                    <span style="color: black!important;" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                    <span style="color: black!important;" t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled
+                <h2 class="h3 text-secondary" style="color: black!important;">
+                    <span  t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                    <span  t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                    <span  t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled
                         Invoice</span>
-                    <span  style="color: black!important;" t-if="o.move_type == 'out_refund'">Credit Note</span>
-                    <span style="color: black!important;" t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
-                    <span style="color: black!important;" t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
-                    <span style="color: black!important;" t-if="o.name != '/'" t-field="o.name" />
+                    <span   t-if="o.move_type == 'out_refund'">Credit Note</span>
+                    <span  t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
+                    <span  t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+                    <span  t-if="o.name != '/'" t-field="o.name" />
                 </h2>
 
-                <div id="informations" class="row mt-4 mb-4">
+                <div id="informations" class="row mt-4 mb-4" style="color: black!important;">
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date"
                         name="invoice_date">
                         <t t-if="o.move_type == 'out_invoice'">
-                            <strong style="color: black!important;">Invoice Date:</strong>
+                            <strong >Invoice Date:</strong>
                         </t>
                         <t t-elif="o.move_type == 'out_refund'">
-                            <strong style="color: black!important;">Credit Note Date:</strong>
+                            <strong >Credit Note Date:</strong>
                         </t>
                         <t t-elif="o.move_type == 'out_receipt'">
-                            <strong style="color: black!important;">Receipt Date:</strong>
+                            <strong >Receipt Date:</strong>
                         </t>
                         <t t-else="">
-                            <strong style="color: black!important;">Date:</strong>
+                            <strong >Date:</strong>
                         </t>
-                        <p style="color: black!important;" class="m-0" t-field="o.invoice_date" />
+                        <p  class="m-0" t-field="o.invoice_date" />
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2"
                         t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'"
                         name="due_date">
-                        <strong style="color: black!important;">Due Date:</strong>
-                        <p style="color: black!important;" class="m-0" t-field="o.invoice_date_due" />
+                        <strong >Due Date:</strong>
+                        <p  class="m-0" t-field="o.invoice_date_due" />
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_origin" name="origin">
                         <p class="m-0">
-                            <strong style="color: black!important;">Source: </strong>
-                            <span style="color: black!important;" t-field="o.invoice_origin" />
+                            <strong >Source: </strong>
+                            <span  t-field="o.invoice_origin" />
                         </p>
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.partner_id.ref"
                         name="customer_code">
                         <p class="m-0">
-                            <strong style="color: black!important;">Customer Code: </strong>
-                            <span style="color: black!important;" t-field="o.partner_id.ref" />
+                            <strong >Customer Code: </strong>
+                            <span  t-field="o.partner_id.ref" />
                         </p>
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.ref" name="reference">
                         <p class="m-0">
-                            <strong style="color: black!important;">Reference: </strong>
-                            <span style="color: black!important;" t-field="o.ref" />
+                            <strong >Reference: </strong>
+                            <span  t-field="o.ref" />
                         </p>
                     </div>
                 </div>
@@ -85,38 +85,38 @@
                 <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)" />
 
                 <table class="table table-sm o_main_table table-striped" name="invoice_line_table">
-                    <thead style="color: black!important;" class="text-secondary">
+                    <thead  class="text-secondary" style="color: black!important">
                         <tr>
                             <th name="th_description" class="text-left">
-                                <span style="color: black!important;">Description</span>
+                                <span >Description</span>
                             </th>
                             <th name="th_quantity" class="text-right">
-                                <span style="color: black!important;">Quantity</span>
+                                <span >Quantity</span>
                             </th>
                             <th name="th_priceunit"
                                 t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                <span style="color: black!important;">Unit Price</span>
+                                <span >Unit Price</span>
                             </th>
                             <th name="th_price_unit" t-if="display_discount"
                                 t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                <span style="color: black!important;">Disc.%</span>
+                                <span >Disc.%</span>
                             </th>
                             <t t-if="o.journal_id.name != 'Factures clients NA'">
                                 <th name="th_taxes"
                                     t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                    <span style="color: black!important;">Taxes</span>
+                                    <span >Taxes</span>
                                 </th>
                             </t>
                             <t t-else="">
                             </t>
                             <th name="th_subtotal" class="text-right">
-                                <span style="color: black!important;" groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
-                                <span  style="color: black!important;" groups="account.group_show_line_subtotals_tax_included">Total
+                                <span  groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                <span   groups="account.group_show_line_subtotals_tax_included">Total
                                     Price</span>
                             </th>
                         </tr>
                     </thead>
-                    <tbody style="color: black!important;" class="invoice_tbody">
+                    <tbody  class="invoice_tbody" style="color: black!important;">
                         <t t-set="current_subtotal" t-value="0" />
                         <t t-set="lines"
                             t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" />
@@ -134,24 +134,24 @@
                                 <t t-if="not line.display_type"
                                     name="account_invoice_line_accountable">
                                     <td name="account_invoice_line_name">
-                                        <span style="color: black!important;" t-field="line.name" t-options="{'widget': 'text'}" />
+                                        <span  t-field="line.name" t-options="{'widget': 'text'}" />
                                     </td>
                                     <td class="text-right">
-                                        <span style="color: black!important;" t-field="line.quantity" />
-                                        <span style="color: black!important;" t-field="line.product_uom_id" groups="uom.group_uom" />
+                                        <span  t-field="line.quantity" />
+                                        <span  t-field="line.product_uom_id" groups="uom.group_uom" />
                                     </td>
                                     <td
                                         t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                        <span style="color: black!important;" class="text-nowrap" t-field="line.price_unit" />
+                                        <span  class="text-nowrap" t-field="line.price_unit" />
                                     </td>
                                     <td t-if="display_discount"
                                         t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                        <span style="color: black!important;" class="text-nowrap" t-field="line.discount" />
+                                        <span  class="text-nowrap" t-field="line.discount" />
                                     </td>
                                     <t t-if="o.journal_id.name != 'Factures clients NA'">
                                         <td
                                                 t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span style="color: black!important;"
+                                            <span 
                                                     t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
                                                     id="line_tax_ids" />
                                         </td>
@@ -159,22 +159,22 @@
                                     <t t-else="">
                                     </t>
                                     <td class="text-right o_price_total">
-                                        <span style="color: black!important;" class="text-nowrap" t-field="line.price_subtotal"
+                                        <span  class="text-nowrap" t-field="line.price_subtotal"
                                             groups="account.group_show_line_subtotals_tax_excluded" />
-                                        <span style="color: black!important;" class="text-nowrap" t-field="line.price_total"
+                                        <span  class="text-nowrap" t-field="line.price_total"
                                             groups="account.group_show_line_subtotals_tax_included" />
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
                                     <td colspan="99">
-                                        <span style="color: black!important;" t-field="line.name" t-options="{'widget': 'text'}" />
+                                        <span  t-field="line.name" t-options="{'widget': 'text'}" />
                                     </td>
                                     <t t-set="current_section" t-value="line" />
                                     <t t-set="current_subtotal" t-value="0" />
                                 </t>
                                 <t t-if="line.display_type == 'line_note'">
                                     <td colspan="99">
-                                        <span style="color: black!important;" t-field="line.name" t-options="{'widget': 'text'}" />
+                                        <span  t-field="line.name" t-options="{'widget': 'text'}" />
                                     </td>
                                 </t>
                             </tr>
@@ -183,8 +183,8 @@
                                 t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td colspan="99">
-                                        <strong style="color: black!important;" class="mr16">Subtotal</strong>
-                                        <span style="color: black!important;"
+                                        <strong  class="mr16">Subtotal</strong>
+                                        <span 
                                             t-esc="current_subtotal"
                                             t-options='{"widget": "monetary", "display_currency": o.currency_id}'
                                         />
@@ -195,7 +195,7 @@
                     </tbody>
                 </table>
 
-                <div class="clearfix">
+                <div class="clearfix" >
                     <div id="total" class="row">
                         <div
                             t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
@@ -205,10 +205,10 @@
                                 <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" />
                                 <t t-call="account.document_tax_totals" t-if="o.journal_id.name != 'Factures clients NA'"/>
                                 <t t-else="">
-                                    <table class="table table-sm" style="border-top: 2px solid black; color: black!important;">
+                                    <table class="table table-sm" style="border-top: 2px solid black;">
                                         <tr>
-                                            <td>Montant TTC</td>
-                                            <td style="background-color: none; text-align: right">
+                                            <td style="color: black!important">Montant TTC</td>
+                                            <td style="background-color: none; text-align: right; color: black!important">
                                                 <t t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/>
                                             </td>
                                         </tr>
@@ -223,25 +223,25 @@
                                             t-value="o.sudo()._get_reconciled_info_JSON_values()" />
                                         <t t-foreach="payments_vals" t-as="payment_vals">
                                             <tr>
-                                                <td>
+                                                <td style="color: black!important">
                                                     <i
                                                         class="oe_form_field text-right oe_payment_label">Paid
                                                         on <t t-esc="payment_vals['date']"
                                                             t-options='{"widget": "date"}' /></i>
                                                 </td>
-                                                <td class="text-right">
-                                                    <span style="color: black!important;" t-esc="payment_vals['amount']"
+                                                <td style="color: black!important" class="text-right">
+                                                    <span  t-esc="payment_vals['amount']"
                                                         t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                                                 </td>
                                             </tr>
                                         </t>
                                         <t t-if="len(payments_vals) > 0">
-                                            <tr class="border-black">
+                                            <tr class="border-black" style="color: black!important"> 
                                                 <td>
-                                                    <strong style="color: black!important;">Amount Due</strong>
+                                                    <strong >Amount Due</strong>
                                                 </td>
                                                 <td class="text-right">
-                                                    <span style="color: black!important;" t-field="o.amount_residual" />
+                                                    <span  t-field="o.amount_residual" />
                                                 </td>
                                             </tr>
                                         </t>
@@ -254,32 +254,32 @@
                 <p style="color: black!important;" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
                     name="payment_communication"> Please use the following communication for your
                     payment : <b>
-                        <span style="color: black!important;" t-field="o.payment_reference" />
+                        <span  t-field="o.payment_reference" />
                     </b>
                 </p>
-                <p t-if="o.invoice_payment_term_id" name="payment_term">
-                    <span style="color: black!important;" t-field="o.invoice_payment_term_id.note" />
+                <p style="color: black!important;" t-if="o.invoice_payment_term_id" name="payment_term">
+                    <span  t-field="o.invoice_payment_term_id.note" />
                 </p>
-                <div t-if="not is_html_empty(o.narration)" name="comment">
-                    <span style="color: black!important;" t-field="o.narration" />
+                <div style="color: black!important;" t-if="not is_html_empty(o.narration)" name="comment">
+                    <span  t-field="o.narration" />
                 </div>
-                <p t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
-                    <span style="color: black!important;" t-field="o.fiscal_position_id.note" />
+                <p style="color: black!important;" t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
+                    <span  t-field="o.fiscal_position_id.note" />
                 </p>
-                <p t-if="o.invoice_incoterm_id" name="incoterm">
-                    <strong style="color: black!important;">Incoterm: </strong><span style="color: black!important;" t-field="o.invoice_incoterm_id.code" /> - <span
+                <p style="color: black!important;" t-if="o.invoice_incoterm_id" name="incoterm">
+                    <strong >Incoterm: </strong><span  t-field="o.invoice_incoterm_id.code" /> - <span
                         t-field="o.invoice_incoterm_id.name" />
                 </p>
-                <div id="qrcode" t-if="o.display_qr_code and o.amount_residual > 0">
+                <div style="color: black!important;" id="qrcode" t-if="o.display_qr_code and o.amount_residual > 0">
                     <p t-if="qr_code_urls.get(o.id)">
-                        <strong style="color: black!important;" class="text-center">Scan me with your banking app.</strong>
+                        <strong  class="text-center">Scan me with your banking app.</strong>
                         <br />
                         <br />
                         <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]" />
                     </p>
                 </div>
-                <div style="margin-top: 10%">
-                    <div class="row" style="color: black!important;">
+                <div style="margin-top: 10%; color: black!important">
+                    <div class="row" >
                         <div class="col-6">
                             Responsable
                         </div>
