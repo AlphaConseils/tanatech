@@ -23,7 +23,8 @@
         </record>
 
         <template id="report_label_product_tanatech">
-            <t t-foreach="products" t-as="product">
+            <t t-foreach="quantity_by_product.items()" t-as="int_product">
+                <t t-set="product" t-value="env[active_model].search([('id', '=', int_product[0])])"/>
                 <t t-translation="off">
 ^XA
 ^CF0,20

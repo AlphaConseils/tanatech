@@ -19,18 +19,8 @@ class ModelName(models.TransientModel):
         elif 'tanatech' == self.print_format:
             xml_id = 'tanatech_product.label_product_product_tanatech'
             data['price_included'] = False
-            data['products'] = []
-            for product in data['quantity_by_product']:
-                exist = self.env[data['active_model']].search([('id', '=', product)])
-                if exist:
-                    data['products'].append(exist)
         elif 'tanatechxprice' == self.print_format:
-            xml_id = 'tanatech_product.label_product_product_tanatechxprice'
+            xml_id = 'tanatech_product.label_product_product_tanatech'
             data['price_included'] = True
-            data['products'] = []
-            for product in data['quantity_by_product']:
-                exist = self.env[data['active_model']].search([('id', '=', product)])
-                if exist:
-                    data['products'].append(exist)
 
         return xml_id, data
