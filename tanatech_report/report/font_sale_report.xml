@@ -3,10 +3,11 @@
     <data>
         <template id="custom_sale_order_report" inherit_id="sale.report_saleorder_document">
             <xpath expr="//div[@class='oe_structure']" position="before">
-                <style>
-                    * {
-                      color: black !important;
-                    }  
+               <style>
+                    td, td * {
+                        font-size: 16px;
+                        color: #000;
+                    }
                 </style>
             </xpath>
         </template>
