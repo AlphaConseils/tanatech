@@ -3,11 +3,11 @@
     'name': "bl_security",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+       restrict users to stock.move
+       """,
 
     'description': """
-        Long description of module's purpose
+        restrict users to add line in stock picking where the article Bl in users views is checked
     """,
 
     'author': "Nexources",
