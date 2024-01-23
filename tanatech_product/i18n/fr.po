@@ -15,11 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: product
-#: model:ir.model.fields.selection,name:product.selection__product_label_layout__print_format__2x7xprice
-msgid "2 x 7 with price"
-msgstr "Format Tanatech"
-
 #. module: tanatech_product
 #: model_terms:ir.ui.view,arch_db:tanatech_product.report_product_inherit
 msgid "Ar"
