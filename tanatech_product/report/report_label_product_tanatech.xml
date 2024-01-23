@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="label_product_product_tanatech" model="ir.actions.report">
+            <field name="name">Tanatech variant (ZPL)</field>
+            <field name="model">product.product</field>
+            <field name="report_type">qweb-text</field>
+            <field name="report_name">tanatech_product.report_label_product_tanatech</field>
+            <field name="report_file">tanatech_product.report_label_product_tanatech</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="label_product_template_tanatech" model="ir.actions.report">
+            <field name="name">Tanatech (ZPL)</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-text</field>
+            <field name="report_name">tanatech_product.report_label_product_tanatech</field>
+            <field name="report_file">tanatech_product.report_label_product_tanatech</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_label_product_tanatech">
+            <t t-foreach="quantity_by_product.items()" t-as="int_product">
+                <t t-set="product" t-value="env[active_model].search([('id', '=', int_product[0])])"/>
+                <t t-translation="off">
+^XA
+^CF0,20
+^CFA,20
+^FO110,40^FB2<t t-esc="product.default_code"/>^FS
+^CF0,30
+^CF0,30
+^FO40,100^FB350,4,0,C^FD<t t-esc="product.name"/>^FS
+<t t-if="price_included">
+^CF0,40
+<t t-if="product.currency_id.position == 'after'">
+^FO70,250^FB300,1,0,C^<t t-esc="product.list_price" t-options='{"widget": "float", "precision": 2}'/><t t-esc="product.currency_id.symbol"/>^FS
+</t>
+<t t-if="product.currency_id.position == 'before'">
+^FO70,250^FB300,1,0,C^<t t-esc="product.currency_id.symbol"/><t t-esc="product.list_price" t-options='{"widget": "float", "precision": 2}'/>^FS
+</t>
+</t>
+^XZ
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
