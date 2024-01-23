@@ -40,7 +40,7 @@
     ],
     'assets':{
         'web.report_assets_pdf':[
-            'tanatech_report/static/report.scss'
+            'tanatech_report/static/report.scss',
         ]
     }
 }
