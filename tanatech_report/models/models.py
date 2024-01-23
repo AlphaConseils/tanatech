@@ -12,8 +12,4 @@ class ResUsers(models.Model):
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-#     @api.onchange('partner_id')
-#     def check_user(self):
-#         current_user = self.env.user
-#         print(current_user.name)
-#         print(current_user.product_bl)
+    
