@@ -27,7 +27,7 @@ Pricelists preferences by product and/or partners.
 Print product labels with barcode.
     """,
     "data": [
-        "report/product_label.xml",
+        "report/report_label_product_tanatech.xml",
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
     ],

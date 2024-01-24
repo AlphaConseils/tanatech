@@ -8,3 +8,7 @@ td, td * {
 body, p, span, div {
     color: black !important;
 }
+
+.page {
+    color: black !important;
+}
