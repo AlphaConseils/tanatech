@@ -2,6 +2,9 @@
 <odoo>
     <data>
         <template id="custom_hr_expense_report" inherit_id="hr_expense.report_expense_sheet">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/tanatech_report/static/src/report.css"/>
+            </xpath>
             <xpath expr="//div[@class='page']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
