@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_expense_sheet_inherit" inherit_id="hr_expense.report_expense_sheet">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/tanatech_report/static/src/report.css"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

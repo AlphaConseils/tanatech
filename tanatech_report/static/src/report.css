@@ -12,3 +12,10 @@ body, p, span, div {
 .page {
     color: black !important;
 }
+.o_report_layout_striped{
+    color: black !important;
+}
+
+.text-secondary{
+    color: black !important;
+}
