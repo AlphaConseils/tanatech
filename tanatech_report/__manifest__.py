@@ -43,7 +43,7 @@
     ],
     "assets": {
         "web.report_assets_common": [
-            "tanatech_report/static/report.css",
+            "tanatech_report/static/src/report.css",
         ]
     },
 }
