@@ -28,6 +28,7 @@ Print product labels with barcode.
     """,
     "data": [
         "report/report_label_product_tanatech.xml",
+        "report/template_tanatech_ticket.xml",
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
     ],
