@@ -19,12 +19,7 @@
                                     <t t-if="price_included">
                                         <p style="font-size: 28px; width: 100%; text-align: right;">
                                             <strong>Prix: </strong>
-                                            <t t-if="product.is_product_variant">
-                                                <strong class="o_label_price" t-field="product.lst_price" t-options="{'widget': 'monetary', 'label_price': True}"/>
-                                            </t>
-                                            <t t-else="">
-                                                <strong class="o_label_price" t-field="product.list_price" t-options="{'widget': 'monetary', 'label_price': True}"/>
-                                            </t>
+                                            <strong class="o_label_price" t-esc="price_tax_included" t-options="{'widget': 'monetary', 'label_price': True, 'display_currency': env.company.currency_id}"/>
                                         </p>
                                     </t>
                                 </td>
