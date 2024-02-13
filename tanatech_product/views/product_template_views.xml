@@ -1,15 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="product_template_only_form_view" model="ir.ui.view">
-    <field name="name">product.template.only.form.inherit</field>
-    <field name="model">product.template</field>
-    <field name="inherit_id" ref="product.product_template_only_form_view"/>
-    <field name="arch" type="xml">
-        <xpath expr="//field[@name='detailed_type']" position="after">
-            <field name="is_product_service_charge" invisible="1" />
-            <field name="is_product_service_charge" string="Frais de service" attrs="{'invisible': [('detailed_type', '!=', 'service')]}"/>
-            <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Pourcentage frais de service" attrs="{'invisible': [('is_product_service_charge', '=', False)]}"/>
-        </xpath>
-    </field>
-</record>
+        <field name="name">product.template.only.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="is_product_service_charge" invisible="1" />
+                <field name="is_product_service_charge" string="Frais de service"
+                    attrs="{'invisible': [('detailed_type', '!=', 'service')]}" />
+                <field name="percentage_service_charge" widget="percentage"
+                    groups="tanatech_sale.percentage_service_charge_group"
+                    string="Pourcentage frais de service"
+                    attrs="{'invisible': [('is_product_service_charge', '=', False)]}" />
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="security" string="Security">
+                    <group>
+                        <field name="editable" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
 </odoo>
