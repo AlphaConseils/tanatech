@@ -16,7 +16,7 @@
             </xpath>
 
             <xpath expr="//notebook" position="inside">
-                <page name="security" string="Security">
+                <page name="security" string="Security" groups="base.group_no_one">
                     <group>
                         <field name="editable" />
                     </group>
