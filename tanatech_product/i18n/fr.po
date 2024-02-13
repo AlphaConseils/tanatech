@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e-20221103\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-28 10:51+0000\n"
-"PO-Revision-Date: 2022-12-28 10:51+0000\n"
+"POT-Creation-Date: 2024-02-13 13:29+0000\n"
+"PO-Revision-Date: 2024-02-13 13:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,88 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: tanatech_product
-#: model_terms:ir.ui.view,arch_db:tanatech_product.report_product_inherit
-msgid "Ar"
+#: model_terms:ir.ui.view,arch_db:tanatech_product.report_label_product_tanatech
+msgid "<strong>Prix: </strong>"
 msgstr ""
 
 #. module: tanatech_product
-#: model_terms:ir.ui.view,arch_db:tanatech_product.report_product_inherit
-msgid "Fmg"
+#: model:ir.model,name:tanatech_product.model_product_label_layout
+msgid "Choose the sheet layout to print the labels"
+msgstr "Choisissez le modèle pour imprimer les étiquettes"
+
+#. module: tanatech_product
+#: model:ir.model,name:tanatech_product.model_product_template
+msgid "Description"
 msgstr ""
 
 #. module: tanatech_product
-#: model_terms:ir.ui.view,arch_db:tanatech_product.report_product_inherit
-msgid "Logo"
+#: model:ir.model.fields,field_description:tanatech_product.field_product_product__editable
+#: model:ir.model.fields,field_description:tanatech_product.field_product_template__editable
+msgid "Editable"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields,field_description:tanatech_product.field_product_label_layout__print_format
+msgid "Format"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields.selection,name:tanatech_product.selection__product_label_layout__print_format__tanatech
+msgid "Format TanaTech"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields.selection,name:tanatech_product.selection__product_label_layout__print_format__tanatechxprice
+msgid "Format TanaTech avec prix"
+msgstr ""
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_only_form_view
+msgid "Frais de service"
+msgstr ""
+
+#. module: tanatech_product
+#: code:addons/tanatech_product/models/product_template.py:0
+#, python-format
+msgid "Il y a dejat un produit de service installation"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields,field_description:tanatech_product.field_product_product__is_product_service_charge
+#: model:ir.model.fields,field_description:tanatech_product.field_product_template__is_product_service_charge
+msgid "Is Product Service Charge"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields,field_description:tanatech_product.field_product_product__percentage_service_charge
+#: model:ir.model.fields,field_description:tanatech_product.field_product_template__percentage_service_charge
+msgid "Percentage Service Charge"
+msgstr ""
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_only_form_view
+msgid "Pourcentage frais de service"
+msgstr ""
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_only_form_view
+msgid "Security"
+msgstr "Sécurité"
+
+#. module: tanatech_product
+#: model:ir.actions.report,name:tanatech_product.label_product_template_tanatech
+msgid "Tanatech (PDF)"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.actions.report,name:tanatech_product.label_product_product_tanatech
+msgid "Tanatech variant (PDF)"
+msgstr ""
+
+#. module: tanatech_product
+#: code:addons/tanatech_product/models/product_template.py:0
+#, python-format
+msgid ""
+"The requested operation cannot be completed due to security "
+"restrictions.(Write Product)."
 msgstr ""

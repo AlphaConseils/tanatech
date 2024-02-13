@@ -1,0 +1,10 @@
+<!-- <record id="group_product_edit_rule" model="ir.rule">
+    <field name="name">Product Edit Rule</field>
+    <field name="model_id" ref="model_product_template"/>
+    <field name="domain_force">[('allow_edit', '=', True)]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+</record> -->
