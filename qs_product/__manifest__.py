@@ -10,12 +10,12 @@
     'description': """
     Long description of module's product
     """,
-    'depends': ['base','product'],
+    'depends': ['product'],
     'data': [
-        'report/product_template.xml',
         'report/book_rent_report.xml',
         'report/book_rent_templates.xml',
-        'views/product_template.xml'
+        'views/product_pricelist_views.xml',
+        'views/product_template_views.xml',
     ],
     'installable': True,
     'auto_install': False,
