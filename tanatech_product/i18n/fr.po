@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-13 13:29+0000\n"
-"PO-Revision-Date: 2024-02-13 13:29+0000\n"
+"POT-Creation-Date: 2024-02-15 19:13+0000\n"
+"PO-Revision-Date: 2024-02-15 19:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,9 +63,24 @@ msgid "Il y a dejat un produit de service installation"
 msgstr ""
 
 #. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_template
+msgid "Image"
+msgstr ""
+
+#. module: tanatech_product
 #: model:ir.model.fields,field_description:tanatech_product.field_product_product__is_product_service_charge
 #: model:ir.model.fields,field_description:tanatech_product.field_product_template__is_product_service_charge
 msgid "Is Product Service Charge"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model.fields,field_description:tanatech_product.field_product_pricelist__is_wholesaleprices
+msgid "Is Wholesaleprices"
+msgstr "Prix de gros?"
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_template
+msgid "Nom"
 msgstr ""
 
 #. module: tanatech_product
@@ -77,6 +92,26 @@ msgstr ""
 #. module: tanatech_product
 #: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_only_form_view
 msgid "Pourcentage frais de service"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.model,name:tanatech_product.model_product_pricelist
+msgid "Pricelist"
+msgstr "Liste de prix"
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_template
+msgid "Prix de gros"
+msgstr ""
+
+#. module: tanatech_product
+#: model:ir.actions.report,name:tanatech_product.report_product_template
+msgid "Product"
+msgstr "Article"
+
+#. module: tanatech_product
+#: model_terms:ir.ui.view,arch_db:tanatech_product.product_template_template
+msgid "Référence interne"
 msgstr ""
 
 #. module: tanatech_product
