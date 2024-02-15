@@ -5,7 +5,7 @@
     "name": "Tanatech Products",
     "version": "1.2",
     "category": "Sales/Sales",
-    "depends": ["product"],
+    "depends": ["product_pricelist_display"],
     "description": """
 This is the base module for managing products and pricelists in Odoo.
 ========================================================================
@@ -29,8 +29,10 @@ Print product labels with barcode.
     "data": [
         "report/report_label_product_tanatech.xml",
         "report/template_tanatech_ticket.xml",
+        "report/product_template_report.xml",
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
+        "views/product_pricelist_views.xml",
     ],
     "license": "LGPL-3",
 }
