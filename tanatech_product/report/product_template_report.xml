@@ -22,7 +22,7 @@
                                     <img t-else="" src="/web/static/img/placeholder.png"
                                         alt="Image"
                                         style="max-width: 125px; max-height: 100px" />
-                                </td>
+                                </td>it a
                                 <td style="max-width: 250px">
                                     <t t-esc="doc.name" />
                                 </td>
