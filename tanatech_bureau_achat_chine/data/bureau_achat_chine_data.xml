@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Load Security XML -->
+    <data noupdate="1">
+        <record model="ir.module.category" id="module_category_purchase">
+            <field name="name">Purchases</field>
+            <field name="sequence">7</field>
+            <field name="description">Module for Purchase Orders, Invoices, Suppliers</field>
+        </record>
+
+        <record id="group_bureau_achat_chine" model="res.groups">
+            <field name="name">Bureau d'achat Chine</field>
+            <field name="category_id" ref="module_category_purchase"/>
+        </record>
+    </data>
+</odoo>
