@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <record id="tanatech_ticket_fomat" model="report.paperformat">
+            <field name="name">Tanatech Ticket</field>
+            <field name="default" eval="False"/>
+            <field name="format">custom</field>
+            <field name="page_height">30</field>
+            <field name="page_width">39</field>
+            <field name="print_page_height">30</field>
+            <field name="print_page_width">39</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">203</field>
+        </record>
+
+        <record id="label_product_product_tanatech" model="ir.actions.report">
+            <field name="name">Tanatech variant (PDF)</field>
+            <field name="model">product.product</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tanatech_product.report_label_product_tanatech</field>
+            <field name="report_file">tanatech_product.report_label_product_tanatech</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="tanatech_product.tanatech_ticket_fomat"/>
+        </record>
+
+        <record id="label_product_template_tanatech" model="ir.actions.report">
+            <field name="name">Tanatech (PDF)</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tanatech_product.report_label_product_tanatech</field>
+            <field name="report_file">tanatech_product.report_label_product_tanatech</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="tanatech_product.tanatech_ticket_fomat"/>
+        </record>
+
+    </data>
+</odoo>
