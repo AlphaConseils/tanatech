@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    
+    <record id="action_report_action_name" model="ir.actions.report">
+      <field name="name">Devis - NA</field>
+      <field name="model">sale.order</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">tanatech_sale_report.tanatech_report_saleorder_na</field>
+      <field name="report_file">tanatech_sale_report.tanatech_report_saleorder_na</field>
+      <field name="print_report_name">'%s' % object.name</field>
+      <field name="binding_model_id" ref="sale.model_sale_order"/>
+      <field name="binding_type">report</field>
+      <field name="paperformat_id" ref="tanatech_sale_report.tanatech_paperformat_a4" />
+    </record>
+
+  </data>
+</odoo>
