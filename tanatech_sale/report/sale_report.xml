@@ -287,7 +287,7 @@
     <template id="custom_external_layout_standard" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@class='col-3 mb4']" position="replace">
             <div class="col-3 mb4">
-                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 80px;" alt="Logo"/>
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 100px;" alt="Logo"/>
             </div>
         </xpath>
     </template>
