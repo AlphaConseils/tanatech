@@ -22,7 +22,8 @@
         'views/sale_order_views.xml',
 
         # report
-        'report/sale_report.xml'
+        'report/sale_report.xml',
+        'report/inherit_report_saleorder_document.xml',
     ],
     'installable': True,
     'auto_install': False,
