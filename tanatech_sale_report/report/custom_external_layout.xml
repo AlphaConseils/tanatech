@@ -21,12 +21,11 @@
     <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
       <div class="mt-2">
         <div class="row">
-          <div class="col-1">
+          <div class="col-3">
             <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
-              style="max-height: 65px;" alt="Logo" />
+              style="max-height: 100px;" alt="Logo" />
           </div>
-          <div class="col-1"></div>
-          <div class="col-10 text-left" name="moto">
+          <div class="col-9 text-left" name="moto">
             <div name="company_address" style="vertical-align: center">
               <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
                 <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
