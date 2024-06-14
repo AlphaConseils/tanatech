@@ -38,7 +38,7 @@
                     </t>
                 </t>
             </t>
-            <div class="page text-secondary" style="font-size: 12px">
+            <div class="page text-secondary" style="font-size: 12px; padding-top: 40px;">
                 <t t-set="currency_id"
                     t-value="doc.env.company.currency_id if not doc.pricelist_id else doc.pricelist_id.currency_id" />
                 <div class="oe_structure" />
@@ -246,7 +246,7 @@
 
         <!--Total
         amount with all taxes-->
-        <tr class="border-black o_total" style="font-size: 16px;">
+        <tr class="border-black o_total" style="font-size: 20px;">
             <td>
                 <strong>Total</strong>
             </td>
@@ -287,7 +287,7 @@
     <template id="custom_external_layout_standard" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@class='col-3 mb4']" position="replace">
             <div class="col-3 mb4">
-                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 80px;" alt="Logo"/>
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo"/>
             </div>
         </xpath>
     </template>
