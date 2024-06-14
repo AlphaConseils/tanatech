@@ -324,7 +324,7 @@
 
         <!--Total
         amount with all taxes-->
-        <tr class="border-black o_total" style="font-size: 16px;">
+        <tr class="border-black o_total" style="font-size: 20px;">
             <td>
                 <strong>Total</strong>
             </td>
