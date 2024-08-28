@@ -187,7 +187,7 @@
                 <!--Tax
                 totals-->
                 <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" />
-                <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 18px !important; font-weight: bold;">
+                <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 21px !important; font-weight: bold;">
                   <tr>
                     <td>Montant TTC</td>
                     <td style="background-color: none; text-align: right">
