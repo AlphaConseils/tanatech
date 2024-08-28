@@ -305,7 +305,7 @@
 
     <template id="invoice_document_tax_totals">
         <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
-            <tr class="border-black o_subtotal" style="font-size: 16px;">
+            <tr class="border-black o_subtotal" style="font-size: 20px;">
                 <td>
                     <strong t-esc="subtotal['name']" />
                 </td>
