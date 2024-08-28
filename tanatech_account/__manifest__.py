@@ -18,7 +18,8 @@ You could use this simplified accounting in case you work with an (external) acc
     'data': [
 
         # report
-        'report/report_invoice.xml'
+        'report/report_invoice.xml',
+        'report/inherit_report_invoice_document.xml',
     ],
     'demo': [
     ],

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+  <template id="inherit_report_invoice_document" inherit_id="account.report_invoice_document">
+    <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
+      <t t-call="tanatech_account.invoice_document_tax_totals"/>
+    </xpath>
+  </template>
+
+</odoo>
