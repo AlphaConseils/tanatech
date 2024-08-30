@@ -6,24 +6,13 @@
 		<field name="inherit_id" ref="stock.view_picking_form"/>
 		<field name="arch" type="xml">
 			<xpath expr="//button[@name='button_validate']" position="after">
-				<field name="is_second_validator" invisible="1"/>
 				<button name="button_2n_validate" attrs="{'invisible': [('state','!=', 'second_validate')]}"
 				        string="2ème validation" type="object" class="oe_highlight" groups="base.group_system"/>
-				<button name="button_validate_stock_user"
-				        attrs="{'invisible': ['|','|', ('state', 'not in', ('waiting', 'confirmed')), ('show_validate', '=', False),('is_second_validator','=',False)]}"
-				        string="Validate" type="object" class="oe_highlight" />
-				<button name="button_validate_stock_user"
-				        attrs="{'invisible': ['|','|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False),('is_second_validator','=',False)]}"
-				        string="Validate" type="object" class="oe_highlight" />
 			</xpath>
 			<xpath expr="//button[@name='button_validate'][1]" position="attributes">
-				<attribute name="attrs">{'invisible': ['|','|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=',
-					False),('is_second_validator','=',True)]}
-				</attribute>
-			</xpath>
-			<xpath expr="//button[@name='button_validate'][2]" position="attributes">
-				<attribute name="attrs">{'invisible': ['|','|', ('state', 'not in', ('waiting', 'confirmed')), ('show_validate',
-					'=', False),('is_second_validator','=',True)]}
+				<attribute name="attrs">{'invisible': ['|', ('state', 'in', ('waiting','confirmed','second_validate')),
+					('show_validate', '=',
+					False)]}
 				</attribute>
 			</xpath>
 		</field>
