@@ -4,34 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e-20221103\n"
+"Project-Id-Version: Odoo Server 15.0+e-20231018\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 06:40+0000\n"
-"PO-Revision-Date: 2023-05-15 06:40+0000\n"
+"POT-Creation-Date: 2024-08-29 14:24+0000\n"
+"PO-Revision-Date: 2024-08-29 14:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: tanatech_stock
-#: code:addons/tanatech_stock/models/stock_picking.py:0
-#, python-format
-msgid ""
-"\n"
-"\n"
-"Transfers %s: You cannot validate these transfers if no quantities are reserved nor done. To force these transfers, switch in edit more and encode the done quantities."
-msgstr ""
-
-#. module: tanatech_stock
-#: code:addons/tanatech_stock/models/stock_picking.py:0
-#, python-format
-msgid ""
-"\n"
-"\n"
-"Transfers %s: You need to supply a Lot/Serial number for products %s."
-msgstr ""
 
 #. module: tanatech_stock
 #: model:ir.model.fields,help:tanatech_stock.field_stock_picking__state
@@ -51,10 +33,10 @@ msgstr ""
 " * En attente d'une autre opération: Ce transfert est en attente d'une autre opération avant d'être prêt.\n"
 " * En attente: Ce transfert est en attente de la disponibilité de certains articles.\n"
 "(a) La politique d'envoi est \"Dès que possible\": aucun n'article n'a pu être réservé.\n"
-"(b) La politique d'envoi est \"Lorsque tous les articles sont prêts\": tous les articles n'ont pu être réservés.\n"
+"(b) La politique d'envoi est \"Quand tous les articles sont prêts\": tous les articles n'ont pu être réservés.\n"
 " * Prêt: Le transfert est prêt à être réalisé.\n"
 "(a) (a) La politique d'envoi est \"Dès que possible\": au moins un article a pu être réservé.\n"
-"(b) La politique d'envoi est \"Lorsque tous les articles sont prêts\": tous les articles ont pu être réservés.\n"
+"(b) La politique d'envoi est \"Quand tous les articles sont prêts\": tous les articles ont pu être réservés.\n"
 " * Fait: Le transfert a pu être réalisé.\n"
 " * Annulé: Le transfert a été annulé."
 
@@ -300,12 +282,6 @@ msgid "Lot/Serial Number"
 msgstr "Numéro de Lot/Série"
 
 #. module: tanatech_stock
-#: code:addons/tanatech_stock/models/stock_picking.py:0
-#, python-format
-msgid "Please add some items to move."
-msgstr ""
-
-#. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__assigned
 msgid "Ready"
 msgstr "Prêt"
@@ -326,10 +302,9 @@ msgid "Transfer"
 msgstr "Transfert"
 
 #. module: tanatech_stock
-#: code:addons/tanatech_stock/models/stock_picking.py:0
-#, python-format
-msgid "Transfers %s: Please add some items to move."
-msgstr ""
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.view_picking_form_inherit
+msgid "Validate"
+msgstr "VALIDER"
 
 #. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__confirmed
@@ -340,9 +315,3 @@ msgstr "En attente"
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__waiting
 msgid "Waiting Another Operation"
 msgstr "En attente d'une autre opération"
-
-#. module: tanatech_stock
-#: code:addons/tanatech_stock/models/stock_picking.py:0
-#, python-format
-msgid "You need to supply a Lot/Serial number for products %s."
-msgstr ""
