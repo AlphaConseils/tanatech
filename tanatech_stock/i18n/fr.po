@@ -6,14 +6,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e-20231018\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-29 14:24+0000\n"
-"PO-Revision-Date: 2024-08-29 14:24+0000\n"
+"POT-Creation-Date: 2024-08-30 08:43+0000\n"
+"PO-Revision-Date: 2024-08-30 08:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tanatech_stock
+#: code:addons/tanatech_stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"\n"
+"\n"
+"Transfers %s: You cannot validate these transfers if no quantities are reserved nor done. To force these transfers, switch in edit more and encode the done quantities."
+msgstr ""
+"\n"
+"\n"
+"Transferts %s: Vous ne pouvez valider ces transferts si aucune quantité n'est réservée ni faite. Pour forcer ces transferts, passez en mode édition et encodez les quantités faites."
+
+#. module: tanatech_stock
+#: code:addons/tanatech_stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"\n"
+"\n"
+"Transfers %s: You need to supply a Lot/Serial number for products %s."
+msgstr ""
+"\n"
+"\n"
+"Transferts %s: Vous devez indiquer un lot/numéro de série pour les articles %s."
 
 #. module: tanatech_stock
 #: model:ir.model.fields,help:tanatech_stock.field_stock_picking__state
@@ -187,7 +211,7 @@ msgstr ""
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong class=\"text-secondary\">Customer Reference:</strong>"
-msgstr ""
+msgstr "<strong class=\"text-secondary\">Référence client:</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
@@ -204,12 +228,12 @@ msgstr ""
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong class=\"text-secondary\">Order:</strong>"
-msgstr ""
+msgstr "<strong class=\"text-secondary\">Commande:</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong class=\"text-secondary\">Shipping Date:</strong>"
-msgstr ""
+msgstr "<strong class=\"text-secondary\">Date d'expédition:</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
@@ -276,10 +300,21 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: tanatech_stock
+#: model:ir.model.fields,field_description:tanatech_stock.field_stock_picking__is_second_validator
+msgid "Is Second Validator"
+msgstr ""
+
+#. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "Lot/Serial Number"
 msgstr "Numéro de Lot/Série"
+
+#. module: tanatech_stock
+#: code:addons/tanatech_stock/models/stock_picking.py:0
+#, python-format
+msgid "Please add some items to move."
+msgstr "Ajoutez quelques objets à déplacer."
 
 #. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__assigned
@@ -302,9 +337,10 @@ msgid "Transfer"
 msgstr "Transfert"
 
 #. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.view_picking_form_inherit
-msgid "Validate"
-msgstr "VALIDER"
+#: code:addons/tanatech_stock/models/stock_picking.py:0
+#, python-format
+msgid "Transfers %s: Please add some items to move."
+msgstr "Transferts %s: Ajoutez des articles a déplacer"
 
 #. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__confirmed
@@ -315,3 +351,9 @@ msgstr "En attente"
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__waiting
 msgid "Waiting Another Operation"
 msgstr "En attente d'une autre opération"
+
+#. module: tanatech_stock
+#: code:addons/tanatech_stock/models/stock_picking.py:0
+#, python-format
+msgid "You need to supply a Lot/Serial number for products %s."
+msgstr "Vous devez fournir un lot/numéro de série pour le produit %s."
