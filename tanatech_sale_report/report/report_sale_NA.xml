@@ -189,7 +189,7 @@
                 <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" />
                 <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 21px !important; font-weight: bold;">
                   <tr>
-                    <td>Montant TTC</td>
+                    <td>Total</td>
                     <td style="background-color: none; text-align: right">
                       <t t-esc="doc.amount_total" t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
                     </td>
