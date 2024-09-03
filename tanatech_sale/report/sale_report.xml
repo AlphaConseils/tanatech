@@ -248,7 +248,7 @@
         amount with all taxes-->
         <tr class="border-black o_total" style="font-size: 20px;">
             <td>
-                <strong>Total</strong>
+                <strong>Montant TTC</strong>
             </td>
             <td class="text-right">
                 <span t-esc="tax_totals['formatted_amount_total']" />
