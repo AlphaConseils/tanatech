@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+  <template id="report_pricelist_page_inherit" inherit_id="product.report_pricelist_page">
+    <xpath expr="//th[1]" position="before">
+      <th>Images</th>
+    </xpath>
+    <xpath expr="//td[1]" position="before">
+      <td><img t-attf-src="/web/image?model=product.template&amp;id={{product['id']}}&amp;field=image_128"
+        class="oe_avatar"/></td>
+    </xpath>
+  </template>
+</odoo>
