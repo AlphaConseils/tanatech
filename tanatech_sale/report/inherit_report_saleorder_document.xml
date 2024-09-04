@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="inherit_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+    <xpath expr="//div[@id='total']" position="replace">
+      <div id="total" class="row" name="total">
+        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+            <table class="table table-sm">
+                <!-- Tax totals -->
+                <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                <t t-call="tanatech_sale.sale_document_tax_totals"/>
+            </table>
+        </div>
+      </div>
+    </xpath>
+
+    <xpath expr="//div[@class='page']" position="attributes">
+      <attribute name="style">margin-top: 40px</attribute>
+    </xpath>
+  </template>
+
+</odoo>

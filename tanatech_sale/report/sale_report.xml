@@ -38,7 +38,7 @@
                     </t>
                 </t>
             </t>
-            <div class="page text-secondary" style="font-size: 12px">
+            <div class="page text-secondary" style="font-size: 12px; padding-top: 40px;">
                 <t t-set="currency_id"
                     t-value="doc.env.company.currency_id if not doc.pricelist_id else doc.pricelist_id.currency_id" />
                 <div class="oe_structure" />
@@ -191,7 +191,8 @@
                             <table class="table table-sm">
                                 <!-- Tax totals -->
                                 <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" />
-                                <t t-call="account.document_tax_totals" />
+                                <t t-call="tanatech_sale.sale_document_tax_totals" />
+                                <!-- <t t-esc="tax_totals" /> -->
                             </table>
                         </div>
                     </div>
@@ -224,6 +225,37 @@
         </t>
     </template>
 
+    <template id="sale_document_tax_totals">
+        <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+            <tr class="border-black o_subtotal" style="font-size: 20px;">
+                <td>
+                    <strong t-esc="subtotal['name']" />
+                </td>
+                
+                <td class="text-right">
+                    <span
+                        t-att-class="oe_subtotal_footer_separator"
+                        t-esc="subtotal['formatted_amount']"
+                    />
+                </td>
+            </tr>
+
+            <t t-set="subtotal_to_show" t-value="subtotal['name']" />
+            <t t-call="account.tax_groups_totals" />
+        </t>
+
+        <!--Total
+        amount with all taxes-->
+        <tr class="border-black o_total" style="font-size: 20px;">
+            <td>
+                <strong>Montant TTC</strong>
+            </td>
+            <td class="text-right">
+                <span t-esc="tax_totals['formatted_amount_total']" />
+            </td>
+        </tr>
+    </template>
+
     <template id="tanatech_report_saleorder">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
@@ -250,6 +282,14 @@
                     t-lang="doc.partner_id.lang" />
             </t>
         </t>
+    </template>
+
+    <template id="custom_external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@class='col-3 mb4']" position="replace">
+            <div class="col-3 mb4">
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo"/>
+            </div>
+        </xpath>
     </template>
 
     <record id="action_report_saleorder" model="ir.actions.report">

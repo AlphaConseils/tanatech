@@ -4,7 +4,7 @@
         <t t-call="tanatech_base.tanatech_external_layout_standard">
             <t t-set="o" t-value="o.with_context(lang=lang)" />
             <t t-set="company" t-value="o.env.company" />
-            <t t-set="no_nif_stat_rcs" t-value="o.name and o.name.lower().startswith('fa-na')"/>
+            <t t-set="no_nif_stat_rcs" t-value="o.name and o.name.lower().startswith('fa-na')" />
             <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
@@ -150,10 +150,10 @@
                                     </td>
                                     <t t-if="o.journal_id.name != 'Factures clients NA'">
                                         <td
-                                                t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                             <span
-                                                    t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
-                                                    id="line_tax_ids" />
+                                                t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
+                                                id="line_tax_ids" />
                                         </td>
                                     </t>
                                     <t t-else="">
@@ -201,15 +201,19 @@
                             t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
                             <table class="table table-sm" style="page-break-inside: avoid;">
 
-                                <!--Tax totals-->
+                                <!--Tax
+                                totals-->
                                 <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" />
-                                <t t-call="account.document_tax_totals" t-if="o.journal_id.name != 'Factures clients NA'"/>
+                                <t t-call="tanatech_account.invoice_document_tax_totals"
+                                    t-if="o.journal_id.name != 'Factures clients NA'" />
                                 <t t-else="">
-                                    <table class="table table-sm" style="border-top: 2px solid black;">
+                                    <table class="table table-sm"
+                                        style="border-top: 2px solid black;">
                                         <tr>
                                             <td>Montant TTC</td>
                                             <td style="background-color: none; text-align: right">
-                                                <t t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                <t t-esc="o.amount_total"
+                                                    t-options="{'widget': 'float', 'precision': 2}" />
                                             </td>
                                         </tr>
                                     </table>
@@ -292,11 +296,43 @@
         </t>
     </template>
 
-    <!--<template id="document_tax_totals_na" inherit_id="account.document_tax_totals">
+    <!--<template
+    id="document_tax_totals_na" inherit_id="account.document_tax_totals">
         <xpath expr="//field[@name='company_id']" position="attributes">
 
         </xpath>
     </template>-->
+
+    <template id="invoice_document_tax_totals">
+        <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+            <tr class="border-black o_subtotal" style="font-size: 20px;">
+                <td>
+                    <strong t-esc="subtotal['name']" />
+                </td>
+
+                <td class="text-right">
+                    <span
+                        t-att-class="oe_subtotal_footer_separator"
+                        t-esc="subtotal['formatted_amount']"
+                    />
+                </td>
+            </tr>
+
+            <t t-set="subtotal_to_show" t-value="subtotal['name']" />
+            <t t-call="account.tax_groups_totals" />
+        </t>
+
+        <!--Total
+        amount with all taxes-->
+        <tr class="border-black o_total" style="font-size: 20px;">
+            <td>
+                <strong>Total</strong>
+            </td>
+            <td class="text-right">
+                <span t-esc="tax_totals['formatted_amount_total']" />
+            </td>
+        </tr>
+    </template>
 
     <template id="tanatech_report_invoice">
         <t t-call="web.html_container">
