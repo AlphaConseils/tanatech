@@ -17,6 +17,7 @@
         'report/custom_external_layout.xml',
         'report/report_sale_NA.xml',
         'report/inherit_external_layout_striped.xml',
+        'report/tanatech_external_layout_a5.xml',
         'views/sale_order.xml',
     ],
 }
