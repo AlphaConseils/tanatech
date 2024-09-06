@@ -27,13 +27,13 @@
           </div>
           <div class="col-7 text-left" name="moto">
             <div name="company_address" style="vertical-align: center">
-              <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
+              <!-- <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
                 <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
                 <font style="font-size: 10px">
                   <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 -
                     RCS : 2009A00346</span>
                 </font>
-              </p>
+              </p> -->
               <span t-if="company.company_details" t-field="company.company_details"></span>
             </div>
           </div>
