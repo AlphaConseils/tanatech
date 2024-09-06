@@ -4,7 +4,8 @@
   <template id="tanatech_external_layout_custom">
     <t t-if="not o" t-set="o" t-value="doc" />
     <t t-set="company" t-value="o.env.company" />
-
+    <t t-set="no_nif_stat_rcs" t-value="o.name and o.name.lower().startswith('Devis - NA')"/>
+    <t t-set="is_na" t-value="True"/>
     <t t-if="not company">
       <!-- Multicompany -->
       <t t-if="company_id">
@@ -27,14 +28,19 @@
           </div>
           <div class="col-7 text-left" name="moto">
             <div name="company_address" style="vertical-align: center">
-              <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
+              <p t-if="not is_na" style="margin: 0; padding: 0">
                 <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
                 <font style="font-size: 10px">
                   <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 -
-                    RCS : 2009A00346</span>
+                    RCS : 2009A00346</span> 
                 </font>
               </p>
               <span t-if="company.company_details" t-field="company.company_details"></span>
+              
+              <!-- <div style="font-size: 11px;font-weight: bolder;font-family: Open_Sans;"> 
+                <span> Lot IVE 32 Bis, 14 Rue Ranarivelo Behoririka Antananarivo 101/ Madagascar</span><br/><br/>
+                <span>Mail: tanatech.nkb@gmail.com  -  Tél: 034 43 480 70 - 033 71 134 84- 032 58 987 86</span>
+              </div> -->
             </div>
           </div>
         </div>
