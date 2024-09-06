@@ -2,7 +2,7 @@
 <odoo>
 
   <template id="inhehit_external_layout_striped" inherit_id="web.external_layout_striped">
-    <xpath expr="//li[@t-if='company.company_details']" position="before">
+    <xpath expr="//div[@class='float-left company_address']" position="before">
       <t t-set="no_nif_stat_rcs" t-value="True"/>
       <p t-if="no_nif_stat_rcs" style="margin: 0; padding: 0">
         <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
