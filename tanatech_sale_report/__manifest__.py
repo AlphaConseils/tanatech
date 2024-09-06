@@ -16,6 +16,7 @@
         'report/parperformat_a4.xml',
         'report/custom_external_layout.xml',
         'report/report_sale_NA.xml',
+        'report/inherit_external_layout_striped.xml',
         'views/sale_order.xml',
     ],
 }
