@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="tanatech_report_saleorder_document">
-        <t t-call="tanatech_base.tanatech_external_layout_standard">
+        <t t-call="tanatech_sale_report.tanatech_external_layout_a5">
             <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
             <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
