@@ -9,5 +9,26 @@
       <td><img t-attf-src="/web/image?model=product.template&amp;id={{product['id']}}&amp;field=image_128"
         class="oe_avatar"/></td>
     </xpath>
+    <xpath expr="//th[2]" position="before">
+      <th>ITEM N°</th>
+    </xpath>
+    <xpath expr="//td[2]" position="before">
+      <td><t t-esc="product['default_code']"/></td>
+    </xpath>
+    <xpath expr="//th[4]" position="before">
+      <th>PRIX ARIARY</th>
+    </xpath>
+    <xpath expr="//td[4]" position="before">
+      <td><t t-esc="product['list_price']"/></td>
+    </xpath>
+    <xpath expr="//th[5]" position="before">
+      <th>STOCK</th>
+    </xpath>
+    <xpath expr="//td[5]" position="before">
+      <td>
+        <t t-if="product['is_in_stock']"> OUI</t>
+        <t t-if="product['is_in_stock'] == False"> NON</t>
+      </td>
+    </xpath>
   </template>
 </odoo>
