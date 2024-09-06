@@ -10,7 +10,7 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base', 'tanatech_base', 'sale'],
+    'depends': ['base', 'tanatech_base', 'sale', 'web'],
 
     'data': [
         'report/parperformat_a4.xml',
