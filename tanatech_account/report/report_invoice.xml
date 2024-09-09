@@ -9,8 +9,8 @@
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
                 <div class="row" style="color: black!important; padding-top: 10px;">
-                    <div  class="col-4">
-                        <address  t-field="o.partner_id"
+                    <div class="col-4">
+                        <address t-field="o.partner_id"
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
                     </div>
                     <div  class="col-3">
@@ -267,11 +267,11 @@
                 <div style="color: black!important;" t-if="not is_html_empty(o.narration)" name="comment">
                     <span  t-field="o.narration" />
                 </div>
-                <p style="color: black!important;" t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
-                    <span  t-field="o.fiscal_position_id.note" />
-                </p>
-                <p style="color: black!important;" t-if="o.invoice_incoterm_id" name="incoterm">
-                    <strong >Incoterm: </strong><span  t-field="o.invoice_incoterm_id.code" /> - <span
+                <!-- <p t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
+                    <span t-field="o.fiscal_position_id.note" />
+                </p> -->
+                <p t-if="o.invoice_incoterm_id" name="incoterm">
+                    <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code" /> - <span
                         t-field="o.invoice_incoterm_id.name" />
                 </p>
                 <div style="color: black!important;" id="qrcode" t-if="o.display_qr_code and o.amount_residual > 0">
@@ -366,6 +366,17 @@
         </t>
     </template>
 
+    <template id="tanatech_report_fa_delivery_note">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.partner_id.lang" />
+                <t t-set="is_na" t-value="True" />
+                <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                    t-call="tanatech_account.tanatech_report_fa_delivery_note_document" t-lang="lang" />
+            </t>
+        </t>
+    </template>
+
     <record id="tanatech_account_invoices" model="ir.actions.report">
         <field name="name">Invoices (A5)</field>
         <field name="model">account.move</field>
@@ -395,6 +406,21 @@
         <field name="binding_model_id" ref="account.model_account_move" />
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="tanatech_base.tanatech_paperformat" />
+    </record>
+
+    <record id="account_fa_delivery_note" model="ir.actions.report">
+        <field name="name">FA Delivery note</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tanatech_account.tanatech_report_fa_delivery_note</field>
+        <field name="report_file">tanatech_account.tanatech_report_fa_delivery_note</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment">(object.state == 'posted') and ((object.name or
+            'INV').replace('/','_')+'.pdf')</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('account.group_account_invoice')), (4, ref('account.group_account_readonly'))]" />
+        <field name="paperformat_id" ref="base.paperformat_euro" />
     </record>
 
 </odoo>
