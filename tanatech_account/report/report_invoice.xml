@@ -8,7 +8,7 @@
             <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat" /> <!-- So that it
             appears in the footer of the report instead of the company VAT if it's set -->
             <t t-set="address">
-                <div class="row">
+                <div class="row" style="padding-top: 10px">
                     <div class="col-4">
                         <address t-field="o.partner_id"
                             t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
