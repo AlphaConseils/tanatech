@@ -18,7 +18,8 @@ You could use this simplified accounting in case you work with an (external) acc
     'data': [
 
         # report
-        'report/report_invoice.xml'
+        'report/report_invoice.xml',
+        "report/report_fa_delivery_note.xml"
     ],
     'demo': [
     ],
