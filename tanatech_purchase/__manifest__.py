@@ -8,8 +8,8 @@
     'category': 'Services/Project',
     'sequence': 999,
     'depends': [
+        'base',
         'purchase',
-        'tanatech_base'
     ],
     'description': "",
     'data': [
