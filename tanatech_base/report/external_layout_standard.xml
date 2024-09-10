@@ -39,15 +39,10 @@
                             <div t-elif="o.company_id.name == 'MASONTSIKA'" style="padding-left: 50px">
                                 <p t-if="not is_na" style="margin: 0; padding: 0">
                                     <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
-                                    <!-- <font style="font-size: 11px;font-weight: bolder">​NIF : 3005 820701 <br/></font>
-                                    <font style="font-size: 10px">
-                                        <span style="font-weight: bolder;font-size: 11px">STAT: 46610 11 2021 0 11419 <br/> RCS : 2021 B 01139 Antananarivo</span>
-                                    </font> -->
                                 </p>
                                 <p t-elif="is_na" style="margin: 0; padding: 0">
                                     <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka Madagascar</span>
                                 </p>
-                                <!-- <span t-if="company.company_details" t-field="company.company_details"></span> -->
                             </div>
                         </div>
                     </div>

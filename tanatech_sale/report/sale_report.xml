@@ -205,11 +205,11 @@
                 <p style="color: black!important;" t-if="not is_html_empty(doc.payment_term_id.note)">
                     <span style="color: black!important;" t-field="doc.payment_term_id.note" />
                 </p>
-                <p style="color: black!important;" id="fiscal_position_remark"
+                <!-- <p id="fiscal_position_remark"
                     t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)">
-                    <strong style="color: black!important;">Fiscal Position Remark:</strong>
-                    <span style="color: black!important;" t-field="doc.fiscal_position_id.sudo().note" />
-                </p>
+                    <strong>Fiscal Position Remark:</strong>
+                    <span t-field="doc.fiscal_position_id.sudo().note" />
+                </p> -->
             </div>
 
             <div style="margin-top: 5%">
@@ -259,6 +259,7 @@
     <template id="tanatech_report_saleorder">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
+                <t t-set="is_na" t-value="False" />
                 <t t-call="tanatech_sale.tanatech_report_saleorder_document"
                     t-lang="doc.partner_id.lang" />
             </t>
