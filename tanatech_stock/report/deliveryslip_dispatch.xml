@@ -72,14 +72,14 @@
                     <div class="row">
                         <div class="col">
                             <span style="color: black!important;">NIF:</span>
-                            <span style="color: black!important;" t-field="partner.x_studio_nif_1" class="small"/>
+                            <span style="color: black!important;" t-if="partner" t-out="partner.x_studio_nif_1" class="small"/>
 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <span style="color: black!important;">STAT:</span>
-                            <span style="color: black!important;" t-field="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
+                            <span style="color: black!important;" t-if="partner" t-out="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
 
                         </div>
                     </div>
