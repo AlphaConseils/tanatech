@@ -6,7 +6,7 @@
             <t t-call="tanatech_base.tanatech_external_layout_standard">
                 <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
                 <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
-
+                
                 <div class="page small text-secondary">
                     <h2 class="h3 text-secondary">
                         <span style="text-decoration-line: underline">BORDEREAU <span class="o_underline">D'EXPÉDITION</span></span>
@@ -72,14 +72,14 @@
                     <div class="row">
                         <div class="col">
                             <span>NIF:</span>
-                            <span t-field="partner.x_studio_nif_1" class="small"/>
+                            <span t-if="partner" t-out="partner.x_studio_nif_1" class="small"/>
 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <span>STAT:</span>
-                            <span t-field="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
+                            <span t-if="partner" t-out="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
 
                         </div>
                     </div>

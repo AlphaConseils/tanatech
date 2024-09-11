@@ -5,7 +5,7 @@
         <t t-call="web.html_container">
             <t t-call="tanatech_base.tanatech_external_layout_standard">
                 
-                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang or o.env.user.partner_id.lang)" />
                 <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
 
                 <t t-set="address">
@@ -208,10 +208,10 @@
 
     <template id="tanatech_report_deliveryslip">
         <t t-foreach="docs" t-as="o">
-            <t t-call="tanatech_stock.tanatech_report_delivery_document" t-lang="o.partner_id.lang" />
+            <t t-call="tanatech_stock.tanatech_report_delivery_document" t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
         </t>
         <t t-foreach="docs" t-as="o">
-            <t t-call="tanatech_stock.tanatech_report_delivery_document" t-lang="o.partner_id.lang" />
+            <t t-call="tanatech_stock.tanatech_report_delivery_document" t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
         </t>
     </template>
 
