@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
+
   <template id="report_pricelist_page_inherit" inherit_id="product.report_pricelist_page">
+    <xpath expr="//div[@class='container bg-white p-4 my-4']" position="before">
+      <t t-if="report_type == 'pdf'">
+        <t t-if="not o" t-set="o" t-value="doc" />
+        <!-- Multicompany -->
+        <t t-if="company_id">
+          <t t-set="company" t-value="company_id" />
+        </t>
+        <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+          <t t-set="company" t-value="o.company_id.sudo()" />
+        </t>
+        <t t-else="else">
+          <t t-set="company" t-value="res_company" />
+        </t>
+
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+          <div class="mt-2">
+            <div class="row">
+              <div class="col-5">
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                  style="max-height: 140px;" alt="Logo" />
+              </div>
+              <div class="col-7 text-left" name="moto">
+                <div name="company_address" style="vertical-align: center">
+                  <p t-if="company.name == 'TANATECH'" style="margin: 0; padding: 0">
+                    <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
+                    <font style="font-size: 10px">
+                      <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 -
+                        RCS : 2009A00346</span>
+                    </font>
+                  </p>
+                  <span t-if="company.company_details" t-field="company.company_details"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="print_date" style="padding-top: 40px; text-align: center; font-weight: bold;">
+          <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+        </div>
+      </t>
+      
+      
+    </xpath>
     <xpath expr="//th[1]" position="before">
       <th>Images</th>
     </xpath>
@@ -31,4 +76,8 @@
       </td>
     </xpath>
   </template>
+
+  <!-- <record id="product.action_report_pricelist" model="ir.actions.report">
+    <field name="paperformat_id" ref="tanatech_product.tanatech_product_pricelist_paperformat" />
+  </record> -->
 </odoo>
