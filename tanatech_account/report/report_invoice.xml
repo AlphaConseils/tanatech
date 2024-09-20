@@ -17,7 +17,7 @@
                         <t t-if="o.journal_id.name!='Factures clients NA'">
                             <div  t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span 
                                     t-field="o.partner_id.x_studio_nif_1" /></div>
-                            <div  t-if="o.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span 
+                            <div  t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span 
                                     t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
                         </t>
                     </div>
@@ -38,7 +38,7 @@
                     <span  t-if="o.name != '/'" t-field="o.name" />
                 </h2>
 
-                <div id="informations" class="row mt-4 mb-4" style="color: black!important;">
+                <div id="informations" class="row mt-2 mb-4" style="color: black!important;">
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date"
                         name="invoice_date">
                         <t t-if="o.move_type == 'out_invoice'">
@@ -282,7 +282,7 @@
                         <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]" />
                     </p>
                 </div>
-                <div style="margin-top: 10%; color: black!important">
+                <div style="margin-top: 30px; color: black!important">
                     <div class="row" >
                         <div class="col-6">
                             Responsable
@@ -409,7 +409,7 @@
     </record>
 
     <record id="account_fa_delivery_note" model="ir.actions.report">
-        <field name="name">FA Delivery note</field>
+        <field name="name">Invoice NA</field>
         <field name="model">account.move</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">tanatech_account.tanatech_report_fa_delivery_note</field>

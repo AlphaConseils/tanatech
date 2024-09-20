@@ -81,7 +81,7 @@
         <h2 class="small o_underline">
           <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
             <p style="margin-top: 20px; margin-bottom: 20px;">
-              <span style="font-weight: bolder; font-size: 14px;">Delivery note</span>
+              <span style="font-weight: bolder; font-size: 14px;">Invoice NA</span>
               <br/>
             </p>
           </span>
