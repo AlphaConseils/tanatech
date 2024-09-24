@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e-20221103\n"
+"Project-Id-Version: Odoo Server 15.0+e-20240905\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-29 06:29+0000\n"
-"PO-Revision-Date: 2022-12-29 06:29+0000\n"
+"POT-Creation-Date: 2024-09-20 15:17+0000\n"
+"PO-Revision-Date: 2024-09-20 15:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: tanatech_account
+#: model:ir.actions.report,print_report_name:tanatech_account.account_fa_delivery_note
 #: model:ir.actions.report,print_report_name:tanatech_account.account_invoices_without_payment
 #: model:ir.actions.report,print_report_name:tanatech_account.tanatech_account_invoices
 msgid "(object._get_report_base_filename())"
@@ -33,19 +34,92 @@ msgstr ""
 "                                    Total</span>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
+"                <span groups=\"account.group_show_line_subtotals_tax_included\">Total</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span style=\"font-weight: bolder; font-size: 14px;\">Invoice NA</span>\n"
+"              <br/>"
+msgstr ""
+"<span style=\"font-weight: bolder; font-size: 14px;\">Facture NA</span>\n"
+"              <br/>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<span style=\"margin: 0px 5px;\">:</span>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span>\n"
+"              <span style=\"font-weight: bolder; text-decoration-line: underline; font-size: 13px;\">\n"
+"                Client</span>\n"
+"            </span>"
+msgstr ""
+
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span>\n"
+"              <span style=\"font-weight: bolder; text-decoration-line: underline; font-size: 13px;\">\n"
+"                Responsable</span>\n"
+"            </span>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span>\n"
+"              <span style=\"font-weight: bolder;\">Partner</span>\n"
+"            </span>"
+msgstr ""
+"<span>\n"
+"              <span style=\"font-weight: bolder;\">Client</span>\n"
+"            </span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Description</span>"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Disc.%</span>"
 msgstr "<span>Rem.%</span>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<span>Product</span>"
+msgstr "Article"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Quantity</span>"
 msgstr "<span>Quantité</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<span>SN/LN</span>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"<span>TVA</span>\n"
+"                    <br/>"
+msgstr ""
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
@@ -53,11 +127,13 @@ msgid "<span>Taxes</span>"
 msgstr "<span>TVA</span>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Unit Price</span>"
 msgstr "<span>Prix Unitaire</span>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong class=\"mr16\">Subtotal</strong>"
 msgstr "<strong class=\"mr16\">Sous-total</strong>"
@@ -74,6 +150,7 @@ msgstr ""
 "                        <br/>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong>Amount Due</strong>"
 msgstr "<strong>Montant Dûe</strong>"
@@ -89,14 +166,20 @@ msgid "<strong>Customer Code: </strong>"
 msgstr "<strong>Code Client: </strong>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<strong>Customer Code:</strong>"
+msgstr "<strong>Numéro de client :</strong>"
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong>Date:</strong>"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong>Due Date:</strong>"
-msgstr "<strong>Date due:</strong>"
+msgstr "<strong>Date d'échéance:</strong>"
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
@@ -104,6 +187,12 @@ msgid "<strong>Incoterm: </strong>"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<strong>Incoterm:</strong>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong>Invoice Date:</strong>"
 msgstr "<strong>Date de la facture:</strong>"
@@ -119,9 +208,24 @@ msgid "<strong>Reference: </strong>"
 msgstr "<strong>Référence: </strong>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<strong>Reference:</strong>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<strong>Shipping Address:</strong>"
+msgstr "<strong>Adresse de livraison :</strong>"
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<strong>Source: </strong>"
 msgstr "<strong>Origine: </strong>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<strong>Source:</strong>"
+msgstr "<strong>Origine :</strong>"
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
@@ -133,6 +237,12 @@ msgstr ""
 "                        Annulée"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "Cancelled Invoice"
+msgstr "Facture annulée"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Credit Note"
 msgstr "Avoir"
@@ -143,14 +253,30 @@ msgid "Customer"
 msgstr "Client"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Draft Invoice"
 msgstr "Facture Brouillon"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "E-mail:"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "From"
+msgstr ""
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Invoice"
 msgstr "Facture"
+
+#. module: tanatech_account
+#: model:ir.actions.report,name:tanatech_account.account_fa_delivery_note
+msgid "Invoice NA"
+msgstr "Facture NA"
 
 #. module: tanatech_account
 #: model:ir.actions.report,name:tanatech_account.tanatech_account_invoices
@@ -172,6 +298,25 @@ msgstr ""
 "                                                        le"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "Paid on"
+msgstr "Payé le"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "Phone:"
+msgstr "Téléphone"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid ""
+"Please use the following communication for\n"
+"          your payment :"
+msgstr ""
+"Merci d'utiliser la communication suivante pour\n"
+"          votre paiement :"
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid ""
 "Please use the following communication for your\n"
@@ -186,16 +331,29 @@ msgid "Responsable"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
-msgid "Tax ID"
+msgid "STAT:"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "Type \"/\" for commands"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Vendor Bill"
 msgstr "Facture fournisseur"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Vendor Credit Note"
 msgstr "Avoir fournisseur"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "using"
+msgstr ""

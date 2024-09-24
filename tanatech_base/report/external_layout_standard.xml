@@ -17,35 +17,67 @@
                 <t t-set="company" t-value="res_company" />
             </t>
         </t>
-
+        
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-            <div class="mt-2">
-                <div class="row">
-                    <div class="col-4">
-                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo" />
+            <div class="mt-2" style="padding-bottom: 16px; min-width: 900px; border-bottom: 1px solid #e9ecef;">
+                <div class="row" >
+                    <div class="col-1">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 94px;" alt="Logo" />
                     </div>
                     <div class="col-1"></div>
                     <div class="col-7 text-left" name="moto">
                         <div name="company_address" style="vertical-align: center">
-                            <!-- <p t-if="not no_nif_stat_rcs" style="margin: 0; padding: 0">
-                                <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
-                                <font style="font-size: 10px">
-                                    <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
-                                </font>
-                            </p> -->
-                            <span t-if="company.company_details" t-field="company.company_details"></span>
+                            <div t-if="o.company_id.name == 'TANATECH'">
+                                <p t-if="no_nif_stat_rcs" style="margin: 0; padding: 0;">
+                                    <!-- <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
+                                    <font style="font-size: 10px">
+                                        <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
+                                    </font> -->
+                                </p>
+                                <p t-elif="not is_na" style="margin: 0; padding: 0;">
+                                    <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
+                                    <font style="font-size: 10px">
+                                        <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
+                                    </font>
+                                </p>
+                                <span t-if="company.company_details" t-field="company.company_details"></span>
+                            </div>
+                            <div t-elif="o.company_id.name == 'MASONTSIKA'" style="padding-left: 50px">
+                                <p t-if="not is_na" style="margin: 0; padding: 0">
+                                    <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
+                                </p>
+                                <p t-elif="is_na" style="margin: 0; padding: 0">
+                                    <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka Madagascar</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer" style="margin-bottom: 0">
+
+        <div t-if="o.company_id.name == 'MASONTSIKA'" t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <div t-field="company.report_footer"/>
+                </ul>
+
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                    <span t-field="o.name"/>
+                </div>
+            </div>
+        </div>
+
+        <div t-else="" class="footer" style="margin-bottom: 0">
             <div class="row" style="border-top: 1px solid black; font-family: Calibri;">
                 <div class="col-4">
                     <span t-esc="o.name" class="text-right" />
                 </div>
                 <div class="col-4 text-center"> PAGE: <span class="page" />
- /                <span class="topage" />
+                <span class="topage" />
             </div>
             <div class="col-4">
 
@@ -53,7 +85,7 @@
         </div>
     </div>
 
-    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+    <div  t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
 
         <t t-out="0" />
     </div>
