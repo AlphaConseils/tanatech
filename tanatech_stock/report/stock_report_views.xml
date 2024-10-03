@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </t>
-                <div class="page text-secondary" style="font-size: 12px; margin-top: 10px;">
+                <div class="page text-secondary" style="font-size: 12px; margin-top: 2px;">
                     <h2 style='color: black!important;' class="text-center h3 text-secondary">
                         Deliveryslip Reference: <span  t-field="o.name"/>
                     </h2>

@@ -7,7 +7,7 @@
                 <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
                 <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
 
-                <div style="color: black!important;" class="page small text-secondary">
+                <div style="color: black!important; padding-top: 40px;" class="page small text-secondary">
                     <h2 class="h3 text-secondary">
                         <span style="text-decoration-line: underline; color: black!important">BORDEREAU <span style="color: black!important;" class="o_underline">D'EXPÉDITION</span></span>
                     </h2>
@@ -43,9 +43,23 @@
                             <div t-if="partner" name="partner_header">
                                 <div t-field="partner.self" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" class="small"/>
                                 <p t-if="partner.sudo().vat">
-                                    <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>
-:                                    <span style="color: black!important;" t-field="partner.sudo().vat"/>
+                                    <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:                                    
+                                    <span style="color: black!important;" t-field="partner.sudo().vat"/>
                                 </p>
+                                <div class="row" t-if="partner.x_studio_nif_1">
+                                    <div class="col">
+                                        <span class="small" style="color: black !important;">NIF:</span>
+                                        <span style="color: black !important;" t-out="partner.x_studio_nif_1" class="small"/>
+            
+                                    </div>
+                                </div>
+                                <div class="row" t-if="partner.x_studio_char_field_d3loF">
+                                    <div class="col">
+                                        <span class="small" style="color: black !important;">STAT:</span>
+                                        <span style="color: black !important;" t-out="partner.x_studio_char_field_d3loF" class="small"/>
+            
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,21 +83,8 @@
                     </div>
                     <div class="row">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <span style="color: black!important;">NIF:</span>
-                            <span style="color: black!important;" t-if="partner" t-out="partner.x_studio_nif_1" class="small"/>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <span style="color: black!important;">STAT:</span>
-                            <span style="color: black!important;" t-if="partner" t-out="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
-
-                        </div>
-                    </div>
-                    <div class="row mt32 mb32">
+                    
+                    <div class="row mt20 mb32">
                         <div t-if="o.origin" class="col-auto" name="div_origin">
                             <strong style="color: black!important;" class="text-secondary">Order:</strong>
                             <p t-field="o.origin"/>
@@ -105,7 +106,7 @@
                         </div>
 
                     </div>
-                    <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table">
+                    <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table" style="margin-top: -20px">
                         <thead class="text-secondary">
                             <tr>
                                 <th name="th_sm_product">
@@ -219,7 +220,7 @@
                             </t>
                         </tbody>
                     </table>
-                    <div class="mt-4">
+                    <div style="margin-top: -8px">
                         <p>
                             <strong style="color: black!important;" class="text-secondary">Marques sur les colis: </strong>Nom, Descriptions<br/>
                         <strong style="color: black!important;" class="text-secondary">Expédition: </strong>Faite sans assurance de la part de l'expéditeur<br/>
@@ -297,24 +298,24 @@
 </template>
 
 <template id="tanatech_report_dispatch_deliveryslip">
-<t t-foreach="docs" t-as="o">
-<t t-call="tanatech_stock.tanatech_report_dispatch_delivery_document" t-lang="o.partner_id.lang" />
-</t>
-<t t-foreach="docs" t-as="o">
-<t t-call="tanatech_stock.tanatech_report_dispatch_delivery_document" t-lang="o.partner_id.lang" />
-</t>
+    <t t-foreach="docs" t-as="o">
+        <t t-call="tanatech_stock.tanatech_report_dispatch_delivery_document" t-lang="o.partner_id.lang" />
+    </t>
+    <t t-foreach="docs" t-as="o">
+        <t t-call="tanatech_stock.tanatech_report_dispatch_delivery_document" t-lang="o.partner_id.lang" />
+    </t>
 </template>
 
 <record id="tanatech_action_dispatch_report_delivery" model="ir.actions.report">
-<field name="name">Dispatch Delivery Slip(A5)</field>
-<field name="model">stock.picking</field>
-<field name="report_name">tanatech_stock.tanatech_report_dispatch_deliveryslip</field>
-<field name="report_file">tanatech_stock.tanatech_report_dispatch_deliveryslip</field>
-<field name="print_report_name">'Dispatch Delivery Slip - %s - %s' % (object.partner_id.name or
-            '',object.name)</field>
-<field name="binding_model_id" ref="stock.model_stock_picking" />
-<field name="binding_type">report</field>
-<field name="paperformat_id" ref="tanatech_base.tanatech_paperformat" />
+    <field name="name">Dispatch Delivery Slip(A5)</field>
+    <field name="model">stock.picking</field>
+    <field name="report_name">tanatech_stock.tanatech_report_dispatch_deliveryslip</field>
+    <field name="report_file">tanatech_stock.tanatech_report_dispatch_deliveryslip</field>
+    <field name="print_report_name">'Dispatch Delivery Slip - %s - %s' % (object.partner_id.name or
+                '',object.name)</field>
+    <field name="binding_model_id" ref="stock.model_stock_picking" />
+    <field name="binding_type">report</field>
+    <field name="paperformat_id" ref="tanatech_base.tanatech_paperformat" />
 </record>
 
 </odoo>
