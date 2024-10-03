@@ -26,21 +26,19 @@
     ],
     # always loaded
     "data": [
-        "report/font_sale_report.xml",
-        "report/font_purchase_report.xml",
-        "report/font_purchaseorder_report.xml",
-        "report/font_stockpicking_report.xml",
-        "report/font_sale_managment.xml",
-        "report/font_report_delivery_document.xml",
-        "report/font_report_account_document.xml",
-        "report/font_report_hr_expense.xml",
-        "report/font_payement.xml",
-        "report/account_report_invoice_document_copy_2.xml",
+        # "report/font_sale_report.xml",
+        # "report/font_purchase_report.xml",
+        # "report/font_purchaseorder_report.xml",
+        # "report/font_stockpicking_report.xml",
+        # "report/font_sale_managment.xml",
+        # "report/font_report_delivery_document.xml",
+        # "report/font_report_account_document.xml",
+        # "report/font_report_hr_expense.xml",
+        # "report/font_payement.xml",
+        # "report/account_report_invoice_document_copy_2.xml",
+        "report/report_delivery_note.xml",
     ],
-    # only loaded in demonstration mode
-    "demo": [
-        "demo/demo.xml",
-    ],
+
     "assets": {
         "web.report_assets_common": [
             "tanatech_report/static/src/report.css",

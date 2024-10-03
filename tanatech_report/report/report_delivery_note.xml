@@ -5,7 +5,10 @@
             <t t-call="web.external_layout">
                 <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
                 <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
-                <div style="color: black!important;" class="page small">
+                <div style="color: black !important;" class="page small">
+                    <h2 style='color: black!important;' class="text-center h3 text-secondary">
+                        Deliveryslip Reference: <span  t-field="o.name"/>
+                    </h2>
                     <div class="row">
                     </div>
                     <div class="row">
@@ -79,11 +82,6 @@
 
                         </div>
                     </div>
-
-
-
-
-
 
                     <div class="row mt32 mb32">
                         <div t-if="o.origin" class="col-auto" name="div_origin">
@@ -221,17 +219,13 @@
                             </t>
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col o_underline">
-                            <span>Le responsable</span>
+                    <div>
+                        <div class="row">
+                            <div class="col-4"><span  style="text-decoration: underline; color: black!important;">Responsible</span></div>
+                            <div class="col-4"><span style="text-decoration: underline; color: black!important;">Customer</span></div>
+                            <div class="col-4"><span style="text-decoration: underline; color: black!important;">Storekeeper in charge or responsible</span></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col o_underline text-right">
-                            <span>Le client</span>
-                        </div>
-                    </div>
-
 
                     <t t-set="backorders" t-value="o.backorder_ids.filtered(lambda x: x.state not in ('done', 'cancel'))"/>
                     <t t-if="o.backorder_ids and backorders">
@@ -294,7 +288,7 @@
     </template>
 
     <record id="delivery_note_id" model="ir.actions.report">
-        <field name="name">Bon de livraison 2</field>
+        <field name="name">BL sans prix</field>
         <field name="model">stock.picking</field>
         <field name="report_name">tanatech_report.report_delivery_note</field>
         <field name="report_file">tanatech_report.report_delivery_note</field>
