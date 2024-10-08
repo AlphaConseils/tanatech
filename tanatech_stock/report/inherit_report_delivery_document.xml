@@ -6,11 +6,10 @@
     <template id="inherit_report_delivery_document" inherit_id="stock.report_delivery_document">
       <xpath expr="//th[@name='th_sm_quantity']" position="after">
         <th></th>
-        <th name="th_sm_price_unit"><strong>Price Unit</strong></th>
+        <th name="th_sm_price_unit"><strong>Prix unitaire</strong></th>
       </xpath>
         <xpath expr="//th[@name='th_sml_quantity']" position="after">
-          <th></th>
-          <th name="th_sml_price_unit"><strong>Price Unit</strong></th>
+          <th name="th_sml_price_unit"><strong>Prix unitaire</strong></th>
         </xpath>
     </template>
 
