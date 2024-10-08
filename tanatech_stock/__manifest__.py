@@ -14,6 +14,7 @@
         # report
         "report/stock_report_views.xml",
         "report/deliveryslip_dispatch.xml",
+        "report/inherit_report_delivery_document.xml",
         # views
         "views/stock_picking_views.xml"
     ],
