@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="main_template" inherit_id="account_reports.main_template">
+        <xpath expr="//div[hasclass('o_account_reports_body')]" position="before">
+            <t t-call-assets="account_reports.assets_financial_report" t-js="false" />
+        </xpath>
+    </template>
+</odoo>
