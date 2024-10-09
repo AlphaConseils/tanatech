@@ -61,14 +61,13 @@
                            </t>
                         </div>
                     </div>
-                    <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table">
+                    <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table" style="margin-top: -5px">
                         <thead class="text-secondary" style="color: black!important">
                             <tr>
                                 <th name="th_sm_product"><strong  >Product</strong></th>
                                 <th name="th_sm_ordered"><strong  >Ordered</strong></th>
                                 <th name="th_sm_quantity"><strong  >Delivered</strong></th>
-
-                                qgdsfdsgfdsgfdsg
+                                <th name="th_sm_quantity"><strong  >Price Unit</strong></th>
                             </tr>
                         </thead>
                         <tbody style="color: black!important">
@@ -91,7 +90,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table table-sm mt48" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
+                    <table class="table table-sm" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
                         <t t-set="has_serial_number" t-value="False"/>
                         <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
                         <thead>
@@ -102,10 +101,11 @@
                                         Lot/Serial Number
                                     </th>
                                 </t>
-                                <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
+                                <th name="th_sml_qty_ordered" class="text-center" t-if="has_serial_number">
                                     <strong  >Ordered</strong>
                                 </th>
                                 <th name="th_sml_quantity" class="text-center"><strong  >Delivered</strong></th>
+                                <th name="th_sml_price_unit" class="text-center"><strong  >Price Unit</strong></th>
                             </tr>
                         </thead>
                         <tbody  >
@@ -197,7 +197,7 @@
                     </t>
 
                     <div>
-                        <div class="row">
+                        <div class="row" style="margin-top: -15px">
                             <div class="col-4"><span  style="text-decoration: underline; color: black!important;">Responsable</span></div>
                             <div class="col-4"><span style="text-decoration: underline; color: black!important;">Customer</span></div>
                             <div class="col-4"><span style="text-decoration: underline; color: black!important;">Storekeeper in charge or responsible</span></div>

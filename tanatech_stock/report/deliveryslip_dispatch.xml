@@ -37,7 +37,7 @@
                             </div>
                             <div t-if="o.picking_type_id.code=='outgoing' and partner">
                                 <span style="color: black!important;">
-                                    <strong style="color: black!important;" class="text-secondary">Customer Address:</strong>
+                                    <strong style="color: black!important;" class="text-secondary">Adresse du client:</strong>
                                 </span>
                             </div>
                             <div t-if="partner" name="partner_header">

@@ -27,7 +27,7 @@
       <xpath expr="//td[@name='move_line_aggregated_qty_done']" position="after">
         <td class="text-center small">
           <t t-if="aggregated_lines[line]['price_unit']">
-            <span t-out="aggregated_lines[line]['price_unit']" t-options="{'widget': 'float', 'precision': 2}" />  
+            <span t-out="aggregated_lines[line]['price_unit']" t-options="{'widget': 'float', 'precision': 2}" /> 
           </t>
         </td>
       </xpath>
