@@ -1,12 +1,16 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+<<<<<<< HEAD
 *$py.class
+=======
+>>>>>>> ticket#2053
 *.pyc
 # C extensions
 *.so
 
 # Distribution / packaging
+<<<<<<< HEAD
 .Python
 build/
 develop-eggs/
@@ -14,11 +18,19 @@ dist/
 downloads/
 eggs/
 .eggs/
+=======
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+>>>>>>> ticket#2053
 lib/
 lib64/
 parts/
 sdist/
 var/
+<<<<<<< HEAD
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
@@ -32,12 +44,18 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+=======
+*.egg-info/
+.installed.cfg
+*.egg
+>>>>>>> ticket#2053
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+<<<<<<< HEAD
 htmlcov/
 .tox/
 .nox/
@@ -128,3 +146,28 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.todo
+=======
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Rope
+.ropeproject
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+>>>>>>> ticket#2053
