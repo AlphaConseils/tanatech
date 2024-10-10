@@ -37,7 +37,7 @@
                             style="color: black!important;">
                             <div t-if="o.picking_type_id.code=='incoming' and partner">
                                 <span>
-                                    <strong>Vendor Address:</strong>
+                                    <strong>Adresse du fournisseur:</strong>
                                 </span>
                             </div>
                             <div t-if="o.picking_type_id.code=='internal' and partner">
