@@ -152,12 +152,12 @@
                                         Lot/Serial Number
                                     </th>
                                 </t>
-                                <!-- <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
+                                <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
 
                                     <span t-field="o.owner_id.property_account_receivable_id.display_name"/>
 
                                     <span t-field="o.owner_id.contact_address_complete"/>
-                                </th> -->
+                                </th>
                                 <th name="th_sml_quantity" class="text-center">
                                     <strong>Delivered</strong>
                                 </th>
