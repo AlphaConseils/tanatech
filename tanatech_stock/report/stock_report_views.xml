@@ -281,13 +281,24 @@
         </t>
     </template>
 
-    <template id="tanatech_report_deliveryslip">
+    <!-- <template id="tanatech_report_deliveryslip">
         <t t-foreach="docs" t-as="o">
             <t t-call="tanatech_stock.tanatech_report_delivery_document"
                 t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
         </t>
         <t t-foreach="docs" t-as="o">
             <t t-call="tanatech_stock.tanatech_report_delivery_document"
+                t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
+        </t>
+    </template> -->
+
+    <template id="tanatech_report_deliveryslip">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="tanatech_stock.tanatech_report_delivery_document_a5"
+                t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
+        </t>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="tanatech_stock.tanatech_report_delivery_document_a5"
                 t-lang="o.partner_id.lang or o.env.user.partner_id.lang" />
         </t>
     </template>
