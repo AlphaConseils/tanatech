@@ -14,6 +14,7 @@
         # report
         "report/stock_report_views.xml",
         "report/deliveryslip_dispatch.xml",
+        "report/tanatech_report_delivery_document_a5.xml",
         "report/inherit_report_delivery_document.xml",
         # views
         "views/stock_picking_views.xml"
