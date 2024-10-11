@@ -19,10 +19,7 @@ You could use this simplified accounting in case you work with an (external) acc
 
         # report
         'report/report_invoice.xml',
-<<<<<<< HEAD
-=======
         'report/inherit_report_invoice_document.xml',
->>>>>>> ticket#2053
         "report/report_fa_delivery_note.xml"
     ],
     'demo': [
