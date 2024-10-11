@@ -90,7 +90,71 @@ msgstr ""
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid ""
-"<span style=\"text-decoration-line: underline\">BORDEREAU <span "
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\" class=\"text-secondary\">Adresse du client:</strong>\n"
+"                                </span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Delivery Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Adresse de livraison:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Vendor Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Adresse du fournisseur:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Warehouse Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span style=\"color: black!important;\">\n"
+"                                    <strong style=\"color: black!important;\">Adresse de l'entrepôt:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid "<span style=\"color: black!important;\">Client:</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<span style=\"color: black!important;\">Remaining quantities not yet "
+"delivered:</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid "<span style=\"color: black!important;\">Responsable:</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid "<span style=\"color: black!important;\">Transporteur:</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<span style=\"text-decoration-line: underline; color: "
+"black!important\">BORDEREAU <span style=\"color: black!important;\" "
 "class=\"o_underline\">D'EXPÉDITION</span></span>"
 msgstr ""
 
@@ -101,7 +165,25 @@ msgstr "<span style=\"text-decoration: underline\">Client</span>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-msgid "<span style=\"text-decoration: underline\">Responsable</span>"
+msgid ""
+"<span style=\"text-decoration: underline; color: black!important;\">\n"
+"                                    Responsable</span>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span style=\"text-decoration: underline; color: black!important;\">\n"
+"                  Customer</span>"
+msgstr ""
+"<span style=\"text-decoration: underline; color: black!important;\">\n"
+"                  Client</span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span style=\"text-decoration: underline; color: black!important;\">\n"
+"                  Responsable</span>"
 msgstr ""
 
 #. module: tanatech_stock
@@ -114,15 +196,13 @@ msgstr ""
 "responsable) logistique</span>"
 
 #. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid ""
-"<span>\n"
-"                                    <strong class=\"text-secondary\">Customer Address:</strong>\n"
-"                                </span>"
+"<span style=\"text-decoration: underline; color: black!important;\">Storekeeper\n"
+"                  in charge or responsible</span>"
 msgstr ""
-"<span>\n"
-"                                    <strong class=\"text-secondary\">Adresse du client:</strong>\n"
-"                                </span>"
+"<span style=\"text-decoration: underline; color: black!important;\">Magasinier\n"
+"                  en charge ou responsable</span>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
@@ -168,28 +248,57 @@ msgid "<span><strong>Delivery Address:</strong></span>"
 msgstr "<span><strong>Adresse de livraison:</strong></span>"
 
 #. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-msgid "<span><strong>Vendor Address:</strong></span>"
-msgstr "<span><strong>Adresse du fournisseur:</strong></span>"
-
-#. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-msgid "<span><strong>Warehouse Address:</strong></span>"
-msgstr "<span><strong>Adresse de l'entrepôt:</strong></span>"
-
-#. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<span>Client:</span>"
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span>\n"
+"                  <strong>Adresse du fournisseur:</strong>\n"
+"                </span>"
 msgstr ""
 
 #. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<span>NIF:</span>"
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span>\n"
+"                  <strong>Customer Address:</strong>\n"
+"                </span>"
+msgstr ""
+"<span>\n"
+"                  <strong>Adresse du client:</strong>\n"
+"                </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span>\n"
+"                  <strong>Warehouse Address:</strong>\n"
+"                </span>"
+msgstr ""
+"<span>\n"
+"                  <strong>Adresse de livraison:</strong>\n"
+"                </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span>\n"
+"                <strong>Delivery Address:</strong>\n"
+"              </span>"
+msgstr ""
+"<span>\n"
+"                <strong>Adresse de livraison:</strong>\n"
+"              </span>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"<span>\n"
+"                <strong>Warehouse Address:</strong>\n"
+"              </span>"
 msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid "<span>Remaining quantities not yet delivered:</span>"
 msgstr "<span>Quantités restantes non encore livrées</span>"
 
@@ -200,8 +309,24 @@ msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<span>STAT:</span>"
+msgid ""
+"<strong style=\"color: black!important;\" class=\"text-secondary\">Marques sur les colis: </strong>Nom, Descriptions<br/>\n"
+"                        <strong style=\"color: black!important;\" class=\"text-secondary\">Expédition: </strong>Faite sans assurance de la part de l'expéditeur<br/>\n"
+"                    <strong style=\"color: black!important;\" class=\"text-secondary\">Assurance: </strong>Non couvert par l'expéditeur<br/>\n"
+"                <span style=\"color: black!important;\">L'expédition est à la charge et aux risque du client</span>\n"
+"                <br/>\n"
+"                <span style=\"color: black!important;\">Fret: Payable à destination par le client</span>\n"
+"                <br/>"
 msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid ""
+"<strong style=\"color: black!important;\" class=\"text-"
+"secondary\">Order:</strong>"
+msgstr ""
+"<strong style=\"color: black!important;\" class=\"text-"
+"secondary\">Commande:</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
@@ -236,8 +361,25 @@ msgstr "<strong class=\"text-secondary\">Commande:</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<strong class=\"text-secondary\">Shipping Date:</strong>"
-msgstr "<strong class=\"text-secondary\">Date d'expédition:</strong>"
+msgid "<strong style=\"color: black!important;\">Product</strong>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid "<strong style=\"color: black!important;\">Quantity</strong>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+msgid "<strong style=\"color: black!important;\">Signature</strong>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_delivery_document_a5
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_dispatch_delivery_document
+msgid "<strong>Commandé</strong>"
+msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
@@ -246,13 +388,22 @@ msgid "<strong>Delivered</strong>"
 msgstr "<strong>Délivré</strong>"
 
 #. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_delivery_document_a5
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_dispatch_delivery_document
+msgid "<strong>Délivré</strong>"
+msgstr ""
+
+#. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid "<strong>Ordered</strong>"
 msgstr "<strong>Commandé</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong>Price Unit</strong>"
 msgstr "<strong>Prix unitaire</strong>"
 
@@ -263,17 +414,19 @@ msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid "<strong>Product</strong>"
 msgstr "<strong>Produit</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid "<strong>Quantity</strong>"
 msgstr "<strong>Quantité</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 msgid "<strong>Shipping Date:</strong>"
 msgstr "<strong>Adresse de livraison:</strong>"
 
@@ -291,6 +444,15 @@ msgstr "Annulé"
 #: model:ir.actions.report,name:tanatech_stock.tanatech_action_report_delivery
 msgid "Delivery Slip(A5)"
 msgstr "Bon de livraison (A5)"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
+msgid ""
+"Deliveryslip\n"
+"            Reference:"
+msgstr ""
+"BON DE LIVRAISON\n"
+"            Référence:"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
@@ -319,6 +481,7 @@ msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "Lot/Serial Number"
 msgstr "Numéro de Lot/Série"
