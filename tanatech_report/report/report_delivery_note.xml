@@ -46,6 +46,20 @@
 :                                    <span t-field="partner.sudo().vat"/>
                                 </p>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>NIF:</span>
+                                    <span t-field="partner.x_studio_nif_1" class="small"/>
+        
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>STAT:</span>
+                                    <span t-field="partner.x_studio_char_field_d3loF" class="small"/>
+        
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -67,20 +81,6 @@
                         </div>
                     </div>
                     <div class="row">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <span>NIF:</span>
-                            <span t-field="partner.x_studio_nif_1" class="small"/>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <span>STAT:</span>
-                            <span t-field="partner.pos_order_ids.partner_id.x_studio_char_field_d3loF" class="small"/>
-
-                        </div>
                     </div>
 
                     <div class="row mt32 mb32">
