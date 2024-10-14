@@ -91,9 +91,11 @@
                 <th name="th_sm_quantity">
                   <strong>Delivered</strong>
                 </th>
-                <th name="th_sm_quantity">
-                  <strong>Price Unit</strong>
-                </th>
+                <t t-if="o.company_id.name.lower() == 'masontsika'">
+                  <th name="th_sm_quantity">
+                    <strong>Price Unit</strong>
+                  </th>
+                </t>
               </tr>
             </thead>
             <tbody style="color: black!important">
@@ -138,9 +140,11 @@
                 <th name="th_sml_quantity" class="text-center">
                   <strong>Delivered</strong>
                 </th>
-                <th name="th_sml_price_unit" class="text-center">
-                  <strong>Price Unit</strong>
-                </th>
+                <t t-if="o.company_id.name.lower() == 'masontsika'">
+                  <th name="th_sml_price_unit" class="text-center">
+                    <strong>Price Unit</strong>
+                  </th>
+                </t>
               </tr>
             </thead>
             <tbody>
