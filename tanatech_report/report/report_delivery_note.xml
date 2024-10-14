@@ -198,7 +198,7 @@
                                     <t t-else="">
                                         <t t-set="aggregated_lines" t-value="move_lines._get_aggregated_product_quantities()"/>
                                         <t t-if="aggregated_lines">
-                                            <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                            <t t-call="tanatech_stock.stock_report_delivery_aggregated_move_lines_bl_without_price"/>
                                         </t>
                                     </t>
                                 </t>

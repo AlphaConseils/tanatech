@@ -141,5 +141,28 @@
         </xpath>
     </template>
 
+    <template id="stock_report_delivery_aggregated_move_lines_bl_without_price">
+      <tr t-foreach="aggregated_lines" t-as="line">
+          <td>
+              <span t-esc="aggregated_lines[line]['name']"/>
+              <p t-if="aggregated_lines[line]['description']">
+                  <span t-esc="aggregated_lines[line]['description']"  t-options="{'widget': 'text'}"/>
+              </p>
+          </td>
+          <td class="text-center" name="move_line_aggregated_qty_ordered">
+              <span t-esc="aggregated_lines[line]['qty_ordered']"
+                  t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+              <span t-esc="aggregated_lines[line]['product_uom']"/>
+          </td>
+          <td class="text-center" name="move_line_aggregated_qty_done">
+              <t t-if="aggregated_lines[line]['qty_done']">
+                  <span t-esc="aggregated_lines[line]['qty_done']"
+                      t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+                  <span t-esc="aggregated_lines[line]['product_uom']"/>
+              </t>
+          </td>
+      </tr>
+    </template>
+
   </data>
 </odoo>
