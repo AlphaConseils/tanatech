@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tanatech_report_tanatech_report,tanatech_report.tanatech_report,model_tanatech_report_tanatech_report,base.group_user,1,1,1,1

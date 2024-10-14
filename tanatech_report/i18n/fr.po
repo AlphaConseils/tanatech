@@ -1,0 +1,172 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20240905\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-03 14:10+0000\n"
+"PO-Revision-Date: 2024-10-03 14:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_report
+#: model:ir.actions.report,print_report_name:tanatech_report.delivery_note_id
+msgid "'Bon de Livraison %s' % (object.partner_id.name)"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Customer</span>"
+msgstr ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Client</span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Responsible</span>"
+msgstr ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Responsable</span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Storekeeper in charge or responsible</span>"
+msgstr ""
+"<span style=\"text-decoration: underline; color: "
+"black!important;\">Magasinier en charge ou responsable</span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span>\n"
+"                                    <strong>Customer Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span>\n"
+"                                    <strong>Adresse du client:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span>\n"
+"                                    <strong>Delivery Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span>\n"
+"                                    <strong>Adresse de livraison:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span>\n"
+"                                    <strong>Vendor Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span>\n"
+"                                    <strong>Adresse du fournisseur:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid ""
+"<span>\n"
+"                                    <strong>Warehouse Address:</strong>\n"
+"                                </span>"
+msgstr ""
+"<span>\n"
+"                                    <strong>Adresse de l'entrepôt:</strong>\n"
+"                                </span>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<span>Le client</span>"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<span>Le responsable</span>"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<span>NIF:</span>"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<span>Remaining quantities not yet delivered:</span>"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<span>STAT:</span>"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Customer Reference:</strong>"
+msgstr "<strong>Référence du client:</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Delivered</strong>"
+msgstr "<strong>Délivré</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Order:</strong>"
+msgstr "<strong>Commande:</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Ordered</strong>"
+msgstr "<strong>Commandé</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Product</strong>"
+msgstr "<strong>Article</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Quantité</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Shipping Date:</strong>"
+msgstr "<strong>Date d'expédition:</strong>"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "<strong>Signature</strong>"
+msgstr ""
+
+#. module: tanatech_report
+#: model:ir.actions.report,name:tanatech_report.delivery_note_id
+msgid "BL sans prix"
+msgstr ""
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "Deliveryslip Reference:"
+msgstr "Bon de livraison référence:"
+
+#. module: tanatech_report
+#: model_terms:ir.ui.view,arch_db:tanatech_report.delivery_note_report
+msgid "Lot/Serial Number"
+msgstr ""

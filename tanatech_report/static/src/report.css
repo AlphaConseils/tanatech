@@ -1,0 +1,21 @@
+td, td * {
+    color: black !important;
+}
+
+*{
+    color: black !important;
+}
+body, p, span, div {
+    color: black !important;
+}
+
+.page {
+    color: black !important;
+}
+.o_report_layout_striped{
+    color: black !important;
+}
+
+.text-secondary{
+    color: black !important;
+}
