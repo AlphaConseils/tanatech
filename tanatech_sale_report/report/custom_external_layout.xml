@@ -29,7 +29,7 @@
           <div class="col-7 text-left" name="moto">
             <div name="company_address" style="vertical-align: center">
               <div t-if="o.company_id.name == 'TANATECH'">
-                <p t-if="not is_na" style="margin: 0; padding: 0">
+                <p t-if="not is_na and o._name != 'stock.picking'" style="margin: 0; padding: 0">
                   <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
                   <font style="font-size: 10px">
                     <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 -
@@ -39,7 +39,13 @@
                 <span t-if="company.company_details" t-field="company.company_details"></span>
               </div>
               <div t-elif="o.company_id.name == 'MASONTSIKA'" style="padding-left: 20px">
-                <p t-if="not is_na" style="margin: 0; padding: 0">
+                <p t-if="o._name == 'stock.picking'" style="margin: 0; padding: 0">
+                  <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka, 101</span><br/>
+                  <span style="font-size: 11px;font-weight: bolder">Antananarivo-Madagascar</span><br/>
+                  <span style="font-size: 11px;font-weight: bolder">Tel: 034 35 320 66 - 034 73 269 49</span><br/>
+                  <span style="font-size: 11px;font-weight: bolder">E-mail: info.masontsika@gmail.com</span>
+                </p>
+                <p t-elif="not is_na" style="margin: 0; padding: 0">
                     <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
                 </p>
                 <p t-elif="is_na" style="margin: 0; padding: 0">
