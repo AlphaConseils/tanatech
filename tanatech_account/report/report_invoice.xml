@@ -210,16 +210,12 @@
                                     <table class="table table-sm"
                                         style="border-top: 2px solid black;">
                                         <tr>
-<<<<<<< HEAD
-                                            <td style="color: black!important">Montant TTC</td>
-=======
                                             <t t-if="no_nif_stat_rcs">
                                                 <td style="color: black!important">Montant Total</td>
                                             </t>
                                             <t t-else="">
                                                 <td style="color: black!important">Montant TTC</td>
                                             </t>
->>>>>>> ticket#2053
                                             <td style="background-color: none; text-align: right; color: black!important">
                                                 <t t-esc="o.amount_total"
                                                     t-options="{'widget': 'float', 'precision': 2}" />
