@@ -81,11 +81,7 @@
         <h2 class="small o_underline">
           <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
             <p style="margin-top: 20px; margin-bottom: 20px;">
-<<<<<<< HEAD
-              <span style="font-weight: bolder; font-size: 14px;">Invoice NA</span>
-=======
               <span style="font-weight: bolder; font-size: 14px;">Invoice N°</span>
->>>>>>> ticket#2053
               <br/>
             </p>
           </span>
@@ -286,11 +282,7 @@
                 <t t-else="">
                   <table class="table table-sm" style="border-top: 2px solid black;">
                     <tr>
-<<<<<<< HEAD
-                      <td>Montant TTC</td>
-=======
                       <td>Montant Total</td>
->>>>>>> ticket#2053
                       <td style="background-color: none; text-align: right">
                         <t t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}" />
                       </td>
