@@ -15,6 +15,9 @@
 					False)]}
 				</attribute>
 			</xpath>
+			<xpath expr="//button[@name='action_cancel']" position="attributes">
+				<attribute name="attrs">{'invisible': [('state', 'not in', ('assigned', 'confirmed', 'draft', 'waiting','second_validate'))]}</attribute>
+			</xpath>
 		</field>
 	</record>
 </odoo>
