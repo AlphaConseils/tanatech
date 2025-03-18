@@ -3,7 +3,6 @@
 from odoo import api, models, _, fields, exceptions
 from odoo.exceptions import AccessDenied
 
-
 class ProductTemplate(models.Model):
     _inherit = "product.template"
     _description = "Description"
@@ -44,5 +43,6 @@ class ProductTemplate(models.Model):
                 )
             )
         return res
+ 
 
     

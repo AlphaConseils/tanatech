@@ -15,6 +15,42 @@
                     attrs="{'invisible': [('is_product_service_charge', '=', False)]}" />
             </xpath>
 
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="user_product_security_groups" invisible="1" />
+            </xpath>
+
+            <xpath expr="//group/field[@name='uom_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='uom_po_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='detailed_type']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/div/field[@name='list_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/div/field[@name='standard_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='categ_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='description']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+
             <xpath expr="//notebook" position="inside">
                 <page name="security" string="Security" groups="base.group_no_one">
                     <group>
@@ -22,11 +58,32 @@
                     </group>
                 </page>
             </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_invoice_policy_inherit" model="ir.ui.view">
+        <field name="name">product.template.invoice.policy.view.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_invoice_policy"/>
+        <field name="arch" type="xml">
             <xpath expr="//group[@name='group_general']" position="inside">
                 <field name="user_product_security_groups" invisible="1" />
             </xpath>
+            <xpath expr="//field[@name='invoice_policy']" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
 
-            <xpath expr="//group/div/field[@name='list_price']" position="attributes">
+    <record id="product_template_form_view_inherit_account" model="ir.ui.view">
+        <field name="name">account.product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="user_product_security_groups" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='taxes_id']" position="attributes">
                 <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
             </xpath>
         </field>
