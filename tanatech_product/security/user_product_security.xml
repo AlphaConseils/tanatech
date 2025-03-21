@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="user_product_security_groups" model="res.groups">
+        <field name="name">Peut modifier les informations générales de l'article</field>
+    </record>
+</odoo> 

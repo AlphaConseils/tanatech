@@ -11,6 +11,11 @@ class ProductTemplate(models.Model):
 
     is_product_service_charge = fields.Boolean()
     percentage_service_charge = fields.Float(default=0.07)
+    user_product_security_groups = fields.Boolean(compute="_compute_user_product_security_groups")
+
+    def _compute_user_product_security_groups(self):
+        for rec in self:
+            rec.user_product_security_groups = self.env.user.has_group("tanatech_product.user_product_security_groups")
 
     @api.constrains('is_product_service_charge')
     def check_is_product_service_charge(self):
