@@ -31,6 +31,7 @@ Print product labels with barcode.
         "report/template_tanatech_ticket.xml",
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
+        "security/user_product_security.xml",
     ],
     "license": "LGPL-3",
 }
