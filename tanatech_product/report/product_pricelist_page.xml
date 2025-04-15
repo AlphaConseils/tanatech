@@ -58,7 +58,7 @@
     <!-- to do: search migrate this code after -->
     <!-- <xpath expr="//th[4]" position="before">
       <th>PRIX ARIARY</th>
-    </xpath> -->
+    </xpath> 
     <xpath expr="//td[4]" position="before">
       <td><t t-esc="product['list_price']"/></td>
     </xpath>
@@ -70,7 +70,7 @@
         <t t-if="product['is_in_stock']"> OUI</t>
         <t t-if="product['is_in_stock'] == False"> NON</t>
       </td>
-    </xpath>
+    </xpath> -->
   </template>
 
   <!-- <record id="product.action_report_pricelist" model="ir.actions.report">
