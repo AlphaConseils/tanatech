@@ -7,8 +7,8 @@
     <field name="arch" type="xml">
         <xpath expr="//field[@name='detailed_type']" position="after">
             <field name="is_product_service_charge" invisible="1" />
-            <field name="is_product_service_charge" string="Frais de service" attrs="{'invisible': [('detailed_type', '!=', 'service')]}"/>
-            <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Pourcentage frais de service" attrs="{'invisible': [('is_product_service_charge', '=', False)]}"/>
+            <field name="is_product_service_charge" string="Service fees" invisible="detailed_type != 'service'"/>
+            <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Percentage service charge" invisible="is_product_service_charge == False"/>
         </xpath>
 
         <xpath expr="//group[@name='group_general']" position="inside">
@@ -16,35 +16,35 @@
             </xpath>
 
             <xpath expr="//group/field[@name='uom_id']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='uom_po_id']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='detailed_type']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/div/field[@name='list_price']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/div/field[@name='standard_price']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='categ_id']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='company_id']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='description']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
 
             <xpath expr="//field[@name='default_code']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//field[@name='barcode']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
     </field>
     </record>
@@ -58,7 +58,7 @@
                 <field name="user_product_security_groups" invisible="1" />
             </xpath>
             <xpath expr="//field[@name='invoice_policy']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
         </field>
     </record>
@@ -72,7 +72,7 @@
                 <field name="user_product_security_groups" invisible="1" />
             </xpath>
             <xpath expr="//field[@name='taxes_id']" position="attributes">
-                <attribute name="attrs">{'readonly': [('user_product_security_groups', '=', False)]}</attribute>
+                <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
         </field>
     </record>

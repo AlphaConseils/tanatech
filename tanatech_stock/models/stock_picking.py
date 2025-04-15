@@ -36,17 +36,6 @@ class Picking(models.Model):
              " * Done: The transfer has been processed.\n"
              " * Cancelled: The transfer has been cancelled.")
 
-    # def button_validate(self):
-    #     values = super(Picking, self).button_validate()
-    #     groups = self.env.user.groups_id
-    #     group_names = [group.name for group in groups]
-    #
-    #     user_has_group = self.env.user.has_group('base.group_system')
-    #     var1 = group_names
-    #     var2 = user_has_group
-    #     var3 = 1
-    #
-    #     return values
     def button_2n_validate(self):
         return self.button_validate()
 

@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='signature']" position="after">
                     <field name="only_authorized_pipeline"/>
-                    <field name="user_id" domain="[('id','!=',id)]" attrs="{'invisible': [('only_authorized_pipeline','=',False)]}"/>
+                    <field name="user_id" domain="[('id','!=',id)]" invisible="only_authorized_pipeline == False"/>
                 </xpath>
             </field>
     </record>

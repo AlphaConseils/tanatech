@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestEnvironmentRibbonData(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestEnvironmentRibbonData, cls).setUpClass()
+        super().setUpClass()
         cls.env["ir.config_parameter"].set_param("ribbon.name", "Test Ribbon {db_name}")
         cls.env["ir.config_parameter"].set_param("ribbon.color", "#000000")
         cls.env["ir.config_parameter"].set_param("ribbon.background.color", "#FFFFFF")
@@ -18,7 +18,7 @@ class TestEnvironmentRibbonData(common.TransactionCase):
         ribbon = self.env["web.environment.ribbon.backend"].get_environment_ribbon()
 
         expected_ribbon = {
-            "name": "Test Ribbon {db_name}".format(db_name=self.env.cr.dbname),
+            "name": f"Test Ribbon {self.env.cr.dbname}",
             "color": "#000000",
             "background_color": "#FFFFFF",
         }

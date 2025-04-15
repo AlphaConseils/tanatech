@@ -1,99 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
-    <template id="tanatech_external_layout_standard">
-        <t t-if="not o" t-set="o" t-value="doc" />
-        <t t-set="company" t-value="o.env.company" />
+  <template id="tanatech_external_layout_standard">
+    <t t-if="not o" t-set="o" t-value="doc" />
+    <t t-set="company" t-value="o.env.company" />
 
-        <t t-if="not company">
-            <!-- Multicompany -->
-            <t t-if="company_id">
-                <t t-set="company" t-value="company_id" />
-            </t>
-            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
-                <t t-set="company" t-value="o.company_id.sudo()" />
-            </t>
-            <t t-else="else">
-                <t t-set="company" t-value="res_company" />
-            </t>
-        </t>
-        
-        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-            <div class="mt-2" style="padding-bottom: 16px; min-width: 900px; border-bottom: 1px solid #e9ecef;">
-                <div class="row" >
-                    <div class="col-1">
-                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 94px;" alt="Logo" />
-                    </div>
-                    <div class="col-1"></div>
-                    <div class="col-7 text-left" name="moto">
-                        <div name="company_address" style="vertical-align: center">
-                            <div t-if="o.company_id.name == 'TANATECH'">
-                                <p t-if="no_nif_stat_rcs" style="margin: 0; padding: 0;">
-                                    <!-- <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
-                                    <font style="font-size: 10px">
-                                        <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
-                                    </font> -->
-                                </p>
-                                <p t-elif="not is_na and o._name != 'stock.picking'" style="margin: 0; padding: 0;">
-                                    <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
-                                    <font style="font-size: 10px">
-                                        <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
-                                    </font>
-                                </p>
-                                <span t-if="company.company_details" t-field="company.company_details"></span>
-                            </div>
-                            <div t-elif="o.company_id.name == 'MASONTSIKA'" style="padding-left: 50px">
-                                <p t-if="o._name == 'stock.picking'" style="margin: 0; padding: 0">
-                                    <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka, 101</span><br/>
-                                    <span style="font-size: 11px;font-weight: bolder">Antananarivo-Madagascar</span><br/>
-                                    <span style="font-size: 11px;font-weight: bolder">Tel: 038 33 786 34 - 034 73 269 49</span><br/>
-                                    <span style="font-size: 11px;font-weight: bolder">E-mail: info.masontsika@gmail.com</span>
-                                </p>
-                                <p t-elif="not is_na" style="margin: 0; padding: 0">
-                                    <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
-                                </p>
-                                <p t-elif="is_na" style="margin: 0; padding: 0">
-                                    <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka Madagascar</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <t t-if="not company">
+      <t t-if="company_id">
+        <t t-set="company" t-value="company_id" />
+      </t>
+      <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+        <t t-set="company" t-value="o.company_id.sudo()" />
+      </t>
+      <t t-else="else">
+        <t t-set="company" t-value="res_company" />
+      </t>
+    </t>
+
+    <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+      <div class="mt-2" style="padding-bottom: 16px; min-width: 900px; border-bottom: 1px solid #e9ecef;">
+        <div class="row">
+          <div class="col-1">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 94px;" alt="Logo" />
+          </div>
+          <div class="col-1"></div>
+          <div class="col-7 text-left" name="moto">
+            <div name="company_address" style="vertical-align: center">
+              <div t-if="o.company_id.name == 'TANATECH'">
+                <p t-if="no_nif_stat_rcs" style="margin: 0; padding: 0;">
+                </p>
+                <p t-elif="not is_na and o._name != 'stock.picking'" style="margin: 0; padding: 0;">
+                  <font style="font-size: 11px;font-weight: bolder">​NIF : 3000634704 - </font>
+                  <font style="font-size: 10px">
+                    <span style="font-weight: bolder;font-size: 11px">STAT: 46101 11 2009 0 01289 - RCS : 2009A00346</span>
+                  </font>
+                </p>
+                <span t-if="company.company_details" t-field="company.company_details"></span>
+              </div>
+              <div t-elif="o.company_id.name == 'MASONTSIKA'" style="padding-left: 50px">
+                <p t-if="o._name == 'stock.picking'" style="margin: 0; padding: 0">
+                  <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka, 101</span>
+                  <br/>
+                  <span style="font-size: 11px;font-weight: bolder">Antananarivo-Madagascar</span>
+                  <br/>
+                  <span style="font-size: 11px;font-weight: bolder">Tel: 038 33 786 34 - 034 73 269 49</span>
+                  <br/>
+                  <span style="font-size: 11px;font-weight: bolder">E-mail: info.masontsika@gmail.com</span>
+                </p>
+                <p t-elif="not is_na" style="margin: 0; padding: 0">
+                  <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
+                </p>
+                <p t-elif="is_na" style="margin: 0; padding: 0">
+                  <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka Madagascar</span>
+                </p>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div t-if="o.company_id.name == 'MASONTSIKA'" t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
-            <div class="text-center" style="border-top: 1px solid black;">
-                <ul class="list-inline mb4">
-                    <div t-field="company.report_footer"/>
-                </ul>
-
-                <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page: <span class="page"/> / <span class="topage"/>
-                </div>
-                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
-                    <span t-field="o.name"/>
-                </div>
-            </div>
-        </div>
-
-        <div t-else="" class="footer" style="margin-bottom: 0">
-            <div class="row" style="border-top: 1px solid black; font-family: Calibri;">
-                <div class="col-4">
-                    <span t-esc="o.name" class="text-right" />
-                </div>
-                <div class="col-4 text-center"> PAGE: <span class="page" />
-                <span class="topage" />
-            </div>
-            <div class="col-4">
-
-            </div>
-        </div>
+      </div>
     </div>
 
-    <div  t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+    <div t-if="o.company_id.name == 'MASONTSIKA'" t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+      <div class="text-center" style="border-top: 1px solid black;">
+        <ul class="list-inline mb4">
+          <div t-field="company.report_footer"/>
+        </ul>
 
-        <t t-out="0" />
+        <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/>
+ /        <span class="topage"/>
+      </div>
+      <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+        <span t-field="o.name"/>
+      </div>
     </div>
+  </div>
+
+  <div t-else="" class="footer" style="margin-bottom: 0">
+    <div class="row" style="border-top: 1px solid black; font-family: Calibri;">
+      <div class="col-4">
+        <span t-esc="o.name" class="text-right" />
+      </div>
+      <div class="col-4 text-center"> PAGE: <span class="page" />
+      <span class="topage" />
+    </div>
+    <div class="col-4">
+
+    </div>
+  </div>
+</div>
+
+<div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+
+  <t t-out="0" />
+</div>
 </template>
 </odoo>

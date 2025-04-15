@@ -7,10 +7,10 @@ class AccountJournal(models.Model):
 
     user_ids = fields.Many2many(comodel_name='res.users', string='Allowed users')
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         self.clear_caches()
-        return super(AccountJournal, self).create(vals)
+        return super(AccountJournal, self).create(vals_list)
 
     def write(self, vals):
         self.clear_caches()

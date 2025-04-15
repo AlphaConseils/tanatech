@@ -8,7 +8,6 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
     _description = 'Description'
 
-
     is_product_service_charge = fields.Boolean()
     percentage_service_charge = fields.Float(default=0.07)
     user_product_security_groups = fields.Boolean(compute="_compute_user_product_security_groups")
@@ -21,7 +20,9 @@ class ProductTemplate(models.Model):
     def check_is_product_service_charge(self):
         checked_product_service_charge = self.search([('id', '!=', self.id), ('is_product_service_charge', '=', True)], limit=1)
         if self.is_product_service_charge and checked_product_service_charge:
-            raise exceptions.ValidationError(_('Il y a dejat un produit de service installation'))
+            raise exceptions.ValidationError(
+                _("There is already an installation service product")
+            )
 
     def get_price_unit_tax_incl(self):
         self.ensure_one()
