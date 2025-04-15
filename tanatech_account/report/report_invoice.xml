@@ -203,7 +203,7 @@
 
                                 <!--Tax
                                 totals-->
-                                <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" />
+                                <!-- <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" /> -->
                                 <t t-call="tanatech_account.invoice_document_tax_totals"
                                     t-if="o.journal_id.name != 'Factures clients NA'" />
                                 <t t-else="">

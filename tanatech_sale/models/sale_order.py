@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 import json
 
 class SaleOrder(models.Model):
@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
     is_office_design = fields.Boolean(compute="_compute_is_office_design")
     can_edit_pricelist = fields.Boolean(compute="_compute_can_edit_pricelist")
     show_action_add_service_charge = fields.Boolean()
-    # percentage_service_charge = fields.Float(default=0.07)
 
     @api.onchange('order_line')
     def show_boutton(self):
