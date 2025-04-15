@@ -55,9 +55,10 @@
     <xpath expr="//td[2]" position="before">
       <td><t t-esc="product['default_code']"/></td>
     </xpath>
-    <xpath expr="//th[4]" position="before">
+    <!-- to do: search migrate this code after -->
+    <!-- <xpath expr="//th[4]" position="before">
       <th>PRIX ARIARY</th>
-    </xpath>
+    </xpath> -->
     <xpath expr="//td[4]" position="before">
       <td><t t-esc="product['list_price']"/></td>
     </xpath>
