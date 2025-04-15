@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, models, _, fields, exceptions
-from odoo.exceptions import AccessDenied
 
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
-    _description = "Description"
+    _inherit = 'product.template'
+
 
     is_product_service_charge = fields.Boolean()
     percentage_service_charge = fields.Float(default=0.07)
-    editable = fields.Boolean(default=True)
     user_product_security_groups = fields.Boolean(compute="_compute_user_product_security_groups")
 
     def _compute_user_product_security_groups(self):
@@ -23,26 +21,12 @@ class ProductTemplate(models.Model):
         )
         if self.is_product_service_charge and checked_product_service_charge:
             raise exceptions.ValidationError(
-                _("Il y a dejat un produit de service installation")
+                _("There is already an installation service product")
             )
 
     def get_price_unit_tax_incl(self):
         self.ensure_one()
         price = self.list_price
         res = self.taxes_id.compute_all(
-            price, product=self, partner=self.env["res.partner"]
-        )
-        return res["total_included"]
-
-    def write(self, vals):
-        res = super().write(vals)
-        if any(not product_id.editable for product_id in self):
-            raise AccessDenied(
-                _(
-                    "The requested operation cannot be completed due to security restrictions.(Write Product)."
-                )
-            )
-        return res
- 
-
-    
+            price, product=self, partner=self.env['res.partner'])
+        return res['total_included']

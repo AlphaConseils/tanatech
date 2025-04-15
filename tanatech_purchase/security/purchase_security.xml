@@ -68,7 +68,7 @@
     <record id="purchase_order_line_personal_rule" model="ir.rule">
         <field name="name">Personal Order Lines</field>
         <field ref="purchase.model_purchase_order_line" name="model_id"/>
-        <field name="domain_force">['|',('sale_order_id.user_id','=',user.id),('sale_order_id.user_id','=',False)]</field>
+        <field name="domain_force">['|',('sale_order_id.user_id','=',False), ('sale_order_id.user_id','=',user.id)]</field>
         <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
     </record>
 
@@ -81,14 +81,14 @@
 
     <record id="account_invoice_send_personal_rule" model="ir.rule">
         <field name="name">Personal Invoice Send and Print</field>
-        <field name="model_id" ref="account.model_account_invoice_send"/>
-        <field name="domain_force">[('invoice_ids.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')), '|', ('invoice_ids.invoice_user_id', '=', user.id), ('invoice_ids.invoice_user_id', '=', False)]</field>
+        <field name="model_id" ref="account.model_account_move_send_batch_wizard"/>
+        <field name="domain_force">[('move_ids.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')), '|', ('move_ids.invoice_user_id', '=', user.id), ('move_ids.invoice_user_id', '=', False)]</field>
         <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
     </record>
 
     <record id="account_invoice_send_rule_see_all" model="ir.rule">
         <field name="name">All Invoice Send and Print</field>
-        <field name="model_id" ref="account.model_account_invoice_send"/>
+        <field name="model_id" ref="account.model_account_move_send_batch_wizard"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[(4, ref('tanatech_purchase.group_purchase_user_all_leads'))]"/>
     </record>

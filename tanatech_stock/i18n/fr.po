@@ -248,12 +248,9 @@ msgid "<span><strong>Delivery Address:</strong></span>"
 msgstr "<span><strong>Adresse de livraison:</strong></span>"
 
 #. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
-msgid ""
-"<span>\n"
-"                  <strong>Adresse du fournisseur:</strong>\n"
-"                </span>"
-msgstr ""
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
+msgid "<span><strong>Vendor Address:</strong></span>"
+msgstr "<span><strong>Adresse du fournisseur:</strong></span>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
@@ -362,12 +359,7 @@ msgstr "<strong class=\"text-secondary\">Commande:</strong>"
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong style=\"color: black!important;\">Product</strong>"
-msgstr ""
-
-#. module: tanatech_stock
-#: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<strong style=\"color: black!important;\">Quantity</strong>"
-msgstr ""
+msgstr "<strong style=\"color: black!important;\">Article</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document

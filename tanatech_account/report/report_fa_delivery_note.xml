@@ -275,7 +275,7 @@
 
                 <!--Tax
                 totals-->
-                <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" />
+                <!-- <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" /> -->
 
                 <t t-call="account.document_tax_totals_copy_3"
                   t-if="o.journal_id.name != 'Factures clients NA'" />
