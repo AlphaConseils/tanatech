@@ -14,7 +14,7 @@
     'description': "",
     'data': [
         # data
-        'data/translation.xml',
+        # 'data/translation.xml',
         
     ],
     "installable": True,

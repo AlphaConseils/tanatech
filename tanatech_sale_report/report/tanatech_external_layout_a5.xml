@@ -4,7 +4,6 @@
     <template id="tanatech_external_layout_a5">
         <t t-if="not o" t-set="o" t-value="doc" />
         <t t-set="company" t-value="o.env.company" />
-        <t t-set="is_na" t-value="True"/>
         <t t-if="not company">
             <!-- Multicompany -->
             <t t-if="company_id">
