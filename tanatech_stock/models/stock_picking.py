@@ -50,7 +50,7 @@ class Picking(models.Model):
             pickings_without_lots = self.browse()
             products_without_lots = self.env['product.product']
             for picking in self:
-                if not picking.move_lines and not picking.move_line_ids:
+                if not picking.move_ids and not picking.move_line_ids:
                     pickings_without_moves |= picking
 
                 picking.message_subscribe([self.env.user.partner_id.id])

@@ -21,7 +21,7 @@ class AccountPaymentRegister(models.TransientModel):
             ("reconciled", "=", False),
         ]
         for vals in to_process:
-            payment_lines = vals['payment'].line_ids.filtered_domain(domain)
+            payment_lines = vals['payment'].move_id.line_ids.filtered_domain(domain)
             lines = vals['to_reconcile']
 
             for account in payment_lines.account_id:
