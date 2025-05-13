@@ -226,7 +226,7 @@
     </template>
 
     <template id="sale_document_tax_totals">
-        <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+        <t t-foreach="doc.tax_totals['subtotals']" t-as="subtotal">
             <tr class="border-black o_subtotal" style="font-size: 20px;">
                 <td>
                     <strong t-esc="subtotal['name']" />
