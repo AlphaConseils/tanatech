@@ -235,13 +235,36 @@
                 <td class="text-right">
                     <span
                         t-att-class="oe_subtotal_footer_separator"
-                        t-esc="subtotal['formatted_amount']"
+                        t-esc="subtotal['base_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
                     />
                 </td>
             </tr>
 
-            <t t-set="subtotal_to_show" t-value="subtotal['name']" />
-            <t t-call="account.tax_groups_totals" />
+            <!-- <t t-set="subtotal_to_show" t-value="subtotal['name']" />
+            <t t-call="account.tax_groups_totals" /> -->
+            <t t-foreach="subtotal['tax_groups']" t-as="amount_by_group">
+                <tr>
+                    <t t-if="len(subtotal['tax_groups']) > 1">
+                        <td>
+                            <span t-esc="amount_by_group['group_name']"/>
+                            <span class="text-nowrap"> on
+                                <t t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            </span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td>
+                            <span class="text-nowrap" t-esc="amount_by_group['group_name']"/>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </t>
+                </tr>
+            </t>
         </t>
 
         <!--Total
@@ -251,7 +274,7 @@
                 <strong>Montant TTC</strong>
             </td>
             <td class="text-right">
-                <span t-esc="tax_totals['formatted_amount_total']" />
+                <span t-esc="doc.tax_totals['total_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
             </td>
         </tr>
     </template>
