@@ -186,7 +186,7 @@
               <table class="table table-sm">
                 <!--Tax
                 totals-->
-                <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" />
+                <!-- <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" /> -->
                 <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 21px !important; font-weight: bold;">
                   <tr>
                     <td>Total</td>
