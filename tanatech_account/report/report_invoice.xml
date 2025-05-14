@@ -318,7 +318,7 @@
                 <td class="text-right">
                     <span
                         t-att-class="oe_subtotal_footer_separator"
-                        t-esc="subtotal['base_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                        t-esc="subtotal['base_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'
                     />
                 </td>
             </tr>
@@ -331,11 +331,11 @@
                         <td>
                             <span t-esc="amount_by_group['group_name']"/>
                             <span class="text-nowrap"> on
-                                <t t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                <t t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                             </span>
                         </td>
                         <td class="text-right o_price_total">
-                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                         </td>
                     </t>
                     <t t-else="">
@@ -343,7 +343,7 @@
                             <span class="text-nowrap" t-esc="amount_by_group['group_name']"/>
                         </td>
                         <td class="text-right o_price_total">
-                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            <span class="text-nowrap" t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                         </td>
                     </t>
                 </tr>
@@ -358,7 +358,7 @@
             </td>
             <td class="text-right">
                 <!-- <span t-esc="tax_totals['formatted_amount_total']" /> -->
-                <span t-esc="doc.tax_totals['total_amount_currency']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                <span t-esc="o.tax_totals['total_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
 
             </td>
         </tr>
