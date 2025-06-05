@@ -9,11 +9,13 @@ class AccountMove(models.Model):
     def _get_reconciled_info_JSON_values(self):
         self.ensure_one()
         reconciled_vals = []
+        invoice_partials, exchange_diff_moves = self._get_reconciled_invoices_partials()
+
         for (
             partial,
             amount,
             counterpart_line,
-        ) in self._get_reconciled_invoices_partials():
+        ) in invoice_partials:
             reconciled_vals.append(
                 self._get_reconciled_vals(partial, amount, counterpart_line)
             )
