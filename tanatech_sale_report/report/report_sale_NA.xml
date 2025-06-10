@@ -7,18 +7,16 @@
       <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" /> <!-- So that it
       appears in the footer of the report instead of the company VAT if it's set -->
       <t t-set="address">
-        <div class="row">
-          <div class="col-4">
-            <address t-field="doc.partner_id"
+        <!-- <div class="row"> -->
+          <!-- <div class="col-4"> -->
+            <div t-field="doc.partner_id"
               t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
-          </div>
-          <div class="col-3">
-            <div t-if="doc.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
-                t-field="doc.partner_id.x_studio_nif_1" /></div>
-            <div t-if="doc.partner_id.x_studio_char_field_d3loF" class="mt16"> STAT: <span
-                t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
-          </div>
-        </div>
+            <div t-if="doc.partner_id.x_studio_nif_1" > NIF: <span
+              t-field="doc.partner_id.x_studio_nif_1" /></div>
+            <div t-if="doc.partner_id.x_studio_char_field_d3loF" > STAT: <span
+              t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
+          <!-- </div> -->
+        <!-- </div> -->
       </t>
       <t
         t-if="doc.partner_shipping_id == doc.partner_invoice_id
@@ -73,7 +71,7 @@
           </div>
           <div t-if="doc.date_order and doc.state in ['draft','sent']"
             class="col-auto col-3 mw-100 mb-2">
-            <strong>Quotation Date:</strong>
+            <strong>Date du devis:</strong>
             <p class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}' />
           </div>
           <div t-if="doc.validity_date and doc.state in ['draft', 'sent']"
@@ -102,9 +100,9 @@
                 <span>Disc.%</span>
               </th>
               <th name="th_subtotal" class="text-right">
-                <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
-                <span groups="account.group_show_line_subtotals_tax_included">Total
-                  Price</span>
+                <span>Montant</span>
+                <!-- <span groups="account.group_show_line_subtotals_tax_included">Total
+                  Price</span> -->
               </th>
             </tr>
           </thead>
@@ -115,11 +113,10 @@
             <t t-foreach="doc.order_line" t-as="line">
 
               <t t-set="current_subtotal"
-                t-value="current_subtotal + line.price_subtotal"
-                groups="account.group_show_line_subtotals_tax_excluded" />
-              <t t-set="current_subtotal"
+                t-value="current_subtotal + line.price_subtotal"/>
+              <!-- <t t-set="current_subtotal"
                 t-value="current_subtotal + line.price_total"
-                groups="account.group_show_line_subtotals_tax_included" />
+                groups="account.group_show_line_subtotals_tax_included" /> -->
 
               <tr
                 t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
@@ -142,11 +139,10 @@
                   </td>
                   <td name="td_subtotal" class="text-right o_price_total">
                     <span t-field="line.price_subtotal"
+                      t-options='{"widget": "monetary", "display_currency": currency_id}'/>
+                    <!-- <span t-field="line.price_total"
                       t-options='{"widget": "monetary", "display_currency": currency_id}'
-                      groups="account.group_show_line_subtotals_tax_excluded" />
-                    <span t-field="line.price_total"
-                      t-options='{"widget": "monetary", "display_currency": currency_id}'
-                      groups="account.group_show_line_subtotals_tax_included" />
+                      groups="account.group_show_line_subtotals_tax_included" /> -->
                   </td>
                 </t>
                 <t t-if="line.display_type == 'line_section'">
@@ -180,14 +176,12 @@
         </table>
 
         <div class="clearfix" name="so_total_summary">
-          <div id="total" class="row" name="total">
-            <div
-              t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
-              <table class="table table-sm">
-                <!--Tax
-                totals-->
+          <div id="total" class="row mt-n3" name="total">
+            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+              <table class="o_total_table table table-borderless">
+                <!--Tax totals-->
                 <!-- <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" /> -->
-                <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 21px !important; font-weight: bold;">
+                <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 18px !important; font-weight: bold;">
                   <tr>
                     <td>Total</td>
                     <td style="background-color: none; text-align: right">
@@ -215,7 +209,7 @@
       </div>
 
       <div style="margin-top: 5%">
-        <div class="row">
+        <div class="row" style="text-align: center;">
           <div class="col-6">
             Responsable
           </div>
