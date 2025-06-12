@@ -144,8 +144,8 @@
                                     </p>
                                 </th>
                                 <th name="th_subtotal" class="text-right">
-                                    <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
-                                    <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                    <span groups="tanatech_account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                    <span groups="tanatech_account.group_show_line_subtotals_tax_included">Total Price</span>
                                 </th>
                             </tr>
                         </thead>
@@ -154,11 +154,11 @@
                             <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
 
                             <t t-foreach="lines" t-as="line" class="small">
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="tanatech_account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="tanatech_account.group_show_line_subtotals_tax_included"/>
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                    <t t-if="not line.display_type" name="account_invoice_line_accountable" class="small">
+                                    <t t-if="line.display_type=='product'" name="account_invoice_line_accountable" class="small">
                                         <td name="account_invoice_line_name">
                                             <span t-field="line.name" t-options="{'widget': 'text'}" class="small"/>
                                             <t t-set="pos_orders" t-value="o.sudo().pos_order_ids"/>
@@ -206,8 +206,8 @@ x</span>
                                             </span>
                                         </td>
                                         <td class="text-right o_price_total">
-                                            <span class="text-nowrap small" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                            <span class="text-nowrap" t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                            <span class="text-nowrap small" t-field="line.price_subtotal" groups="tanatech_account.group_show_line_subtotals_tax_excluded"/>
+                                            <span class="text-nowrap" t-field="line.price_total" groups="tanatech_account.group_show_line_subtotals_tax_included"/>
                                         </td>
                                     </t>
                                     <t t-if="line.display_type == 'line_section'">
@@ -244,7 +244,7 @@ x</span>
                                     <!--Tax totals-->
                                     <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
 
-                                    <t t-call="account.document_tax_totals_copy_2" t-if="o.journal_id.name != 'Factures clients NA'"/>
+                                    <t t-call="account.document_tax_totals" t-if="o.journal_id.name != 'Factures clients NA'"/>
                                     <t t-else="">
                                         <table class="table table-sm" style="border-top: 2px solid black;">
                                             <tr>

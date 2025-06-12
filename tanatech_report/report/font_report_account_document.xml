@@ -20,9 +20,9 @@
             <xpath expr="//td" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//b" position="attributes">
+            <!-- <xpath expr="//b" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
-            </xpath>
+            </xpath> -->
              <xpath expr="//strong" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
@@ -32,12 +32,12 @@
             <xpath expr="//td" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
-            <xpath expr="//h2" position="attributes">
+            <!-- <xpath expr="//h2" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
             </xpath>
               <xpath expr="//div[@class='page']" position="attributes">
                 <attribute name="style">color: black!important;</attribute>
-            </xpath>
+            </xpath> -->
         </template> 
     </data>
 </odoo>

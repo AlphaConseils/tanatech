@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  
+
   <template id="inherit_report_invoice_document" inherit_id="account.report_invoice_document">
     <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
-      <t t-call="tanatech_account.invoice_document_tax_totals"/>
+      <t t-call="tanatech_account.invoice_document_tax_totals" />
+    </xpath>
+    <xpath expr="//div[@id='informations']" position="attributes">
+      <attribute name="style">font-size: 13px !important;</attribute>
+    </xpath>
+    <xpath expr="//table[@name='invoice_line_table']" position="attributes">
+      <attribute name="style">font-size: 13px !important;</attribute>
+    </xpath>
+    <xpath expr="//t[@t-set='layout_document_title']" position="attributes">
+      <attribute name="style">font-size: 16px !important;</attribute>
+    </xpath>
+    <xpath expr="//p[@name='payment_communication']" position="after">
+      <div class="row" style="margin-top:100px">
+          <div class="col-8">
+            <span>
+              <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
+                Responsable</span>
+            </span>
+          </div>
+          <div class="col-4">
+            <span>
+              <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
+                Client</span>
+            </span>
+          </div>
+        </div>
     </xpath>
   </template>
 
