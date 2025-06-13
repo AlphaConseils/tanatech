@@ -131,11 +131,11 @@
                 <span>Description</span>
               </th>
               <th name="th_quantity" class="text-right">
-                <span>Quantity</span>
+                <span>Quantité</span>
               </th>
               <th name="th_priceunit"
                 t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                <span>Unit Price</span>
+                <span>Prix unitaire</span>
               </th>
               <th name="th_price_unit" t-if="display_discount"
                 t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
@@ -153,8 +153,8 @@
               <t t-else="">
               </t>
               <th name="th_subtotal" class="text-right">
-                <span groups="tanatech_account.group_show_line_subtotals_tax_excluded">Amount</span>
-                <span groups="tanatech_account.group_show_line_subtotals_tax_included">Total Price</span>
+                <span groups="tanatech_account.group_show_line_subtotals_tax_excluded">Montant</span>
+                <span groups="tanatech_account.group_show_line_subtotals_tax_included">Prix total</span>
               </th>
             </tr>
           </thead>
