@@ -271,7 +271,7 @@
               <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                 <table class="o_total_table table table-borderless" style="page-break-inside: avoid;">
                   <!-- Tax totals -->
-                  <t t-call="account.document_tax_totals"
+                  <t t-call="tanatech_account.invoice_document_tax_totals"
                     t-if="o.journal_id.name != 'Factures clients NA'" />
                   <t t-else="">
                     <table class="table table-sm" style="border-top: 2px solid black;">
