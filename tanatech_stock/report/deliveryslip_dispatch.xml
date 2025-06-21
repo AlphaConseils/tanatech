@@ -328,4 +328,22 @@
     <field name="paperformat_id" ref="tanatech_base.tanatech_paperformat" />
 </record>
 
+<template id="tanatech_report_dispatch_deliveryslip_a4">
+    <t t-foreach="docs" t-as="o">
+        <t t-call="tanatech_stock.tanatech_report_dispatch_delivery_document" t-lang="o.partner_id.lang" />
+    </t>
+</template>
+
+<record id="tanatech_action_dispatch_report_delivery_a4" model="ir.actions.report">
+    <field name="name">Bon de livraison Expédition</field>
+    <field name="model">stock.picking</field>
+    <field name="report_name">tanatech_stock.tanatech_report_dispatch_deliveryslip_a4</field>
+    <field name="report_file">tanatech_stock.tanatech_report_dispatch_deliveryslip_a4</field>
+    <field name="print_report_name">'Dispatch Delivery Slip - %s - %s' % (object.partner_id.name or
+                '',object.name)</field>
+    <field name="binding_model_id" ref="stock.model_stock_picking" />
+    <field name="binding_type">report</field>
+    <field name="paperformat_id" ref="base.paperformat_euro" />
+</record>
+
 </odoo>

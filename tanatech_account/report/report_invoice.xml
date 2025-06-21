@@ -131,8 +131,7 @@
 
                             <tr
                                 t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                <t t-if="not line.display_type"
-                                    name="account_invoice_line_accountable">
+                                <t t-if="line.display_type=='product'" name="account_invoice_line_accountable" >
                                     <td name="account_invoice_line_name">
                                         <span  t-field="line.name" t-options="{'widget': 'text'}" />
                                     </td>
@@ -196,14 +195,10 @@
                 </table>
 
                 <div class="clearfix" >
-                    <div id="total" class="row">
-                        <div
-                            t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
-                            <table class="table table-sm" style="page-break-inside: avoid;">
-
-                                <!--Tax
-                                totals-->
-                                <!-- <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)" /> -->
+                    <div id="total" class="row mt-n3" name="total">
+                        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+                            <table class="o_total_table table table-borderless" style="page-break-inside: avoid;">
+                                <!--Tax totals-->
                                 <t t-call="tanatech_account.invoice_document_tax_totals"
                                     t-if="o.journal_id.name != 'Factures clients NA'" />
                                 <t t-else="">

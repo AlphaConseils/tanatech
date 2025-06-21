@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_hr_expense_report" inherit_id="account.report_payment_receipt_document">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/tanatech_report/static/src/report.css"/>
+            </xpath>
+            <xpath expr="//div[@class='page']" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//tbody" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+        </template>
+
+        <template id="account_document_tax_totals_inherit" inherit_id="account.document_tax_totals">
+            <xpath expr="//tr[@class='border-black o_subtotal']" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_total']" position="attributes">
+                <attribute name="style">color: black!important;</attribute>
+            </xpath>
+        </template>
+    </data>
+</odoo>

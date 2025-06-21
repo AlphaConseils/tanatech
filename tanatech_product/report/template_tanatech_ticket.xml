@@ -14,7 +14,13 @@
                                         <t t-esc="product.default_code"/>
                                     </p>
                                     <p style="font-size: 25px; width: 100%; text-align: center;">
-                                        <span t-field="product.name"/>
+                                        <t t-if="len(product.name) &gt; 50">
+                                            <span t-esc="product.name[:50]"/>
+                                            <span t-esc="'...'"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="product.name"/>
+                                        </t>
                                     </p>
                                     <t t-if="price_included">
                                         <p style="font-size: 28px; width: 100%; text-align: right;">

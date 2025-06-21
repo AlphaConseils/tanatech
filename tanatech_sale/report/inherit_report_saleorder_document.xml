@@ -3,14 +3,34 @@
 
   <template id="inherit_report_saleorder_document" inherit_id="sale.report_saleorder_document">
     <xpath expr="//div[@id='total']" position="replace">
-      <div id="total" class="row" name="total">
-        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
-            <table class="table table-sm">
-                <!-- Tax totals -->
-                <!-- <t t-set="tax_totals" t-value="doc.tax_totals"/> -->
-                <t t-call="tanatech_sale.sale_document_tax_totals"/>
-            </table>
+      <div id="total" class="row mt-n3" name="total">
+        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+          <table class="o_total_table table table-borderless">
+            <!-- Tax totals -->
+            <t t-call="tanatech_sale.sale_document_tax_totals">
+              <t t-set="tax_totals" t-value="doc.tax_totals" />
+              <t t-set="currency" t-value="doc.currency_id" />
+            </t>
+          </table>
         </div>
+      </div>
+      <div style="margin-top: 5%">
+        <div class="row" style="text-align: center;">
+          <div class="col-6">
+            Responsable
+          </div>
+          <div class="col-6">
+            Client
+          </div>
+        </div>
+      </div>
+    </xpath>
+    <xpath expr="//t[@t-set='address']" position="inside">
+      <div style="font-size: 12px">
+        <div style="color: black!important;" t-if="doc.partner_id.x_studio_nif_1"> NIF: <span style="color: black!important;"
+                t-field="doc.partner_id.x_studio_nif_1" /></div>
+        <div style="color: black!important;" t-if="doc.partner_id.x_studio_char_field_d3loF"> STAT: <span style="color: black!important;"
+                t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
       </div>
     </xpath>
 

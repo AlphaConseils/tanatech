@@ -15,7 +15,7 @@
           </t>
         </t>
       </xpath>
-      <xpath expr="//th[@name='th_sml_qty_ordered']" position="replace">
+      <!-- <xpath expr="//th[@name='th_sml_qty_ordered']" position="replace">
         <t t-if="o.company_id.name.lower() == 'masontsika'">
           <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
             <strong>Commandé</strong>
@@ -26,7 +26,7 @@
             <strong>Commandé</strong>
           </th>
         </t>
-      </xpath>
+      </xpath> -->
       <xpath expr="//th[@name='th_sml_quantity']" position="replace">
         <t t-if="o.company_id.name.lower() == 'masontsika'">
           <th name="th_sml_quantity" class="text-center"><strong>Délivré</strong></th>

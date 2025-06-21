@@ -57,10 +57,10 @@ msgstr ""
 " * En attente d'une autre opération: Ce transfert est en attente d'une autre opération avant d'être prêt.\n"
 " * En attente: Ce transfert est en attente de la disponibilité de certains articles.\n"
 "(a) La politique d'envoi est \"Dès que possible\": aucun n'article n'a pu être réservé.\n"
-"(b) La politique d'envoi est \"Lorsque tous les articles sont prêts\": tous les articles n'ont pu être réservés.\n"
+"(b) La politique d'envoi est \"Quand tous les articles sont prêts\": tous les articles n'ont pu être réservés.\n"
 " * Prêt: Le transfert est prêt à être réalisé.\n"
 "(a) (a) La politique d'envoi est \"Dès que possible\": au moins un article a pu être réservé.\n"
-"(b) La politique d'envoi est \"Lorsque tous les articles sont prêts\": tous les articles ont pu être réservés.\n"
+"(b) La politique d'envoi est \"Quand tous les articles sont prêts\": tous les articles ont pu être réservés.\n"
 " * Fait: Le transfert a pu être réalisé.\n"
 " * Annulé: Le transfert a été annulé."
 
@@ -306,7 +306,14 @@ msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<span>STAT:</span>"
+msgid ""
+"<strong style=\"color: black!important;\" class=\"text-secondary\">Marques sur les colis: </strong>Nom, Descriptions<br/>\n"
+"                        <strong style=\"color: black!important;\" class=\"text-secondary\">Expédition: </strong>Faite sans assurance de la part de l'expéditeur<br/>\n"
+"                    <strong style=\"color: black!important;\" class=\"text-secondary\">Assurance: </strong>Non couvert par l'expéditeur<br/>\n"
+"                <span style=\"color: black!important;\">L'expédition est à la charge et aux risque du client</span>\n"
+"                <br/>\n"
+"                <span style=\"color: black!important;\">Fret: Payable à destination par le client</span>\n"
+"                <br/>"
 msgstr ""
 
 #. module: tanatech_stock
@@ -356,7 +363,14 @@ msgstr "<strong style=\"color: black!important;\">Article</strong>"
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
-msgid "<strong class=\"text-secondary\">Shipping Date:</strong>"
+msgid "<strong style=\"color: black!important;\">Signature</strong>"
+msgstr ""
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_delivery_document_a5
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_dispatch_delivery_document
+msgid "<strong>Commandé</strong>"
 msgstr ""
 
 #. module: tanatech_stock
@@ -364,6 +378,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
 msgid "<strong>Delivered</strong>"
 msgstr "<strong>Délivré</strong>"
+
+#. module: tanatech_stock
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_delivery_document_a5
+#: model_terms:ir.ui.view,arch_db:tanatech_stock.inherit_tanatech_report_dispatch_delivery_document
+msgid "<strong>Délivré</strong>"
+msgstr ""
 
 #. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
@@ -446,6 +467,11 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: tanatech_stock
+#: model:ir.model.fields,field_description:tanatech_stock.field_stock_picking__is_second_validator
+msgid "Is Second Validator"
+msgstr ""
+
+#. module: tanatech_stock
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_delivery_document_a5
 #: model_terms:ir.ui.view,arch_db:tanatech_stock.tanatech_report_dispatch_delivery_document
@@ -456,7 +482,7 @@ msgstr "Numéro de Lot/Série"
 #: code:addons/tanatech_stock/models/stock_picking.py:0
 #, python-format
 msgid "Please add some items to move."
-msgstr ""
+msgstr "Ajoutez quelques objets à déplacer."
 
 #. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__assigned
@@ -482,7 +508,7 @@ msgstr "Transfert"
 #: code:addons/tanatech_stock/models/stock_picking.py:0
 #, python-format
 msgid "Transfers %s: Please add some items to move."
-msgstr ""
+msgstr "Transferts %s: Ajoutez des articles a déplacer"
 
 #. module: tanatech_stock
 #: model:ir.model.fields.selection,name:tanatech_stock.selection__stock_picking__state__confirmed
@@ -498,4 +524,4 @@ msgstr "En attente d'une autre opération"
 #: code:addons/tanatech_stock/models/stock_picking.py:0
 #, python-format
 msgid "You need to supply a Lot/Serial number for products %s."
-msgstr ""
+msgstr "Vous devez fournir un lot/numéro de série pour le produit %s."
