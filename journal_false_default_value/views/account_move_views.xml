@@ -7,7 +7,8 @@
     <field name="arch" type="xml">
       <field name="journal_id" position="attributes">
         <attribute name="default">0</attribute>
-        <attribute name="attrs">{'readonly': [('posted_before', '=', True)], 'required': True}</attribute>
+        <attribute name="readonly">posted_before==True</attribute>
+        <attribute name="required">True</attribute>
       </field>
     </field>
   </record>

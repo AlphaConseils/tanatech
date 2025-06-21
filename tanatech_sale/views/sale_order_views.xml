@@ -18,14 +18,11 @@
         <field name="arch" type="xml">
             <xpath expr="//button[8]" position="after">
                 <field name="show_action_add_service_charge" invisible="1" />
-                <button name="action_add_service_charge" type="object" string="Ajout frais de service" attrs="{'invisible': [('show_action_add_service_charge', '=', False)]}"/>
+                <button name="action_add_service_charge" type="object" string="Ajout frais de service" invisible="show_action_add_service_charge==False"/>
             </xpath>
             <xpath expr="//header" position="attributes">
                 <attribute name="groups">tanatech_sale.commercial_group</attribute>
             </xpath>
-            <!--<xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Pourcentage frais de service"/>
-            </xpath>-->
             <group name="partner_details" position="attributes">
                 <attribute name="groups">tanatech_sale.commercial_group</attribute>
             </group>
@@ -35,28 +32,24 @@
                 <field name="can_edit_pricelist" invisible="1"/>
             </group>
             <field name="partner_id" position="attributes">
-                <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
+                <attribute name="required">is_commercial</attribute>
             </field>
             <field name="partner_invoice_id" position="attributes">
-                <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
+                <attribute name="required">is_commercial</attribute>
             </field>
             <field name="partner_shipping_id" position="attributes">
-                <attribute name="attrs">{'required': [('is_commercial', '=', True)]}</attribute>
+                <attribute name="required">s_commercial</attribute>
             </field>
             <field name="pricelist_id" position="attributes">
-                <attribute name="attrs">{
-                    'required': [('is_commercial', '=', True),('can_edit_pricelist', '=', True)], 
-                    'readonly': [('can_edit_pricelist', '=', False)], 
-                    'invisible': [('is_commercial', '=', False)]
-                }</attribute>
+                <attribute name="required">is_commercial and can_edit_pricelist</attribute>
+                <attribute name="readonly">not can_edit_pricelist</attribute>
+                <attribute name="invisible">not is_commercial</attribute>
             </field>
             <xpath expr="//label[@for='pricelist_id']" position="attributes">
-                <attribute name="attrs">{
-                    'invisible': [('is_commercial', '=', False)]
-                }</attribute>
+                <attribute name="invisible">not is_commercial</attribute>
             </xpath>
             <button name="preview_sale_order" position="attributes">
-                <attribute name="attrs">{'invisible': [('is_office_design', '=', True)]}</attribute>
+                <attribute name="invisible">is_office_design</attribute>
             </button>
         </field>
     </record>

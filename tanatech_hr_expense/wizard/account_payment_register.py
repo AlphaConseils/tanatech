@@ -12,12 +12,16 @@ class AccountPaymentRegister(models.TransientModel):
             Adding SUDO when calling the reconcile method.
         """
         domain = [
-            ('parent_state', '=', 'posted'),
-            ('account_internal_type', 'in', ('receivable', 'payable')),
-            ('reconciled', '=', False),
+            ("parent_state", "=", "posted"),
+            (
+                "account_type",
+                "in",
+                ("asset_receivable", "liability_payable"),
+            ),
+            ("reconciled", "=", False),
         ]
         for vals in to_process:
-            payment_lines = vals['payment'].line_ids.filtered_domain(domain)
+            payment_lines = vals['payment'].move_id.line_ids.filtered_domain(domain)
             lines = vals['to_reconcile']
 
             for account in payment_lines.account_id:
