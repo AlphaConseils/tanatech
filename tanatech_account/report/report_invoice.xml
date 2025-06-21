@@ -331,7 +331,7 @@
                         <td>
                             <span t-esc="amount_by_group['group_name']"/>
                             <span class="text-nowrap"> on
-                                <t t-esc="amount_by_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                <t t-esc="amount_by_group['display_base_amount_currency']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                             </span>
                         </td>
                         <td class="text-right o_price_total">
