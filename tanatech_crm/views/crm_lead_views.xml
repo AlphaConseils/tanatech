@@ -60,7 +60,7 @@
     </record>
 
     <record id="tanatech_crm_case_kanban_view_leads" model="ir.ui.view">
-        <field name="name"></field>
+        <field name="name">tanateh.crm.lead</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">

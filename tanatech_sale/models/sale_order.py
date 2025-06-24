@@ -19,18 +19,18 @@ class SaleOrder(models.Model):
     @api.onchange("order_line")
     def show_boutton(self):
         for sale in self:
-            if sale.order_line and sale.order_line.filtered(
+            if sale.order_line and not any(sale.order_line.filtered(
                 lambda line: line.is_service
-            ):
+            )):
                 sale.show_action_add_service_charge = True
             else:
                 sale.show_action_add_service_charge = False
 
     def _compute_show_boutton(self):
         for sale in self:
-            if sale.order_line and sale.order_line.filtered(
+            if sale.order_line and not any(sale.order_line.filtered(
                 lambda line: line.is_service
-            ):
+            )):
                 sale.show_action_add_service_charge = True
             else:
                 sale.show_action_add_service_charge = False
@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
                         "is_service": True,
                         "product_uom": product_tmplt.uom_id.id,
                         "price_unit": float(
-                            json.loads(self.tax_totals_json)["amount_untaxed"]
+                            float(self.tax_totals["tax_amount_currency"])
                         )
                         * product_tmplt.percentage_service_charge,
                         "order_id": order.id,
@@ -102,9 +102,7 @@ class SaleOrder(models.Model):
                         "is_service": True,
                         "product_uom_qty": 1,
                         "product_uom": charge_service_product.uom_id.id,
-                        "price_unit": float(
-                            json.loads(self.tax_totals_json)["amount_untaxed"]
-                        )
+                        "price_unit": float(self.tax_totals["tax_amount_currency"])
                         * charge_service_product.percentage_service_charge,
                         "order_id": order.id,
                         "name": "Frais de service",
