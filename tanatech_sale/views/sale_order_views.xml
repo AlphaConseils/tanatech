@@ -16,6 +16,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+                <field name="is_service" invisible="1"/>
+            </xpath>
             <xpath expr="//button[8]" position="after">
                 <field name="show_action_add_service_charge" invisible="1" />
                 <button name="action_add_service_charge" type="object" string="Ajout frais de service" invisible="show_action_add_service_charge==False"/>
@@ -51,6 +54,9 @@
             <button name="preview_sale_order" position="attributes">
                 <attribute name="invisible">is_office_design</attribute>
             </button>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+                <field name="is_service" invisible="1"/>
+            </xpath>
         </field>
     </record>
 </odoo>
