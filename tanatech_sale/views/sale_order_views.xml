@@ -20,7 +20,15 @@
                 <field name="is_service" invisible="1"/>
             </xpath>
             <xpath expr="//button[8]" position="after">
-                <field name="show_action_add_service_charge" invisible="1" />
+                <field name="show_action_add_service_charge" invisible="1
+                
+                
+                
+                
+                
+                
+                
+                " />
                 <button name="action_add_service_charge" type="object" string="Ajout frais de service" invisible="show_action_add_service_charge==False"/>
             </xpath>
             <xpath expr="//header" position="attributes">
