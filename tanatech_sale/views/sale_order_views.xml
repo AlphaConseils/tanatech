@@ -16,8 +16,19 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="after">
+                <field name="is_service" invisible="1"/>
+            </xpath>
             <xpath expr="//button[8]" position="after">
-                <field name="show_action_add_service_charge" invisible="1" />
+                <field name="show_action_add_service_charge" invisible="1
+                
+                
+                
+                
+                
+                
+                
+                " />
                 <button name="action_add_service_charge" type="object" string="Ajout frais de service" invisible="show_action_add_service_charge==False"/>
             </xpath>
             <xpath expr="//header" position="attributes">
@@ -38,7 +49,7 @@
                 <attribute name="required">is_commercial</attribute>
             </field>
             <field name="partner_shipping_id" position="attributes">
-                <attribute name="required">s_commercial</attribute>
+                <attribute name="required">is_commercial</attribute>
             </field>
             <field name="pricelist_id" position="attributes">
                 <attribute name="required">is_commercial and can_edit_pricelist</attribute>
@@ -48,7 +59,7 @@
             <xpath expr="//label[@for='pricelist_id']" position="attributes">
                 <attribute name="invisible">not is_commercial</attribute>
             </xpath>
-            <button name="preview_sale_order" position="attributes">
+            <button name="action_preview_sale_order" position="attributes">
                 <attribute name="invisible">is_office_design</attribute>
             </button>
         </field>

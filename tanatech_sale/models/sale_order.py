@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 import json
 
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
@@ -13,16 +14,26 @@ class SaleOrder(models.Model):
     is_commercial = fields.Boolean(compute="_compute_is_commercial")
     is_office_design = fields.Boolean(compute="_compute_is_office_design")
     can_edit_pricelist = fields.Boolean(compute="_compute_can_edit_pricelist")
-    show_action_add_service_charge = fields.Boolean()
+    show_action_add_service_charge = fields.Boolean(compute="_compute_show_boutton")
 
-    @api.onchange('order_line')
+    @api.onchange("order_line")
     def show_boutton(self):
         for sale in self:
-            if sale.order_line:
+            if sale.order_line and not any(sale.order_line.filtered(
+                lambda line: line.is_service
+            )):
                 sale.show_action_add_service_charge = True
             else:
                 sale.show_action_add_service_charge = False
 
+    def _compute_show_boutton(self):
+        for sale in self:
+            if sale.order_line and not any(sale.order_line.filtered(
+                lambda line: line.is_service
+            )):
+                sale.show_action_add_service_charge = True
+            else:
+                sale.show_action_add_service_charge = False
 
     def _compute_is_commercial(self):
         for rec in self:
@@ -42,44 +53,59 @@ class SaleOrder(models.Model):
                 "tanatech_sale.pricelist_group"
             )
 
-    @api.constrains('order_line')
+    @api.constrains("order_line")
     def check_have_one_charge_service(self):
         for sale in self:
-            if sale.order_line.search([('check_belongs_order', '=', True), ('order_id', '=', sale.id)], limit=1):
+            if sale.order_line.search(
+                [("check_belongs_order", "=", True), ("order_id", "=", sale.id)],
+                limit=1,
+            ):
                 sale.show_action_add_service_charge = False
             else:
                 sale.show_action_add_service_charge = True
 
-
     def action_add_service_charge(self):
         for order in self:
-            product_tmplt = self.env['product.template'].search([('is_product_service_charge', '=', True)], limit=1)
+            product_tmplt = self.env["product.template"].search(
+                [("is_product_service_charge", "=", True)], limit=1
+            )
             if product_tmplt:
-                self.env['sale.order.line'].create({
-                    'product_template_id': product_tmplt.id,
-                    'product_id': product_tmplt.product_variant_id.id,
-                    'product_uom_qty': 1,
-                    'product_uom': product_tmplt.uom_id.id,
-                    'price_unit': float(json.loads(self.tax_totals_json)['amount_untaxed']) * product_tmplt.percentage_service_charge,
-                    'order_id': order.id,
-                    'name': 'Frais de service',
-                    'check_belongs_order': True,
-                })
+                self.env["sale.order.line"].create(
+                    {
+                        "product_template_id": product_tmplt.id,
+                        "product_id": product_tmplt.product_variant_id.id,
+                        "product_uom_qty": 1,
+                        "is_service": True,
+                        "product_uom": product_tmplt.uom_id.id,
+                        "price_unit": float(
+                            float(self.tax_totals["base_amount_currency"])
+                        )
+                        * product_tmplt.percentage_service_charge,
+                        "order_id": order.id,
+                        "name": "Frais de service",
+                        "check_belongs_order": True,
+                    }
+                )
             else:
-                charge_service_product = self.env['product.template'].create({
-                    'name': 'Frais de service',
-                    'detailed_type': 'service',
-                    'is_product_service_charge': True,
-                    'percentage_service_charge': 0.07,
-                })
-                self.env['sale.order.line'].create({
-                    'product_template_id': charge_service_product.id,
-                    'product_id': charge_service_product.product_variant_id.id,
-                    'product_uom_qty': 1,
-                    'product_uom': charge_service_product.uom_id.id,
-                    'price_unit': float(json.loads(self.tax_totals_json)['amount_untaxed']) * charge_service_product.percentage_service_charge,
-                    'order_id': order.id,
-                    'name': 'Frais de service',
-                    'check_belongs_order': True,
-                })
-            order.show_action_add_service_charge = False
+                charge_service_product = self.env["product.template"].create(
+                    {
+                        "name": "Frais de service",
+                        "detailed_type": "service",
+                        "is_product_service_charge": True,
+                        "percentage_service_charge": 0.07,
+                    }
+                )
+                self.env["sale.order.line"].create(
+                    {
+                        "product_template_id": charge_service_product.id,
+                        "product_id": charge_service_product.product_variant_id.id,
+                        "is_service": True,
+                        "product_uom_qty": 1,
+                        "product_uom": charge_service_product.uom_id.id,
+                        "price_unit": float(self.tax_totals["base_amount_currency"])
+                        * charge_service_product.percentage_service_charge,
+                        "order_id": order.id,
+                        "name": "Frais de service",
+                        "check_belongs_order": True,
+                    }
+                )
