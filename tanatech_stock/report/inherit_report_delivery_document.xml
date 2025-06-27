@@ -72,8 +72,8 @@
               <span t-esc="aggregated_lines[line]['product_uom']"/>
           </td>
           <td class="text-center" name="move_line_aggregated_qty_done">
-              <t t-if="aggregated_lines[line]['qty_done']">
-                  <span t-esc="aggregated_lines[line]['qty_done']"
+              <t t-if="aggregated_lines[line]['quantity']">
+                  <span t-esc="aggregated_lines[line]['quantity']"
                       t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
                   <span t-esc="aggregated_lines[line]['product_uom']"/>
               </t>
@@ -170,8 +170,8 @@
               <span t-esc="aggregated_lines[line]['product_uom']"/>
           </td>
           <td class="text-center" name="move_line_aggregated_qty_done">
-              <t t-if="aggregated_lines[line]['qty_done']">
-                  <span t-esc="aggregated_lines[line]['qty_done']"
+              <t t-if="aggregated_lines[line]['quantity']">
+                  <span t-esc="aggregated_lines[line]['quantity']"
                       t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
                   <span t-esc="aggregated_lines[line]['product_uom']"/>
               </t>
