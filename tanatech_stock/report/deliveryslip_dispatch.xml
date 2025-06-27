@@ -139,7 +139,8 @@
                                     <span style="color: black!important;" t-field="move.product_uom"/>
                                 </td>
                                 <td style="color: black!important;">
-                                    <span style="color: black!important;" t-field="move.quantity_done"/>
+                                    <!-- <span style="color: black!important;" t-field="move.quantity_done"/> -->
+                                    <span style="color: black!important;" t-field="move.quantity"/>
                                     <span style="color: black!important;" t-field="move.product_uom"/>
                                 </td>
                             </tr>
