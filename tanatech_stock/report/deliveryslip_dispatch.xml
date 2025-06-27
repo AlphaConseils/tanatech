@@ -5,7 +5,7 @@
         <t t-call="web.html_container">
             <t t-call="tanatech_base.tanatech_external_layout_standard">
                 <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-                <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
+                <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"/>
 
                 <div style="color: black!important; padding-top: 40px;" class="page small text-secondary">
                     <h2 class="h3 text-secondary">
@@ -126,7 +126,7 @@
                             </tr>
                         </thead>
                         <tbody style="color: black!important;">
-                            <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                            <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
                             <tr t-foreach="lines" t-as="move" class="text-secondary">
                                 <td style="color: black!important;">
                                     <span style="color: black!important;" t-field="move.product_id"/>
@@ -139,7 +139,8 @@
                                     <span style="color: black!important;" t-field="move.product_uom"/>
                                 </td>
                                 <td style="color: black!important;">
-                                    <span style="color: black!important;" t-field="move.quantity_done"/>
+                                    <!-- <span style="color: black!important;" t-field="move.quantity_done"/> -->
+                                    <span style="color: black!important;" t-field="move.quantity"/>
                                     <span style="color: black!important;" t-field="move.product_uom"/>
                                 </td>
                             </tr>
@@ -272,7 +273,7 @@
                 </thead>
                 <tbody class="text-secondary">
                     <t t-foreach="backorders" t-as="backorder">
-                        <t t-set="bo_lines" t-value="backorder.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                        <t t-set="bo_lines" t-value="backorder.move_ids.filtered(lambda x: x.product_uom_qty)"/>
                         <tr t-foreach="bo_lines" t-as="bo_line">
                             <td style="color: black!important;"  class="w-auto">
                                 <span style="color: black!important;" t-field="bo_line.product_id"/>
