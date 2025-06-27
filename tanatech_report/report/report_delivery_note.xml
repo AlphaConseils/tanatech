@@ -84,11 +84,11 @@
                     </div>
 
                     <div class="row mt32 mb32">
-                        <div t-if="o.origin" class="col-auto" name="div_origin">
+                        <div t-if="o.origin" class="col-auto col-4 mw-100 mb-2" name="div_origin">
                             <strong>Order:</strong>
                             <p t-field="o.origin"/>
                         </div>
-                        <div t-if="o.state" class="col-auto" name="div_sched_date">
+                        <div t-if="o.state" class="col-auto col-4 mw-100 mb-2" name="div_sched_date">
                             <strong>Shipping Date:</strong>
                             <t t-if="o.state == 'done'">
                                 <p t-field="o.date_done"/>

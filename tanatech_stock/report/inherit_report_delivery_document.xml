@@ -15,6 +15,21 @@
           </t>
         </t>
       </xpath>
+      <xpath expr="//div[@name='signature']" position="after">
+        <div style="text-align: center;">
+          <div class="row">
+            <div class="col-auto col-4 mw-100 mb-2">
+              <p>Le récepteur</p>
+            </div>
+            <div class="col-auto col-4 mw-100 mb-2">
+              <p>Le client</p>
+            </div>
+            <div class="col-auto col-4 mw-100 mb-2">
+              <p>Le récepteur (magasinier ou responsable logistique)</p>
+            </div>
+          </div>
+        </div>    
+      </xpath>
       <!-- <xpath expr="//th[@name='th_sml_qty_ordered']" position="replace">
         <t t-if="o.company_id.name.lower() == 'masontsika'">
           <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
@@ -57,8 +72,8 @@
               <span t-esc="aggregated_lines[line]['product_uom']"/>
           </td>
           <td class="text-center" name="move_line_aggregated_qty_done">
-              <t t-if="aggregated_lines[line]['qty_done']">
-                  <span t-esc="aggregated_lines[line]['qty_done']"
+              <t t-if="aggregated_lines[line]['quantity']">
+                  <span t-esc="aggregated_lines[line]['quantity']"
                       t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
                   <span t-esc="aggregated_lines[line]['product_uom']"/>
               </t>
@@ -155,8 +170,8 @@
               <span t-esc="aggregated_lines[line]['product_uom']"/>
           </td>
           <td class="text-center" name="move_line_aggregated_qty_done">
-              <t t-if="aggregated_lines[line]['qty_done']">
-                  <span t-esc="aggregated_lines[line]['qty_done']"
+              <t t-if="aggregated_lines[line]['quantity']">
+                  <span t-esc="aggregated_lines[line]['quantity']"
                       t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
                   <span t-esc="aggregated_lines[line]['product_uom']"/>
               </t>
