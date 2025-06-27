@@ -155,10 +155,10 @@ class Picking(models.Model):
                 and self.env.user.has_groups("stock.group_auto_reception_report")
                 and self.filtered(lambda p: p.picking_type_id.code != "outgoing")
             ):
-                lines = self.move_lines.filtered(
+                lines = self.move_ids.filtered(
                     lambda m: m.product_id.type == "product"
                     and m.state != "cancel"
-                    and m.quantity_done
+                    and m.quantity
                     and not m.move_dest_ids
                 )
                 if lines:
