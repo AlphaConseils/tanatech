@@ -114,7 +114,9 @@
                   <span t-field="move.product_uom" />
                 </td>
                 <td>
-                  <span t-field="move.quantity_done" />
+                  <!-- <span t-field="move.quantity_done" /> -->
+                  <span t-field="move.quantity" />
+
                   <span t-field="move.product_uom" />
                 </td>
               </tr>
