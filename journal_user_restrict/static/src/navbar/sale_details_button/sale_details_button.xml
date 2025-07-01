@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="journal_user_restrict.SaleDetailsReport" t-inherit="point_of_sale.SaleDetailsReport" t-inherit-mode="primary">
+        <xpath expr="//div[@class='orderlines'][2]" position="replace">
+            <div class="orderlines">
+                <t t-foreach="products" t-as="category" t-key="category['name']">
+                    <t t-foreach="category['products']" t-as="line" t-key="line_index">
+                        <div class="responsive-price">
+                            <!-- <t t-esc="line['product_name']" /> -->
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="Math.round(line.quantity * Math.pow(10, pos.models['decimal.precision'].find((dp) => dp.name === 'Product Unit of Measure').digits)) / Math.pow(10, pos.models['decimal.precision'].find((dp) => dp.name === 'Product Unit of Measure').digits)" />
+                                <t t-if="line.uom !== 'Units'">
+                                    <t t-esc="line.uom" />
+                                </t>
+                                x
+                                <t t-esc="formatCurrency(line.price_unit, false)" />
+                            </span>
+                        </div>
+                        <t t-if="line.discount !== 0">
+                            <div class="pos-receipt-left-padding">Discount: <t t-esc="line.discount" />
+%</div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@class='orderlines'][1]" position="replace">
+            <div class="orderlines">
+                <t t-foreach="products" t-as="category" t-key="category['name']">
+                    <t t-foreach="category['products']" t-as="line" t-key="line_index">
+                        <div class="responsive-price">
+                            <!-- <t t-esc="line['product_name']" /> -->
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="Math.round(line.quantity * Math.pow(10, pos.models['decimal.precision'].find((dp) => dp.name === 'Product Unit of Measure').digits)) / Math.pow(10, pos.models['decimal.precision'].find((dp) => dp.name === 'Product Unit of Measure').digits)" />
+                                <t t-if="line.uom !== 'Units'">
+                                    <t t-esc="line.uom" />
+                                </t>
+                                x
+                                <t t-esc="formatCurrency(line.price_unit, false)" />
+                            </span>
+                        </div>
+                        <t t-if="line.discount !== 0">
+                            <div class="pos-receipt-left-padding">Discount: <t t-esc="line.discount" />
+%</div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>
