@@ -3,11 +3,11 @@
     <record model="ir.rule" id="journal_user_restrict">
         <field name="name">Restrict journal account for certain users</field>
         <field name="model_id" ref="model_account_journal"/>
-        <field name="domain_force">['|', ('user_ids','=', False), ('user_ids', 'in', [user.id])]</field>
+        <field name="domain_force">['|', ('user_ids','=', False), ('id','in', user.get_allowed_journal())]</field>
     </record>
-    <record model="ir.rule" id="invoice_journal_user_restrict">
-        <field name="name">Restrict account journal of invoice for certain users</field>
+    <record model="ir.rule" id="sale_subscription_user_restrict">
+        <field name="name">Restrict sale subscription for certain users</field>
         <field name="model_id" ref="account.model_account_move"/>
-        <field name="domain_force">['|', ('journal_id','=', False), '|', ('journal_id.user_ids','=', False), ('journal_id.user_ids','in', user.id)]</field>
+        <field name="domain_force">['|', ('journal_id','=', False), ('journal_id','in', user.get_allowed_journal())]</field>
     </record>
 </odoo>
