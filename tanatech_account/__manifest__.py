@@ -16,12 +16,11 @@ You could use this simplified accounting in case you work with an (external) acc
     "website": "https://www.nexources.com/",
     "depends": ["account", "tanatech_base"],
     "data": [
-        # security
-        "security/res_groups.xml",
-        # report
-        "report/report_invoice.xml",
+        "views/account_move_views.xml",
+        # "reportreport/report_invoice.xml",
+        # "securitysecurity/res_groups.xml",
         "report/inherit_report_invoice_document.xml",
-        "report/report_fa_delivery_note.xml",
+        "report/report_fa_delivery_note.xml"
     ],
     "demo": [],
     "installable": True,

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models
+from odoo import models, fields
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
+
+    related_journal = fields.Char(related='journal_id.name', string='Journal Name', readonly=True)
 
     def _get_reconciled_info_JSON_values(self):
         self.ensure_one()
@@ -44,3 +46,12 @@ class AccountMove(models.Model):
             "move_id": counterpart_line.move_id.id,
             "ref": reconciliation_ref,
         }
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    price_unit_ht = fields.Float(string="Prix", compute="_compute_price_unit_ht")
+
+    def _compute_price_unit_ht(self):
+        for rec in self:
+            rec.price_unit_ht = (rec.price_total if rec.price_total else 1) / (rec.quantity if rec.quantity else 1)

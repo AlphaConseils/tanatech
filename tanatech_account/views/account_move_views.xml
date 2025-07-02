@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View account.move form -->
+    <record id="view_account_move_form_inherited_tanatech" model="ir.ui.view">
+        <field name="name">view.account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delivery_date']" position="after">
+                <field name="related_journal" />
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field/list/field[@name='tax_ids']" position="attributes">
+                <attribute name="column_invisible">parent.related_journal == 'Factures clients NA'</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field/list/field[@name='price_subtotal']" position="attributes">
+                <attribute name="column_invisible" separator=" or " add="parent.related_journal == 'Factures clients NA'" />
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field/list/field[@name='price_subtotal']" position="after">
+                <field name="price_total" column_invisible="parent.related_journal != 'Factures clients NA'"/>
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field/list/field[@name='price_unit']" position="after">
+                <field name="price_unit_ht" column_invisible="parent.related_journal != 'Factures clients NA'"/>
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field/list/field[@name='price_unit']" position="attributes">
+                <attribute name="column_invisible" separator=" or " add="parent.related_journal == 'Factures clients NA'" />
+            </xpath>
+            <xpath expr="//field[@name='tax_totals']" position="attributes">
+                <attribute name="invisible">related_journal == 'Factures clients NA'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tax_totals']" position="after">
+                <field name="amount_total" invisible="related_journal != 'Factures clients NA'" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
