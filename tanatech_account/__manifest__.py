@@ -17,8 +17,8 @@ You could use this simplified accounting in case you work with an (external) acc
     "depends": ["account", "tanatech_base"],
     "data": [
         "views/account_move_views.xml",
-        # "reportreport/report_invoice.xml",
-        # "securitysecurity/res_groups.xml",
+        "report/report_invoice.xml",
+        "security/res_groups.xml",
         "report/inherit_report_invoice_document.xml",
         "report/report_fa_delivery_note.xml"
     ],

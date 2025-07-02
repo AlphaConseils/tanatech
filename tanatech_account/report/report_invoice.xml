@@ -321,7 +321,7 @@
             <!-- <t t-set="subtotal_to_show" t-value="subtotal['name']" />
             <t t-call="account.tax_groups_totals" /> -->
             <t t-foreach="subtotal['tax_groups']" t-as="amount_by_group">
-                <tr>
+                <tr t-if="o.journal_id.name != 'Factures clients NA'">
                     <t t-if="len(subtotal['tax_groups']) > 1">
                         <td>
                             <span t-esc="amount_by_group['group_name']"/>

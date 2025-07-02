@@ -30,6 +30,36 @@
           </div>
         </div>
     </xpath>
+    <xpath expr="//th[@name='th_taxes']" position="attributes">
+      <attribute name="t-if">o.journal_id.name != 'Factures clients NA'</attribute>
+    </xpath>
+    <xpath expr="//td[@name='td_taxes']" position="attributes">
+      <attribute name="t-if">o.journal_id.name != 'Factures clients NA'</attribute>
+    </xpath>
+    <xpath expr="//td[@name='td_price_unit']" position="replace">
+      <t t-if="o.journal_id.name != 'Factures clients NA'">
+        <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+            <span class="text-nowrap" t-field="line.price_unit"/>
+        </td>
+      </t>
+      <t t-else="">
+        <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+            <span class="text-nowrap" t-field="line.price_unit_ht"/>
+        </td>
+      </t>
+    </xpath>
+    <xpath expr="//td[@name='td_subtotal']" position="replace">
+      <t t-if="o.journal_id.name != 'Factures clients NA'">
+        <td name="td_subtotal" class="text-end o_price_total">
+            <span class="text-nowrap" t-field="line.price_subtotal"/>
+        </td>
+      </t>
+      <t t-else="">
+        <td name="td_subtotal" class="text-end o_price_total">
+            <span class="text-nowrap" t-field="line.price_total"/>
+        </td>
+      </t>
+    </xpath>
   </template>
 
 </odoo>
