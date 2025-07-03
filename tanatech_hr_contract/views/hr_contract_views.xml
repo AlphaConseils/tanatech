@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_view_form_extent" model="ir.ui.view">
+        <field name="name">hr.contract.form.extent</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook/page[@name='information']/group" position="inside">
+                <group name="allowance_info">
+                    <group name="allowance">
+                        <label for="family_allowance"/>
+                        <div class="o_row mw-50" name="wage">
+                            <field name="family_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

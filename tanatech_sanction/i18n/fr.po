@@ -1,0 +1,1138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_sanction
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20241230\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-26 13:35+0000\n"
+"PO-Revision-Date: 2025-03-26 13:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,print_report_name:tanatech_sanction.action_report_demex
+msgid "'%s' % object.name"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,print_report_name:tanatech_sanction.action_report_epl
+msgid "'EPL - %s' % (object.name)"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,print_report_name:tanatech_sanction.action_lay_off_report
+msgid "'Lay Off - %s' % (object.name)"
+msgstr "Licenciement"
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,print_report_name:tanatech_sanction.action_report_warning
+msgid "'Warning - %s' % (object.name)"
+msgstr "Avertissment"
+
+#. module: tanatech_sanction
+#: model:mail.template,body_html:tanatech_sanction.lay_off_mail_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col mb-2\">\n"
+"                            <p class=\"text-end\">\n"
+"                            Antananarivo, le <span t-out=\"datetime.date.today()\" t-options=\"{'widget': 'date', 'format': 'dd MMMM YYYY'}\"></span>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>\n"
+"                                Nom et prénom : <t t-out=\"object.employee_id.name\"></t><br>\n"
+"                                Adresse : <t t-out=\"object.employee_id.private_street\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_street2\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_country_id.name\"></t>\n"
+"                                            <br>\n"
+"                                <t t-if=\"object.employee_id.work_location_id\">\n"
+"                                    Agence : <t t-out=\"object.employee_id.work_location_id.name\"></t><br>\n"
+"                                </t>\n"
+"                                Poste : <t t-out=\"object.employee_id.job_id.name\"></t><br>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-7 offset-5\">\n"
+"                            <p>\n"
+"                                <span style=\"text-decoration: underline;\">Objet </span>: Licenciement\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12 mt-2\">\n"
+"                            <p><span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span></p>\n"
+"                              <p>Veuillez écrire votre contenu de licenciement ici</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>Veuillez agréer, <span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span> nos sincères salutations.</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <table width=\"100%\" class=\"no_border\">\n"
+"                                <tr t-if=\"object.employee_manager.id != object.hr_responsible.id\">\n"
+"                                    <td width=\"40%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                    <td class=\"text-end pe-2\" t-if=\"object.get_signature_rh_responsible()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_rh_responsible())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\"> \n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.employee_manager.id == object.hr_responsible.id\">\n"
+"                                    <td width=\"60%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr width=\"100%\">\n"
+"                                    <td colspan=\"3\" class=\"text-center\">\n"
+"                                        <img src=\"/tanatech_sanction/static/src/img/cachet_pamf.png\" alt=\"Icône cachet\" t-attf-style=\"width: 200px; height: 200px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,body_html:tanatech_sanction.sanction_epl_mail_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col mb-2\">\n"
+"                            <p class=\"text-end\">\n"
+"                            Antananarivo, le <span t-out=\"datetime.date.today()\" t-options=\"{'widget': 'date', 'format': 'dd MMMM YYYY'}\"></span>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-7 offset-5\">\n"
+"                            <p>\n"
+"                                Nom et prénom : <t t-out=\"object.employee_id.name\"></t><br>\n"
+"                                Adresse : <t t-out=\"object.employee_id.private_street\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_street2\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_country_id.name\"></t>\n"
+"                                            <br>\n"
+"                                <t t-if=\"object.employee_id.work_location_id\">\n"
+"                                    Agence : <t t-out=\"object.employee_id.work_location_id.name\"></t><br>\n"
+"                                </t>\n"
+"                                Poste : <t t-out=\"object.employee_id.job_id.name\"></t><br>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>\n"
+"                                <span style=\"text-decoration: underline;\">Objet </span>: Convocation à un entretien préalable au licenciement\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12 mt-2\">\n"
+"                            <p><span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span></p>\n"
+"                              <p>Veuillez écrire votre contenu ici</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>Veuillez agréer, <span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span> nos sincères salutations.</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <table width=\"100%\" class=\"no_border\">\n"
+"                                <tr t-if=\"object.employee_manager.id != object.hr_responsible.id\">\n"
+"                                    <td width=\"40%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                    <td class=\"text-end pe-2\" t-if=\"object.get_signature_rh_responsible()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_rh_responsible())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\"> \n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.employee_manager.id == object.hr_responsible.id\">\n"
+"                                    <td width=\"60%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr width=\"100%\">\n"
+"                                    <td colspan=\"3\" class=\"text-center\">\n"
+"                                        <img src=\"/tanatech_sanction/static/src/img/cachet_pamf.png\" alt=\"Icône cachet\" t-attf-style=\"width: 200px; height: 200px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,body_html:tanatech_sanction.sanction_demex_mail_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col mb-2\">\n"
+"                            <p class=\"text-end\">\n"
+"                            Antananarivo, le <span t-out=\"datetime.date.today()\" t-options=\"{'widget': 'date', 'format': 'dd MMMM YYYY'}\"></span>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col\">\n"
+"                            <t t-set=\"company\" t-value=\"env.company\"></t>\n"
+"                            <p>\n"
+"                                <span t-out=\"company.name\"></span><br>\n"
+"                                <span t-out=\"company.street\"></span>, <span t-out=\"company.street2\"></span>, <span t-out=\"company.zip\"></span> <span t-out=\"company.city\"></span>, <span t-out=\"company.country_id.name\"></span> <br>\n"
+"                                Tel : <span t-out=\"company.phone\"></span><br>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-7 offset-5\">\n"
+"                            <p>\n"
+"                                Nom et prénom : <t t-out=\"object.employee_id.name\"></t><br>\n"
+"                                Adresse : <t t-out=\"object.employee_id.private_street\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_street2\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                            <t t-out=\"object.employee_id.private_country_id.name\"></t>\n"
+"                                            <br>\n"
+"                                <t t-if=\"object.employee_id.work_location_id\">\n"
+"                                    Agence : <t t-out=\"object.employee_id.work_location_id.name\"></t><br>\n"
+"                                </t>\n"
+"                                Poste : <t t-out=\"object.employee_id.job_id.name\"></t><br>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>\n"
+"                                <span style=\"text-decoration: underline;\">Objet </span>: Demande d'explication\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12 mt-2\">\n"
+"                            <p><span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span></p>\n"
+"                            <p>Veuillez écrire votre contenu ici</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <p>Veuillez agréer, <span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span> nos sincères salutations.</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <table width=\"100%\" class=\"no_border\">\n"
+"                                <tr t-if=\"object.employee_manager.id != object.hr_responsible.id\">\n"
+"                                    <td width=\"40%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                    <td class=\"text-end pe-2\" t-if=\"object.get_signature_rh_responsible()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_rh_responsible())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\"> \n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.employee_manager.id == object.hr_responsible.id\">\n"
+"                                    <td width=\"60%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr width=\"100%\">\n"
+"                                    <td colspan=\"3\" class=\"text-center\">\n"
+"                                        <img src=\"/tanatech_sanction/static/src/img/cachet_pamf.png\" alt=\"Icône cachet\" t-attf-style=\"width: 200px; height: 200px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,body_html:tanatech_sanction.sanction_warning_mail_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col mb-2\">\n"
+"                            <p class=\"text-end\">\n"
+"                            Antananarivo, le <span t-out=\"datetime.date.today()\" t-options=\"{'widget': 'date', 'format': 'dd MMMM YYYY'}\"></span>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <p>\n"
+"                            Nom et prénom : <t t-out=\"object.employee_id.name\"></t><br>\n"
+"                            Adresse : <t t-out=\"object.employee_id.private_street\"></t>\n"
+"                                        <t t-out=\"object.employee_id.private_street2\"></t>\n"
+"                                        <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                        <t t-out=\"object.employee_id.private_city\"></t>\n"
+"                                        <t t-out=\"object.employee_id.private_country_id.name\"></t>\n"
+"                                        <br>\n"
+"                            <t t-if=\"object.employee_id.work_location_id\">\n"
+"                                Agence : <t t-out=\"object.employee_id.work_location_id.name\"></t><br>\n"
+"                            </t>\n"
+"                            Poste : <t t-out=\"object.employee_id.job_id.name\"></t><br>\n"
+"                        </p>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-7 offset-5\">\n"
+"                            <p>\n"
+"                                <span style=\"text-decoration: underline;\">Objet </span>: Notification <t t-out=\"object.sanction_type_id.name\"></t>\n"
+"                            </p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12 mt-2\">\n"
+"                            <p><span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span></p>\n"
+"                              <p>Veuillez écrire votre contenu ici</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                         <div class=\"col-12\">\n"
+"                            <p>Veuillez agréer, <span t-if=\"object.employee_id.gender == 'male'\">Monsieur,</span><span t-if=\"object.employee_id.gender == 'female'\">Madame,</span> nos sincères salutations.</p>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                    <div class=\"row\">\n"
+"                        <div class=\"col-12\">\n"
+"                            <table width=\"100%\" class=\"no_border\">\n"
+"                                <tr t-if=\"object.employee_manager.id != object.hr_responsible.id\">\n"
+"                                    <td width=\"40%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                    <td class=\"text-end pe-2\" t-if=\"object.get_signature_rh_responsible()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_rh_responsible())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\"> \n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.employee_manager.id == object.hr_responsible.id\">\n"
+"                                    <td width=\"60%\"></td>\n"
+"                                    <td class=\"text-end\" t-if=\"object.get_signature_manager()\">\n"
+"                                        <img t-att-src=\"image_data_uri(object.get_signature_manager())\" t-attf-style=\"width: 200px; height: 90px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr width=\"100%\">\n"
+"                                    <td colspan=\"3\" class=\"text-center\">\n"
+"                                        <img src=\"/tanatech_sanction/static/src/img/cachet_pamf.png\" alt=\"Icône cachet\" t-attf-style=\"width: 200px; height: 200px;\" class=\"float-end\">\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                    </div>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Activate sanction"
+msgstr "Activer la sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__active
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__active
+msgid "Active"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Apercu email"
+msgstr "Aperçu email de notification"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Apercu epl"
+msgstr "Aperçu EPL email"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Apercu lay off email"
+msgstr "Aperçu email de licenciement"
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_approval_request
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__approval_request_id
+msgid "Approval Request"
+msgstr "Demande de validation"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Approver"
+msgstr "Approbateur"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__approval_ids
+msgid "Approvers"
+msgstr "Approbateurs"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Avertissement"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Back To Draft"
+msgstr "Remettre en brouillon"
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_hr_employee_base
+msgid "Basic Employee"
+msgstr "Employé de base"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Blâme"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__cancel
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_type_wizard
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_sanction_type_wizard
+msgid "Choose sanction type with diffrents options"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__color
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: tanatech_sanction
+#: model:ir.ui.menu,name:tanatech_sanction.sanction_config_menu
+msgid "Configuration"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_sanction_corrective_measure
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__corrective_measure_id
+msgid "Corrective Measure"
+msgstr "Mesure Corrective"
+
+#. module: tanatech_sanction
+#: model:ir.ui.menu,name:tanatech_sanction.corrective_measure_root_menu
+msgid "Corrective Meseaure"
+msgstr "Mesure corrective"
+
+#. module: tanatech_sanction
+#: model:ir.actions.act_window,name:tanatech_sanction.sanction_measure_corrective_action
+msgid "Corrective measure"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.ui.menu,name:tanatech_sanction.corrective_measure_menu
+msgid "Corrective meseaure"
+msgstr "Mesure corrective"
+
+#. module: tanatech_sanction
+#: model_terms:ir.actions.act_window,help:tanatech_sanction.sanction_measure_corrective_action
+msgid "Create a new Corrective measure"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.actions.act_window,help:tanatech_sanction.sanction_sanction_action
+msgid "Create a new sanction"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.actions.act_window,help:tanatech_sanction.sanction_type_action
+msgid "Create a new sanction type"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__create_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__create_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__create_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__create_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__create_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__create_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Date"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "DemEx"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,subject:tanatech_sanction.sanction_demex_mail_template
+msgid "Demande d'explication"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__demex_body
+msgid "Demex Body"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__demex_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__demex_date
+msgid "Demex Date"
+msgstr ""
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Demex Email"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,name:tanatech_sanction.sanction_demex_mail_template
+msgid "Demex Mail Template"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,name:tanatech_sanction.action_report_demex
+msgid "Demex report"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_employee_inherit_view_form
+msgid "Detail"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__display_name
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__display_name
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__display_name
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "EPL Email"
+msgstr "Ecrire l'EPL"
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Assistant de composition d'e-mails"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__emp_manager_domain
+msgid "Emp Manager Domain"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_id
+msgid "Employee"
+msgstr "Employé(e)"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_agency
+msgid "Employee Agency"
+msgstr "Agence"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_department
+msgid "Employee Department"
+msgstr "Département"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_manager
+msgid "Employee Manager"
+msgstr "Manager"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_post
+msgid "Employee Post"
+msgstr "Post"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__employee_registration_number
+msgid "Employee Registration Number"
+msgstr "Matricule"
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_sanction_sanction
+msgid "Employee's sanction"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,subject:tanatech_sanction.sanction_epl_mail_template
+msgid ""
+"Entretien Préalable au Licenciement [Sanction : {{ "
+"object.sanction_type_id.name }}]"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__epl
+msgid "Epl"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__epl_notification
+msgid "Epl Notification"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,name:tanatech_sanction.action_report_epl
+msgid "Epl Report"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,description:tanatech_sanction.sanction_epl_mail_template
+msgid "Epl mail"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,name:tanatech_sanction.sanction_epl_mail_template
+msgid "Epl notification"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__hr_responsible
+msgid "HR Responsible"
+msgstr "Responsable RH"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__hr_responsible_domain
+msgid "Hr Responsible Domain"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__id
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__id
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__id
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__message_has_error
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__image_1920
+msgid "Image"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__in_progress
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "In progress"
+msgstr "En cours"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__interview_datetime
+msgid "Interview Datetime"
+msgstr "Date de l'interview"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__interview_place
+msgid "Interview Place"
+msgstr "Lieu de l'interview"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__is_validate
+msgid "Is Validate"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__write_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__write_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__write_uid
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__write_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__write_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__write_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Lay Off"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__lay_off_notification
+msgid "Lay Off Notification"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,name:tanatech_sanction.action_lay_off_report
+msgid "Lay off Report"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Lay off email"
+msgstr "Editer email de licenciement"
+
+#. module: tanatech_sanction
+#: model:mail.template,name:tanatech_sanction.lay_off_mail_template
+msgid "Lay off notification"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__is_lay_off
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__is_lay_off
+msgid "Lay-off ?"
+msgstr "Licenciement ?"
+
+#. module: tanatech_sanction
+#: model:mail.template,subject:tanatech_sanction.lay_off_mail_template
+msgid "Licenciement [Sanction : {{ object.sanction_type_id.name }}]"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:res.groups,name:tanatech_sanction.sanction_group_manager
+msgid "Manager"
+msgstr ""
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Manager field cannot by empty"
+msgstr "Le champ manager ne peut être vide"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Mise à pied"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__name
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__name
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Nom de l'employé"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:mail.template,subject:tanatech_sanction.sanction_warning_mail_template
+msgid "Notification [Sanction : {{ object.sanction_type_id.name }}]"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__precursor_fact
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__precursor_fact
+msgid "Precursor Fact"
+msgstr "Fait précurseur"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Rappel à l'ordre"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__reference
+msgid "Reference"
+msgstr "Référence"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__refused
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Refused"
+msgstr "Refusé"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__request_explanation
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Request explanation"
+msgstr "Demande d'explication"
+
+#. module: tanatech_sanction
+#: model:mail.template,description:tanatech_sanction.sanction_demex_mail_template
+msgid "Request explanation mail"
+msgstr ""
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Responsible RH field cannot by empty"
+msgstr "Le responsable RH ne peut pas être vide"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_approval_request__sanction_id
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee__sanction_ids
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee_base__sanction_ids
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee_public__sanction_ids
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_type_id
+#: model:ir.module.category,name:tanatech_sanction.sanction_category
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.tanatech_sanction_view_form_approval_request
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_view_form_inherit_employee_view_form
+msgid "Sanction"
+msgstr ""
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Sanction : %(name)s - %(type_name)s"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:approval.category,name:tanatech_sanction.approval_category_sanction
+msgid "Sanction Approval"
+msgstr "Approbation sanctions"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_approval_request__sanction_count
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee__sanction_count
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee_base__sanction_count
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_employee_public__sanction_count
+msgid "Sanction Count"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_initiator
+msgid "Sanction Initiator"
+msgstr "Initiateur de la sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__sanction_type_id
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_type_wizard
+msgid "Sanction Type"
+msgstr "Type de sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__sanction_date
+msgid "Sanction date"
+msgstr "Date de la sanction"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Sanction must be cancel before"
+msgstr "La sanction doit être annulé avant"
+
+#. module: tanatech_sanction
+#: model:ir.actions.act_window,name:tanatech_sanction.sanction_sanction_action
+#: model:ir.ui.menu,name:tanatech_sanction.sanction_root_menu
+#: model:ir.ui.menu,name:tanatech_sanction.sanction_sanction_menu
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_employee_inherit_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_employee_public_inherit_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Sanctions"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.ui.menu,name:tanatech_sanction.sanction_type_root_menu
+msgid "Sanctions Type"
+msgstr "Type de sanction"
+
+#. module: tanatech_sanction
+#: model:ir.actions.act_window,name:tanatech_sanction.sanction_type_action
+#: model:ir.ui.menu,name:tanatech_sanction.sanction_type_menu
+msgid "Sanctions type"
+msgstr "Type de sanction"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.tanatech_sanction_inherit_mail_compose
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_type_wizard
+msgid "Save"
+msgstr "Enregistrer"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Select sanction type"
+msgstr "Sélectionner la sanction"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Set manager for %(employee_name)s"
+msgstr "Définir un manager pour l'employé : %(employee_name)s"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__state
+msgid "State"
+msgstr "Statut"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model,name:tanatech_sanction.model_sanction_type
+msgid "Type of sanction"
+msgstr "Type de sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:res.groups,name:tanatech_sanction.sanction_group_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__validate
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_search
+msgid "Validated"
+msgstr "Validé"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "Warning Email"
+msgstr "Email de notification"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__warning_notification
+msgid "Warning Notification"
+msgstr "email de notification"
+
+#. module: tanatech_sanction
+#: model:ir.actions.report,name:tanatech_sanction.action_report_warning
+msgid "Warning Report"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Warning email"
+msgstr "Editer l'email de notification"
+
+#. module: tanatech_sanction
+#: model:mail.template,name:tanatech_sanction.sanction_warning_mail_template
+msgid "Warning notification"
+msgstr "Email de notification"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_sanction_sanction__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "epl email"
+msgstr "Editer l'EPL"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:addons/tanatech_sanction/models/sanctions.py:0
+#, python-format
+msgid "work email for this employee %(name)s can't be empty"
+msgstr ""
+"L'employé %(name)s doit avoir une adresse email professionnelle définit"

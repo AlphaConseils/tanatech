@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sanction_employee_inherit_view_form" model="ir.ui.view">
+        <field name="name">sanction.employee.view.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="sanctions" string="Sanctions" invisible="not sanction_ids">
+                    <div class="row mw-100 mt-3">
+                        <field name="sanction_ids" mode="list" readonly="1">
+                            <list editable="bottom">
+                                <field name="color" optional="hide"/>
+                                <field name="state" optional="hide"/>
+                                <field name="employee_id" widget="many2one_avatar_employee"/>
+                                <field name="precursor_fact" decoration-bf="1"/>
+                                <field name="sanction_type_id" widget="badge" 
+                                    decoration-info="color == 4" 
+                                    decoration-warning="color == 3"
+                                    decoration-primary="color == 2"
+                                    decoration-danger="color == 1"/>
+                                <field name="corrective_measure_id" decoration-bf="1"/>
+                                <field name="state" widget="badge" 
+                                    decoration-muted="state == 'draft'" 
+                                    decoration-info="state == 'request_explanation'" 
+                                    decoration-warning="state == 'in_progress'" 
+                                    decoration-success="state == 'validate'"/>
+                                <button name="open_sanction" string="Detail" type="object" class="oe_stat_button" icon="fa-eye"/>
+                            </list>
+                        </field>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="sanction_view_form_inherit_employee_view_form" model="ir.ui.view">
+        <field name="name">sanction.smartbutton.view.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="sanction_count" invisible="1" />
+                <button name="get_sanction" type="object" class="oe_stat_button" icon="fa-gavel"  groups="tanatech_sanction.sanction_group_user,hr.group_hr_user" invisible="not sanction_count">
+                    <field name="sanction_count" string="Sanction" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tanatech_sanction.access_sanction_sanction,acess.sanction.sanction,model_sanction_sanction,hr.group_hr_user,1,1,1,1
+access_sanction_sanction_user,acess.sanction.sanction.user,model_sanction_sanction,sanction_group_user,1,0,0,0
+access_sanction_sanction_manager,acess.sanction.sanction.manager,model_sanction_sanction,sanction_group_manager,1,1,1,1
+access_sanction_sanction_res_user,acess.sanction.sanction.res.user,model_sanction_sanction,base.group_user,1,0,0,0
+tanatech_sanction.access_sanction_type,acess.sanction.type,model_sanction_type,hr.group_hr_user,1,1,1,1
+tanatech_sanction.access_sanction_corrective_measure,acess.sanction.corrective.measure,model_sanction_corrective_measure,hr.group_hr_user,1,1,1,1
+access_sanction_type_wizard,Sanction type wizard,model_sanction_type_wizard,base.group_user,1,1,1,1

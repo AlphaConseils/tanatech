@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+    <record id="lay_off_mail_template" model="mail.template">
+        <field name="name">Lay off notification</field>
+        <field name="model_id" ref="tanatech_sanction.model_sanction_sanction"/>
+        <field name="email_from">{{ object.employee_id.company_id.email_formatted }}</field>
+        <field name="subject">Licenciement [Sanction : {{ object.sanction_type_id.name }}]</field>
+        <field name="email_to">{{ object.employee_id.work_email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-size: 14px;">
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">
+                    <div class="row">
+                        <div class="col mb-2">
+                            <p class="text-end">
+                            Antananarivo, le <span t-out="datetime.date.today()" t-options="{'widget': 'date', 'format': 'dd MMMM YYYY'}"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                Nom et prénom : <t t-out="object.employee_id.name"></t><br/>
+                                Adresse : <t t-out="object.employee_id.private_street"></t>
+                                            <t t-out="object.employee_id.private_street2"></t>
+                                            <t t-out="object.employee_id.private_city"></t>
+                                            <t t-out="object.employee_id.private_city"></t>
+                                            <t t-out="object.employee_id.private_country_id.name"></t>
+                                            <br/>
+                                <t t-if="object.employee_id.work_location_id">
+                                    Agence : <t t-out="object.employee_id.work_location_id.name"></t><br/>
+                                </t>
+                                Poste : <t t-out="object.employee_id.job_id.name"></t><br/>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7 offset-5">
+                            <p>
+                                <span style="text-decoration: underline;">Objet </span>: Licenciement
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-2">
+                            <p><span t-if="object.employee_id.gender == 'male'">Monsieur,</span><span t-if="object.employee_id.gender == 'female'">Madame,</span></p>
+                              <p>Veuillez écrire votre contenu de licenciement ici</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Veuillez agréer, <span t-if="object.employee_id.gender == 'male'">Monsieur,</span><span t-if="object.employee_id.gender == 'female'">Madame,</span> nos sincères salutations.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table width="100%" class="no_border">
+                                <tr t-if="object.employee_manager.id != object.hr_responsible.id">
+                                    <td class="text-start" t-if="object.get_signature_manager()">
+                                        <img t-att-src="image_data_uri(object.get_signature_manager())" t-attf-style="width: 200px; height: 90px;" class="float-end"/>
+                                    </td>
+                                    <td class="text-end pe-2" t-if="object.get_signature_rh_responsible()">
+                                        <img t-att-src="image_data_uri(object.get_signature_rh_responsible())" t-attf-style="width: 200px; height: 90px;" class="float-end"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="object.employee_manager.id == object.hr_responsible.id">
+                                    <td class="text-end" t-if="object.get_signature_manager()">
+                                        <img t-att-src="image_data_uri(object.get_signature_manager())" t-attf-style="width: 200px; height: 90px;" class="float-end"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </field>
+    </record>
+</data>
+</odoo>

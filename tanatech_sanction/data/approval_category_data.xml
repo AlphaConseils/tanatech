@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="approval_category_sanction" model="approval.category">
+        <field name="name">Sanction Approval</field>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>
