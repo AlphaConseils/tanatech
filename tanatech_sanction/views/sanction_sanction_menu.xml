@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sanction_sanction_action" model="ir.actions.act_window">
+        <field name="name">Sanctions</field>
+        <field name="res_model">sanction.sanction</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new sanction</p>
+        </field>
+    </record>
+
+    <record id="sanction_type_action" model="ir.actions.act_window">
+        <field name="name">Sanctions type</field>
+        <field name="res_model">sanction.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new sanction type</p>
+        </field>
+    </record>
+
+    <record id="sanction_measure_corrective_action" model="ir.actions.act_window">
+        <field name="name">Corrective measure</field>
+        <field name="res_model">sanction.corrective.measure</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new Corrective measure</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="sanction_root_menu"
+        name="Sanctions"
+        sequence="10"
+        web_icon="tanatech_sanction,static/description/icon.png" />
+    
+    <menuitem
+        id="sanction_sanction_menu"
+        name="Sanctions"
+        parent="sanction_root_menu"
+        action="sanction_sanction_action"
+        sequence="30"/>
+        
+    <!-- CONFIG MENU -->
+    <menuitem
+        id="sanction_config_menu"
+        name="Configuration"
+        parent="sanction_root_menu"
+        sequence="100"/>
+    <menuitem
+        id="sanction_type_root_menu"
+        name="Sanctions Type"
+        parent="sanction_config_menu"
+        sequence="10"/>
+    
+    <menuitem
+        id="sanction_type_menu"
+        name="Sanctions type"
+        parent="sanction_type_root_menu"
+        action="sanction_type_action"
+        sequence="10"/>
+
+    <menuitem
+        id="corrective_measure_root_menu"
+        name="Corrective Meseaure"
+        parent="sanction_config_menu"
+        sequence="20"/>
+    
+    <menuitem
+        id="corrective_measure_menu"
+        name="Corrective meseaure"
+        parent="corrective_measure_root_menu"
+        action="sanction_measure_corrective_action"
+        sequence="10"/>
+            
+</odoo>

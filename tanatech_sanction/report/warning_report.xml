@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_warning">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="name" t-value="o.name.split(' ')"/>
+                <t t-call="web.html_container">
+                        <div t-out="o.warning_notification"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

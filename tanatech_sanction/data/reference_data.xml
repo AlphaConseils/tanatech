@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="reference_sanction" model="ir.sequence">
+        <field name="name">Reference</field>
+        <field name="prefix">SAN#</field>
+        <field name="padding">6</field>
+        <field name="number_increment">1</field>
+        <field name="code">sanction.sanction</field>
+        <field name="implementation">standard</field>
+    </record>
+
+</odoo>
