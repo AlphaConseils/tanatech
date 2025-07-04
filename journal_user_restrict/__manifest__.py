@@ -7,7 +7,7 @@
     "sequence": 10,
     "category": "Accounting/Accounting",
     "website": "https://www.nexources.com",
-    "depends": ["account", "point_of_sale"],
+    "depends": ["account"],
     "data": ["security/ir_rule.xml", "views/account_journal_views.xml"],
     "license": "LGPL-3",
 }
