@@ -1,0 +1,15 @@
+<odoo>
+	<data>
+		<record id="inherited_res_company_view_form" model="ir.ui.view">
+			<field name="name">inherited.res_company.form.inherit</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="company_account_number"/>
+					<field name="transfer_code"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
