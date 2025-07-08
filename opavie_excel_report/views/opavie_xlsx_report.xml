@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <!-- XLSX REPORTS -->
+        <record id="action_opavie_report" model="ir.actions.report">
+            <field name="name">OPAVI XLSX</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="type">ir.actions.report</field>
+            <field name="report_name">opavie_excel_report.report_opavie_xlsx</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_file">opavie_excel_report.report_opavie_xlsx</field>
+        </record>
+
+    </data>
+</odoo>
