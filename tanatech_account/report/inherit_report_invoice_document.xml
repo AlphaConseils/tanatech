@@ -17,7 +17,7 @@
     <xpath expr="//div[@class='mb-3'][2]" position="after">
       <div t-if="o.journal_id.name == 'Factures clients NA'">
         <p>
-          <span>Arrêté à la somme de </span> <span t-esc="o.amount_to_words(o.amount_total)"/>
+          <span>Arrêté à la somme de </span><span t-esc="o.amount_to_words(o.amount_total)"/>
         </p>
       </div>
     </xpath>

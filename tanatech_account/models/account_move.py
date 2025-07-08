@@ -61,7 +61,6 @@ class AccountMove(models.Model):
         else:
             result = f" {integer_in_words} {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'}"
         result = result[0].upper() + result[1:]
-
         return result
 
 class AccountMoveLine(models.Model):
