@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from num2words import num2words
 from odoo import models, fields
 
 
@@ -46,6 +46,23 @@ class AccountMove(models.Model):
             "move_id": counterpart_line.move_id.id,
             "ref": reconciliation_ref,
         }
+
+    def amount_to_words(self, amount):
+        """
+        Convert amount to text with proper formatting for dollars and cents in French,
+        starting with a majuscule.
+        """
+        integer_part = int(amount)
+        decimal_part = int(round((amount - integer_part) * 100))
+        integer_in_words = num2words(integer_part, lang="fr")
+        if decimal_part > 0:
+            decimal_in_words = num2words(decimal_part, lang="fr")
+            result = f" {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'} {integer_in_words}  {decimal_in_words} "
+        else:
+            result = f" {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'} {integer_in_words}"
+        result = result[0].upper() + result[1:]
+
+        return result
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
