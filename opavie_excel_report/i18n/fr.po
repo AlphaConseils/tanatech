@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* opavie_excel_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20231018\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-26 12:45+0000\n"
+"PO-Revision-Date: 2024-01-26 12:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: opavie_excel_report
+#: model_terms:ir.ui.view,arch_db:opavie_excel_report.hr_payslip_run_view_form
+msgid "Create OPAVI Report"
+msgstr "Créer un rapport OPAVI"
+
+#. module: opavie_excel_report
+#: model:ir.model.fields,field_description:opavie_excel_report.field_res_company__company_account_number
+msgid "Account number"
+msgstr "Numero de compte"
+
+#. module: opavie_excel_report
+#: model:ir.model.fields,field_description:opavie_excel_report.field_res_company__transfer_code
+msgid "Transfer code"
+msgstr "Code de virement"
+
+#. module: opavie_excel_report
+#: model:ir.actions.report,name:opavie_excel_report.action_opavie_report
+msgid "OPAVI XLSX"
+msgstr ""
+
+#. module: opavie_excel_report
+#: model:ir.model,name:opavie_excel_report.model_report_opavie_excel_report_report_opavie_xlsx
+msgid "report.opavie_excel_report.report_opavie_xlsx"
+msgstr ""
+

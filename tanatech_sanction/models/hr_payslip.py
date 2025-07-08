@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from odoo import api, Command, models, fields
+import logging
 
 
 class HrPayslip(models.Model):
@@ -24,7 +25,7 @@ class HrPayslip(models.Model):
             'name': 'Sanctions',
             'view_mode': 'list,form',
             'res_model': 'sanction.sanction',
-            'domain': [('employee_id', '=', self.employee_id.id)],
+            'domain': [('employee_id', '=', self.employee_id.id), ('state', '!=', 'draft')],
             'context': "{'create': False}",
         }
     
@@ -44,11 +45,23 @@ class HrPayslip(models.Model):
                 lines_to_remove = payslip.input_line_ids.filtered(lambda x: x.input_type_id.id in sanction_attachment_type_ids)
                 input_sanction_line_vals = [Command.unlink(line.id) for line in lines_to_remove]
                 # sanctions = self.env['sanction.sanction'].search([('state', '!=', 'draft'),('employee_id', '=', self.employee_id.id)])
-                sanctions = payslip.employee_id.sanction_ids.filtered(
-                    lambda san: san.state == 'validate'
-                        and san.sanction_start_date <= payslip.date_to if san.is_long_duration else san.sanction_date <= payslip.date_to
-                        and san.other_input_type_id.available_in_sanction_attachments == True
-                )
+                # sanctions = payslip.employee_id.sanction_ids.filtered(
+                #     lambda san: san.state in ('validate') 
+                #     and san.sanction_start_date <= payslip.date_to if san.is_long_duration else san.sanction_date <= payslip.date_to 
+                #     and san.other_input_type_id.available_in_sanction_attachments == True
+                # )
+                sanctions = self.env['sanction.sanction'].search([
+                    ('state', '=', 'validate'),
+                    ('employee_id', '=', payslip.employee_id.id),
+                    '|',  # for OR condition between long-duration and short-duration date checks
+                        '&',
+                            ('is_long_duration', '=', True),
+                            ('sanction_start_date', '<=', payslip.date_to),
+                        '&',
+                            ('is_long_duration', '=', False),
+                            ('sanction_date', '<=', payslip.date_to),
+                    ('other_input_type_id.available_in_sanction_attachments', '=', True),
+                ])
                 if sanctions:
                     name = ', '.join(sanctions.mapped('sanction_type_id.name'))
                     duration = sum(sanction.sanction_duration for sanction in sanctions)
