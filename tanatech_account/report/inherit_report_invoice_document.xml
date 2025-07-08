@@ -14,9 +14,16 @@
     <xpath expr="//t[@t-set='layout_document_title']" position="attributes">
       <attribute name="style">font-size: 16px !important;</attribute>
     </xpath>
+    <xpath expr="//div[@class='mb-3'][2]" position="after">
+      <div t-if="o.journal_id.name == 'Factures clients NA'">
+        <p>
+          <span>Arrêté à la somme d' </span> <span t-esc="o.amount_to_words(o.amount_total)"/>
+        </p>
+      </div>
+    </xpath>
     <xpath expr="//p[@name='payment_communication']" position="after">
       <div class="row" style="margin-top:100px">
-          <div class="col-8">
+          <div class="col-8">            
             <span>
               <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
                 Responsable</span>
