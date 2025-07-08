@@ -57,9 +57,9 @@ class AccountMove(models.Model):
         integer_in_words = num2words(integer_part, lang="fr")
         if decimal_part > 0:
             decimal_in_words = num2words(decimal_part, lang="fr")
-            result = f" {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'} {integer_in_words}  {decimal_in_words} "
+            result = f" {integer_in_words}  {decimal_in_words} {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'}"
         else:
-            result = f" {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'} {integer_in_words}"
+            result = f" {integer_in_words} {self.currency_id.currency_unit_label if self.currency_id else 'Ariary'}"
         result = result[0].upper() + result[1:]
 
         return result
