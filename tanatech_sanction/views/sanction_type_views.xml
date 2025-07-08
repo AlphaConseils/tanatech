@@ -11,6 +11,7 @@
                         <field name="name" />
                         <field name="color" widget='sanction_type_color'/>
                         <field name="is_lay_off"/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -24,6 +25,7 @@
             <list string="">
                 <field name="name" />
                 <field name="is_lay_off"/>
+                <field name="code"/>
                 <field name="color" widget='color_picker'/>
             </list>
         </field>

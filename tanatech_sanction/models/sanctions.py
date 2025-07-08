@@ -70,6 +70,18 @@ class Sanction(models.Model):
     employee_manager = fields.Many2one(comodel_name="res.users", readonly=False)
     emp_manager_domain = fields.Binary(compute="_compute_emp_manager_domain")
 
+    is_long_duration = fields.Boolean("Is long duration ?")
+    sanction_start_date = fields.Date("Sanction start date")
+    sanction_end_date = fields.Date("Sanction end date")
+    sanction_duration = fields.Float("Duration (days)")
+
+    other_input_type_id = fields.Many2one(
+        'hr.payslip.input.type',
+        string="Other Input Type",
+        tracking=True,
+        domain=[('available_in_sanction_attachments', '=', True)]
+    )
+
     @api.model
     def default_get(self, fields_list):
         """Set default value on emp_manager_field"""

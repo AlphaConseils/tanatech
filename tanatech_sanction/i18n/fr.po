@@ -368,6 +368,11 @@ msgid "Activate sanction"
 msgstr "Activer la sanction"
 
 #. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: tanatech_sanction
 #: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_corrective_measure__active
 #: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__active
 msgid "Active"
@@ -451,7 +456,6 @@ msgstr ""
 
 #. module: tanatech_sanction
 #: model:ir.model.fields.selection,name:tanatech_sanction.selection__sanction_sanction__state__cancel
-#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
 #: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_type_wizard
 msgid "Cancelled"
 msgstr "Annulé"
@@ -1136,3 +1140,65 @@ msgstr "Editer l'EPL"
 msgid "work email for this employee %(name)s can't be empty"
 msgstr ""
 "L'employé %(name)s doit avoir une adresse email professionnelle définit"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_res_users__is_rh
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.res_user_view_inherit_base_view_users_form
+msgid "HR Responsible"
+msgstr "Responsable RH"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__other_input_type_id
+msgid "Other Input Type"
+msgstr "Autre type d'entrée"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__is_long_duration
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__is_long_duration
+msgid "Is long duration ?"
+msgstr "De longue durée ?"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_start_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__sanction_start_date
+msgid "Sanction start date"
+msgstr "Date de début de la sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_end_date
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__sanction_end_date
+msgid "Sanction end date"
+msgstr "Date de fin de la sanction"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_sanction__sanction_duration
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type_wizard__sanction_duration
+msgid "Duration (days)"
+msgstr "Durée (jours)"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_payslip_input_type__available_in_sanction_attachments
+msgid "Available in sanction attachments"
+msgstr "Disponible dans les pièces jointes de sanction"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Payroll"
+msgstr "Paie"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__is_lay_off
+msgid "Lay-off ?"
+msgstr "Licenciement ?"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:tanatech/tanatech_sanction/wizard/sanction_type.py:0
+msgid "Sanction date is required !"
+msgstr "La date de sanction est requise !"
+
+#. module: tanatech_sanction
+#. odoo-python
+#: code:tanatech/tanatech_sanction/wizard/sanction_type.py:0
+msgid "Sanction interval date is required for long lasting sanction ! (start date and end date must be specified)"
+msgstr "La date d'intervalle de sanction est requise pour une sanction de longue durée ! (les dates de début et de fin doivent être spécifiées)"

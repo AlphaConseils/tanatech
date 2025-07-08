@@ -10,7 +10,8 @@ class SanctionType(models.Model):
     name = fields.Char()
     active = fields.Boolean(default=True)
     is_lay_off = fields.Boolean(string="Lay-off ?")
-
+    code = fields.Char(string="Code")
+    
     def _get_default_color(self):
         return randint(1, 5)
 

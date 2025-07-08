@@ -10,7 +10,12 @@
                     <group>
                         <group>
                             <field name="sanction_type_id" required="1"/>
-                            <field name="sanction_date" required="1"/>
+                            <field name="is_long_duration" />
+
+                            <field name="sanction_date" invisible="is_long_duration"/>
+                            <field name="sanction_start_date" invisible="not is_long_duration"/>
+                            <field name="sanction_end_date" invisible="not is_long_duration"/>
+                            <field name="sanction_duration" invisible="not is_long_duration"/>
                         </group>
                         <group>
                             <field name="precursor_fact" required="1"/>
