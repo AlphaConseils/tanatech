@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+        <field name="name">sanction.smartbutton.hr.payslip.view.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="sanction_count" invisible="1" />
+                <button name="action_open_sanctions" type="object" class="oe_stat_button" icon="fa-gavel" invisible="not sanction_count">
+                    <field name="sanction_count" string="Sanction" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

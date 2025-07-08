@@ -5,7 +5,7 @@
         <field name="name">sanction.sanction.view.form</field>
         <field name="model">sanction.sanction</field>
         <field name="arch" type="xml">
-            <form string="Sanction">
+            <form string="Sanction" duplicate="0">
                 <header>
                     <field name="is_lay_off" invisible="1"/>
                     <field name="warning_notification" invisible="1"/>
@@ -71,12 +71,21 @@
                             <field name="precursor_fact" readonly="state not in ['draft']"/>
                         </group>
                         <group invisible="not sanction_type_id">
+                            <field name="is_long_duration" invisible="1"/>
                             <field name="sanction_type_id" readonly="state not in ['draft']"/>
-                            <field name="sanction_date" readonly="state not in ['draft']"/>
+                            <field name="sanction_date" readonly="state not in ['draft']" invisible="is_long_duration"/>
                             <field name="demex_date" readonly="state not in ['draft']"/>
                             <!-- <field name="corrective_measure_id" readonly="state not in ['draft']"/>
                             <field name="interview_place" readonly="state not in ['draft']"/>
                             <field name="interview_datetime" readonly="state not in ['draft']"/> -->
+                            <field name="sanction_start_date" readonly="state not in ['draft']" invisible="not is_long_duration"/>
+                            <field name="sanction_end_date" readonly="state not in ['draft']" invisible="not is_long_duration"/>
+                            <field name="sanction_duration" readonly="state not in ['draft']" />
+                        </group>
+
+                        <separator name="payroll" string="Payroll"/>
+                        <group>
+                            <field name="other_input_type_id"/>
                         </group>
                     </group>
 
