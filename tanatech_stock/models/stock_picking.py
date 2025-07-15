@@ -14,6 +14,9 @@ from odoo.tools.misc import format_date
 class Picking(models.Model):
     _inherit = "stock.picking"
 
+    show_validate = fields.Boolean(
+        compute="_compute_show_validate",
+    )
     state = fields.Selection(
         [
             ("draft", "Draft"),
@@ -38,6 +41,13 @@ class Picking(models.Model):
         " * Done: The transfer has been processed.\n"
         " * Cancelled: The transfer has been cancelled.",
     )
+
+    @api.depends("quality_check_todo")
+    def _compute_show_validate(self):
+        super()._compute_show_validate()
+        for picking in self:
+            if picking.quality_check_todo:
+                picking.show_validate = False
 
     # def button_2n_validate(self):
     #     return self.button_validate()
