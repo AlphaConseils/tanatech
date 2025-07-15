@@ -42,7 +42,7 @@ class Picking(models.Model):
         " * Cancelled: The transfer has been cancelled.",
     )
 
-     @api.depends("state")
+    @api.depends("state")
     def _compute_show_validate(self):
         for picking in self:
             if picking.state not in ("draft", "waiting", "confirmed", "assigned"):
