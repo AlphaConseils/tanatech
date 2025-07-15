@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models,api,fields
+import datetime
+import pytz
+
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
@@ -16,3 +19,8 @@ class ResUsers(models.Model):
     def write(self, vals):
         self.clear_caches()
         return super(ResUsers,self).write(vals)
+
+    @api.depends("tz")
+    def _compute_tz_offset(self):
+        for user in self:
+            user.tz_offset = datetime.datetime.now(pytz.timezone("GMT")).strftime("%z")

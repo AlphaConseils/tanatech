@@ -5,7 +5,7 @@
     "version": "1.0",
     "category": "Uncategorized",
     "author": "Nexources",
-    "depends": ["point_of_sale"],
+    "depends": ["point_of_sale", "hr_attendance"],
     "data": [
         # WIZARD
         "wizard/pos_report_wizard_views.xml",
