@@ -5,9 +5,9 @@
     <field name="model">product.template</field>
     <field name="inherit_id" ref="product.product_template_only_form_view"/>
     <field name="arch" type="xml">
-        <xpath expr="//field[@name='detailed_type']" position="after">
+        <xpath expr="//field[@name='type']" position="after">
             <field name="is_product_service_charge" invisible="1" />
-            <field name="is_product_service_charge" string="Service fees" invisible="detailed_type != 'service'"/>
+            <field name="is_product_service_charge" string="Service fees" invisible="type != 'service'"/>
             <field name="percentage_service_charge" widget="percentage" groups="tanatech_sale.percentage_service_charge_group" string="Percentage service charge" invisible="is_product_service_charge == False"/>
         </xpath>
 
@@ -15,13 +15,13 @@
                 <field name="user_product_security_groups" invisible="1" />
             </xpath>
 
-            <xpath expr="//group/field[@name='uom_id']" position="attributes">
+            <xpath expr="//field[@name='uom_id']" position="attributes">
                 <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/field[@name='uom_po_id']" position="attributes">
                 <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
-            <xpath expr="//group/field[@name='detailed_type']" position="attributes">
+            <xpath expr="//group/field[@name='type']" position="attributes">
                 <attribute name="readonly">not user_product_security_groups</attribute>
             </xpath>
             <xpath expr="//group/div/field[@name='list_price']" position="attributes">

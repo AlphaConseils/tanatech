@@ -7,7 +7,7 @@
     "summary": "Manage your stock and logistics activities",
     "description": "",
     "website": "https://www.nexources.com/",
-    "depends": ["stock", "tanatech_base"],
+    "depends": ["tanatech_base", "quality_control"],
     "category": "Inventory/Inventory",
     "sequence": 25,
     "data": [
