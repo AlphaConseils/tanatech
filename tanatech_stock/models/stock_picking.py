@@ -42,12 +42,13 @@ class Picking(models.Model):
         " * Cancelled: The transfer has been cancelled.",
     )
 
-    @api.depends("quality_check_todo")
+     @api.depends("state")
     def _compute_show_validate(self):
-        super()._compute_show_validate()
         for picking in self:
-            if picking.quality_check_todo:
+            if picking.state not in ("draft", "waiting", "confirmed", "assigned"):
                 picking.show_validate = False
+            else:
+                picking.show_validate = True
 
     # def button_2n_validate(self):
     #     return self.button_validate()
