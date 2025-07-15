@@ -39,8 +39,8 @@ class Picking(models.Model):
         " * Cancelled: The transfer has been cancelled.",
     )
 
-    def button_2n_validate(self):
-        return self.button_validate()
+    # def button_2n_validate(self):
+    #     return self.button_validate()
 
     def button_validate(self):
         user_has_group_syst = self.env.user.has_group("base.group_system")

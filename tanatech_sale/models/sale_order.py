@@ -90,7 +90,7 @@ class SaleOrder(models.Model):
                 charge_service_product = self.env["product.template"].create(
                     {
                         "name": "Frais de service",
-                        "detailed_type": "service",
+                        "type": "service",
                         "is_product_service_charge": True,
                         "percentage_service_charge": 0.07,
                     }

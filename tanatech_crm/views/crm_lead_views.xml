@@ -64,7 +64,7 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
-            <xpath expr="//span[@t-esc='record.partner_id.value']" position="attributes">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="groups">tanatech_sale.commercial_group</attribute>
             </xpath>
         </field>
