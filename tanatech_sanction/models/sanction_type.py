@@ -11,6 +11,8 @@ class SanctionType(models.Model):
     active = fields.Boolean(default=True)
     is_lay_off = fields.Boolean(string="Lay-off ?")
     code = fields.Char(string="Code")
+
+    is_taken_into_account_in_time_off = fields.Boolean(string="Include in Time-off ?")
     
     def _get_default_color(self):
         return randint(1, 5)

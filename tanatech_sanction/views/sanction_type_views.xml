@@ -11,6 +11,7 @@
                         <field name="name" />
                         <field name="color" widget='sanction_type_color'/>
                         <field name="is_lay_off"/>
+                        <field name="is_taken_into_account_in_time_off"/>
                         <field name="code"/>
                     </group>
                 </sheet>

@@ -9,7 +9,7 @@
     "license": "LGPL-3",
     "category": "Human Resources/Sanction",
     "website": "https://www.nexources.com",
-    "depends": ["approvals", "hr", "hr_payroll", "tanatech_base"],
+    "depends": ["approvals", "hr", "hr_payroll", "hr_holidays", "tanatech_base"],
     "data": [
         "security/sanction_security_group.xml",
         "security/ir.model.access.csv",
@@ -35,8 +35,9 @@
         "views/hr_employee_public.xml",
         "views/approval_request_from_inherit.xml",
         "views/res_user_form_view.xml",
-        "views/hr_payslip_view.xml",
-        "views/hr_payslip_input_type_view.xml",
+        # "views/hr_payslip_view.xml",
+        # "views/hr_payslip_input_type_view.xml",
+        "views/hr_leave_type_view.xml",
         # WIZARD
         "wizard/sanction_type.xml",
         "wizard/mail_compose_message_form_inherit.xml",

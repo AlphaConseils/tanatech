@@ -82,6 +82,12 @@ class Sanction(models.Model):
         domain=[('available_in_sanction_attachments', '=', True)]
     )
 
+    # hr_leave_id = fields.Many2one(
+    #     comodel_name="hr.leave", string="Time Off"
+    # )
+
+    hr_leave_ids = fields.One2many('hr.leave', 'sanction_id', string="Time Off")
+
     @api.model
     def default_get(self, fields_list):
         """Set default value on emp_manager_field"""
@@ -192,8 +198,10 @@ class Sanction(models.Model):
         }
 
     def action_submit(self):
-        """Prepare and send approval request"""
+        """Prepare and send approval request then create time-off"""
+        # TODO : Prepare and create unpaid time-off
         self._create_approval_request()
+        self._create_unpaid_time_off()
 
     def action_draft(self):
         """
@@ -207,11 +215,17 @@ class Sanction(models.Model):
         self.precursor_fact = ""
         self.is_validate = False
         self.warning_notification = False
+        if self.hr_leave_ids:
+            self.hr_leave_ids.action_reset_confirm()
+            self.hr_leave_ids.unlink()
 
     def action_cancel_sanction(self):
         """Cancel Sanction"""
         self.state = "cancel"
         self.approval_request_id.action_cancel()
+        if self.hr_leave_ids:
+            self.hr_leave_ids.action_refuse()
+            # self.hr_leave_ids.write({'state': 'cancel'})
 
     def action_send_mail(self):
         """Send explanation request email"""
@@ -288,6 +302,53 @@ class Sanction(models.Model):
         rec.approval_request_id = approval_request.id
         rec.approval_request_id.action_confirm()
 
+    def _create_unpaid_time_off(self):
+        """Create Time-off"""
+        for rec in self:
+            self._prepare_unpaid_time_off(record=rec)
+
+    def _prepare_unpaid_time_off(self, record):
+        """ Prepare and create an unpaid time-off related to the sanction 
+            in order to have a view in time-off dashboar and payroll work entries 
+        """
+        if record.sanction_type_id.is_taken_into_account_in_time_off:
+            hr_leave_type = self.env["hr.leave.type"].search([('specific_for_sanction', '=', True)], limit=1)
+            duration_display = (_(
+                "%(sanction_duration)s days"
+                ) % {"sanction_duration": record.sanction_duration}
+            )
+            hr_leave = self.env["hr.leave"].create(
+                {
+                    "name": _("%(name)s on %(time_off_type)s: %(duration_display)s")
+                    % {"name": record.employee_id.name, "time_off_type": hr_leave_type.name, "duration_display": duration_display},
+                    "employee_id": record.employee_id.id,
+                    "company_id": record.employee_id.company_id.id,
+                    "department_id": record.employee_id.department_id.id,
+                    "holiday_status_id": hr_leave_type.id,
+                    "payslip_state": "normal",
+                    "request_date_from": record.sanction_date if not record.is_long_duration else record.sanction_start_date,
+                    "request_date_to": record.sanction_date if not record.is_long_duration else record.sanction_end_date,
+                    "state": "confirm",
+                }
+            )
+            # record.hr_leave_id = hr_leave.id
+            record.hr_leave_ids = [(4, hr_leave.id)]
+        else:
+            return
+
+    is_related_to_time_off = fields.Boolean("Is related to time-off ?", compute="_check_if_related_to_time_off")
+
+    @api.depends('sanction_type_id')
+    def _check_if_related_to_time_off(self):
+        for record in self:
+            if not record.sanction_type_id:
+                record.is_related_to_time_off = False
+            else:
+                record.is_related_to_time_off = record.sanction_type_id.is_taken_into_account_in_time_off
+
+    def _validate_time_off_record(self, record):
+        record.hr_leave_ids.action_approve()
+
     def _get_teamplate_and_report_warning(self):
         """Define template and report action warning"""
         template = self.sudo().env.ref("tanatech_sanction.sanction_warning_mail_template")
@@ -330,6 +391,7 @@ class Sanction(models.Model):
                     rec._send_notification_mail(
                         template=template, action_report=action_report
                     )
+                    self._validate_time_off_record(record=rec)
                 elif rec.is_lay_off and rec.state not in "epl":
                     # EPL STAGE
                     rec.is_validate = False
@@ -347,6 +409,7 @@ class Sanction(models.Model):
                     rec._send_notification_mail(
                         template=template, action_report=action_report
                     )
+                    self._validate_time_off_record(record=rec)
             elif rec.approval_request_id.request_status == "refused":
                 rec.state = "refused"
                 rec.is_validate = False
