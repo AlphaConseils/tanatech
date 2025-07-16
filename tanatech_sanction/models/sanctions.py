@@ -313,6 +313,8 @@ class Sanction(models.Model):
         """
         if record.sanction_type_id.is_taken_into_account_in_time_off:
             hr_leave_type = self.env["hr.leave.type"].search([('specific_for_sanction', '=', True)], limit=1)
+            if not hr_leave_type:
+                return
             duration_display = (_(
                 "%(sanction_duration)s days"
                 ) % {"sanction_duration": record.sanction_duration}

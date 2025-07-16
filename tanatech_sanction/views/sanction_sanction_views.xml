@@ -105,7 +105,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page name="hr_leave" string="Time Off" invisible="state in ['draft', 'request_explanation'] or not is_related_to_time_off">
+                        <page name="hr_leave" string="Time Off" invisible="state in ['draft', 'request_explanation'] or not is_related_to_time_off or not hr_leave_ids">
                             <field name="hr_leave_ids" mode="list" readonly="1">
                                 <list editable="bottom" no_open="1">
                                     <field name="name" />
