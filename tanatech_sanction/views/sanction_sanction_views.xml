@@ -13,6 +13,7 @@
                     <field name="epl_notification" invisible="1"/>
                     <field name="hr_responsible_domain" invisible="1"/>
                     <field name="emp_manager_domain" invisible="1"/>
+                    <field name="is_related_to_time_off" invisible="1"/>
                     <button string="Select sanction type" name="action_sanction_wizard" type="object" class="oe_highlight rounded"
                         invisible="state != 'request_explanation' or sanction_initiator != uid"/>
                     <button name="action_draft" string="Back To Draft" type="object" invisible="state not in ['cancel'] or  sanction_initiator != uid"/>
@@ -83,10 +84,10 @@
                             <field name="sanction_duration" readonly="state not in ['draft']" />
                         </group>
 
-                        <separator name="payroll" string="Payroll"/>
-                        <group>
+                        <!-- <separator name="payroll" string="Payroll" invisible="state in ['draft', 'refused', 'cancel']" groups="hr.group_hr_user"/>
+                        <group invisible="state in ['draft', 'refused', 'cancel']" groups="hr.group_hr_user">
                             <field name="other_input_type_id"/>
-                        </group>
+                        </group> -->
                     </group>
 
                     <notebook>
@@ -104,13 +105,19 @@
                                 </list>
                             </field>
                         </page>
+                        <page name="hr_leave" string="Time Off" invisible="state in ['draft', 'request_explanation'] or not is_related_to_time_off">
+                            <field name="hr_leave_ids" mode="list" readonly="1">
+                                <list editable="bottom" no_open="1">
+                                    <field name="name" />
+                                    <field name="employee_id" />
+                                    <field name="holiday_status_id" />
+                                    <field name="duration_display" />
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
-                <!-- <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div> -->
                 <chatter/>
             </form>
         </field>

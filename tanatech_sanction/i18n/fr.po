@@ -1202,3 +1202,23 @@ msgstr "La date de sanction est requise !"
 #: code:tanatech/tanatech_sanction/wizard/sanction_type.py:0
 msgid "Sanction interval date is required for long lasting sanction ! (start date and end date must be specified)"
 msgstr "La date d'intervalle de sanction est requise pour une sanction de longue durée ! (les dates de début et de fin doivent être spécifiées)"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_hr_leave_type__specific_for_sanction
+msgid "Sanction included"
+msgstr "Sanction incluse"
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,help:tanatech_sanction.field_hr_leave_type__specific_for_sanction
+msgid "It is just for linking time off to sanction."
+msgstr "Il s'agit simplement de lier le congé à la sanction."
+
+#. module: tanatech_sanction
+#: model:ir.model.fields,field_description:tanatech_sanction.field_sanction_type__is_taken_into_account_in_time_off
+msgid "Include in Time-off ?"
+msgstr "Inclure dans les congés ?"
+
+#. module: tanatech_sanction
+#: model_terms:ir.ui.view,arch_db:tanatech_sanction.sanction_sanction_view_form
+msgid "Time Off"
+msgstr "Congé"
