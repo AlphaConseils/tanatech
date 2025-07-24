@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_overtime_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.overtime.form</field>
+        <field name="model">hr.attendance.overtime</field>
+        <field name="arch" type="xml">
+            <form string="Employee overtime" duplicate="false" create="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" widget="many2one_avatar_user" readonly="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="attendance_id" readonly="1" invisible="1"/>
+                            <field name="registration_number" />
+                        </group>
+                        <group>
+                            <field name="state" widget="badge" decoration-warning="state == 'to_approve'" decoration-success="state == 'approved'" decoration-danger="state == 'refused'" />
+                            <!-- <field name="overtime_type" widget="badge" decoration-muted="state in ('overtime', 'usual_night_hours', 'occasional_night_hours', 'hours_worked_on_sunday', 'hours_worked_on_public_holidays')" /> -->
+                            <field name="is_out_of_working_times" invisible="1" />
+                            <field name="is_within_public_holidays" invisible="1" />
+                            <field name="is_sunday_work" invisible="1" />
+                            <field name="overtime_type" />
+                            <field name="date" readonly="1" />
+                            <field name="duration" widget="float_time" readonly="1"/>
+                            <field name="duration_real" widget="float_time" readonly="1"/>
+                            <field name="adjustment" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_attendance_overtime_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.overtime.list.inherit</field>
+        <field name="model">hr.attendance.overtime</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_overtime_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="overtime_type"/>
+                <field name="state"/>
+            </xpath>
+            <xpath expr="//field[@name='duration']" position="attributes">
+                <attribute name="sum">Total Hours</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance.hr_attendance_overtime_action" model="ir.actions.act_window">
+        <field name="view_mode">graph,pivot,list,form</field>
+    </record>
+
+    <menuitem 
+        id="menu_hr_attendance_ovetime_view" 
+        name="Overtime" 
+        parent="hr_attendance.menu_hr_attendance_root" 
+        sequence="14" 
+        action="hr_attendance.hr_attendance_overtime_action"
+    />
+</odoo>

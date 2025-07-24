@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Work Entry Type -->
+        <record id="hr_work_entry.overtime_work_entry_type" model="hr.work.entry.type">
+            <field name="is_overtime">True</field>
+        </record>
+
+        <record id="special_overtime_work_entry_type" model="hr.work.entry.type">
+            <field name="name">Special Overtime</field>
+            <field name="color">4</field>
+            <field name="code">SPECIALOVERTIME</field>
+            <field name="is_readonly_code">True</field>
+        </record>
+
+        <record id="hours_worked_on_sunday_work_entry_type" model="hr.work.entry.type">
+            <field name="name">Sunday Work Overtime</field>
+            <field name="color">4</field>
+            <field name="code">SUNDAYOVERTIME</field>
+            <field name="is_readonly_code">True</field>
+        </record>
+
+        <record id="hours_worked_on_public_holidays_work_entry_type" model="hr.work.entry.type">
+            <field name="name">Public Holidays Overtime</field>
+            <field name="color">4</field>
+            <field name="code">PUBLICHOLIDAYOVERTIME</field>
+            <field name="is_readonly_code">True</field>
+        </record>
+    </data>
+</odoo>

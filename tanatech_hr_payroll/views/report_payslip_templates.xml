@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_inherit" inherit_id="hr_payroll.report_payslip"> 
+        
+        <xpath expr="//div[hasclass('page')]/t[@t-set='is_invalid']" position="before">
+            <style>
+                #payslip_title {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                #payslip_title td {
+                    border: 1px solid #000000;
+                    padding: 8px;
+                }
+
+                #separator {
+                    height: 8px;
+                }
+
+                #custom_tbody tr {
+                    background-color: #ffffff; /* need to override the original css to apply the color */
+                    border: none;
+                }
+
+                #custom_tbody td {
+                    border: none;
+                }
+
+                #simple_separtor {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                #simple_separtor td {
+                    border: 1px solid #000000;
+                    padding: 8px;
+                }
+
+                #payslip_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #deduction_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #taxable_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #letter_amount_table tr {
+                    border: 1px solid #000000;
+                }
+            </style>
+        </xpath>
+        <xpath expr="//h2[@id='payslip_name']" position="replace">
+            <table id="payslip_title">
+                <tr>
+                    <td>
+                        <div style="text-transform: uppercase; text-align: center;">
+                            <strong>Pay slip</strong>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']" position="before">
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']//thead[hasclass('o_black_border')]" position="replace">
+            <!-- NOTHING TO DISPLAY HERE -->
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']/table/tbody" position="attributes">
+            <attribute name="id" add="custom_tbody" />
+        </xpath>
+
+        <xpath expr="//td[@id='employee_infos']" position="replace">
+            <td id="employee_infos" style=" width: 30%;">
+                <div>
+                    <strong class="me-2">Pay Period from</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Company Name or Reason</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Full name of the worker</strong>
+                </div>
+                <div>
+                    <strong class="me-2">CIN</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Address</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Contract</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Job Position</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Classification</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Dependent children</strong>
+                </div>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@id='other_infos']" position="replace">
+            <td id="other_infos" style=" width: 70%;">
+                <div class="row">
+                    <div class="col-4">
+                        <span t-if="o.date_from &lt; o.contract_id.date_start" t-field="o.contract_id.date_start"/>
+                        <span t-else="" t-field="o.date_from"/>
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2"> to </strong>
+                    </div>
+                    <div class="col-4">
+                        <span t-if="o.contract_id.date_end and o.date_to &gt; o.contract_id.date_end" t-field="o.contract_id.date_end"/>
+                        <span t-else="" t-field="o.date_to"/>
+                    </div>
+                </div>
+                <div>
+                    <span t-field="o.company_id.name"/>
+                </div>
+                <div>
+                    <span t-field="o.employee_id.legal_name"/>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.identification_id" t-field="o.employee_id.identification_id"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.private_street" t-field="o.employee_id.private_street"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_street2" t-field="o.employee_id.private_street2" class="ms-2"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_city" t-field="o.employee_id.private_city" class="ms-2"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_zip" t-field="o.employee_id.private_zip"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_country_id" t-field="o.employee_id.private_country_id"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.contract_id.contract_type_id" t-field="o.employee_id.contract_id.contract_type_id"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <span t-if="o.employee_id.job_title" t-field="o.employee_id.job_title"/>
+                        <span t-else=""> - </span>
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2">Registration N°</strong>
+                    </div>
+                    <div class="col-4">
+                        <span t-if="o.employee_id.registration_number" t-field="o.employee_id.registration_number"/>
+                        <span t-else=""> - </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <span>HC</span> <!-- to be defined -->
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2">Indice</strong>
+                    </div>
+                    <div class="col-4">
+                        <span>2378</span> <!-- to be defined -->
+                    </div>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.children" t-field="o.employee_id.children"/>
+                    <span t-else="">0</span>
+                </div>
+            </td>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']" position="after">
+            <table id="simple_separtor">
+                <tr>
+                    <td>
+                        <div id="separator"></div>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+
+        <xpath expr="//div[@id='worked_days_table']" position="replace">
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='payslip_lines_table']" position="replace">
+            <div class="row">
+                <div class="col-6">
+                    <table id="payslip_table" class="table table-sm">
+                        <tr>
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <span>Basic salary</span>
+                            </td>
+                            <td>
+                                <span>276288.66</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 30%</span>
+                            </td>
+                            <td>
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 40%</span>
+                            </td>
+                            <td>
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 50%</span>
+                            </td>
+                            <td>
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 100%</span>
+                            </td>
+                            <td>
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style=" width: 70%;">
+                                <span>Gross salary</span>
+                            </td>
+                            <td>
+                                <span>276288.66</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-6">
+                    <table id="deduction_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Cnaps</span>
+                            </td>
+                            <td>
+                                <span>2,762.89</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>AMIT</span>
+                            </td>
+                            <td>
+                                <span>5,525.77</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>IRSA</span>
+                            </td>
+                            <td>
+                                <span>3,000.00</span>
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <span>Deduction total</span>
+                            </td>
+                            <td>
+                                <span>11,288.66</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-9">
+                    <table id="taxable_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Taxable salary</span>
+                            </td>
+                            <td>
+                                <span>265,000.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Family allowance ,,,,,,,,,,/Child(Cnaps)  Net salary</span>
+                            </td>
+                            <td>
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <span>Grand total</span>
+                            </td>
+                            <td>
+                                <span>265,000.00</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-3" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-12">
+                    <table id="letter_amount_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 30%;">
+                                <span>Amount in letter</span>
+                            </td>
+                            <td>
+                                <span>Two hundred and sixty-five thousand ariary</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">
+                                <span>Received on</span>
+                            </td>
+                            <td>
+                                <span>4/1/2025</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+        </xpath>
+
+        <xpath expr="//div[@id='to_pay']" position="replace">
+            
+        </xpath>
+
+    </template>
+</odoo>
