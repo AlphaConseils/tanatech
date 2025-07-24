@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_hr_payroll
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20240905\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-02 08:39+0000\n"
+"PO-Revision-Date: 2025-07-02 08:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime__state
+msgid "State"
+msgstr "Etat"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__state__to_approve
+msgid "To Approve"
+msgstr "À approuver"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__state__approved
+msgid "Approved"
+msgstr "Approuvé"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__state__refused
+msgid "Refused"
+msgstr "Refusé"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime__registration_number
+msgid "Registration number"
+msgstr "Matricule"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime__overtime_type
+msgid "Overtime Type"
+msgstr "Type d'heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime
+msgid "Overtime"
+msgstr "Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__special_overtime
+msgid "Special Overtime"
+msgstr "Heures supplémentaires spéciales"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_sunday
+msgid "Hours Worked On Sunday"
+msgstr "Heures travaillées le dimanche"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_public_holidays
+msgid "Hours Worked On Public Holidays"
+msgstr "Heures travaillées les jours fériés"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_work_entry_type__is_overtime
+msgid "Is overtime"
+msgstr "Est-ce des heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_view_form
+msgid "Employee overtime"
+msgstr "Heures supplémentaires des employés"
+
+#. module: tanatech_hr_payroll
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_view
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
+msgid "Overtime"
+msgstr "Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_hr_payslip_form_inherit
+msgid "<span class=\"o_stat_text\">Overtime</span>"
+msgstr "<span class=\"o_stat_text\">Heures supplémentaires</span>"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.special_overtime_work_entry_type
+msgid "Special Overtime"
+msgstr "Heures supplémentaires spéciales"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_sunday_work_entry_type
+msgid "Sunday Work Overtime"
+msgstr "Heures supplémentaires du dimanche"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_public_holidays_work_entry_type
+msgid "Public Holidays Overtime"
+msgstr "Heures supplémentaires pour les jours fériés"
