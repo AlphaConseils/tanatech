@@ -24,3 +24,151 @@ msgstr "Allocation Familiale"
 #: model:ir.model.fields,help:tanatech_hr_contract.field_hr_contract__family_allowance
 msgid "Employee's monthly family allocation."
 msgstr "Allocation familiale mensuelle du salarié."
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_contract__contract_id
+msgid "Source Contract"
+msgstr "Contrat Source"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__state__open_not_declared
+msgid "Running Undeclared"
+msgstr "En cours non déclaré"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_contract__contract_category
+msgid "Contract Category"
+msgstr "Catégorie de contrat"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__declared
+msgid "Declared"
+msgstr "Déclaré"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__not_declared
+msgid "Undeclared"
+msgstr "Non Déclaré"
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
+msgid ""
+"An employee can only have one contract at the same time. (Excluding Draft and Cancelled contracts).\n"
+"\n"
+"Employee: %(employee_name)s"
+msgstr ""
+"Un employé ne peut avoir qu'un seul contrat à la fois. (Hors contrats brouillon et contrats annulés).\n"
+"\n"
+"Employé : %(employee_name)s"
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
+msgid ""
+"Undeclared contract cannot be removed explicitly! \n"
+"Tips : Remove the declared contract."
+msgstr ""
+"Un contrat non déclaré ne peut pas être supprimé explicitement! \n"
+"Conseils : Supprimez le contrat déclaré."
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
+msgid ""
+"Undeclared contract cannot be archived explicitly! \n"
+"Tips : Archive the declared contract."
+msgstr ""
+"Un contrat non déclaré ne peut pas être archivé explicitement! \n"
+"Conseils : Archiver le contrat déclaré."
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
+msgid ""
+"Undeclared contract cannot be unarchived explicitly! \n"
+"Tips : Unarchive the declared contract."
+msgstr ""
+"Un contrat non déclaré ne peut pas être désarchivé explicitement! \n"
+"Conseils : Désarchiver le contrat déclaré."
+
+#. module: tanatech_hr_contract
+#: model:ir.ui.menu,name:tanatech_hr_contract.hr_menu_declared_contracts
+msgid "Declared Contracts"
+msgstr "Contrats Déclarés"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.act_window,name:tanatech_hr_contract.action_hr_contract_not_declared
+#: model:ir.ui.menu,name:tanatech_hr_contract.hr_menu_contract_not_declared
+msgid "Undeclared Contracts"
+msgstr "Contrats Non Déclarés"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.actions.act_window,help:tanatech_hr_contract.action_hr_contract_not_declared
+msgid "No undeclared contracts"
+msgstr "Pas de contrats non déclarés"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Search Contract"
+msgstr "Rechercher dans les contrats"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Contract"
+msgstr "Contrat"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Contracts to review"
+msgstr "Contrats à examiner"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Running Contracts"
+msgstr "Contrats en cours"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Start Date"
+msgstr "Date de début"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Archived"
+msgstr "Archivé"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Status"
+msgstr "Statut"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Employee"
+msgstr "Employé"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Job Position"
+msgstr "Poste"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Department"
+msgstr "Département"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Working Schedule"
+msgstr "Horaire de travail"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+msgid "Salary Structure Type"
+msgstr "Type de structure salariale"
