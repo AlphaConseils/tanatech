@@ -147,100 +147,109 @@ class HrContract(models.Model):
                         """, (not_declared_contract.id,))
                         self.env.cr.commit()
                 elif vals.get('state') == 'draft':
-                    self.env.cr.execute("""
-                        UPDATE hr_contract
-                        SET state = 'draft'
-                        WHERE id = %s; 
-                    """, (not_declared_contract.id,))
-                    self.env.cr.commit()
+                    if not_declared_contract:
+                        self.env.cr.execute("""
+                            UPDATE hr_contract
+                            SET state = 'draft'
+                            WHERE id = %s; 
+                        """, (not_declared_contract.id,))
+                        self.env.cr.commit()
                 elif vals.get('state') == 'close':
-                    self.env.cr.execute("""
-                        UPDATE hr_contract
-                        SET state = 'close', date_end = %s
-                        WHERE id = %s; 
-                    """, (contract.date_end, not_declared_contract.id))
-                    self.env.cr.commit()
+                    if not_declared_contract:
+                        self.env.cr.execute("""
+                            UPDATE hr_contract
+                            SET state = 'close', date_end = %s
+                            WHERE id = %s; 
+                        """, (contract.date_end, not_declared_contract.id))
+                        self.env.cr.commit()
                 else:
-                    self.env.cr.execute("""
-                        UPDATE hr_contract
-                        SET state = 'cancel'
-                        WHERE id = %s; 
-                    """, (not_declared_contract.id,))
-                    self.env.cr.commit()
+                    if not_declared_contract:
+                        self.env.cr.execute("""
+                            UPDATE hr_contract
+                            SET state = 'cancel'
+                            WHERE id = %s; 
+                        """, (not_declared_contract.id,))
+                        self.env.cr.commit()
             # employee_id
             if 'employee_id' in vals:
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET employee_id = %s, job_id = %s, department_id = %s, resource_calendar_id = %s, company_id = %s
-                    WHERE id = %s; 
-                """, (
-                        contract.employee_id.id if contract.employee_id else None, 
-                        contract.employee_id.job_id.id if contract.employee_id.job_id else None, 
-                        contract.employee_id.department_id.id if contract.employee_id.department_id else None, 
-                        contract.employee_id.resource_calendar_id.id if contract.employee_id.resource_calendar_id else None, 
-                        contract.employee_id.company_id.id if contract.employee_id.company_id else None, 
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET employee_id = %s, job_id = %s, department_id = %s, resource_calendar_id = %s, company_id = %s
+                        WHERE id = %s; 
+                    """, (
+                            contract.employee_id.id if contract.employee_id else None, 
+                            contract.employee_id.job_id.id if contract.employee_id.job_id else None, 
+                            contract.employee_id.department_id.id if contract.employee_id.department_id else None, 
+                            contract.employee_id.resource_calendar_id.id if contract.employee_id.resource_calendar_id else None, 
+                            contract.employee_id.company_id.id if contract.employee_id.company_id else None, 
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
             # contract_type_id
             if 'contract_type_id' in vals:
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET contract_type_id = %s
-                    WHERE id = %s; 
-                """, (
-                        contract.contract_type_id.id if contract.contract_type_id else None,
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET contract_type_id = %s
+                        WHERE id = %s; 
+                    """, (
+                            contract.contract_type_id.id if contract.contract_type_id else None,
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
             # Dates
             if 'date_start' in vals:
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET date_start = %s
-                    WHERE id = %s; 
-                """, (
-                        contract.date_start,
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET date_start = %s
+                        WHERE id = %s; 
+                    """, (
+                            contract.date_start,
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
             if 'date_end' in vals:
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET date_end = %s
-                    WHERE id = %s; 
-                """, (
-                        contract.date_end if contract.date_end else None,
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET date_end = %s
+                        WHERE id = %s; 
+                    """, (
+                            contract.date_end if contract.date_end else None,
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
             # resource_calendar_id
             if 'resource_calendar_id' in vals:
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET resource_calendar_id = %s
-                    WHERE id = %s; 
-                """, (
-                        contract.resource_calendar_id.id,
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET resource_calendar_id = %s
+                        WHERE id = %s; 
+                    """, (
+                            contract.resource_calendar_id.id,
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
             # name
             if 'name' in vals:
-                name = f"{contract.name} - N.D."
-                self.env.cr.execute("""
-                    UPDATE hr_contract
-                    SET name = %s
-                    WHERE id = %s; 
-                """, (
-                        name,
-                        not_declared_contract.id,
+                if not_declared_contract:
+                    name = f"{contract.name} - N.D."
+                    self.env.cr.execute("""
+                        UPDATE hr_contract
+                        SET name = %s
+                        WHERE id = %s; 
+                    """, (
+                            name,
+                            not_declared_contract.id,
+                        )
                     )
-                )
-                self.env.cr.commit()
+                    self.env.cr.commit()
         return res
