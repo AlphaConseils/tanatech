@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.view.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="inside">
+                <field name="is_from_undeclared_contract" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_print_payslip']" position="attributes">
+                <attribute name="invisible">not line_ids or is_from_undeclared_contract</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.view.list.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='company_id'][2]" position="before">
+                <field name="contract_id" optional="hide"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>

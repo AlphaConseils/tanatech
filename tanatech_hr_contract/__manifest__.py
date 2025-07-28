@@ -7,12 +7,19 @@
     "summary": "Manage your Contracts activities",
     "description": "",
     "website": "https://www.nexources.com/",
-    "depends": ["hr_contract", "tanatech_base"],
+    "depends": ["hr", "hr_contract", "hr_payroll", "tanatech_base"],
     "category": "Human Resources/Contracts",
     "data": [
         # views
         'views/hr_contract_views.xml',
+        'views/hr_payslip_view.xml',
+        'wizard/hr_payroll_index_wizard_views.xml',
     ],
+    "assets": {
+        "web.assets_backend": [
+            "tanatech_hr_contract/static/src/js/*.js",
+        ],
+    },
     "installable": True,
     "application": True,
     "auto_install": False,
