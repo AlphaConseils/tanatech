@@ -5,7 +5,7 @@ from odoo import api, Command, models, fields
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
-    is_from_undeclared_contract = fields.Boolean('Is from undeclared contract ?', compute='_compute_contract_category')
+    is_from_undeclared_contract = fields.Boolean('Is from undeclared contract ?', compute='_compute_contract_category', store=True)
 
     @api.depends('contract_id')
     def _compute_contract_category(self):
