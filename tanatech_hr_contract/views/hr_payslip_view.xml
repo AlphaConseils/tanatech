@@ -14,6 +14,18 @@
                 <attribute name="invisible">not line_ids or is_from_undeclared_contract</attribute>
             </xpath>
 
+            <xpath expr="//field[@name='contract_domain_ids']" position="after">
+                <field name="structure_domain_ids" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='struct_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', structure_domain_ids)]</attribute>
+            </xpath>
+
+            <!-- <xpath expr="//button[@name='action_open_salary_attachments']" position="attributes">
+                <attribute name="invisible">salary_attachment_count == 0 or is_from_undeclared_contract</attribute>
+            </xpath> -->
+
         </field>
     </record>
 
@@ -27,6 +39,23 @@
                 <field name="contract_id" optional="hide"/>
             </xpath>
             
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.select.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='struct_id']" position="after">
+                <field name="is_from_undeclared_contract" />
+            </xpath>
+            <xpath expr="//filter[@name='done']" position="after">
+                <separator/>
+                <filter string="From declared contract" name="from_declared_contract" domain="[('is_from_undeclared_contract', '!=', True)]" />
+                <filter string="From undeclared contract" name="from_undeclared_contract" domain="[('is_from_undeclared_contract', '=', True)]" />
+            </xpath>
         </field>
     </record>
 

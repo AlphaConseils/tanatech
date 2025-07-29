@@ -10,9 +10,18 @@
     "depends": ["hr", "hr_contract", "hr_payroll", "tanatech_base"],
     "category": "Human Resources/Contracts",
     "data": [
+        # security
+        'security/ir.model.access.csv',
+        # data
+        'data/ir_actions_server_data.xml',
         # views
         'views/hr_contract_views.xml',
         'views/hr_payslip_view.xml',
+        'views/hr_payroll_menu.xml',
+        'views/hr_payroll_report_views.xml',
+        'views/hr_payroll_structure_type_views.xml',
+        'views/hr_payroll_structure_views.xml',
+        # wizard
         'wizard/hr_payroll_index_wizard_views.xml',
     ],
     "assets": {

@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
 
 from . import hr_payroll_report
+from . import hr_payroll_undeclared_report
