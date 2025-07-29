@@ -10,6 +10,11 @@
                 <attribute name="duplicate">false</attribute>
             </xpath>
 
+            <xpath expr="//group[@name='top_info_right']/field[@name='hr_responsible_id']" position="before">
+                <field name="contract_category" />
+                <field name="contract_id" readonly="1" invisible="contract_category != 'not_declared'" />
+            </xpath>
+
             <xpath expr="//field[@name='name']" position="attributes">
                 <attribute name="readonly">contract_category == 'not_declared'</attribute>
             </xpath>
@@ -32,6 +37,14 @@
                 <attribute name="readonly">contract_category == 'not_declared'</attribute>
             </xpath>
 
+            <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][1]" position="replace">
+                <field name="structure_type_id" groups="!hr_contract.group_hr_contract_manager" domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]" options="{'no_open': True, 'no_create': True}"/>
+            </xpath>
+
+            <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][2]" position="replace">
+                <field name="structure_type_id" groups="hr_contract.group_hr_contract_manager" domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]"/>
+            </xpath>
+
             <xpath expr="//group[@name='top_info_right']/field[@name='department_id'][1]" position="attributes">
                 <attribute name="readonly">contract_category == 'not_declared'</attribute>
             </xpath>
@@ -51,11 +64,6 @@
             </xpath>
             <xpath expr="//group[@name='top_info_right']/field[@name='contract_type_id'][2]" position="attributes">
                 <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-
-            <xpath expr="//group[@name='top_info_right']/field[@name='hr_responsible_id']" position="before">
-                <field name="contract_category" />
-                <field name="contract_id" readonly="1" invisible="contract_category != 'not_declared'" />
             </xpath>
 
             <!-- <xpath expr="//form/header" position="replace">
@@ -195,5 +203,18 @@
         action="tanatech_hr_contract.action_hr_contract_not_declared"
         parent="hr_payroll.menu_hr_payroll_employees_root"
         sequence="31"/>
+
+    <!-- <record id="hr_contract_form_inherit_extent" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit.extent</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_open_salary_attachments']" position="attributes">
+                <attribute name="invisible">contract_category == 'not_declared'</attribute>
+            </xpath>
+            
+        </field>
+    </record> -->
 
 </odoo>

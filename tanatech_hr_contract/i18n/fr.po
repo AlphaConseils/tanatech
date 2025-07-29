@@ -36,16 +36,33 @@ msgid "Running Undeclared"
 msgstr "En cours non déclaré"
 
 #. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payslip__is_from_undeclared_contract
+msgid "Is from undeclared contract ?"
+msgstr "Est-ce un contrat non déclaré ?"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_structure__is_declared_type
+msgid "Is declared type ?"
+msgstr "Est du type déclaré ?"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_structure_type__structure_category
+msgid "Structure Category"
+msgstr "Catégorie de structure"
+
+#. module: tanatech_hr_contract
 #: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_contract__contract_category
 msgid "Contract Category"
 msgstr "Catégorie de contrat"
 
 #. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_structure_type__structure_category__declared
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__declared
 msgid "Declared"
 msgstr "Déclaré"
 
 #. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_structure_type__structure_category__not_declared
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__not_declared
 msgid "Undeclared"
 msgstr "Non Déclaré"
@@ -172,3 +189,227 @@ msgstr "Horaire de travail"
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
 msgid "Salary Structure Type"
 msgstr "Type de structure salariale"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count
+msgid "# Undeclared Payslip"
+msgstr "# Fiche de paie non déclaré"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_entry_source__attendance
+msgid "Attendances"
+msgstr "Présences"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_payroll_undeclared_report_view_tree
+msgid "Average of Basic Wage"
+msgstr "Moyenne du salaire de base"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_payroll_undeclared_report_view_tree
+msgid "Average of Net Wage"
+msgstr "Moyenne du salaire net"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__basic_wage
+msgid "Basic Wage"
+msgstr "Salaire de base"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__leave_basic_wage
+msgid "Basic Wage for Time Off"
+msgstr "Salaire de base pour les congés"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count_leave
+msgid "Days of Paid Time Off"
+msgstr "Jours de congés payés"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count_unforeseen_absence
+msgid "Days of Unforeseen Absence"
+msgstr "Jours d'absence imprévue"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count_leave_unpaid
+msgid "Days of Unpaid Time Off"
+msgstr "Jours de congés non payés"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__department_id
+msgid "Department"
+msgstr "Département"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__employee_id
+msgid "Employee"
+msgstr "Employé"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__date_to
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__gross_wage
+msgid "Gross Wage"
+msgstr "Salaire brut"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__job_id
+msgid "Job Position"
+msgstr "Poste"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__master_department_id
+msgid "Master Department"
+msgstr "Département parent"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__net_wage
+msgid "Net Wage"
+msgstr "Salaire net"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__number_of_days
+msgid "Number of Days"
+msgstr "Nombre de jours"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__number_of_hours
+msgid "Number of Hours"
+msgstr "Nombre d'heures"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_type__2
+msgid "Paid Time Off"
+msgstr "Congés payés"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.act_window,name:tanatech_hr_contract.payroll_undeclared_report_action
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_payroll_undeclared_report_view_tree
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_graph
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_pivot
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
+msgid "Undeclared Payroll Analysis"
+msgstr "Analyse de la paie non déclarée"
+
+#. module: tanatech_hr_contract
+#: model:ir.model,name:tanatech_hr_contract.model_hr_payroll_undeclared_report
+msgid "Undeclared Payroll Analysis Report"
+msgstr "Rapport d'analyse de paie non déclarée"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__payslip_id
+msgid "Payslip"
+msgstr "Fiche de paie"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__name
+msgid "Payslip Name"
+msgstr "Nom de fiche de paie"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_entry_source__planning
+msgid "Planning"
+msgstr "Planning"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_type__1
+msgid "Regular Working Day"
+msgstr "Journée de travail régulière"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__date_from
+msgid "Start Date"
+msgstr "Date de début"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__type
+msgid "Type"
+msgstr "Type"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_type__3
+msgid "Unpaid Time Off"
+msgstr "Congés non payés"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count_work
+msgid "Work Days"
+msgstr "Jours de travail"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_undeclared_report__work_entry_source
+msgid "Work Entry Source"
+msgstr "Source de la prestation"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__count_work_hours
+msgid "Work Hours"
+msgstr "Heures de travail"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__work_code
+msgid "Work type"
+msgstr "Type de travail"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__work_type
+msgid "Work, (un)paid Time Off"
+msgstr "Travail, congés (non) payés"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_entry_source__calendar
+msgid "Working Schedule"
+msgstr "Horaire de travail"
+
+#. module: tanatech_hr_contract
+#: model:ir.ui.menu,name:tanatech_hr_contract.menu_report_declared_payroll
+msgid "Declared Payroll"
+msgstr "Paie déclarée"
+
+#. module: tanatech_hr_contract
+#: model:ir.ui.menu,name:tanatech_hr_contract.menu_report_undeclared_payroll
+msgid "Undeclared Payroll"
+msgstr "Paie non déclarée"
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/wizard/hr_payroll_payslips_by_employees.py:0
+msgid "Some work entries could not be validated."
+msgstr "Certaines prestations n'ont pas pu être validées."
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/wizard/hr_payroll_payslips_by_employees.py:0
+msgid "Time intervals to look for:%s"
+msgstr "Intervalles de temps à vérifier : %s "
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/wizard/hr_payroll_payslips_by_employees.py:0
+msgid "You must select employee(s) to generate payslip(s)."
+msgstr ""
+"Vous devez sélectionner un ou des employés pour générer une ou des fiches de"
+" paie."
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
+msgid "Last 365 Days Payslip"
+msgstr "Fiche de paie des 365 derniers jours"

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <!-- **** Reporting **** -->
+    <record model="ir.ui.menu" id="hr_payroll.menu_report_payroll">
+        <field name="active" eval="False" />
+    </record>
+
+    <menuitem
+        id="menu_report_declared_payroll"
+        name="Declared Payroll"
+        action="hr_payroll.ir_actions_server_action_open_reporting"
+        parent="hr_payroll.menu_hr_payroll_report"
+        sequence="8"/>
+
+    <menuitem
+        id="menu_report_undeclared_payroll"
+        name="Undeclared Payroll"
+        action="ir_actions_server_action_open_undeclared_reporting"
+        parent="hr_payroll.menu_hr_payroll_report"
+        sequence="9"/>
+
+</odoo>
