@@ -217,4 +217,49 @@
         </field>
     </record> -->
 
+    <!-- action server -->
+    <record model="ir.actions.server" id="action_draft_contracts">
+        <field name="name">Set to draft</field>
+        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records._set_to_draft()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_run_contracts">
+        <field name="name">Set to running</field>
+        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records._set_to_running()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_expire_contracts">
+        <field name="name">Set to expired</field>
+        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records._set_to_expired()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_cancel_contracts">
+        <field name="name">Set to cancelled</field>
+        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records._set_to_cancelled()
+        </field>
+    </record>
+
 </odoo>
