@@ -51,6 +51,7 @@ class HrContract(models.Model):
                 ('id', '!=', contract.id),
                 ('employee_id', '=', contract.employee_id.id),
                 ('company_id', '=', contract.company_id.id),
+                ('contract_category', '!=', 'not_declared'),
                 '|',
                     ('state', 'in', ['open', 'close']),
                     '&',
@@ -66,7 +67,9 @@ class HrContract(models.Model):
                 end_domain = ['|', ('date_end', '>', contract.date_start), ('date_end', '=', False)]
 
             domain = expression.AND([domain, start_domain, end_domain])
-            if self.search_count(domain):
+            # conflicts = self.search_count(domain)
+            conflicts = self.search(domain)
+            if conflicts:
                 raise ValidationError(
                     _(
                         'An employee can only have one contract at the same time. (Excluding Draft and Cancelled contracts).\n\nEmployee: %(employee_name)s',
@@ -154,6 +157,14 @@ class HrContract(models.Model):
                             WHERE id = %s; 
                         """, (not_declared_contract.id,))
                         self.env.cr.commit()
+                    else:
+                        new_not_declared_contract = contract.copy({
+                            'name' : f'{contract.name} - N.D.',
+                            'date_start' : contract.date_start,
+                            'contract_category' : 'not_declared',
+                            'state' : 'draft',
+                            'contract_id' : contract.id,
+                        })
                 elif vals.get('state') == 'close':
                     if not_declared_contract:
                         self.env.cr.execute("""
@@ -162,6 +173,15 @@ class HrContract(models.Model):
                             WHERE id = %s; 
                         """, (contract.date_end, not_declared_contract.id))
                         self.env.cr.commit()
+                    else:
+                        new_not_declared_contract = contract.copy({
+                            'name' : f'{contract.name} - N.D.',
+                            'date_start' : contract.date_start,
+                            'date_end' : contract.date_end,
+                            'contract_category' : 'not_declared',
+                            'state' : 'close',
+                            'contract_id' : contract.id,
+                        })
                 else:
                     if not_declared_contract:
                         self.env.cr.execute("""
@@ -170,6 +190,14 @@ class HrContract(models.Model):
                             WHERE id = %s; 
                         """, (not_declared_contract.id,))
                         self.env.cr.commit()
+                    else:
+                        new_not_declared_contract = contract.copy({
+                            'name' : f'{contract.name} - N.D.',
+                            'date_start' : contract.date_start,
+                            'contract_category' : 'not_declared',
+                            'state' : 'cancel',
+                            'contract_id' : contract.id,
+                        })
             # employee_id
             if 'employee_id' in vals:
                 if not_declared_contract:
@@ -253,3 +281,39 @@ class HrContract(models.Model):
                     )
                     self.env.cr.commit()
         return res
+
+    def _set_to_draft(self):
+        for contract in self:
+            if contract.contract_category == 'not_declared':
+                raise ValidationError(_('Cannot modify undeclared contract status !'))
+            if contract.state != 'draft':
+                contract.write({
+                    'state': 'draft'
+                })
+
+    def _set_to_running(self):
+        for contract in self:
+            if contract.contract_category == 'not_declared':
+                raise ValidationError(_('Cannot modify undeclared contract status !'))
+            if contract.state != 'open':
+                contract.write({
+                    'state': 'open'
+                })
+
+    def _set_to_expired(self):
+        for contract in self:
+            if contract.contract_category == 'not_declared':
+                raise ValidationError(_('Cannot modify undeclared contract status !'))
+            if contract.state != 'close':
+                contract.write({
+                    'state': 'close'
+                })
+
+    def _set_to_cancelled(self):
+        for contract in self:
+            if contract.contract_category == 'not_declared':
+                raise ValidationError(_('Cannot modify undeclared contract status !'))
+            if contract.state != 'cancel':
+                contract.write({
+                    'state': 'cancel'
+                })

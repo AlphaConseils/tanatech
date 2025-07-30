@@ -413,3 +413,39 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
 msgid "Last 365 Days Payslip"
 msgstr "Fiche de paie des 365 derniers jours"
+
+#. module: tanatech_hr_contract
+#. odoo-python
+#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
+msgid "Cannot modify undeclared contract status !"
+msgstr "Impossible de modifier le statut du contrat non déclaré !"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.server,name:tanatech_hr_contract.action_draft_contracts
+msgid "Set to draft"
+msgstr "Mettre en brouillon"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.server,name:tanatech_hr_contract.action_run_contracts
+msgid "Set to running"
+msgstr "Mettre en cours"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.server,name:tanatech_hr_contract.action_expire_contracts
+msgid "Set to expired"
+msgstr "Définir comme expiré"
+
+#. module: tanatech_hr_contract
+#: model:ir.actions.server,name:tanatech_hr_contract.action_cancel_contracts
+msgid "Set to cancelled"
+msgstr "Définir comme annulé"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.view_hr_payslip_filter_inherit
+msgid "From declared contract"
+msgstr "D'un contrat déclaré"
+
+#. module: tanatech_hr_contract
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.view_hr_payslip_filter_inherit
+msgid "From undeclared contract"
+msgstr "D'un contrat non déclaré"
