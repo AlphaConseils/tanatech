@@ -40,7 +40,7 @@ class HrContract(models.Model):
         ],
         string="Contract Category",
         default="declared",
-        readonly=True
+        store=True
     )
 
     @api.constrains('employee_id', 'state', 'kanban_state', 'date_start', 'date_end')
@@ -127,7 +127,19 @@ class HrContract(models.Model):
                     self.env.cr.commit()
         return super().action_unarchive()
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """ Affect the default undeclared structure type for undeclared contract """
+        contracts = super().create(vals_list)
+        for contract in contracts.filtered(lambda c: c.contract_category == 'not_declared'):
+            structure_type = self.env['hr.payroll.structure.type'].search([('structure_category', '=', 'not_declared')], limit=1)
+            if not structure_type:
+                continue
+            contract.structure_type_id = structure_type.id
+        return contracts
+
     def write(self, vals):
+        # TODO : set the default 'structure_type_id' for undeclared contract
         res = super(HrContract, self).write(vals)
         # FIXME : Find a better way to update the undeclared contract other than raw SQL
         for contract in self:
