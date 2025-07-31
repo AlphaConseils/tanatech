@@ -11,7 +11,7 @@
             </xpath>
 
             <xpath expr="//group[@name='top_info_right']/field[@name='hr_responsible_id']" position="before">
-                <field name="contract_category" />
+                <field name="contract_category" readonly="1"/>
                 <field name="contract_id" readonly="1" invisible="contract_category != 'not_declared'" />
             </xpath>
 
@@ -159,7 +159,7 @@
                 <field name="date_end"/>
                 <field name="employee_id"/>
                 <field name="job_id"/>
-                <field name="contract_category"/>
+                <field name="contract_category" />
                 <field name="department_id" operator="child_of"/>
                 <field name="resource_calendar_id"/>
                 <filter string="Running Contracts" name="running" domain="[('state', '=', 'open_not_declared'), ('contract_category', '=', 'not_declared')]"/>
