@@ -302,6 +302,10 @@ class HrContract(models.Model):
                 contract.write({
                     'state': 'draft'
                 })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
 
     def _set_to_running(self):
         for contract in self:
@@ -311,6 +315,10 @@ class HrContract(models.Model):
                 contract.write({
                     'state': 'open'
                 })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
 
     def _set_to_expired(self):
         for contract in self:
@@ -320,6 +328,10 @@ class HrContract(models.Model):
                 contract.write({
                     'state': 'close'
                 })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
 
     def _set_to_cancelled(self):
         for contract in self:
@@ -329,3 +341,7 @@ class HrContract(models.Model):
                 contract.write({
                     'state': 'cancel'
                 })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
