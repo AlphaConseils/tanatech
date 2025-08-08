@@ -91,7 +91,7 @@
                     <strong class="me-2">Full name of the worker</strong>
                 </div>
                 <div>
-                    <strong class="me-2">CIN</strong>
+                    <strong class="me-2">NIC</strong>
                 </div>
                 <div>
                     <strong class="me-2">Address</strong>
@@ -149,7 +149,7 @@
                     <span t-else=""> - </span>
                 </div>
                 <div>
-                    <span t-if="o.employee_id.contract_id.contract_type_id" t-field="o.employee_id.contract_id.contract_type_id"/>
+                    <span t-if="o.contract_id.contract_type_id" t-field="o.contract_id.contract_type_id.name"/>
                     <span t-else=""> - </span>
                 </div>
                 <div class="row">
@@ -167,13 +167,17 @@
                 </div>
                 <div class="row">
                     <div class="col-4">
-                        <span>HC</span> <!-- to be defined -->
+                        <!-- <span>HC</span> to be defined -->
+                        <span t-if="o.employee_id.classification" t-field="o.employee_id.classification"/>
+                        <span t-else=""> - </span>
                     </div>
                     <div class="col-4">
-                        <strong class="me-2">Indice</strong>
+                        <strong class="me-2">Index</strong>
                     </div>
                     <div class="col-4">
-                        <span>2378</span> <!-- to be defined -->
+                        <!-- <span>2378</span> to be defined -->
+                        <span t-if="o.employee_id.indice" t-field="o.employee_id.indice"/>
+                        <span t-else=""> - </span>
                     </div>
                 </div>
                 <div>
@@ -198,6 +202,46 @@
         </xpath>
 
         <xpath expr="//div[@id='payslip_lines_table']" position="replace">
+            <!-- Compute overtime -->
+            <t t-set="overtime_30" t-value="0"/>
+            <t t-set="overtime_40" t-value="0"/>
+            <t t-set="overtime_50" t-value="0"/>
+            <t t-set="overtime_100" t-value="0"/>
+            <t t-set="worked_days_lines_overtime_30" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code in ('OVERTIME30', 'USUALNIGHTWORK130'))"/>
+            <t t-set="worked_days_lines_overtime_40" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'SUNDAYOVERTIME')"/>
+            <t t-set="worked_days_lines_overtime_50" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code in ('OVERTIME50', 'USUALNIGHTWORK150'))"/>
+            <t t-set="worked_days_lines_overtime_100" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'PUBLICHOLIDAYOVERTIME')"/>
+            <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount')) + (sum(worked_days_lines_overtime_30.mapped('amount')) * 0.3)"/>
+            <t t-set="overtime_40" t-value="sum(worked_days_lines_overtime_40.mapped('amount')) + (sum(worked_days_lines_overtime_40.mapped('amount')) * 0.4)"/>
+            <t t-set="overtime_50" t-value="sum(worked_days_lines_overtime_50.mapped('amount')) + (sum(worked_days_lines_overtime_50.mapped('amount')) * 0.5)"/>
+            <t t-set="overtime_100" t-value="sum(worked_days_lines_overtime_100.mapped('amount')) + sum(worked_days_lines_overtime_100.mapped('amount'))"/>
+            <t t-set="gross_salary" t-value="overtime_30 + overtime_40 + overtime_50 + overtime_100 + o.contract_id.wage"/>
+
+            <!-- Compute deduction -->
+            <t t-set="payslip_lines" t-value="o.line_ids.filtered(lambda line: line.appears_on_payslip)"/>
+            <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02'))"/>
+            <t t-set="irsa" t-value="sum(payslip_lines_irsa.mapped('amount'))"/>
+
+            <t t-set="payslip_lines_cnaps" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('CNaPS - PS'))"/>
+            <t t-set="cnaps" t-value="sum(payslip_lines_cnaps.mapped('amount'))"/>
+
+            <t t-set="payslip_lines_amit" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('AMIT - PS'))"/>
+            <t t-set="amit" t-value="sum(payslip_lines_amit.mapped('amount'))"/>
+            
+            <t t-set="total_deduction" t-value="cnaps + amit + irsa"/>
+
+            <!-- Compute taxable salary -->
+            <t t-set="taxable_salary" t-value="gross_salary - total_deduction"/>
+
+            <!-- Compute Net salary -->
+            <t t-set="taxable_salary" t-value="gross_salary - total_deduction"/>
+
+            <!-- Compute family allowance -->
+            <t t-set="total_allowance" t-value="o.contract_id.family_allowance * o.employee_id.children if o.employee_id.children else 0"/>
+
+            <!-- Compute grand total -->
+            <t t-set="grand_total" t-value="taxable_salary + total_allowance"/>
+
             <div class="row">
                 <div class="col-6">
                     <table id="payslip_table" class="table table-sm">
@@ -206,7 +250,12 @@
                                 <span>Basic salary</span>
                             </td>
                             <td>
-                                <span>276288.66</span>
+                                <span t-if="o.contract_id.wage">
+                                    <t t-set="formatted_amount_wage" t-value="'{0:,.2f}'.format(o.contract_id.wage)"/>
+                                    <span t-out="formatted_amount_wage" />
+                                </span>
+                                <!-- <span t-if="o.contract_id.wage" t-field="o.contract_id.wage"/> -->
+                                <span t-else="">0</span>
                             </td>
                         </tr>
                         <tr>
@@ -214,7 +263,8 @@
                                 <span>Overtime at 30%</span>
                             </td>
                             <td>
-                                <span>0</span>
+                                <t t-set="formatted_amount_overtime_30" t-value="'{0:,.2f}'.format(overtime_30)"/>
+                                <span t-out="formatted_amount_overtime_30" />
                             </td>
                         </tr>
                         <tr>
@@ -222,7 +272,8 @@
                                 <span>Overtime at 40%</span>
                             </td>
                             <td>
-                                <span>0</span>
+                                <t t-set="formatted_amount_overtime_40" t-value="'{0:,.2f}'.format(overtime_40)"/>
+                                <span t-out="formatted_amount_overtime_40" />
                             </td>
                         </tr>
                         <tr>
@@ -230,7 +281,8 @@
                                 <span>Overtime at 50%</span>
                             </td>
                             <td>
-                                <span>0</span>
+                                <t t-set="formatted_amount_overtime_50" t-value="'{0:,.2f}'.format(overtime_50)"/>
+                                <span t-out="formatted_amount_overtime_50" />
                             </td>
                         </tr>
                         <tr>
@@ -238,15 +290,17 @@
                                 <span>Overtime at 100%</span>
                             </td>
                             <td>
-                                <span>0</span>
+                                <t t-set="formatted_amount_overtime_100" t-value="'{0:,.2f}'.format(overtime_100)"/>
+                                <span t-out="formatted_amount_overtime_100" />
                             </td>
                         </tr>
                         <tr style="border: 2px solid #000000;">
                             <td style=" width: 70%;">
-                                <span>Gross salary</span>
+                                <strong><span>Gross salary</span></strong>
                             </td>
                             <td>
-                                <span>276288.66</span>
+                                <t t-set="formatted_amount_gross_salary" t-value="'{0:,.2f}'.format(gross_salary)"/>
+                                <span t-out="formatted_amount_gross_salary" />
                             </td>
                         </tr>
                     </table>
@@ -264,7 +318,8 @@
                                 <span>Cnaps</span>
                             </td>
                             <td>
-                                <span>2,762.89</span>
+                                <t t-set="formatted_amount_cnaps" t-value="'{0:,.2f}'.format(cnaps)"/>
+                                <span t-out="formatted_amount_cnaps" />
                             </td>
                         </tr>
                         <tr>
@@ -272,7 +327,8 @@
                                 <span>AMIT</span>
                             </td>
                             <td>
-                                <span>5,525.77</span>
+                                <t t-set="formatted_amount_amit" t-value="'{0:,.2f}'.format(amit)"/>
+                                <span t-out="formatted_amount_amit" />
                             </td>
                         </tr>
                         <tr>
@@ -280,15 +336,17 @@
                                 <span>IRSA</span>
                             </td>
                             <td>
-                                <span>3,000.00</span>
+                                <t t-set="formatted_amount_irsa" t-value="'{0:,.2f}'.format(irsa)"/>
+                                <span t-out="formatted_amount_irsa" />
                             </td>
                         </tr>
                         <tr style="border: 2px solid #000000;">
                             <td style="text-transform: uppercase; width: 70%;">
-                                <span>Deduction total</span>
+                                <strong><span>Deduction total</span></strong>
                             </td>
                             <td>
-                                <span>11,288.66</span>
+                                <t t-set="formatted_amount_total_deduction" t-value="'{0:,.2f}'.format(total_deduction)"/>
+                                <span t-out="formatted_amount_total_deduction" />
                             </td>
                         </tr>
                     </table>
@@ -303,26 +361,28 @@
                     <table id="taxable_table" class="table table-sm">
                         <tr>
                             <td style=" width: 70%;">
-                                <span>Taxable salary</span>
+                                <strong><span>Taxable salary</span></strong>
                             </td>
                             <td>
-                                <span>265,000.00</span>
+                                <t t-set="formatted_amount_taxable_salary" t-value="'{0:,.2f}'.format(taxable_salary)"/>
+                                <span t-out="formatted_amount_taxable_salary" />
                             </td>
                         </tr>
                         <tr>
                             <td style=" width: 70%;">
-                                <span>Family allowance ,,,,,,,,,,/Child(Cnaps)  Net salary</span>
+                                <strong><span>Family allowance</span> <span t-if="o.contract_id.family_allowance" t-field="o.contract_id.family_allowance"/><span t-else="">,,,,,,,,,,</span><span>/Child(Cnaps)  Net salary</span></strong>
                             </td>
                             <td>
-                                <span>0</span>
+                                <span> </span>
                             </td>
                         </tr>
                         <tr style="border: 2px solid #000000;">
                             <td style="text-transform: uppercase; width: 70%;">
-                                <span>Grand total</span>
+                                <strong><span>Grand total</span></strong>
                             </td>
                             <td>
-                                <span>265,000.00</span>
+                                <t t-set="formatted_amount_grand_total" t-value="'{0:,.2f}'.format(grand_total)"/>
+                                <span t-out="formatted_amount_grand_total" />
                             </td>
                         </tr>
                     </table>
@@ -340,7 +400,7 @@
                                 <span>Amount in letter</span>
                             </td>
                             <td>
-                                <span>Two hundred and sixty-five thousand ariary</span>
+                                <span t-out="o.company_id.currency_id.amount_to_text(grand_total)"/>
                             </td>
                         </tr>
                         <tr>
@@ -348,10 +408,26 @@
                                 <span>Received on</span>
                             </td>
                             <td>
-                                <span>4/1/2025</span>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y')"/>
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <strong>Employer</strong>
+                    </div>
+                </div>
+                <div class="col-6"/>
+                <div class="col-3">
+                    <div>
+                        <strong>Employee</strong>
+                    </div>
                 </div>
             </div>
             

@@ -41,26 +41,43 @@ msgid "Registration number"
 msgstr "Matricule"
 
 #. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance__overtime_type
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime__overtime_type
 msgid "Overtime Type"
 msgstr "Type d'heures supplémentaires"
 
 #. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime
-msgid "Overtime"
-msgstr "Heures supplémentaires"
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__overtime_130
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime_130
+msgid "Overtime at 130%"
+msgstr "Heures supplémentaires à 130%"
 
 #. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__special_overtime
-msgid "Special Overtime"
-msgstr "Heures supplémentaires spéciales"
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__overtime_150
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime_150
+msgid "Overtime at 150%"
+msgstr "Heures supplémentaires à 150%"
 
 #. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__usual_night_work_30
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__usual_night_work_30
+msgid "Usual Night Work at 30%"
+msgstr "Travail de nuit habituel à 30%"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__usual_night_work_50
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__usual_night_work_50
+msgid "Usual Night Work at 50%"
+msgstr "Travail de nuit habituel à 50%"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__hours_worked_on_sunday
 #: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_sunday
 msgid "Hours Worked On Sunday"
 msgstr "Heures travaillées le dimanche"
 
 #. module: tanatech_hr_payroll
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__hours_worked_on_public_holidays
 #: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_public_holidays
 msgid "Hours Worked On Public Holidays"
 msgstr "Heures travaillées les jours fériés"
@@ -76,27 +93,187 @@ msgid "Employee overtime"
 msgstr "Heures supplémentaires des employés"
 
 #. module: tanatech_hr_payroll
-#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_view
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
-msgid "Overtime"
-msgstr "Heures supplémentaires"
-
-#. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_hr_payslip_form_inherit
 msgid "<span class=\"o_stat_text\">Overtime</span>"
 msgstr "<span class=\"o_stat_text\">Heures supplémentaires</span>"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.special_overtime_work_entry_type
-msgid "Special Overtime"
-msgstr "Heures supplémentaires spéciales"
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.overtime_130_work_entry_type
+msgid "OT at 130%"
+msgstr "HS à 130%"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.overtime_150_work_entry_type
+msgid "OT at 150%"
+msgstr "HS à 150%"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.usual_night_work_30_work_entry_type
+msgid "UNW at 30%"
+msgstr "TNH à 30%"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.usual_night_work_50_work_entry_type
+msgid "UNW at 50%"
+msgstr "TNH à 50%"
 
 #. module: tanatech_hr_payroll
 #: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_sunday_work_entry_type
-msgid "Sunday Work Overtime"
-msgstr "Heures supplémentaires du dimanche"
+msgid "Sunday OT"
+msgstr "HS du dimanche"
 
 #. module: tanatech_hr_payroll
 #: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_public_holidays_work_entry_type
-msgid "Public Holidays Overtime"
-msgstr "Heures supplémentaires pour les jours fériés"
+msgid "Public Holidays OT"
+msgstr "HS jours fériés"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong>Pay slip</strong>"
+msgstr "<strong>Bulletin de paie</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Pay Period from</strong>"
+msgstr "<strong class=\"me-2\">Période du</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Company Name or Reason</strong>"
+msgstr "<strong class=\"me-2\">Nom ou Raison de l'Entreprise</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Company Name or Reason</strong>"
+msgstr "<strong class=\"me-2\">Nom ou Raison de l'Entreprise</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Full name of the worker</strong>"
+msgstr "<strong class=\"me-2\">Nom et Prénoms du travailleur</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">NIC</strong>"
+msgstr "<strong class=\"me-2\">CIN</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Address</strong>"
+msgstr "<strong class=\"me-2\">Adresse</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Contract</strong>"
+msgstr "<strong class=\"me-2\">Contrat</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Job Position</strong>"
+msgstr "<strong class=\"me-2\">Fonction</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Classification</strong>"
+msgstr "<strong class=\"me-2\">Classification</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Dependent children</strong>"
+msgstr "<strong class=\"me-2\">Enfant à charge</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\"> to </strong>"
+msgstr "<strong class=\"me-2\"> à </strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Registration N°</strong>"
+msgstr "<strong class=\"me-2\">N° Matricule</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong class=\"me-2\">Index</strong>"
+msgstr "<strong class=\"me-2\">Indice</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Basic salary</span>"
+msgstr "<span>Salaire de base</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Overtime at 30%</span>"
+msgstr "<span>Heure supplementaire à 30%</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Overtime at 40%</span>"
+msgstr "<span>Heure supplementaire à 40%</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Overtime at 50%</span>"
+msgstr "<span>Heure supplementaire à 50%</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Overtime at 100%</span>"
+msgstr "<span>Heure supplementaire à 100%</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong><span>Gross salary</span></strong>"
+msgstr "<strong><span>Salaire Brut</span></strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong><span>Deduction total</span></strong>"
+msgstr "<strong><span>Total des déductions</span></strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong><span>Taxable salary</span></strong>"
+msgstr "<strong><span>Salaire Imposable</span></strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Family allowance</span>"
+msgstr "<span>Allocation familiale</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>/Child(Cnaps)  Net salary</span>"
+msgstr "<span>/Enfant(Cnaps)  Salaire net</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong><span>Grand total</span></strong>"
+msgstr "<strong><span>Total général</span></strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Amount in letter</span>"
+msgstr "<span>Montant en lettre</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Received on</span>"
+msgstr "<span>Reçu le</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong>Employer</strong>"
+msgstr "<strong>Employeur</strong>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<strong>Employee</strong>"
+msgstr "<strong>Employé</strong>"
+
+#. module: tanatech_hr_payroll
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_view
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
+msgid "Overtime"
+msgstr "Heures supplémentaires"
