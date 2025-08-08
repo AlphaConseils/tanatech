@@ -41,6 +41,8 @@
         # WIZARD
         "wizard/sanction_type.xml",
         "wizard/mail_compose_message_form_inherit.xml",
+        #
+        "data/hr_leave_type_data.xml",
     ],
     "installable": True,
     "application": True,
