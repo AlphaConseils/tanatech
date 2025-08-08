@@ -12,10 +12,12 @@
     "data": [
         "data/hr_work_entry_data.xml",
         # views
-        # "views/report_payslip_templates.xml",
+        "views/hr_employee_view.xml",
+        "views/report_payslip_templates.xml",
         "views/hr_attendance_overtime_view.xml",
         "views/hr_payslip_view.xml",
         "views/hr_work_entry_views.xml",
+        "views/hr_attendance_view.xml",
     ],
     "installable": True,
     "application": True,

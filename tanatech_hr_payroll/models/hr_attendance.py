@@ -17,13 +17,27 @@ class HrAttendance(models.Model):
 
     # attendance_overtime_id = fields.Many2one('hr.attendance.overtime', string="Attendance Overtime")
 
+    overtime_type = fields.Selection(
+        selection=[
+            ('overtime_130', "Overtime at 130%"),
+            ('overtime_150', "Overtime at 150%"),
+            ('usual_night_work_30', "Usual Night Work at 30%"),
+            ('usual_night_work_50', "Usual Night Work at 50%"),
+            ('hours_worked_on_sunday', "Hours Worked On Sunday"),
+            ('hours_worked_on_public_holidays', "Hours Worked On Public Holidays"),
+        ],
+        string="Overtime Type",
+        tracking=True, 
+        readonly=False,
+        required=True
+    )
+
     def _update_overtime(self, employee_attendance_dates=None):
         if employee_attendance_dates is None:
             employee_attendance_dates = self._get_attendances_dates()
 
         overtime_to_unlink = self.env['hr.attendance.overtime']
         overtime_vals_list = []
-        is_out_of_working_times = False # useful to determine if the employe is working out of his working times
         affected_employees = self.env['hr.employee']
         for emp, attendance_dates in employee_attendance_dates.items():
             # get_attendances_dates returns the date translated from the local timezone without tzinfo,
@@ -84,7 +98,6 @@ class HrAttendance(models.Model):
                         # User does not have any resource_calendar_attendance for that day (week-end for example)
                         overtime_duration = sum(attendances.mapped('worked_hours'))
                         overtime_duration_real = overtime_duration
-                        is_out_of_working_times = True
                     # The employee usually work on that day
                     else:
                         # Count time before, during and after 'working hours'
@@ -110,13 +123,11 @@ class HrAttendance(models.Model):
                             'duration': overtime_duration,
                             'duration_real': overtime_duration_real,
                             'attendance_id': self.id,
-                            'is_out_of_working_times': is_out_of_working_times
                         })
                     elif overtime:
                         overtime.sudo().write({
                             'duration': overtime_duration,
-                            'duration_real': overtime_duration,
-                            'is_out_of_working_times': is_out_of_working_times
+                            'duration_real': overtime_duration
                         })
                         affected_employees |= overtime.employee_id
                 elif overtime:
@@ -134,24 +145,5 @@ class HrAttendance(models.Model):
         self.env.add_to_compute(self._fields['expected_hours'],
                                 to_recompute)
 
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     """ Create work entry in leaves day if the employee gets to work """
-    #     res = super().create(vals_list)
-    #     overtime = self.env['hr.attendance.overtime'].search([('attendance_id', '=', res.id)], limit=1)
-    #     if overtime.overtime_type == 'special_overtime':
-    #         work_entry = self.env['hr.work.entry'].search([('attendance_id', '=', res.id)], limit=1)
-    #         if not work_entry:
-    #             work_entry_type_overtime = self.env['hr.work.entry.type'].search([('is_overtime', '=', True)], limit=1)
-    #             work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'SPECIALOVERTIME')], limit=1)
-    #             new_work_entry = self.env['hr.work.entry'].create({
-    #                 'name' : _('{}: {}') % (work_entry_type_overtime.name, overtime.employee_id.name),
-    #                 'employee_id' : overtime.employee_id.id,
-    #                 'work_entry_type_id' : work_entry_type_special.id,
-    #                 'date_start' : res.check_in,
-    #                 'date_stop' : res.check_out,
-    #                 'duration' : overtime.duration,
-    #             })
-    #     return res
 
 

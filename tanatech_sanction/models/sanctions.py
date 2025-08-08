@@ -334,6 +334,7 @@ class Sanction(models.Model):
                 }
             )
             # record.hr_leave_id = hr_leave.id
+            # hr_leave.action_validate()
             record.hr_leave_ids = [(4, hr_leave.id)]
         else:
             return
@@ -350,6 +351,8 @@ class Sanction(models.Model):
 
     def _validate_time_off_record(self, record):
         record.hr_leave_ids.action_approve()
+        if record.hr_leave_ids.state == 'validate1':
+            record.hr_leave_ids.action_validate()
 
     def _get_teamplate_and_report_warning(self):
         """Define template and report action warning"""
