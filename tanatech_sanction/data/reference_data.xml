@@ -8,6 +8,7 @@
         <field name="number_increment">1</field>
         <field name="code">sanction.sanction</field>
         <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/> <!-- Explicitely set to False for it to be available to all companies -->
     </record>
 
 </odoo>

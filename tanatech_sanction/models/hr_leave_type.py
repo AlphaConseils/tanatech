@@ -9,5 +9,6 @@ from odoo.exceptions import UserError, ValidationError
 class HolidaysType(models.Model):
     _inherit = "hr.leave.type"
 
-    specific_for_sanction = fields.Boolean('Sanction included', default=False, help="It is just for linking time off to sanction.")
+    specific_for_sanction = fields.Boolean(string='Sanction included', default=False, help="It is just for linking time off to sanction.")
+    work_entry_type_id = fields.Many2one('hr.work.entry.type')
     

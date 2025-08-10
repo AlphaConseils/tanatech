@@ -267,7 +267,10 @@ class Sanction(models.Model):
 
     def _prepare_approval_request(self, rec):
         """Prepare all data for approval request"""
-        category_id = self.env.ref("tanatech_sanction.approval_category_sanction")
+        if rec.employee_id.company_id.id == 1:
+            category_id = self.env.ref("tanatech_sanction.approval_category_sanction")
+        else:
+            category_id = self.env.ref("tanatech_sanction.approval_category_sanction_2")
         if not rec.employee_manager:
             raise ValidationError(
                 _("Set manager for %(employee_name)s")
@@ -350,6 +353,11 @@ class Sanction(models.Model):
                 record.is_related_to_time_off = record.sanction_type_id.is_taken_into_account_in_time_off
 
     def _validate_time_off_record(self, record):
+        hr_group = self.env.ref('hr_holidays.group_hr_holidays_user')
+        users = self.env['res.users'].search([]).filtered(lambda u: hr_group.id in u.groups_id.ids)
+        one_users = users[0] if users else False
+        if one_users:
+            self.env.user = one_users
         record.hr_leave_ids.action_approve()
         if record.hr_leave_ids.state == 'validate1':
             record.hr_leave_ids.action_validate()
