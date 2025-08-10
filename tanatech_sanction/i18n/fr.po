@@ -982,6 +982,7 @@ msgstr ""
 
 #. module: tanatech_sanction
 #: model:approval.category,name:tanatech_sanction.approval_category_sanction
+#: model:approval.category,name:tanatech_sanction.approval_category_sanction_2
 msgid "Sanction Approval"
 msgstr "Approbation sanctions"
 

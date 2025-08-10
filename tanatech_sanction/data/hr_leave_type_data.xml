@@ -16,6 +16,7 @@
             <field name="color">11</field>
             <field name="company_id" eval="False"/> <!-- Explicitely set to False for it to be available to all companies -->
             <field name="sequence">99</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_contract.work_entry_type_unpaid_leave"></field>
         </record>
     </data>
 </odoo>
