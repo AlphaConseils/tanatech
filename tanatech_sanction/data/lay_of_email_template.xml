@@ -11,6 +11,12 @@
             <div style="margin: 0px; padding: 0px; font-size: 14px;">
                 <p style="margin: 0px; padding: 0px; font-size: 14px;">
                     <div class="row">
+                        <div class="col-lg-3">
+                            <img t-if="object.employee_id.company_id.logo" t-att-src="image_data_uri(object.employee_id.company_id.logo)" alt="Logo" style="width: 30%;" />
+                            <!-- <div t-if="object.employee_id.company_id.report_header" t-field="company.report_header" class="o_company_tagline mw-50 fw-bold">Company tagline</div> -->
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col mb-2">
                             <p class="text-end">
                             Antananarivo, le <span t-out="datetime.date.today()" t-options="{'widget': 'date', 'format': 'dd MMMM YYYY'}"/>
