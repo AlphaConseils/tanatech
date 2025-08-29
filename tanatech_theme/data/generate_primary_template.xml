@@ -11,7 +11,7 @@
     </record>
 
     <record id="website.default_website" model="website">
-        <field name="logo" type="base64" file="theme_tanatech/static/src/img/logo.png"/>
+        <field name="logo" type="base64" file="tanatech_theme/static/src/img/logo.png"/>
     </record>
 
 </odoo>
