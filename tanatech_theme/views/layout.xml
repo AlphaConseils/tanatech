@@ -200,11 +200,11 @@
     <template id="green_snippet_options" name="snippet_options" inherit_id="website.snippet_options">
         <xpath expr="//we-select[@data-variable='header-template']" position="inside">
             <!-- Add your fields or attributes here -->
-            <we-button title="GREEN HEADER" data-name="header_green" data-customize-website-views="theme_tanatech.template_header_green" data-customize-website-variable="'greenshop'" data-img="/theme_tanatech/static/src/img/snippets_options/headerDefault.svg" />
+            <we-button title="GREEN HEADER" data-name="header_green" data-customize-website-views="tanatech_theme.template_header_green" data-customize-website-variable="'greenshop'" data-img="/tanatech_theme/static/src/img/snippets_options/headerDefault.svg" />
         </xpath>
         <xpath expr="//we-select[@data-variable='footer-template']" position="inside">
             <!-- Add your fields or attributes here -->
-            <we-button title="GREEN FOOTER" data-name="footer_green" data-customize-website-views="theme_tanatech.template_footer_green" data-customize-website-variable="'green'" data-img="/theme_tanatech/static/src/img/snippets_options/Tanatech Footer.svg" />
+            <we-button title="GREEN FOOTER" data-name="footer_green" data-customize-website-views="tanatech_theme.template_footer_green" data-customize-website-variable="'green'" data-img="/tanatech_theme/static/src/img/snippets_options/Tanatech Footer.svg" />
         </xpath>
         
     </template>
