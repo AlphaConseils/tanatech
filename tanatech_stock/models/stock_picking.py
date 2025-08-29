@@ -42,6 +42,13 @@ class Picking(models.Model):
         " * Cancelled: The transfer has been cancelled.",
     )
 
+    # @api.depends("quality_check_todo")
+    # def _compute_show_validate(self):
+    #     super()._compute_show_validate()
+    #     for picking in self:
+    #         if picking.quality_check_todo:
+    #             picking.show_validate = False
+
     @api.depends("state")
     def _compute_show_validate(self):
         for picking in self:

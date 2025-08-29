@@ -1,0 +1,154 @@
+.oe_login_form_tantech {
+  position: relative;
+  left: 64px;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+  // margin: 0px;
+
+  width: 480px;
+  max-width: 480px;
+  height: 126px;
+}
+
+/* Section Title */
+
+.title_login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+
+  width: 480px;
+  max-width: 480px;
+  height: 126px;
+}
+
+.background {
+    background: url('/tanatech_website/static/src/img/sign_in.png') center center / cover no-repeat;
+  }
+
+.btn-assistance{
+  width: 138px;
+  height: 47px;
+  // margin: 10px;
+}
+
+.fa-envelope-greenshop {
+  width:20px;
+  height:16px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/envelope.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.fa-phone-greenshop {
+  width:24px;
+  height:20px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/phone.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.fa-map-marker-greenshop {
+  width:24px;
+  height:24px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/map.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.search-assistance{
+  background-color: transparent;
+  border-color: transparent!important;
+  width: 671px;
+  height: 59px;
+  background: rgba(8, 9, 2, 0.05);
+  border: 1px solid rgba(8, 9, 2, 0.15)!important;
+    // outline: none!important;
+    border-right: none!important;
+
+    // border-top-right-radius: 12px!important;
+    // border-bottom-right-radius: 12px!important;
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   background:url("/tanatech_website/static/src/img/icon/map.svg") center no-repeat;
+  //   // right: 15px;
+  //   // top: 50%;
+  //   // transform: translateY(-50%);
+  //   // color: #333;
+  //   // pointer-events: none; // empêche de bloquer le clic dans l’input
+  //   // font-size: 16px;
+  // }
+ 
+
+}
+
+.btn-search-assistance{
+  background-color: transparent;
+  border-color: transparent;
+  background: rgba(8, 9, 2, 0.05);
+  border: 1px solid rgba(8, 9, 2, 0.15)!important;
+  outline: none!important;
+  border-left: none!important;
+  color: #333;
+
+}
+
+/* Card 2 */
+
+/* Auto layout */
+// display: flex;
+// flex-direction: row;
+// align-items: flex-start;
+// padding: 0px;
+// gap: 10px;
+
+// width: 1280px;
+// height: 186px;
+
+
+// /* Inside auto layout */
+// flex: none;
+// order: 1;
+// align-self: stretch;
+// flex-grow: 0;
+
+.row-faqs{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+
+
+
+
+
+
+
+
+
