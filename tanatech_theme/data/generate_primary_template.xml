@@ -3,7 +3,7 @@
 
     <!-- Generate primary snippet templates that are not predefined -->
     <function model="ir.module.module" name="_generate_primary_snippet_templates">
-        <value eval="[ref('base.module_theme_tanatech')]"/>
+        <value eval="[ref('base.module_tanatech_theme')]"/>
     </function>
 
     <record id="website.template_header_default" model="ir.ui.view">
