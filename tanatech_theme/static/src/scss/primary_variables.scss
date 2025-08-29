@@ -1,0 +1,219 @@
+$o-color-palettes: map-merge(
+  $o-color-palettes,
+  (
+    "greenshop": (
+      "o-color-1": #bedb39,
+      "o-color-2": #f9b807,
+      "o-color-3": #fff3cd,
+      "o-color-4": #ffffff,
+      "o-color-5": #000000,
+    ),
+  )
+);
+
+$o-selected-color-palettes-names: append(
+  $o-selected-color-palettes-names,
+  "greenshop"
+);
+
+$o-website-values-palettes: (
+  (
+    "color-palettes-name": "greenshop",
+    "header-template": "greenshop",
+    "input-border-radius": 12px,
+    "input-border-radius-sm": 12px,
+    "input-border-radius-lg": 12px,
+    "btn-border-radius": 12px,
+    "btn-border-radius-sm": 12px,
+    "btn-border-radius-lg": 12px,
+  ),
+);
+
+.btn.btn-light.search-green-color {
+  --btn-color: #f9b807;
+}
+
+// .dropdown-toggle.nav-link {
+//   color: transparent;
+// }
+
+// .navbar-toggler-icon {
+//   --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+// }
+
+.user-icon-header-greenshop {
+    background-image: url('/theme_tanatech/static/src/img/user.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-position: center;
+    background-size: contain; // Nécessaire pour que width/height s’appliquent
+    width: 24px!important;            // 📏 Largeur de ton span (à adapter)
+    height: 24px;           // 📏 Hauteur de ton span (à adapter)
+    padding: 0 !important;
+
+    vertical-align: middle;
+        margin: 0 !important;
+
+
+}
+.text-transparent{
+  color: transparent!important;
+}
+
+.user-icon-header-greenshop::before {
+  color: transparent;
+};
+
+.dropdown-toggle-header-greenshop {
+  &.dropdown-toggle::after {
+    content: none;
+    border: none;
+  };
+  
+}
+
+
+
+// .hide-button{
+//   .hide-text{
+//     color: transparent !important;
+     
+    
+//   };
+// }
+
+// button.hide-button{
+//   background-image: url('/theme_tanatech/static/src/img/globe.png')!important;
+
+//   };
+  
+  
+//   // .oi-globe {background-image: url('/theme_tanatech/static/src/img/globe.png')!important; }
+//   // color: transparent !important;
+//   // background-image: url('/theme_tanatech/static/src/img/globe.png');
+// // }
+
+// button.hide-button::after {
+//     color: transparent !important;
+//     border: none;
+//     // background-image: url('/theme_tanatech/static/src/img/globe.png')!important; 
+//   }
+
+//   // .hide-text {
+//   //   // color: transparent !important;
+//   //   // border: none;
+//   //   background-image: url('/theme_tanatech/static/src/img/globe.png')!important; 
+//   // }
+.hide-button span:nth-child(1) {
+    color: transparent;
+    background-image: url('/theme_tanatech/static/src/img/globe.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%; // Redimensionne l’image à l'intérieur du span
+
+    display: inline-block; // Nécessaire pour que width/height s’appliquent
+    width: 24px;            // 📏 Largeur de ton span (à adapter)
+    height: 24px;           // 📏 Hauteur de ton span (à adapter)
+
+    // vertical-align: middle;
+    padding: 0 !important;
+    margin: 0 !important;
+
+}
+
+.hide-button::after {
+    color: transparent;
+    border: none;
+}
+
+.o_wsale_my_cart {
+    .fa-shopping-cart{
+        width:24px;
+        height:24px;
+        &::before{
+            content:"";
+            display:inline-block;
+            background:url("/theme_tanatech/static/src/img/cart-alt.svg") center no-repeat;
+            background-size:100%;
+            width:inherit;
+            height:inherit;
+            color: transparent;
+        }
+    }
+    .my_cart_quantity {
+        border-radius:100px;
+        transform:translateX(-5px);
+    }
+}
+
+// .o_footer{
+//   color: transparent;
+// }
+.icon-green {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  vertical-align: middle;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+  }
+  &.ico-facebook::before {
+      display:inline-block;
+      // margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      background: url("/theme_tanatech/static/src/img/Facebook.svg") center no-repeat !important;
+      background: 100%;
+  }
+
+  &.ico-instagram::before {
+      display:inline-block;
+      // margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      background: url("/theme_tanatech/static/src/img/instagram.svg") center no-repeat !important;
+      background: 100%;
+  }
+
+  &.ico-x-twitter::before {
+      display:inline-block;
+      // margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      background: url("/theme_tanatech/static/src/img/X.svg") center no-repeat !important;
+      background: 100%;
+  }
+
+  &.ico-linkedin::before {
+      display:inline-block;
+      // margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      background: url("/theme_tanatech/static/src/img/linkedin.svg") center no-repeat !important;
+      background: 100%;
+  }
+
+  &.ico-youtube::before {
+      display:inline-block;
+      // margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      background: url("/theme_tanatech/static/src/img/youtube.svg") center no-repeat !important;
+      background: 100%;
+  }
+}
+
+// $down-lg: 1199px !default;
+
+.carousel-control-prev, .carousel-control-next {
+            border-radius: 0px;
+        }
+

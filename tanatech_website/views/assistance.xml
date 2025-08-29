@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="teste" name="template_name">
+        <div id="faq-section-root"></div>
+    </template>
+    <template id="page_assistance" name="Page Assistance">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_text_block pt40 pb40 o_colored_level ">
+                    <div class="container">
+                        <div class="container row text-center mb-6">
+                            <t t-foreach="[ 
+                            {'icon': 'fa fa-truck', 'title': 'Membership', 'text': 'Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card.'}, 
+                            {'icon': 'fa fa-undo', 'title': 'Payments', 'text': 'Need help with a payment? We explain the secure payment solutions and options available at Tanatech.'}, 
+                            {'icon': 'fa fa-credit-card', 'title': 'purchase', 'text': 'Browse our buying guide to find the products best suited to your technology needs.'}, 
+                            {'icon': 'fa fa-user', 'title': 'My account', 'text': 'Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience.'}, 
+                            {'icon': 'fa fa-lock', 'title': 'Shipping &amp; Returns', 'text': 'Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services.'}, 
+                            {'icon': 'fa fa-question-circle', 'title': 'Shops', 'text': 'Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers. Find your nearest Tanatech store.'} ]" t-as="faq">
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm bg-light rounded h-100" style='gap: 10px;'>
+                                        <i t-att-class="faq['icon'] + ' fa-2x mb-3'"></i>
+                                        <h5>
+                                            <t t-esc="faq['title']"/>
+                                        </h5>
+                                        <p class="text-muted">
+                                            <t t-esc="faq['text']"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mb-5">
+                            <h1>FAQs</h1>
+                            <p class="text-muted">You can search for one of our most frequently asked questions or contact us.</p>
+                            <div class="col-4" style="margin-left:33.5%">
+                                <t t-call="website.website_search_box_input" t-nocache="The searchbox should not cache previous searches.">
+                                    <t t-set="default_style" t-value="True"/>
+                                    <t t-set="_submit_classes" t-valuef="btn btn-search-assistance"/>
+                                    <t t-set="_input_classes" t-valuef="border-1 search-assistance search-assistance-icon"/>
+                                    <t t-set="search_type" t-valuef="products"/>
+
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- <t t-call="tanatech_website.teste"/> -->
+
+
+                        <!-- Bloc Contact -->
+                        <div class="row align-items-start mt-5">
+                            <div class="col-md-6 mb-4">
+                                <p>Contact</p>
+                                <h2>Contact Us</h2>
+                                <p>Still not satisfied with the FAQ?</p>
+                                <ul class="list-unstyled text-muted">
+                                    <li>
+                                        <i class="fa fa-envelope-greenshop me-2"></i> support@exemple.com</li>
+                                    <li>
+                                        <i class="fa fa-phone-greenshop me-2"></i> +261 34 00 000 00</li>
+                                    <li>
+                                        <i class="fa fa-map-marker-greenshop me-2"></i> Lot XYZ, Antananarivo, Madagascar</li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-6 mb-4" style="padding-right: 30px;">
+                                <form action="/website/form/" method="POST" class="s_website_form form-group" data-model_name="crm.lead">
+                                    <div class="mb-3 col-12 s_website_form_field s_website_form_required s_website_form_model_required" data-type="char" data-name="Field">
+                                        <label class="s_website_form_label" style="width: 200px" for="name">
+                                            <span class="s_website_form_label_content">Name</span>
+                                            <span class="s_website_form_mark"> *</span>
+                                        </label>
+                                        <input id="name" type="text" class="form-control s_website_form_input" style="height: 48px" name="name" required="" data-fill-with="name"/>
+                                    </div>
+
+                                    <div class="mb-3 col-12 s_website_form_field s_website_form_required s_website_form_model_required" data-type="email" data-name="Field">
+                                        <label class="s_website_form_label" style="width: 200px" for="email">
+                                            <span class="s_website_form_label_content">Email</span>
+                                            <span class="s_website_form_mark"> *</span>
+                                        </label>
+                                        <input id="email" type="email" class="form-control s_website_form_input" style="height: 48px" name="email_from" required="" data-fill-with="email"/>
+                                    </div>
+                                    <div class="mb-3 col-12 s_website_form_field s_website_form_custom s_website_form_required" data-type="text" data-name="Field">
+                                        <label class="s_website_form_label" style="width: 200px" for="description">
+                                            <span class="s_website_form_label_content">Message</span>
+                                            <span class="s_website_form_mark"> *</span>
+                                        </label>
+                                        <textarea id="description" class="form-control s_website_form_input" name="description" required="" rows="8" placeholder="Write your message..."></textarea>
+                                    </div>
+
+                                    <div class="mb-3 col-12 s_website_form_field s_website_form_custom s_website_form_required">
+                                        <input class="s_website_form_input" type="checkbox" required="" id="privacyCheck"/>
+                                        <label class="s_website_form_label" for="privacyCheck">
+                                            <span class="form-check-label">I accept the Terms and Conditions.</span>
+                                        </label>
+                                    </div>
+                                    <div class="mb-0 py-2 col-12 s_website_form_submit s_website_form_no_submit_label" data-name="Submit Button">
+                                        <div  class="s_website_form_label"/>
+                                        <a href="#" role="button" class="btn btn-primary s_website_form_send btn-assistance">Submit</a>
+                                        <span id="s_website_form_result"></span>
+                                    </div>
+
+                                    <!-- <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/> -->
+                                    <!-- <div class="form-group mb-3">
+                                        <label for="name" class="form-label d-flex justify-content-between">Name</label>
+                                        <input type="text" name="name" class="form-control" style="height: 48px" required="required" data-fill-with="name"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="email" class="form-label d-flex justify-content-between">Email</label>
+
+                                        <input type="email" name="email" class="form-control" style="height: 48px" required="required" data-fill-with="email"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="description" class="form-label d-flex justify-content-between">Message</label>
+                                        <textarea name="description" class="form-control" rows="4" placeholder="Write your message..." required="required"></textarea>
+                                    </div> -->
+                                    <!-- <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" required="required" id="privacyCheck"/>
+                                        <label class="form-check-label" for="privacyCheck">
+                                            I accept the Terms and Conditions.
+                                        </label>
+                                    </div> -->
+                                    <!-- <button type="submit" class="btn btn-primary btn-assistance">Submit</button> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
