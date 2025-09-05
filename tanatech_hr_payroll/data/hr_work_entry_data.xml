@@ -7,43 +7,22 @@
             <field name="is_overtime">True</field>
         </record>
 
-        <record id="overtime_130_work_entry_type" model="hr.work.entry.type">
-            <field name="name">OT at 130%</field>
+        <record id="special_overtime_work_entry_type" model="hr.work.entry.type">
+            <field name="name">Special Overtime</field>
             <field name="color">4</field>
-            <field name="code">OVERTIME30</field>
-            <field name="is_readonly_code">True</field>
-        </record>
-
-        <record id="overtime_150_work_entry_type" model="hr.work.entry.type">
-            <field name="name">OT at 150%</field>
-            <field name="color">4</field>
-            <field name="code">OVERTIME50</field>
-            <field name="is_readonly_code">True</field>
-        </record>
-
-        <record id="usual_night_work_30_work_entry_type" model="hr.work.entry.type">
-            <field name="name">UNW at 30%</field>
-            <field name="color">4</field>
-            <field name="code">USUALNIGHTWORK130</field>
-            <field name="is_readonly_code">True</field>
-        </record>
-
-        <record id="usual_night_work_50_work_entry_type" model="hr.work.entry.type">
-            <field name="name">UNW at 50%</field>
-            <field name="color">4</field>
-            <field name="code">USUALNIGHTWORK150</field>
+            <field name="code">SPECIALOVERTIME</field>
             <field name="is_readonly_code">True</field>
         </record>
 
         <record id="hours_worked_on_sunday_work_entry_type" model="hr.work.entry.type">
-            <field name="name">Sunday OT</field>
+            <field name="name">Sunday Work Overtime</field>
             <field name="color">4</field>
             <field name="code">SUNDAYOVERTIME</field>
             <field name="is_readonly_code">True</field>
         </record>
 
         <record id="hours_worked_on_public_holidays_work_entry_type" model="hr.work.entry.type">
-            <field name="name">Public Holidays OT</field>
+            <field name="name">Public Holidays Overtime</field>
             <field name="color">4</field>
             <field name="code">PUBLICHOLIDAYOVERTIME</field>
             <field name="is_readonly_code">True</field>

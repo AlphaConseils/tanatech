@@ -23,26 +23,8 @@ class HrWorkEntry(models.Model):
             if entry.is_just_to_trigger_depends_method:
                 overtime = self.env['hr.attendance.overtime'].search([('attendance_id', '=', entry.attendance_id.id)])
                 logging.info('start')
-                if overtime.overtime_type == 'overtime_130':
-                    work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'OVERTIME30')], limit=1)
-                    entry.nothing_but_trigger = not entry.nothing_but_trigger
-                    # entry.write({'work_entry_type_id' : work_entry_type_special.id})
-                    work_entry_name = f"{work_entry_type_special.name}: {entry.employee_id.name}"
-                    self._sql_request(work_entry_type_special.id, work_entry_name, entry.id)
-                elif overtime.overtime_type == 'overtime_150':
-                    work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'OVERTIME50')], limit=1)
-                    entry.nothing_but_trigger = not entry.nothing_but_trigger
-                    # entry.write({'work_entry_type_id' : work_entry_type_special.id})
-                    work_entry_name = f"{work_entry_type_special.name}: {entry.employee_id.name}"
-                    self._sql_request(work_entry_type_special.id, work_entry_name, entry.id)
-                elif overtime.overtime_type == 'usual_night_work_30':
-                    work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'USUALNIGHTWORK130')], limit=1)
-                    entry.nothing_but_trigger = not entry.nothing_but_trigger
-                    # entry.write({'work_entry_type_id' : work_entry_type_special.id})
-                    work_entry_name = f"{work_entry_type_special.name}: {entry.employee_id.name}"
-                    self._sql_request(work_entry_type_special.id, work_entry_name, entry.id)
-                elif overtime.overtime_type == 'usual_night_work_50':
-                    work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'USUALNIGHTWORK150')], limit=1)
+                if overtime.overtime_type == 'special_overtime':
+                    work_entry_type_special = self.env['hr.work.entry.type'].search([('code', '=', 'SPECIALOVERTIME')], limit=1)
                     entry.nothing_but_trigger = not entry.nothing_but_trigger
                     # entry.write({'work_entry_type_id' : work_entry_type_special.id})
                     work_entry_name = f"{work_entry_type_special.name}: {entry.employee_id.name}"
