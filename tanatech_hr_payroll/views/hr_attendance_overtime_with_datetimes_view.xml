@@ -36,7 +36,7 @@
                 <field name="employee_id"/>
                 <field name="overtime_type" column_invisible="1" />
                 <field name="overtime_type_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
-                <field name="duration" widget="float_time"/>
+                <field name="duration" widget="float_time" sum="Total Overtimes"/>
             </list>
         </field>
     </record>

@@ -13,10 +13,17 @@ from odoo.tools.float_utils import float_is_zero
 from odoo import models, fields, api, _
 from odoo.osv.expression import AND, OR
 
-class HrAttendance(models.Model):
+
+class HrAttendanceInherit(models.Model):
     _inherit = "hr.attendance"
 
     # attendance_overtime_id = fields.Many2one('hr.attendance.overtime', string="Attendance Overtime")
+
+    def unlink(self):
+        for att in self:
+            existing_overtimes = self.env['hr.attendance.overtime.with.datetimes'].search([('attendance_id', '=', att.id)])
+            existing_overtimes.unlink()
+        return super().unlink()
 
     def _remove_duplication_in_list(self, main_list):
         # remove duplicate dicts
@@ -70,6 +77,8 @@ class HrAttendance(models.Model):
         overtime_on_sunday_between_5am_and_8pm_vals_list = []
         overtime_on_sunday_after_8_pm_vals_list = []
         overtime_on_public_holidays_vals_list = []
+
+        attendance_ofwd_ids = []
 
         for attendance in attendances:
             # Convert to employee timezone
@@ -136,13 +145,14 @@ class HrAttendance(models.Model):
                     'company_id': attendance.employee_id.company_id.id,
                     'overtime_type': 'work_on_public_holidays',
                 })
+            attendance_ofwd_ids.append(attendance.id)
             
-        # TODO : filter overtime already existing to avoid SQL constraints
+        # # TODO : filter overtime already existing to avoid SQL constraints
         overtime_on_sunday_before_5_am_vals_list = self._remove_already_existing_records(overtime_on_sunday_before_5_am_vals_list)
         overtime_on_sunday_between_5am_and_8pm_vals_list = self._remove_already_existing_records(overtime_on_sunday_between_5am_and_8pm_vals_list)
         overtime_on_sunday_after_8_pm_vals_list = self._remove_already_existing_records(overtime_on_sunday_after_8_pm_vals_list)
         overtime_on_public_holidays_vals_list = self._remove_already_existing_records(overtime_on_public_holidays_vals_list)
-        return overtime_on_sunday_before_5_am_vals_list, overtime_on_sunday_between_5am_and_8pm_vals_list, overtime_on_sunday_after_8_pm_vals_list, overtime_on_public_holidays_vals_list
+        return attendance_ofwd_ids, overtime_on_sunday_before_5_am_vals_list, overtime_on_sunday_between_5am_and_8pm_vals_list, overtime_on_sunday_after_8_pm_vals_list, overtime_on_public_holidays_vals_list
 
     def _get_overtime_pre_post_work_time(self, employee, working_times, attendance_date):
         overtime_before_working_time = self.env['hr.attendance.overtime.with.datetimes']
@@ -152,6 +162,8 @@ class HrAttendance(models.Model):
         overtime_after_5_am_working_time_vals_list = []
         overtime_before_8_pm_working_time_vals_list = []
         overtime_after_8_pm_working_time_vals_list = []
+
+        attendance_ids = []
 
         # Compute start and end time for that day
         planned_start_dt, planned_end_dt = False, False
@@ -233,54 +245,54 @@ class HrAttendance(models.Model):
                         'overtime_type': 'day_work_on_regular_day',
                     })
 
-                # ---- AFTER END OF WORK ----
-                if local_check_out_emp_tz > planned_end_dt:
-                    # Case 1: Entirely between end and 8pm
-                    if planned_end_dt < local_check_out_emp_tz <= eight_pm:
+            # ---- AFTER END OF WORK ----
+            if local_check_out_emp_tz > planned_end_dt:
+                # Case 1: Entirely between end and 8pm
+                if planned_end_dt < local_check_out_emp_tz <= eight_pm:
+                    overtime_before_8_pm_working_time_vals_list.append({
+                        'employee_id': attendance.employee_id.id,
+                        'start_date': max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None),
+                        'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
+                        'attendance_id': attendance.id,
+                        'company_id': attendance.employee_id.company_id.id,
+                        'overtime_type': 'day_work_on_regular_day',
+                    })
+
+                # Case 2: Crosses 8pm -> split into day + night
+                else:
+                    # day part (until 8pm)
+                    if local_check_in_emp_tz < eight_pm:
                         overtime_before_8_pm_working_time_vals_list.append({
                             'employee_id': attendance.employee_id.id,
                             'start_date': max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None),
-                            'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
+                            'end_date': eight_pm.astimezone(pytz.utc).replace(tzinfo=None),
                             'attendance_id': attendance.id,
                             'company_id': attendance.employee_id.company_id.id,
                             'overtime_type': 'day_work_on_regular_day',
                         })
+                    # night part (after 8pm)
+                    overtime_after_8_pm_working_time_vals_list.append({
+                        'employee_id': attendance.employee_id.id,
+                        'start_date': max(local_check_in_emp_tz, eight_pm).astimezone(pytz.utc).replace(tzinfo=None),
+                        'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
+                        'attendance_id': attendance.id,
+                        'company_id': attendance.employee_id.company_id.id,
+                        'overtime_type': 'occasional_night_work_on_weekends' if local_check_in_emp_tz.date().weekday() == 5 else 'casual_night_work_on_regular_day',
+                    })
+            attendance_ids.append(attendance.id)
 
-                    # Case 2: Crosses 8pm -> split into day + night
-                    else:
-                        # day part (until 8pm)
-                        if local_check_in_emp_tz < eight_pm:
-                            overtime_before_8_pm_working_time_vals_list.append({
-                                'employee_id': attendance.employee_id.id,
-                                'start_date': max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None),
-                                'end_date': eight_pm.astimezone(pytz.utc).replace(tzinfo=None),
-                                'attendance_id': attendance.id,
-                                'company_id': attendance.employee_id.company_id.id,
-                                'overtime_type': 'day_work_on_regular_day',
-                            })
-                        # night part (after 8pm)
-                        overtime_after_8_pm_working_time_vals_list.append({
-                            'employee_id': attendance.employee_id.id,
-                            'start_date': max(local_check_in_emp_tz, eight_pm).astimezone(pytz.utc).replace(tzinfo=None),
-                            'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
-                            'attendance_id': attendance.id,
-                            'company_id': attendance.employee_id.company_id.id,
-                            'overtime_type': 'occasional_night_work_on_weekends' if local_check_in_emp_tz.date().weekday() == 5 else 'casual_night_work_on_regular_day',
-                        })
-
-        # TODO : filter overtime already existing to avoid SQL constraints
+        # # TODO : filter overtime already existing to avoid SQL constraints
         overtime_before_5_am_working_time_vals_list = self._remove_already_existing_records(overtime_before_5_am_working_time_vals_list)
         overtime_after_5_am_working_time_vals_list = self._remove_already_existing_records(overtime_after_5_am_working_time_vals_list)
         overtime_before_8_pm_working_time_vals_list = self._remove_already_existing_records(overtime_before_8_pm_working_time_vals_list)
         overtime_after_8_pm_working_time_vals_list = self._remove_already_existing_records(overtime_after_8_pm_working_time_vals_list)
-        return overtime_before_5_am_working_time_vals_list, overtime_after_5_am_working_time_vals_list, overtime_before_8_pm_working_time_vals_list, overtime_after_8_pm_working_time_vals_list
+        return attendance_ids, overtime_before_5_am_working_time_vals_list, overtime_after_5_am_working_time_vals_list, overtime_before_8_pm_working_time_vals_list, overtime_after_8_pm_working_time_vals_list
 
     def _update_overtime(self, employee_attendance_dates=None):
         if employee_attendance_dates is None:
             employee_attendance_dates = self._get_attendances_dates()
 
-        overtime_to_unlink = self.env['hr.attendance.overtime']
-        overtime_vals_list = []
+        overtimes_to_unlink = self.env['hr.attendance.overtime.with.datetimes']
         # regular overtime
         overtime_before_5_am_vals_list = []
         overtime_after_5_am_vals_list = []
@@ -292,7 +304,6 @@ class HrAttendance(models.Model):
         overtime_on_sunday_after_8_pm_vals_list = []
         overtime_on_public_hoilday_vals_list = []
 
-        affected_employees = self.env['hr.employee']
         for emp, attendance_dates in employee_attendance_dates.items():
             # get_attendances_dates returns the date translated from the local timezone without tzinfo,
             # and contains all the date which we need to check for overtime
@@ -324,10 +335,9 @@ class HrAttendance(models.Model):
                 # Exclude resource.calendar.attendance
                 working_times[expected_attendance[0].date()].append(expected_attendance[:2])
 
-            overtimes = self.env['hr.attendance.overtime'].sudo().search([
+            overtimes_with_datetimes = self.env['hr.attendance.overtime.with.datetimes'].sudo().search([
                 ('employee_id', '=', emp.id),
                 ('date', 'in', [day_data[1] for day_data in attendance_dates]),
-                ('adjustment', '=', False),
             ])
 
             company_threshold = emp.company_id.overtime_company_threshold / 60.0
@@ -337,8 +347,9 @@ class HrAttendance(models.Model):
                 attendance_date = day_data[1]
                 attendances = attendances_per_day.get(attendance_date, self.browse())
                 unfinished_shifts = attendances.filtered(lambda a: not a.check_out)
-                overtime_duration = 0
-                overtime_duration_real = 0
+
+                att_ids = []
+                
                 # Overtime is not counted if any shift is not closed or if there are no attendances for that day,
                 # this could happen when deleting attendances.
 
@@ -351,53 +362,23 @@ class HrAttendance(models.Model):
                     if not working_times[attendance_date]:
                         # User does not have any resource_calendar_attendance for that day (week-end for example)
                         # overtimes on sundays or public holidays
-                        m, n, o, p = self._get_overtime_out_of_work_day(attendances)
+                        attendance_ofwd_ids, m, n, o, p = self._get_overtime_out_of_work_day(attendances)
+                        att_ids += attendance_ofwd_ids
                         overtime_on_sunday_before_5_am_vals_list = m
                         overtime_on_sunday_between_5am_and_8pm_vals_list = n
                         overtime_on_sunday_after_8_pm_vals_list = o
                         overtime_on_public_hoilday_vals_list = p
-                        overtime_duration = sum(attendances.mapped('worked_hours'))
-                        overtime_duration_real = overtime_duration
                     # The employee usually work on that day
                     else:
                         # Count time before, during and after 'working hours'
-                        pre_work_time_overtime_before_5_am_vals_list, pre_work_time_overtime_after_5_am_vals_list, post_work_time_overtime_before_8_pm_vals_list, post_work_time_overtime_after_8_pm_vals_list = attendances._get_overtime_pre_post_work_time(emp, working_times, attendance_date)
+                        attendance_ids, pre_work_time_overtime_before_5_am_vals_list, pre_work_time_overtime_after_5_am_vals_list, post_work_time_overtime_before_8_pm_vals_list, post_work_time_overtime_after_8_pm_vals_list = attendances._get_overtime_pre_post_work_time(emp, working_times, attendance_date)
+                        att_ids += attendance_ids
                         overtime_before_5_am_vals_list = pre_work_time_overtime_before_5_am_vals_list
                         overtime_after_5_am_vals_list = pre_work_time_overtime_after_5_am_vals_list
                         overtime_before_8_pm_vals_list = post_work_time_overtime_before_8_pm_vals_list
                         overtime_after_8_pm_vals_list = post_work_time_overtime_after_8_pm_vals_list
-                        pre_work_time, work_duration, post_work_time, planned_work_duration = attendances._get_pre_post_work_time(emp, working_times, attendance_date)
-                        # Overtime within the planned work hours + overtime before/after work hours is > company threshold
-                        overtime_duration = work_duration - planned_work_duration
-                        if pre_work_time > company_threshold:
-                            overtime_duration += pre_work_time
-                        if post_work_time > company_threshold:
-                            overtime_duration += post_work_time
-                        # Global overtime including the thresholds
-                        overtime_duration_real = sum(attendances.mapped('worked_hours')) - planned_work_duration
 
-                overtime = overtimes.filtered(lambda o: o.date == attendance_date)
-                if not float_is_zero(overtime_duration, 2) or unfinished_shifts:
-                    # Do not create if any attendance doesn't have a check_out, update if exists
-                    if unfinished_shifts:
-                        overtime_duration = 0
-                    if not overtime and overtime_duration:
-                        overtime_vals_list.append({
-                            'employee_id': emp.id,
-                            'date': attendance_date,
-                            'duration': overtime_duration,
-                            'duration_real': overtime_duration_real,
-                        })
-                    elif overtime:
-                        overtime.sudo().write({
-                            'duration': overtime_duration,
-                            'duration_real': overtime_duration
-                        })
-                        affected_employees |= overtime.employee_id
-                elif overtime:
-                    overtime_to_unlink |= overtime
         # remove duplicate dicts
-        overtime_vals_list = self._remove_duplication_in_list(overtime_vals_list)
         # regular overtime
         overtime_before_5_am_vals_list = self._remove_duplication_in_list(overtime_before_5_am_vals_list)
         overtime_after_5_am_vals_list = self._remove_duplication_in_list(overtime_after_5_am_vals_list)
@@ -408,7 +389,6 @@ class HrAttendance(models.Model):
         overtime_on_sunday_between_5am_and_8pm_vals_list = self._remove_duplication_in_list(overtime_on_sunday_between_5am_and_8pm_vals_list)
         overtime_on_sunday_after_8_pm_vals_list = self._remove_duplication_in_list(overtime_on_sunday_after_8_pm_vals_list)
         overtime_on_public_hoilday_vals_list = self._remove_duplication_in_list(overtime_on_public_hoilday_vals_list)
-        created_overtimes = self.env['hr.attendance.overtime'].sudo().create(overtime_vals_list)
         # create overtimes with datetimes
         # regular overtime
         created_overtimes_with_datetimes_before_5_am = self.env['hr.attendance.overtime.with.datetimes'].sudo().create(overtime_before_5_am_vals_list)
@@ -420,15 +400,3 @@ class HrAttendance(models.Model):
         created_overtimes_on_sunday_between_5am_and_8pm = self.env['hr.attendance.overtime.with.datetimes'].sudo().create(overtime_on_sunday_between_5am_and_8pm_vals_list)
         created_overtimes_on_sunday_after_8_pm = self.env['hr.attendance.overtime.with.datetimes'].sudo().create(overtime_on_sunday_after_8_pm_vals_list)
         created_overtimes_on_public_hoilda = self.env['hr.attendance.overtime.with.datetimes'].sudo().create(overtime_on_public_hoilday_vals_list)
-        
-        employees_worked_hours_to_compute = (affected_employees.ids +
-                                             created_overtimes.employee_id.ids +
-                                             overtime_to_unlink.employee_id.ids)
-        overtime_to_unlink.sudo().unlink()
-        to_recompute = self.search([('employee_id', 'in', employees_worked_hours_to_compute)])
-        self.env.add_to_compute(self._fields['overtime_hours'],
-                                to_recompute)
-        self.env.add_to_compute(self._fields['validated_overtime_hours'],
-                                to_recompute)
-        self.env.add_to_compute(self._fields['expected_hours'],
-                                to_recompute)
