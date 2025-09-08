@@ -7,25 +7,53 @@
             <field name="is_overtime">True</field>
         </record>
 
-        <record id="special_overtime_work_entry_type" model="hr.work.entry.type">
-            <field name="name">Special Overtime</field>
+        <!-- new -->
+        <record id="day_work_on_regular_day_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Day work on regular day</field>
             <field name="color">4</field>
-            <field name="code">SPECIALOVERTIME</field>
+            <field name="code">DAYWORKONREGULARDAY</field>
             <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
         </record>
 
-        <record id="hours_worked_on_sunday_work_entry_type" model="hr.work.entry.type">
-            <field name="name">Sunday Work Overtime</field>
+        <record id="casual_night_work_on_regular_day_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Casual night work on regular day</field>
             <field name="color">4</field>
-            <field name="code">SUNDAYOVERTIME</field>
+            <field name="code">CASUALNIGHTWORKONREGULARDAY</field>
             <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
         </record>
 
-        <record id="hours_worked_on_public_holidays_work_entry_type" model="hr.work.entry.type">
-            <field name="name">Public Holidays Overtime</field>
+        <record id="occasional_night_work_on_weekends_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Occasional night work on weekend</field>
             <field name="color">4</field>
-            <field name="code">PUBLICHOLIDAYOVERTIME</field>
+            <field name="code">OCCASIONALNIGHTWORKONWEEKENDS</field>
             <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
+        </record>
+
+        <record id="day_work_on_sunday_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Day work on Sunday</field>
+            <field name="color">4</field>
+            <field name="code">DAYWORKONSUNDAY</field>
+            <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
+        </record>
+
+        <record id="night_work_on_sunday_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Night work on Sunday</field>
+            <field name="color">4</field>
+            <field name="code">NIGHTWORKONSUNDAY</field>
+            <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
+        </record>
+
+        <record id="work_on_public_holidays_work_entry_type" model="hr.work.entry.type">
+            <field name="name">ET - Hours Worked On Public Holidays</field>
+            <field name="color">4</field>
+            <field name="code">WORKONPUBLICHOLIDAYS</field>
+            <field name="is_readonly_code">True</field>
+            <field name="is_overtime">True</field>
         </record>
     </data>
 </odoo>

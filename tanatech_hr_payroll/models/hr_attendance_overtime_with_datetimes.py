@@ -7,6 +7,8 @@ from random import randint
 
 from odoo import models, fields, api
 
+import pytz
+
 class HrAttendanceOvertimeWithDatetimes(models.Model):
     _name = "hr.attendance.overtime.with.datetimes"
     _description = "Attendance Overtime With start and end date"
@@ -58,7 +60,8 @@ class HrAttendanceOvertimeWithDatetimes(models.Model):
         for record in self:
             record.date = fields.Datetime.now().date()
             if record.start_date:
-                record.date = record.start_date.date()
+                start_date_tz = pytz.utc.localize(record.start_date).astimezone(pytz.timezone(record.employee_id._get_tz()))
+                record.date = start_date_tz.date()
 
     @api.depends('start_date', 'end_date')
     def _compute_duration(self):
