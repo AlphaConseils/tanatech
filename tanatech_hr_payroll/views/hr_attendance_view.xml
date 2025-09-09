@@ -6,6 +6,9 @@
         <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
         <field name="priority">999</field>
         <field name="arch" type="xml">
+            <xpath expr="//form/header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr="//field[@name='worked_hours']" position="after">
                 <field name="extra_time_hours" widget="float_time"/>
             </xpath>
