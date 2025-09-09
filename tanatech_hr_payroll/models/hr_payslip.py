@@ -6,6 +6,14 @@ import logging
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
+    is_undeclared_payslip = fields.Boolean('Is undeclared payslip ?', compute="_define_payslip_nature", default=False, store=True)
+    @api.depends('contract_id')
+    def _define_payslip_nature(self):
+        for payslip in self:
+            payslip.is_undeclared_payslip = False
+            if payslip.contract_id and payslip.contract_id.contract_category == 'not_declared':
+                payslip.is_undeclared_payslip = True
+
     overtime_hours_count = fields.Float(compute='_compute_overtime_hours') 
 
     employee_id = fields.Many2one(

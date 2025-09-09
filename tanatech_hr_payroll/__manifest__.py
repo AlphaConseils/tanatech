@@ -26,7 +26,7 @@
         # "views/hr_attendance_overtime_view.xml",
         "views/hr_payslip_view.xml",
         "views/hr_work_entry_views.xml",
-        # "views/hr_attendance_view.xml",
+        "views/hr_attendance_view.xml",
         "views/resource_calendar_view.xml",
         "security/ir.model.access.csv",
         "views/hr_attendance_overtime_menu.xml",

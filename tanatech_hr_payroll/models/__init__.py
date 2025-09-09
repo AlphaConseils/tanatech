@@ -9,3 +9,4 @@ from . import resource_calendar
 from . import hr_attendance_overtime_resource_calendar
 from . import hr_attendance_overtime_with_datetimes
 from . import hr_leave_type
+from . import res_config_settings

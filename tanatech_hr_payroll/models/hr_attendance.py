@@ -17,7 +17,15 @@ from odoo.osv.expression import AND, OR
 class HrAttendanceInherit(models.Model):
     _inherit = "hr.attendance"
 
-    # attendance_overtime_id = fields.Many2one('hr.attendance.overtime', string="Attendance Overtime")
+    attendance_overtime_ids = fields.One2many('hr.attendance.overtime.with.datetimes', 'attendance_id', string="Attendance Overtime")
+
+    extra_time_hours = fields.Float(string='Extra Hours', compute='_compute_extra_time_hours', store=True, readonly=True)
+
+    @api.depends('attendance_overtime_ids')
+    def _compute_extra_time_hours(self):
+        for attendance in self:
+            extra_times = self.env['hr.attendance.overtime.with.datetimes'].search([('attendance_id', '=', attendance.id)])
+            attendance.extra_time_hours = sum(extra_time.duration for extra_time in extra_times)
 
     def unlink(self):
         for att in self:

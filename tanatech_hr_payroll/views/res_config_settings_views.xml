@@ -9,6 +9,21 @@
             <xpath expr="//app/block[@name='overtime_settings']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//app/block[@name='overtime_settings']" position="after">
+                <block title="Extra Hours" name="overtime_settings">
+                    <setting company_dependent="1">
+                        <div class="mt16">
+                            <label for="overtime_threshold" class="o_form_label">
+                                Tolerance Time In Favor Of Company
+                            </label>
+                            <div class="text-muted">
+                                Allow a period of time (around working hours) where extra time will not be counted, in benefit of the company
+                            </div>
+                            <span class="me-2">Time Period</span><field name="overtime_threshold" class="text-center" style="width: 5ch;"/><span class="ms-2">Minutes</span>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
         </field>
     </record>
 

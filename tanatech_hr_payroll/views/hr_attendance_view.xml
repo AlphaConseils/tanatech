@@ -4,9 +4,75 @@
         <field name="name">hr.attendance.form.inherit</field>
         <field name="model">hr.attendance</field>
         <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="priority">999</field>
         <field name="arch" type="xml">
-            <xpath expr="//form/sheet/group/group/group[@col='2']/field[@name='overtime_hours']" position="before">
-                <field name="overtime_type" />
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="extra_time_hours" widget="float_time"/>
+            </xpath>
+
+            <xpath expr="//field[@name='overtime_hours']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='validated_overtime_hours']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='validated_overtime_hours']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="extra_time_hours" widget="float_time"/>
+            </xpath>
+            <xpath expr="//field[@name='overtime_hours']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='validated_overtime_hours']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='overtime_status']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree_management_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree_management"/>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="extra_time_hours" widget="float_time"/>
+            </xpath>
+            <xpath expr="//field[@name='overtime_hours']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='validated_overtime_hours']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='overtime_status']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_approve_overtime']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_refuse_overtime']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//list/button[@name='action_approve_overtime']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//list/button[@name='action_refuse_overtime']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>

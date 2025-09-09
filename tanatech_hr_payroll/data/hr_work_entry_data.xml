@@ -13,7 +13,7 @@
             <field name="color">4</field>
             <field name="code">DAYWORKONREGULARDAY</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
 
         <record id="casual_night_work_on_regular_day_work_entry_type" model="hr.work.entry.type">
@@ -21,7 +21,7 @@
             <field name="color">4</field>
             <field name="code">CASUALNIGHTWORKONREGULARDAY</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
 
         <record id="occasional_night_work_on_weekends_work_entry_type" model="hr.work.entry.type">
@@ -29,7 +29,7 @@
             <field name="color">4</field>
             <field name="code">OCCASIONALNIGHTWORKONWEEKENDS</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
 
         <record id="day_work_on_sunday_work_entry_type" model="hr.work.entry.type">
@@ -37,7 +37,7 @@
             <field name="color">4</field>
             <field name="code">DAYWORKONSUNDAY</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
 
         <record id="night_work_on_sunday_work_entry_type" model="hr.work.entry.type">
@@ -45,7 +45,7 @@
             <field name="color">4</field>
             <field name="code">NIGHTWORKONSUNDAY</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
 
         <record id="work_on_public_holidays_work_entry_type" model="hr.work.entry.type">
@@ -53,7 +53,7 @@
             <field name="color">4</field>
             <field name="code">WORKONPUBLICHOLIDAYS</field>
             <field name="is_readonly_code">True</field>
-            <field name="is_overtime">True</field>
+            <!-- <field name="is_overtime">True</field> -->
         </record>
     </data>
 </odoo>
