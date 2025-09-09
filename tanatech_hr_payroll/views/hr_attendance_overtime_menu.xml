@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem 
+        id="main_menu_hr_attendance_ovetime_view" 
+        name="Overtime" 
+        parent="hr_attendance.menu_hr_attendance_root" 
+        sequence="14"
+    />
+</odoo>

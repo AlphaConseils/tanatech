@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.attendance.extend</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="80"/>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app/block[@name='overtime_settings']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//app/block[@name='overtime_settings']" position="after">
+                <block title="Extra Hours" name="overtime_settings">
+                    <setting company_dependent="1">
+                        <div class="mt16">
+                            <label for="overtime_threshold" class="o_form_label">
+                                Tolerance Time In Favor Of Company
+                            </label>
+                            <div class="text-muted">
+                                Allow a period of time (around working hours) where extra time will not be counted, in benefit of the company
+                            </div>
+                            <span class="me-2">Time Period</span><field name="overtime_threshold" class="text-center" style="width: 5ch;"/><span class="ms-2">Minutes</span>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -28,7 +28,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="is_just_to_trigger_depends_method" readonly="1" invisible="1"/>
-                <field name="nothing_but_trigger" readonly="1" invisible="1"/>
             </xpath>
         </field>
     </record>
