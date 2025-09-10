@@ -24,7 +24,7 @@
                         <span class="o_stat_value text-success">
                             <field name="overtime_with_datatimes_hours_count" widget="float_time"/>
                         </span>
-                        <span class="o_stat_text">Overtimes</span>
+                        <span class="o_stat_text">Overtime</span>
                     </div>
                 </button>
             </xpath>

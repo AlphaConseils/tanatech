@@ -47,42 +47,6 @@ msgid "Overtime Type"
 msgstr "Type d'heures supplémentaires"
 
 #. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__overtime_130
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime_130
-msgid "Overtime at 130%"
-msgstr "Heures supplémentaires à 130%"
-
-#. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__overtime_150
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__overtime_150
-msgid "Overtime at 150%"
-msgstr "Heures supplémentaires à 150%"
-
-#. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__usual_night_work_30
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__usual_night_work_30
-msgid "Usual Night Work at 30%"
-msgstr "Travail de nuit habituel à 30%"
-
-#. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__usual_night_work_50
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__usual_night_work_50
-msgid "Usual Night Work at 50%"
-msgstr "Travail de nuit habituel à 50%"
-
-#. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__hours_worked_on_sunday
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_sunday
-msgid "Hours Worked On Sunday"
-msgstr "Heures travaillées le dimanche"
-
-#. module: tanatech_hr_payroll
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance__overtime_type__hours_worked_on_public_holidays
-#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime__overtime_type__hours_worked_on_public_holidays
-msgid "Hours Worked On Public Holidays"
-msgstr "Heures travaillées les jours fériés"
-
-#. module: tanatech_hr_payroll
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_work_entry_type__is_overtime
 msgid "Is overtime"
 msgstr "Est-ce des heures supplémentaires"
@@ -94,38 +58,208 @@ msgstr "Heures supplémentaires des employés"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_hr_payslip_form_inherit
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_employee_form_inherit
 msgid "<span class=\"o_stat_text\">Overtime</span>"
 msgstr "<span class=\"o_stat_text\">Heures supplémentaires</span>"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.overtime_130_work_entry_type
-msgid "OT at 130%"
-msgstr "HS à 130%"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.day_work_on_regular_day_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__overtime_type__day_work_on_regular_day
+msgid "Day work on regular day"
+msgstr "Travail de jour en journée régulière"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.overtime_150_work_entry_type
-msgid "OT at 150%"
-msgstr "HS à 150%"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.casual_night_work_on_regular_day_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__overtime_type__casual_night_work_on_regular_day
+msgid "Casual night work on regular day"
+msgstr "Travail de nuit habituel en journée normale"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.usual_night_work_30_work_entry_type
-msgid "UNW at 30%"
-msgstr "TNH à 30%"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.occasional_night_work_on_weekends_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__occasional_night_work_on_weekends
+msgid "Occasional night work on weekend"
+msgstr "Travail de nuit occasionnel le week-end"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.usual_night_work_50_work_entry_type
-msgid "UNW at 50%"
-msgstr "TNH à 50%"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.day_work_on_sunday_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__day_work_on_sunday
+msgid "Day work on Sunday"
+msgstr "Travail de jour le dimanche"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_sunday_work_entry_type
-msgid "Sunday OT"
-msgstr "HS du dimanche"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.night_work_on_sunday_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__night_work_on_sunday
+msgid "Night work on Sunday"
+msgstr "Travail de nuit le dimanche"
 
 #. module: tanatech_hr_payroll
-#: model:hr.work.entry.type,name:tanatech_hr_payroll.hours_worked_on_public_holidays_work_entry_type
-msgid "Public Holidays OT"
-msgstr "HS jours fériés"
+#: model:hr.attendance.overtime.type,name:tanatech_hr_payroll.work_on_public_holidays_overtime_type
+#: model:ir.model.fields.selection,name:tanatech_hr_payroll.selection__hr_attendance_overtime_with_datetimes__work_on_public_holidays
+msgid "Hours Worked On Public Holidays"
+msgstr "Heures travaillées les jours fériés"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.day_work_on_regular_day_work_entry_type
+msgid "ET - Day work on regular day"
+msgstr "HS - Travail de jour en journée régulière"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.casual_night_work_on_regular_day_work_entry_type
+msgid "ET - Casual night work on regular day"
+msgstr "HS - Travail de nuit habituel en journée normale"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.occasional_night_work_on_weekends_work_entry_type
+msgid "ET - Occasional night work on weekend"
+msgstr "HS - Travail de nuit occasionnel le week-end"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.day_work_on_sunday_work_entry_type
+msgid "ET - Day work on Sunday"
+msgstr "HS - Travail de jour le dimanche"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.night_work_on_sunday_work_entry_type
+msgid "ET - Night work on Sunday"
+msgstr "HS - Travail de nuit le dimanche"
+
+#. module: tanatech_hr_payroll
+#: model:hr.work.entry.type,name:tanatech_hr_payroll.work_on_public_holidays_work_entry_type
+msgid "ET - Hours Worked On Public Holidays"
+msgstr "HS - Heures travaillées les jours fériés"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__employee_id
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
+msgid "Employee"
+msgstr "Employé"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__attendance_id
+msgid "Attendance"
+msgstr "Présence"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__date
+msgid "Day"
+msgstr "Jour"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__start_date
+msgid "Start Date"
+msgstr "Date de début"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__end_date
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__duration
+msgid "Duration"
+msgstr "Durée"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type_ids
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_tree
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_overtime_type_view
+#: model:ir.actions.act_window,name:tanatech_hr_contract.hr_attendance_overtime_type_action
+msgid "Overtime Type"
+msgstr "Type d'heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_threshold
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_res_config_settings__overtime_threshold
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_res_company__overtime_threshold
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.res_config_settings_view_form_inherit
+msgid "Tolerance Time In Favor Of Company"
+msgstr "Tolérance du temps en faveur de l'entreprise"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_type__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_type__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance__attendance_overtime_ids
+msgid "Attendance Overtime"
+msgstr "Présence Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance__extra_time_hours
+#: model_terms:ir.actions.act_window,help:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_action
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.res_config_settings_view_form_inherit
+msgid "Extra Hours"
+msgstr "Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#. odoo-python
+#: code:tanatech/tanatech_hr_payroll/models/hr_payslip.py:0
+msgid "Overtime This Month"
+msgstr "Heures supplémentaires ce mois-ci"
+
+#. module: tanatech_hr_payroll
+#: model:ir.ui.menu,name:tanatech_hr_payroll.main_menu_hr_attendance_ovetime_view
+#: model:ir.ui.menu,name:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
+msgid "Overtime"
+msgstr "Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.actions.act_window,help:tanatech_hr_payroll.hr_attendance_overtime_type_action
+msgid "Create Overtime Type. Use Overtime Type to categorize your Overtime"
+msgstr "Créez un type d'heures supplémentaires. Utilisez-le pour catégoriser vos heures supplémentaires."
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_view_form
+msgid "Employee overtime"
+msgstr "Heures supplémentaires des employés"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_view_form
+msgid "<span>Overtime during day work gets deducted by the Tolerance Time In Favor Of Company </span>"
+msgstr "<span>Les heures supplémentaires effectuées pendant la journée de travail sont déduites du temps de tolérance en faveur de l'entreprise </span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
+msgid "Date"
+msgstr ""
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
+msgid "Type"
+msgstr ""
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.actions.act_window,help:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_action
+msgid "The overtime with datetimes records of your employees will be displayed here."
+msgstr "Les heures supplémentaires avec les enregistrements de date et d'heure de vos employés seront affichées ici."
+
+#. module: tanatech_hr_payroll
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_with_datetimes_view
+msgid "Overtime With Datetimes"
+msgstr "Heures supplémentaires"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.res_config_settings_view_form_inherit
+msgid "Allow a period of time (around working hours) where extra time will not be counted, in benefit of the company"
+msgstr "Accorder une période de temps (autour des heures de travail) où les heures supplémentaires ne seront pas comptées, au profit de l'entreprise"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.res_config_settings_view_form_inherit
+msgid "<span class=\"me-2\">Time Period</span>"
+msgstr "<span class=\"me-2\">Période</span>"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
