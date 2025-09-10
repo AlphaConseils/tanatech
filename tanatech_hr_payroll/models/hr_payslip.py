@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from odoo import api, Command, models, fields
+from odoo import api, Command, models, fields, _
 import logging
 
 
@@ -24,7 +24,7 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Overtime This Month',
+            'name': _('Overtime This Month'),
             'view_mode': 'list,form',
             'res_model': 'hr.attendance.overtime.with.datetimes',
             'domain': [('employee_id', '=', self.employee_id.id), ('date', '>=', self.date_from), ('date', '<=', self.date_to)],

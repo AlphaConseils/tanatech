@@ -13,7 +13,7 @@ class HrAttendanceOvertimeWithDatetimes(models.Model):
     _name = "hr.attendance.overtime.with.datetimes"
     _description = "Attendance Overtime With start and end date"
     _rec_name = 'employee_id'
-    _order = 'date desc'
+    _order = 'start_date desc'
 
     employee_id = fields.Many2one(
         'hr.employee', string="Employee",
@@ -47,6 +47,12 @@ class HrAttendanceOvertimeWithDatetimes(models.Model):
         'hr_attendance_overtime_type_rel',
         string='Overtime Type',
         compute='_get_overtime_type'
+    )
+
+    overtime_threshold = fields.Integer(
+        string="Tolerance Time In Favor Of Company", 
+        related='company_id.overtime_threshold', 
+        readonly=False
     )
 
     @api.depends('overtime_type')

@@ -27,6 +27,37 @@ class HrAttendanceInherit(models.Model):
             extra_times = self.env['hr.attendance.overtime.with.datetimes'].search([('attendance_id', '=', attendance.id)])
             attendance.extra_time_hours = sum(extra_time.duration for extra_time in extra_times)
 
+    def _work_entry_fields_to_nullify(self):
+        return ['active']
+
+    def _regenerate_work_entries(self, attendance):
+        """ Regenerate work entries from an attendance """
+        date_start_tz =  pytz.utc.localize(attendance.check_in).astimezone(pytz.timezone(attendance.employee_id._get_tz()))
+        # First time of the day (00:00:00)
+        first_time = datetime.combine(date_start_tz.date(), time.min)
+        first_time_utc = pytz.utc.localize(first_time).astimezone(pytz.utc)
+        # Last time of the day (23:59:59)
+        last_time = datetime.combine(date_start_tz.date(), time.max)
+        last_time_utc = pytz.utc.localize(last_time).astimezone(pytz.utc)
+        work_entries = self.env['hr.work.entry'].search([
+            ('employee_id', '=', attendance.employee_id.id),
+            ('date_stop', '>=', first_time_utc),
+            ('date_start', '<=', last_time_utc),
+            ('state', '!=', 'validated')])
+        write_vals = {field: False for field in self._work_entry_fields_to_nullify()}
+        work_entries.write(write_vals)
+        attendance.employee_id.generate_work_entries(first_time_utc, last_time_utc, True)
+
+    def write(self, vals):
+        if any(field in vals for field in ['employee_id', 'check_in', 'check_out']):
+            # remove all related overtimes before computing the current
+            # and regenerate work entries
+            for attendance in self:
+                overtimes = self.env['hr.attendance.overtime.with.datetimes'].search([('attendance_id', '=', attendance.id)])
+                overtimes.unlink()
+                self._regenerate_work_entries(attendance)
+        return super(HrAttendanceInherit, self).write(vals)
+
     def unlink(self):
         for att in self:
             existing_overtimes = self.env['hr.attendance.overtime.with.datetimes'].search([('attendance_id', '=', att.id)])
@@ -34,7 +65,7 @@ class HrAttendanceInherit(models.Model):
         return super().unlink()
 
     def _remove_duplication_in_list(self, main_list):
-        # remove duplicate dicts
+        """ Erase duplicated values in a list """
         seen = set()
         unique_data = []
         for d in main_list:
@@ -47,6 +78,7 @@ class HrAttendanceInherit(models.Model):
         return main_list
 
     def _remove_already_existing_records(self, element_list):
+        """ Take existing overtime out of the vals list """
         for element in element_list:
             # domain = [
             #     ('employee_id', '=', element['employee_id']),
@@ -163,6 +195,7 @@ class HrAttendanceInherit(models.Model):
         return attendance_ofwd_ids, overtime_on_sunday_before_5_am_vals_list, overtime_on_sunday_between_5am_and_8pm_vals_list, overtime_on_sunday_after_8_pm_vals_list, overtime_on_public_holidays_vals_list
 
     def _get_overtime_pre_post_work_time(self, employee, working_times, attendance_date):
+        """ Come out overtimes before and after the working time """
         overtime_before_working_time = self.env['hr.attendance.overtime.with.datetimes']
         overtime_after_working_time = self.env['hr.attendance.overtime.with.datetimes']
 
@@ -196,6 +229,9 @@ class HrAttendanceInherit(models.Model):
             five_am = employee_tz.localize(datetime.combine(local_check_in_emp_tz.date(), time(5, 0)))
             eight_pm = employee_tz.localize(datetime.combine(local_check_out_emp_tz.date(), time(20, 0)))
 
+            company_threshold_minutes = attendance.employee_id.company_id.overtime_threshold
+            company_threshold = attendance.employee_id.company_id.overtime_threshold / 60.0
+
             # ---- BEFORE START OF WORK ----
             if local_check_in_emp_tz < planned_start_dt:
                 # Case 1: Overtime fully before 5 AM
@@ -222,14 +258,20 @@ class HrAttendanceInherit(models.Model):
                             'overtime_type': 'night_work_on_sunday' if local_check_in_emp_tz.date().weekday() == 0 else 'casual_night_work_on_regular_day',
                         })
                     # day part
-                    overtime_after_5_am_working_time_vals_list.append({
-                        'employee_id': attendance.employee_id.id,
-                        'start_date': five_am.astimezone(pytz.utc).replace(tzinfo=None),
-                        'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
-                        'attendance_id': attendance.id,
-                        'company_id': attendance.employee_id.company_id.id,
-                        'overtime_type': 'day_work_on_regular_day',
-                    })
+                    # if less than company threshold, no overtime creation
+                    # else subtract duration by the company threshold
+                    start_date_a = five_am.astimezone(pytz.utc).replace(tzinfo=None)
+                    end_date_a = local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None)
+                    duration_a = (end_date_a - start_date_a).total_seconds() / 3600.0
+                    if duration_a > company_threshold:
+                        overtime_after_5_am_working_time_vals_list.append({
+                            'employee_id': attendance.employee_id.id,
+                            'start_date': start_date_a + timedelta(minutes=company_threshold_minutes),
+                            'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
+                            'attendance_id': attendance.id,
+                            'company_id': attendance.employee_id.company_id.id,
+                            'overtime_type': 'day_work_on_regular_day',
+                        })
 
                 # Case 3: Starts before work but ends after planned_start -> cut until planned_start
                 else:
@@ -244,40 +286,58 @@ class HrAttendanceInherit(models.Model):
                             'overtime_type': 'casual_night_work_on_regular_day',
                         })
                     # day part
-                    overtime_after_5_am_working_time_vals_list.append({
-                        'employee_id': attendance.employee_id.id,
-                        'start_date': max(local_check_in_emp_tz, five_am).astimezone(pytz.utc).replace(tzinfo=None),
-                        'end_date': planned_start_dt.astimezone(pytz.utc).replace(tzinfo=None),
-                        'attendance_id': attendance.id,
-                        'company_id': attendance.employee_id.company_id.id,
-                        'overtime_type': 'day_work_on_regular_day',
-                    })
+                    # if less than company threshold, no overtime creation
+                    # else subtract duration by the company threshold
+                    start_date_b = max(local_check_in_emp_tz, five_am).astimezone(pytz.utc).replace(tzinfo=None)
+                    end_date_b = planned_start_dt.astimezone(pytz.utc).replace(tzinfo=None)
+                    duration_b = (end_date_b - start_date_b).total_seconds() / 3600.0
+                    if duration_b > company_threshold:
+                        overtime_after_5_am_working_time_vals_list.append({
+                            'employee_id': attendance.employee_id.id,
+                            'start_date': start_date_b + timedelta(minutes=company_threshold_minutes),
+                            'end_date': end_date_b,
+                            'attendance_id': attendance.id,
+                            'company_id': attendance.employee_id.company_id.id,
+                            'overtime_type': 'day_work_on_regular_day',
+                        })
 
             # ---- AFTER END OF WORK ----
             if local_check_out_emp_tz > planned_end_dt:
                 # Case 1: Entirely between end and 8pm
                 if planned_end_dt < local_check_out_emp_tz <= eight_pm:
-                    overtime_before_8_pm_working_time_vals_list.append({
-                        'employee_id': attendance.employee_id.id,
-                        'start_date': max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None),
-                        'end_date': local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None),
-                        'attendance_id': attendance.id,
-                        'company_id': attendance.employee_id.company_id.id,
-                        'overtime_type': 'day_work_on_regular_day',
-                    })
+                    # if less than company threshold, no overtime creation
+                    # else subtract duration by the company threshold
+                    start_date_c = max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None)
+                    end_date_c = local_check_out_emp_tz.astimezone(pytz.utc).replace(tzinfo=None)
+                    duration_c = (end_date_c - start_date_c).total_seconds() / 3600.0
+                    if duration_c > company_threshold:
+                        overtime_before_8_pm_working_time_vals_list.append({
+                            'employee_id': attendance.employee_id.id,
+                            'start_date': start_date_c + timedelta(minutes=company_threshold_minutes),
+                            'end_date': end_date_c,
+                            'attendance_id': attendance.id,
+                            'company_id': attendance.employee_id.company_id.id,
+                            'overtime_type': 'day_work_on_regular_day',
+                        })
 
                 # Case 2: Crosses 8pm -> split into day + night
                 else:
                     # day part (until 8pm)
                     if local_check_in_emp_tz < eight_pm:
-                        overtime_before_8_pm_working_time_vals_list.append({
-                            'employee_id': attendance.employee_id.id,
-                            'start_date': max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None),
-                            'end_date': eight_pm.astimezone(pytz.utc).replace(tzinfo=None),
-                            'attendance_id': attendance.id,
-                            'company_id': attendance.employee_id.company_id.id,
-                            'overtime_type': 'day_work_on_regular_day',
-                        })
+                        # if less than company threshold, no overtime creation
+                        # else subtract duration by the company threshold
+                        start_date_d = max(local_check_in_emp_tz, planned_end_dt).astimezone(pytz.utc).replace(tzinfo=None)
+                        end_date_d = eight_pm.astimezone(pytz.utc).replace(tzinfo=None)
+                        duration_d = (end_date_d - start_date_d).total_seconds() / 3600.0
+                        if duration_d > company_threshold:
+                            overtime_before_8_pm_working_time_vals_list.append({
+                                'employee_id': attendance.employee_id.id,
+                                'start_date': start_date_d + timedelta(minutes=company_threshold_minutes),
+                                'end_date': end_date_d,
+                                'attendance_id': attendance.id,
+                                'company_id': attendance.employee_id.company_id.id,
+                                'overtime_type': 'day_work_on_regular_day',
+                            })
                     # night part (after 8pm)
                     overtime_after_8_pm_working_time_vals_list.append({
                         'employee_id': attendance.employee_id.id,
