@@ -353,6 +353,11 @@ msgstr "<span>Heure supplementaire à 50%</span>"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
+msgid "<span>Overtime at 70%</span>"
+msgstr "<span>Heure supplementaire à 70%</span>"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
 msgid "<span>Overtime at 100%</span>"
 msgstr "<span>Heure supplementaire à 100%</span>"
 
