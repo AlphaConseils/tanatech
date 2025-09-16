@@ -206,8 +206,9 @@
             <t t-set="overtime_30" t-value="0"/>
             <t t-set="overtime_40" t-value="0"/>
             <t t-set="overtime_50" t-value="0"/>
+            <t t-set="overtime_70" t-value="0"/>
             <t t-set="overtime_100" t-value="0"/>
-            <t t-set="worked_days_lines_overtime_30" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code in ('CASUALNIGHTWORKONREGULARDAY', 'DAYWORKONREGULARDAY'))"/>
+            <!-- <t t-set="worked_days_lines_overtime_30" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code in ('CASUALNIGHTWORKONREGULARDAY', 'DAYWORKONREGULARDAY'))"/>
             <t t-set="worked_days_lines_overtime_40" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'DAYWORKONSUNDAY')"/>
             <t t-set="worked_days_lines_overtime_50" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'OCCASIONALNIGHTWORKONWEEKENDS')"/>
             <t t-set="worked_days_lines_overtime_70" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'NIGHTWORKONSUNDAY')"/>
@@ -215,16 +216,24 @@
             <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount')) + (sum(worked_days_lines_overtime_30.mapped('amount')) * 0.3)"/>
             <t t-set="overtime_40" t-value="sum(worked_days_lines_overtime_40.mapped('amount')) + (sum(worked_days_lines_overtime_40.mapped('amount')) * 0.4)"/>
             <t t-set="overtime_50" t-value="sum(worked_days_lines_overtime_50.mapped('amount')) + (sum(worked_days_lines_overtime_50.mapped('amount')) * 0.5)"/>
-            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount')) + (sum(worked_days_lines_overtime_70.mapped('amount')) * 0.7)"/>
-            <!-- <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount'))"/>
+            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount')) + (sum(worked_days_lines_overtime_70.mapped('amount')) * 0.7)"/> -->
+
+            <t t-set="payslip_lines" t-value="o.line_ids.filtered(lambda line: line.appears_on_payslip)"/>
+
+            <t t-set="worked_days_lines_overtime_30" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('CASUALNIGHTWORKONREGULARDAY', 'HSUPP130'))"/>
+            <t t-set="worked_days_lines_overtime_40" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code == 'TDIM40')"/>
+            <t t-set="worked_days_lines_overtime_50" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code == 'OCCASIONALNIGHTWORKONWEEKENDS')"/>
+            <t t-set="worked_days_lines_overtime_70" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code == 'NIGHTWORKONSUNDAY')"/>
+            <t t-set="worked_days_lines_overtime_100" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code == 'HSUPP100')"/>
+            <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount'))"/>
             <t t-set="overtime_40" t-value="sum(worked_days_lines_overtime_40.mapped('amount'))"/>
             <t t-set="overtime_50" t-value="sum(worked_days_lines_overtime_50.mapped('amount'))"/>
-            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount'))"/> -->
-            <t t-set="overtime_100" t-value="sum(worked_days_lines_overtime_100.mapped('amount')) + sum(worked_days_lines_overtime_100.mapped('amount'))"/>
+            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount'))"/>
+            <t t-set="overtime_100" t-value="sum(worked_days_lines_overtime_100.mapped('amount'))"/>
             <t t-set="gross_salary" t-value="overtime_30 + overtime_40 + overtime_50 + overtime_70 + overtime_100 + o.contract_id.wage"/>
 
             <!-- Compute deduction -->
-            <t t-set="payslip_lines" t-value="o.line_ids.filtered(lambda line: line.appears_on_payslip)"/>
+            
             <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02'))"/>
             <t t-set="irsa" t-value="sum(payslip_lines_irsa.mapped('amount'))"/>
 
