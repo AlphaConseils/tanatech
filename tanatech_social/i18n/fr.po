@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_social
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20250801\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-16 14:40+0000\n"
+"PO-Revision-Date: 2025-09-16 14:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_social
+#: model:ir.model,name:tanatech_social.model_broadcast_channel
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__broadcast_channel_id
+msgid "Broadcast Channel"
+msgstr "Canaux de diffusion"
+
+#. module: tanatech_social
+#: model:ir.actions.act_window,name:tanatech_social.broadcast_channels_action
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__broadcast_line_ids
+#: model:ir.ui.menu,name:tanatech_social.broadcast_channels_menu
+#: model_terms:ir.ui.view,arch_db:tanatech_social.broadcast_channels_list
+#: model_terms:ir.ui.view,arch_db:tanatech_social.utm_campaign_view_form_inherit
+msgid "Broadcast Channels"
+msgstr "Canaux de diffusion"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__budget
+msgid "Budget"
+msgstr "Budget alloué"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__campaign_id
+msgid "Campaign"
+msgstr "Campagne"
+
+#. module: tanatech_social
+#: model:ir.model,name:tanatech_social.model_utm_campaign_broadcast
+msgid "Campaign Broadcast Line"
+msgstr "Ligne de diffusion de campagne"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__name
+msgid "Channel Name"
+msgstr "Nom"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__create_uid
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__create_date
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__company_currency_id
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: tanatech_social
+#: model_terms:ir.ui.view,arch_db:tanatech_social.utm_campaign_view_form_inherit
+msgid "Date"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__display_name
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__date_to
+msgid "End Date"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__id
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__id
+msgid "ID"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__write_uid
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_broadcast_channel__write_date
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign_broadcast__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: tanatech_social
+#: model_terms:ir.ui.view,arch_db:tanatech_social.utm_campaign_view_form_inherit
+msgid "Launch (validity)"
+msgstr "Lancement (validité)"
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__date_from
+msgid "Start Date"
+msgstr ""
+
+#. module: tanatech_social
+#: model:ir.model.fields,field_description:tanatech_social.field_utm_campaign__budjet_total
+msgid "Total Budget"
+msgstr "Budget total"
+
+#. module: tanatech_social
+#: model:ir.model,name:tanatech_social.model_utm_campaign
+msgid "UTM Campaign"
+msgstr "Campagne UTM"
+
+#. module: tanatech_social
+#: model_terms:ir.actions.act_window,help:tanatech_social.broadcast_channels_action
+msgid "add new broadcasting channels"
+msgstr "ajouter de nouvelles canaux de diffusion"

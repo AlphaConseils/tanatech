@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="utm_campaign_view_form_inherit" model="ir.ui.view">
+        <field name="name">utm.campaign.view.form.inherit</field>
+        <field name="model">utm.campaign</field>
+        <field name="inherit_id" ref="utm.utm_campaign_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group" position="after">
+                <group name="col_left">
+                    <label for="date_from"
+                        string="Launch (validity)" />
+                    <div class="o_row">
+                        <field name="date_from"  string="Date" widget="daterange"
+                            options="{'end_date_field': 'date_to'}" />
+                        <field name="date_to" 
+                        invisible="1"
+                         />
+                    </div>
+                </group>               
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Broadcast Channels">
+                        <field name="broadcast_line_ids">
+                            <list editable="bottom">
+                                <field name="broadcast_channel_id" />
+                                <field name="budget" />
+                            </list>
+                            <form>
+                                <group>
+                                    <field name="broadcast_channel_id" />
+                                    <field name="budget" />
+                                </group>
+                            </form>
+                        </field>
+                        <group>
+                            <field name="company_currency_id" invisible="1" />
+                            <field name="budjet_total" readonly="1" widget="monetary"
+                            options="{'currency_field': 'company_currency_id'}" />
+                        </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
