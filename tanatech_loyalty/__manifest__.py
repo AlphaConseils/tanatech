@@ -7,7 +7,7 @@
     "category": "loyalty",
     "version": "0.1",
     "depends": ["loyalty"],
-    "data": ["security/ir.model.access.csv", "views/loyalty_card_views.xml"],
+    "data": ["views/loyalty_card_views.xml"],
     "installable": True,
     "auto_install": False,
     "application": True,
