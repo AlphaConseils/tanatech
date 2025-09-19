@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_tanatech_loyalty_card,access_tanatech_loyalty_card,model_loyalty_card,base.group_user,1,1,1,1
