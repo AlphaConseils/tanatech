@@ -67,7 +67,8 @@ class Sanction(models.Model):
     lay_off_notification = fields.Html()
     is_lay_off = fields.Boolean(related="sanction_type_id.is_lay_off")
 
-    employee_manager = fields.Many2one(comodel_name="res.users", readonly=False)
+    emp_manager_domain_ids = fields.Char("Employee Manager")
+    employee_manager = fields.Many2one(comodel_name="res.users", domain=emp_manager_domain_ids, readonly=False)
     emp_manager_domain = fields.Binary(compute="_compute_emp_manager_domain")
 
     is_long_duration = fields.Boolean("Is long duration ?")
@@ -93,15 +94,15 @@ class Sanction(models.Model):
         """Set default value on emp_manager_field"""
         defaults = super().default_get(fields_list)
 
-        if "emp_manager_domain" in fields_list:
-            managers = (
-                self.env["hr.employee"]
-                .search([("child_ids", "!=", False)])
-                .mapped("user_id.id")
-            )
-            defaults["emp_manager_domain"] = json.dumps(
-                [("id", "in", managers)] if managers else [("id", "in", [0])]
-            )
+        # if "emp_manager_domain" in fields_list:
+        #     managers = (
+        #         self.env["hr.employee"]
+        #         .search([("child_ids", "!=", False)])
+        #         .mapped("user_id.id")
+        #     )
+        #     defaults["emp_manager_domain"] = json.dumps(
+        #         [("id", "in", managers)] if managers else [("id", "in", [0])]
+        #     )
 
         if "hr_responsible_domain" in fields_list:
             rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
@@ -112,6 +113,18 @@ class Sanction(models.Model):
             )
 
         return defaults
+
+    @api.onchange('employee_id')
+    def _get_employee_manager(self):
+        if self.employee_id.parent_id:
+            # Build domain based on the employee_id
+            domain = [('id', '=', self.employee_id.parent_id.id)]
+            # Search for the records that match the domain
+            records = self.env['hr.employee'].search(domain).mapped("user_id.id")
+            # Store the ids in the helper field
+            self.emp_manager_domain_ids = [('id', 'in', records)]
+        else:
+            self.emp_manager_domain_ids = [("id", "in", [0])]
 
     def _compute_emp_manager_domain(self):
         for record in self:
