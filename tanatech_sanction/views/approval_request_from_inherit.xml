@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tanatech_sanction_view_form_approval_request" model="ir.ui.view">
+        <field name="name">tanatech_sanction.approva.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="sanction_id" invisible="1"/>
+                <button name="open_sanction_record" type="object" class="oe_stat_button" icon="fa-list"
+                    invisible="sanction_count &lt;= 0"
+                    >
+                    <field name="sanction_count" string="Sanction" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

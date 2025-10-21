@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sanction_sanction_type_1" model="sanction.type">
+        <field name="name">Rappel à l'ordre</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="sanction_sanction_type_2" model="sanction.type">
+        <field name="name">Avertissement</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="sanction_sanction_type_3" model="sanction.type">
+        <field name="name">Blâme</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="sanction_sanction_type_4" model="sanction.type">
+        <field name="name">Mise à pied</field>
+        <field name="active" eval="True" />
+    </record>
+</odoo>

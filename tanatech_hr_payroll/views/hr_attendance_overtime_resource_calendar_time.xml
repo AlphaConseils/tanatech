@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_attendance_overtime_resource_calendar_time_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.overtime.resource.calendar.time.list</field>
+        <field name="model">hr.attendance.overtime.resource.calendar.time</field>
+        <field name="arch" type="xml">
+            <list string="Scheduled Overtime Time" editable="bottom" default_order="hour_from">
+                <field name="name"/>
+                <field name="day_period"/>
+                <field name="hour_from" widget="float_time"/>
+                <field name="hour_to" widget="float_time"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

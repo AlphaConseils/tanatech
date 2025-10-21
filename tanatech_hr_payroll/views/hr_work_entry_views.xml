@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- HR WORK ENTRY TYPE -->
+
+    <record id="hr_work_entry_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.work.entry.type.form.inherit</field>
+        <field name="model">hr.work.entry.type</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other']" position="inside">
+                <group name="overtime" string="Overtime">
+                    <field name="is_overtime" readonly="1"/>
+                    <field name="is_readonly_code" readonly="1" invisible="1"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='code']" position="attributes">
+                <attribute name="readonly">is_readonly_code</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.work.entry.form.inherit</field>
+        <field name="model">hr.work.entry</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_just_to_trigger_depends_method" readonly="1" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_hr_holidays
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20240905\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-25 14:35+0000\n"
+"PO-Revision-Date: 2025-08-25 14:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_hr_holidays
+#: model:ir.model.fields,field_description:tanatech_hr_holidays.field_hr_leave_type__is_deducted_if_weekend_included
+msgid "Is deducted if weekend included"
+msgstr "Est déduit si week-end inclus"
+
+#. module: tanatech_hr_holidays
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_holidays.hr_leave_view_form_inherit
+msgid ""
+"<span>Leave ending on Friday gets its duration increased by 3 days.</span>"
+msgstr ""
+"<span>Les congés se terminant le vendredi voient leur durée augmentée de 3 jours.</span>"
+
+#. module: tanatech_hr_holidays
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_holidays.hr_leave_view_form_inherit
+msgid ""
+"<span>Leave including weekend (saturday and Sunday) gets its duration increased by 2 days.</span>"
+msgstr ""
+"<span>Les congés incluant le week-end (samedi et dimanche) voient leur durée augmentée de 2 jours.</span>"

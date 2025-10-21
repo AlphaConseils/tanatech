@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_demex" model="ir.actions.report">
+        <field name="name">Demex report</field>
+        <field name="model">sanction.sanction</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tanatech_sanction.report_demex</field>
+        <field name="report_file">tanatech_sanction.report_demex</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_demex">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="name" t-value="o.name.split(' ')"/>
+                <t t-call="web.html_container">
+                    <div t-out="o.demex_body"/>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

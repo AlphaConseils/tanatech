@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sanction_sanction_view_form" model="ir.ui.view">
+        <field name="name">sanction.sanction.view.form</field>
+        <field name="model">sanction.sanction</field>
+        <field name="arch" type="xml">
+            <form string="Sanction" duplicate="0">
+                <header>
+                    <field name="is_lay_off" invisible="1"/>
+                    <field name="warning_notification" invisible="1"/>
+                    <field name="lay_off_notification" invisible="1"/>
+                    <field name="epl_notification" invisible="1"/>
+                    <field name="hr_responsible_domain" invisible="1"/>
+                    <field name="emp_manager_domain" invisible="1"/>
+                    <field name="is_related_to_time_off" invisible="1"/>
+                    <button string="Select sanction type" name="action_sanction_wizard" type="object" class="oe_highlight rounded"
+                        invisible="state != 'request_explanation' or sanction_initiator != uid"/>
+                    <button name="action_draft" string="Back To Draft" type="object" invisible="state not in ['cancel'] or  sanction_initiator != uid"/>
+                    <button string="Cancel" name="action_cancel_sanction" type="object" class="btn btn-secondary border rounded" invisible="state in ['request_explanation', 'cancel', 'draft'] or sanction_initiator != uid"/>
+                    <button string="DemEx" name="action_send_mail" type="object" class="oe_highlight rounded" invisible="state != 'draft' or (sanction_initiator != uid) or not reference"/>
+                    <button string="Warning email" name="action_write_warning_email" type="object" class="oe_highlight rounded" invisible="not sanction_type_id or warning_notification or is_lay_off"/>
+                    <button string="epl email" name="action_write_epl_email" type="object" class="oe_highlight rounded" invisible="not is_lay_off or lay_off_notification or epl_notification"/>
+                    <button string="Apercu email" name="action_apercu_warning_email" type="object" class="rounded" invisible="not warning_notification or is_lay_off"/>
+                    <button string="Apercu epl" name="action_apercu_epl_email" type="object" class="rounded" invisible="not epl_notification or not is_lay_off"/>
+                    <button string="Lay off email" name="action_write_lay_off_email" type="object" class="oe_highlight rounded" invisible="not epl_notification or not is_lay_off or lay_off_notification"/>
+                    <button string="Apercu lay off email" name="action_apercu_lay_off_email" type="object" class="rounded" invisible="not lay_off_notification or not is_lay_off"/>
+                    <button string="Activate sanction" name="action_submit" type="object" class="oe_highlight rounded" invisible="not warning_notification or is_lay_off or state not in  ['request_explanation'] or not sanction_type_id"/>
+                    <button string="Activate sanction" id="lay_off" name="action_submit" type="object" class="oe_highlight rounded" invisible="not epl_notification or not lay_off_notification or not is_lay_off or state not in  ['request_explanation'] or not sanction_type_id"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,request_explanation,in_progress,validate" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="row justify-content-between position-relative w-100 m-0 mb-2">
+                        <div class="oe_title mw-75 ps-0 pe-2">
+                            <h1 class="">
+                                <field name="employee_id" placeholder="Nom de l'employé" required="True" style="font-size: min(4vw, 2.6rem);" readonly="state not in ['draft']"/>
+                            </h1>
+                            <h2>
+                                <field name="employee_post"/>
+                            </h2>
+                        </div>
+                        <div class="o_employee_avatar m-0 p-0 mw-25">
+                            <field name="image_1920" widget="image" class="oe_avatar m-0" />
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_registration_number" />
+                            <field name="employee_post" />
+                            <field name="employee_department" />
+                            <field name="employee_agency" />
+                        </group>
+
+                        <group>
+                            <field name="employee_manager"
+                            widget="many2one_avatar_user"
+                            options="{'no_create': True}"
+                            domain="emp_manager_domain"
+                            required="state in ['draft']"
+                            readonly="state not in ['draft', 'request_explanation'] or uid != sanction_initiator"/>
+                            <field name="hr_responsible"
+                            widget="many2one_avatar_user"
+                            options="{'no_create': True}"
+                            domain="hr_responsible_domain"
+                            required="state in ['draft']"
+                            readonly="state not in ['draft', 'request_explanation'] or uid != sanction_initiator"/>
+                            <field name="sanction_initiator"/>
+                        </group>
+                        <separator name="sanction" string="Sanctions" invisible="not sanction_type_id"/>
+                        <group invisible="not sanction_type_id">
+                            <field name="reference"/>
+                            <field name="precursor_fact" readonly="state not in ['draft']"/>
+                        </group>
+                        <group invisible="not sanction_type_id">
+                            <field name="is_long_duration" invisible="1"/>
+                            <field name="sanction_type_id" readonly="state not in ['draft']"/>
+                            <field name="sanction_date" readonly="state not in ['draft']" invisible="is_long_duration"/>
+                            <field name="demex_date" readonly="state not in ['draft']"/>
+                            <!-- <field name="corrective_measure_id" readonly="state not in ['draft']"/>
+                            <field name="interview_place" readonly="state not in ['draft']"/>
+                            <field name="interview_datetime" readonly="state not in ['draft']"/> -->
+                            <field name="sanction_start_date" readonly="state not in ['draft']" invisible="not is_long_duration"/>
+                            <field name="sanction_end_date" readonly="state not in ['draft']" invisible="not is_long_duration"/>
+                            <field name="sanction_duration" readonly="state not in ['draft']" />
+                        </group>
+
+                        <!-- <separator name="payroll" string="Payroll" invisible="state in ['draft', 'refused', 'cancel']" groups="hr.group_hr_user"/>
+                        <group invisible="state in ['draft', 'refused', 'cancel']" groups="hr.group_hr_user">
+                            <field name="other_input_type_id"/>
+                        </group> -->
+                    </group>
+
+                    <notebook>
+                        <page name="approver" string="Approver" invisible="state in ['draft', 'request_explanation']">
+                            <field name="approval_ids" mode="list" readonly="1">
+                                <list editable="bottom" decoration-success="status=='approved'" decoration-warning="status in ['pending', 'waiting']" decoration-danger="status=='refused'" no_open="1">
+                                    <field name="existing_request_user_ids" column_invisible="True"/>
+                                    <field name="sequence" column_invisible="True"/>
+                                    <field name="can_edit" column_invisible="True"/>
+                                    <field name="can_edit_user_id" column_invisible="True"/>
+                                    <field name="user_id" string="Approver" readonly="1" force_save="1"/>
+                                    <field name="required" readonly="1" force_save="1"/>
+                                    <field name="status"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="hr_leave" string="Time Off" invisible="state in ['draft', 'request_explanation'] or not is_related_to_time_off or not hr_leave_ids">
+                            <field name="hr_leave_ids" mode="list" readonly="1">
+                                <list editable="bottom" no_open="1">
+                                    <field name="name" />
+                                    <field name="employee_id" />
+                                    <field name="holiday_status_id" />
+                                    <field name="duration_display" />
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="sanction_sanction_view_list" model="ir.ui.view">
+        <field name="name">sanction.sanction.view.list</field>
+        <field name="model">sanction.sanction</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="employee_id" widget="many2one_avatar_employee"/>
+                <field name="reference" />
+                <field name="sanction_date" />
+                <field name="employee_registration_number" />
+                <field name="employee_agency" />
+                <field name="employee_department" />
+                <field name="employee_post" />
+                <field name="precursor_fact" decoration-bf="1"/>
+                <field name="color" optional="hide" />
+                <field name="sanction_initiator" decoration-bf="1"/>
+                <field name="sanction_type_id" widget="badge"
+                    decoration-info="color == 4"
+                    decoration-warning="color == 3"
+                    decoration-primary="color == 2"
+                    decoration-danger="color == 1"/>
+                <field name="corrective_measure_id" decoration-bf="1"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-info="state == 'request_explanation'"
+                    decoration-warning="state == 'in_progress'"
+                    decoration-primary="state == 'refused'"
+                    decoration-success="state == 'validate'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sanction_sanction_view_search" model="ir.ui.view">
+        <field name="name">sanction.sanction.view.search</field>
+        <field name="model">sanction.sanction</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="name" />
+                <filter name="state" string="Request explanation" domain="[('state', '=', 'request_explanation')]" />
+                <filter name="state" string="In progress" domain="[('state', '=', 'in_progress')]" />
+                <filter name="state" string="Refused" domain="[('state', '=', 'refused')]" />
+                <filter name="state" string="Validate" domain="[('state', '=', 'validate')]" />
+                <separator/>
+                <filter name="sanction_type_id" string="Rappel à l'ordre" domain="[('sanction_type_id.name', 'ilike', 'Rappel à l\'ordre')]" />
+                <filter name="sanction_type_id" string="Avertissement" domain="[('sanction_type_id.name', 'ilike', 'Avertissement')]" />
+                <filter name="sanction_type_id" string="Blâme" domain="[('sanction_type_id.name', 'ilike', 'Blâme')]" />
+                <filter name="sanction_type_id" string="Mise à pied" domain="[('sanction_type_id.name', 'ilike', 'Mise à pied')]" />
+                <separator/>
+                <filter name="sanction_date" date="sanction_date" string="Date"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

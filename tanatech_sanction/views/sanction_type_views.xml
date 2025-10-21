@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sanction_type_view_form" model="ir.ui.view">
+        <field name="name">sanction.type.view.form</field>
+        <field name="model">sanction.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="color" widget='sanction_type_color'/>
+                        <field name="is_lay_off"/>
+                        <field name="is_taken_into_account_in_time_off"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sanction_type_view_list" model="ir.ui.view">
+        <field name="name">sanction.type.view.list</field>
+        <field name="model">sanction.type</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="is_lay_off"/>
+                <field name="code"/>
+                <field name="color" widget='color_picker'/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

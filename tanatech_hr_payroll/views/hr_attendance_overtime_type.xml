@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_attendance_overtime_type_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.overtime.type.view.form</field>
+        <field name="model">hr.attendance.overtime.type</field>
+        <field name="arch" type="xml">
+            <form string="Overtime Type" create="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="strategic_name" invisible="1" />
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="color" required="True" widget="color_picker"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_attendance_overtime_type_view_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.overtime.type.view.list</field>
+        <field name="model">hr.attendance.overtime.type</field>
+        <field name="arch" type="xml">
+            <list string="Overtime Type" editable="top" create="0" delete="0">
+                <field name="strategic_name" column_invisible="1" />
+                <field name="name"/>
+                <field name="color" widget="color_picker" />
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_attendance_overtime_type_action" model="ir.actions.act_window">
+        <field name="name">Overtime Type</field>
+        <field name="res_model">hr.attendance.overtime.type</field>
+        <!-- <field name="view_id" ref="hr_attendance_overtime_type_view_tree"/> -->
+        <field name="view_mode">list,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create Overtime Type. Use Overtime Type to categorize your Overtime
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        id="menu_hr_attendance_overtime_type_view" 
+        name="Overtime Type" 
+        parent="tanatech_hr_payroll.main_menu_hr_attendance_ovetime_view" 
+        sequence="3" 
+        action="hr_attendance_overtime_type_action"
+    />
+
+</odoo>

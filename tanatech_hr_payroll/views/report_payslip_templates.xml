@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_inherit" inherit_id="hr_payroll.report_payslip"> 
+        
+        <xpath expr="//div[hasclass('page')]/t[@t-set='is_invalid']" position="before">
+            <style>
+                #payslip_title {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                #payslip_title td {
+                    border: 1px solid #000000;
+                    padding: 8px;
+                }
+
+                #separator {
+                    height: 8px;
+                }
+
+                #custom_tbody tr {
+                    background-color: #ffffff; /* need to override the original css to apply the color */
+                    border: none;
+                }
+
+                #custom_tbody td {
+                    border: none;
+                }
+
+                #simple_separtor {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                #simple_separtor td {
+                    border: 1px solid #000000;
+                    padding: 8px;
+                }
+
+                #payslip_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #deduction_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #taxable_table tr {
+                    border: 1px solid #000000;
+                }
+
+                #letter_amount_table tr {
+                    border: 1px solid #000000;
+                }
+            </style>
+        </xpath>
+        <xpath expr="//h2[@id='payslip_name']" position="replace">
+            <table id="payslip_title">
+                <tr>
+                    <td>
+                        <div style="text-transform: uppercase; text-align: center;">
+                            <strong>Pay slip</strong>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']" position="before">
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']//thead[hasclass('o_black_border')]" position="replace">
+            <!-- NOTHING TO DISPLAY HERE -->
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']/table/tbody" position="attributes">
+            <attribute name="id" add="custom_tbody" />
+        </xpath>
+
+        <xpath expr="//td[@id='employee_infos']" position="replace">
+            <td id="employee_infos" style=" width: 30%;">
+                <div>
+                    <strong class="me-2">Pay Period from</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Company Name or Reason</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Full name of the worker</strong>
+                </div>
+                <div>
+                    <strong class="me-2">NIC</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Address</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Contract</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Job Position</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Classification</strong>
+                </div>
+                <div>
+                    <strong class="me-2">Dependent children</strong>
+                </div>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@id='other_infos']" position="replace">
+            <td id="other_infos" style=" width: 70%;">
+                <div class="row">
+                    <div class="col-4">
+                        <span t-if="o.date_from &lt; o.contract_id.date_start" t-field="o.contract_id.date_start"/>
+                        <span t-else="" t-field="o.date_from"/>
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2"> to </strong>
+                    </div>
+                    <div class="col-4">
+                        <span t-if="o.contract_id.date_end and o.date_to &gt; o.contract_id.date_end" t-field="o.contract_id.date_end"/>
+                        <span t-else="" t-field="o.date_to"/>
+                    </div>
+                </div>
+                <div>
+                    <span t-field="o.company_id.name"/>
+                </div>
+                <div>
+                    <span t-field="o.employee_id.legal_name"/>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.identification_id" t-field="o.employee_id.identification_id"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.private_street" t-field="o.employee_id.private_street"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_street2" t-field="o.employee_id.private_street2" class="ms-2"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_city" t-field="o.employee_id.private_city" class="ms-2"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_zip" t-field="o.employee_id.private_zip"/>
+                    <span t-else=""> - </span>
+                    <span t-if="o.employee_id.private_country_id" t-field="o.employee_id.private_country_id"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div>
+                    <span t-if="o.contract_id.contract_type_id" t-field="o.contract_id.contract_type_id.name"/>
+                    <span t-else=""> - </span>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <span t-if="o.employee_id.job_title" t-field="o.employee_id.job_title"/>
+                        <span t-else=""> - </span>
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2">Registration N°</strong>
+                    </div>
+                    <div class="col-4">
+                        <span t-if="o.employee_id.registration_number" t-field="o.employee_id.registration_number"/>
+                        <span t-else=""> - </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <!-- <span>HC</span> to be defined -->
+                        <span t-if="o.employee_id.classification" t-field="o.employee_id.classification"/>
+                        <span t-else=""> - </span>
+                    </div>
+                    <div class="col-4">
+                        <strong class="me-2">Index</strong>
+                    </div>
+                    <div class="col-4">
+                        <!-- <span>2378</span> to be defined -->
+                        <span t-if="o.employee_id.indice" t-field="o.employee_id.indice"/>
+                        <span t-else=""> - </span>
+                    </div>
+                </div>
+                <div>
+                    <span t-if="o.employee_id.children" t-field="o.employee_id.children"/>
+                    <span t-else="">0</span>
+                </div>
+            </td>
+        </xpath>
+
+        <xpath expr="//div[@id='infos_table']" position="after">
+            <table id="simple_separtor">
+                <tr>
+                    <td>
+                        <div id="separator"></div>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+
+        <xpath expr="//div[@id='worked_days_table']" position="replace">
+            <div id="separator"></div>
+        </xpath>
+
+        <xpath expr="//div[@id='payslip_lines_table']" position="replace">
+            <!-- Compute overtime -->
+            <t t-set="overtime_30" t-value="0"/>
+            <t t-set="overtime_40" t-value="0"/>
+            <t t-set="overtime_50" t-value="0"/>
+            <t t-set="overtime_70" t-value="0"/>
+            <t t-set="overtime_100" t-value="0"/>
+            <!-- <t t-set="worked_days_lines_overtime_30" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code in ('CASUALNIGHTWORKONREGULARDAY', 'DAYWORKONREGULARDAY'))"/>
+            <t t-set="worked_days_lines_overtime_40" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'DAYWORKONSUNDAY')"/>
+            <t t-set="worked_days_lines_overtime_50" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'OCCASIONALNIGHTWORKONWEEKENDS')"/>
+            <t t-set="worked_days_lines_overtime_70" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'NIGHTWORKONSUNDAY')"/>
+            <t t-set="worked_days_lines_overtime_100" t-value="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.code == 'WORKONPUBLICHOLIDAYS')"/>
+            <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount')) + (sum(worked_days_lines_overtime_30.mapped('amount')) * 0.3)"/>
+            <t t-set="overtime_40" t-value="sum(worked_days_lines_overtime_40.mapped('amount')) + (sum(worked_days_lines_overtime_40.mapped('amount')) * 0.4)"/>
+            <t t-set="overtime_50" t-value="sum(worked_days_lines_overtime_50.mapped('amount')) + (sum(worked_days_lines_overtime_50.mapped('amount')) * 0.5)"/>
+            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount')) + (sum(worked_days_lines_overtime_70.mapped('amount')) * 0.7)"/> -->
+
+            <t t-set="payslip_lines" t-value="o.line_ids.filtered(lambda line: line.appears_on_payslip)"/>
+
+            <t t-set="worked_days_lines_overtime_30" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('CASUALNIGHTWORKONREGULARDAY', 'HSUPP130'))"/>
+            <t t-set="worked_days_lines_overtime_40" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code == 'TDIM40')"/>
+            <t t-set="worked_days_lines_overtime_50" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code == 'OCCASIONALNIGHTWORKONWEEKENDS')"/>
+            <t t-set="worked_days_lines_overtime_70" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code == 'NIGHTWORKONSUNDAY')"/>
+            <t t-set="worked_days_lines_overtime_100" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code == 'HSUPP100')"/>
+            <t t-set="overtime_30" t-value="sum(worked_days_lines_overtime_30.mapped('amount'))"/>
+            <t t-set="overtime_40" t-value="sum(worked_days_lines_overtime_40.mapped('amount'))"/>
+            <t t-set="overtime_50" t-value="sum(worked_days_lines_overtime_50.mapped('amount'))"/>
+            <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount'))"/>
+            <t t-set="overtime_100" t-value="sum(worked_days_lines_overtime_100.mapped('amount'))"/>
+            <t t-set="gross_salary" t-value="overtime_30 + overtime_40 + overtime_50 + overtime_70 + overtime_100 + o.contract_id.wage"/>
+
+            <!-- Compute deduction -->
+            
+            <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02'))"/>
+            <t t-set="irsa" t-value="sum(payslip_lines_irsa.mapped('amount'))"/>
+
+            <t t-set="payslip_lines_cnaps" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('CNaPS - PS'))"/>
+            <t t-set="cnaps" t-value="sum(payslip_lines_cnaps.mapped('amount'))"/>
+
+            <t t-set="payslip_lines_amit" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('AMIT - PS'))"/>
+            <t t-set="amit" t-value="sum(payslip_lines_amit.mapped('amount'))"/>
+            
+            <t t-set="total_deduction" t-value="cnaps + amit + irsa"/>
+
+            <!-- Compute taxable salary -->
+            <t t-set="taxable_salary" t-value="gross_salary - total_deduction"/>
+
+            <!-- Compute Net salary -->
+            <t t-set="taxable_salary" t-value="gross_salary - total_deduction"/>
+
+            <!-- Compute family allowance -->
+            <t t-set="total_allowance" t-value="o.contract_id.family_allowance * o.employee_id.children if o.employee_id.children else 0"/>
+
+            <!-- Compute grand total -->
+            <t t-set="grand_total" t-value="taxable_salary + total_allowance"/>
+
+            <div class="row">
+                <div class="col-6">
+                    <table id="payslip_table" class="table table-sm">
+                        <tr>
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <span>Basic salary</span>
+                            </td>
+                            <td>
+                                <span t-if="o.contract_id.wage">
+                                    <t t-set="formatted_amount_wage" t-value="'{0:,.2f}'.format(o.contract_id.wage)"/>
+                                    <span t-out="formatted_amount_wage" />
+                                </span>
+                                <!-- <span t-if="o.contract_id.wage" t-field="o.contract_id.wage"/> -->
+                                <span t-else="">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 30%</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_overtime_30" t-value="'{0:,.2f}'.format(overtime_30)"/>
+                                <span t-out="formatted_amount_overtime_30" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 40%</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_overtime_40" t-value="'{0:,.2f}'.format(overtime_40)"/>
+                                <span t-out="formatted_amount_overtime_40" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 50%</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_overtime_50" t-value="'{0:,.2f}'.format(overtime_50)"/>
+                                <span t-out="formatted_amount_overtime_50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 70%</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_overtime_70" t-value="'{0:,.2f}'.format(overtime_70)"/>
+                                <span t-out="formatted_amount_overtime_70" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Overtime at 100%</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_overtime_100" t-value="'{0:,.2f}'.format(overtime_100)"/>
+                                <span t-out="formatted_amount_overtime_100" />
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style=" width: 70%;">
+                                <strong><span>Gross salary</span></strong>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_gross_salary" t-value="'{0:,.2f}'.format(gross_salary)"/>
+                                <span t-out="formatted_amount_gross_salary" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-6">
+                    <table id="deduction_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>Cnaps</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_cnaps" t-value="'{0:,.2f}'.format(cnaps)"/>
+                                <span t-out="formatted_amount_cnaps" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>AMIT</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_amit" t-value="'{0:,.2f}'.format(amit)"/>
+                                <span t-out="formatted_amount_amit" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <span>IRSA</span>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_irsa" t-value="'{0:,.2f}'.format(irsa)"/>
+                                <span t-out="formatted_amount_irsa" />
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <strong><span>Deduction total</span></strong>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_total_deduction" t-value="'{0:,.2f}'.format(total_deduction)"/>
+                                <span t-out="formatted_amount_total_deduction" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-9">
+                    <table id="taxable_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 70%;">
+                                <strong><span>Taxable salary</span></strong>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_taxable_salary" t-value="'{0:,.2f}'.format(taxable_salary)"/>
+                                <span t-out="formatted_amount_taxable_salary" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 70%;">
+                                <strong><span>Family allowance</span> <span t-if="o.contract_id.family_allowance" t-field="o.contract_id.family_allowance"/><span t-else="">,,,,,,,,,,</span><span>/Child(Cnaps)  Net salary</span></strong>
+                            </td>
+                            <td>
+                                <t t-set="formatted_total_allowance" t-value="'{0:,.2f}'.format(total_allowance)"/>
+                                <span t-out="formatted_total_allowance" />
+                            </td>
+                        </tr>
+                        <tr style="border: 2px solid #000000;">
+                            <td style="text-transform: uppercase; width: 70%;">
+                                <strong><span>Grand total</span></strong>
+                            </td>
+                            <td>
+                                <t t-set="formatted_amount_grand_total" t-value="'{0:,.2f}'.format(grand_total)"/>
+                                <span t-out="formatted_amount_grand_total" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-3" />
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-12">
+                    <table id="letter_amount_table" class="table table-sm">
+                        <tr>
+                            <td style=" width: 30%;">
+                                <span>Amount in letter</span>
+                            </td>
+                            <td>
+                                <span t-out="o.company_id.currency_id.amount_to_text(grand_total)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">
+                                <span>Received on</span>
+                            </td>
+                            <td>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y')"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="separator"></div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <strong>Employer</strong>
+                    </div>
+                </div>
+                <div class="col-6"/>
+                <div class="col-3">
+                    <div>
+                        <strong>Employee</strong>
+                    </div>
+                </div>
+            </div>
+            
+        </xpath>
+
+        <xpath expr="//div[@id='to_pay']" position="replace">
+            
+        </xpath>
+
+    </template>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="priority">140</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="classification" />
+                <field name="indice" />
+                <field name="overtime_with_datetimes_ids" invisible="1" />
+                <field name="overtime_with_datatimes_hours_count" invisible="1" />
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_overtime_with_datatimes"
+                    class="oe_stat_button"
+                    icon="fa-history"
+                    type="object"
+                    invisible="overtime_with_datatimes_hours_count == 0.0">
+                    <div class="o_stat_info">
+                        <span class="o_stat_value text-success">
+                            <field name="overtime_with_datatimes_hours_count" widget="float_time"/>
+                        </span>
+                        <span class="o_stat_text">Overtime</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_form_inherit_hr_attendance_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.extend</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_attendance.view_employee_form_inherit_hr_attendance"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_last_month_overtime']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

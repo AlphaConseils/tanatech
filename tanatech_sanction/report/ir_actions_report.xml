@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_warning" model="ir.actions.report">
+       <field name="name">Warning Report</field>
+       <field name="model">sanction.sanction</field>
+       <field name="report_type">qweb-pdf</field>
+       <field name="report_name">tanatech_sanction.report_warning</field>
+       <field name="report_file">tanatech_sanction.report_warning</field>
+       <field name="print_report_name">'Warning - %s' % (object.name)</field>
+       <field name="binding_model_id" eval="False"/>
+       <field name="binding_type">report</field>
+   </record>
+   <record id="action_report_epl" model="ir.actions.report">
+       <field name="name">Epl Report</field>
+       <field name="model">sanction.sanction</field>
+       <field name="report_type">qweb-pdf</field>
+       <field name="report_name">tanatech_sanction.report_epl</field>
+       <field name="report_file">tanatech_sanction.report_epl</field>
+       <field name="print_report_name">'EPL - %s' % (object.name)</field>
+       <field name="binding_model_id" eval="False"/>
+       <field name="binding_type">report</field>
+   </record>
+   <record id="action_lay_off_report" model="ir.actions.report">
+       <field name="name">Lay off Report</field>
+       <field name="model">sanction.sanction</field>
+       <field name="report_type">qweb-pdf</field>
+       <field name="report_name">tanatech_sanction.report_lay_off</field>
+       <field name="report_file">tanatech_sanction.report_lay_off</field>
+       <field name="print_report_name">'Lay Off - %s' % (object.name)</field>
+       <field name="binding_model_id" eval="False"/>
+       <field name="binding_type">report</field>
+   </record>
+
+</odoo>

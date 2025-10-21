@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sanction_employee_public_inherit_view_form" model="ir.ui.view">
+        <field name="name">sanction.employee.public.view.form.inherit</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='public']" position="after">
+                <page name="sanctions" string="Sanctions" invisible="not employee_id or not sanction_ids">
+                    <div class="row mw-100 mt-3">
+                        <field name="sanction_ids" mode="list" readonly="1">
+                            <list editable="bottom">
+                                <field name="color" optional="hide"/>
+                                <field name="state" optional="hide"/>
+                                <field name="employee_id" widget="many2one_avatar_employee"/>
+                                <field name="precursor_fact" decoration-bf="1"/>
+                                <field name="sanction_type_id" widget="badge" 
+                                    decoration-info="color == 4" 
+                                    decoration-warning="color == 3"
+                                    decoration-primary="color == 2"
+                                    decoration-danger="color == 1"/>
+                                <field name="corrective_measure_id" decoration-bf="1"/>
+                                <field name="state" widget="badge" 
+                                    decoration-muted="state == 'draft'" 
+                                    decoration-info="state == 'request_explanation'" 
+                                    decoration-warning="state == 'in_progress'" 
+                                    decoration-success="state == 'validate'"/>
+                            </list>
+                        </field>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
