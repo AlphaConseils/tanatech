@@ -105,3 +105,9 @@ class Home(WebHome):
         response = request.render("website.login_layout", values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+        
+
+class ConditionController(http.Controller):
+    @http.route('/conditions', type='http', auth='public', website=True)
+    def terms_conditions(self, **kw):
+        return request.render('tanatech_website.condition_template', {})
