@@ -9,7 +9,7 @@
     ],
     "data": [
         "data/generate_primary_template.xml",
-        # "views/layout.xml",
+        "views/layout.xml",
         "views/snippets.xml",
     ],
     "assets": {
