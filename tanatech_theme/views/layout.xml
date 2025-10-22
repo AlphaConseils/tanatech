@@ -1,6 +1,6 @@
 <odoo>
     <template id="template_header_green" inherit_id="website.layout" name="Green Shop Custom Header" active="True">
-        <xpath expr="//header//nav" position="replace">
+        <xpath expr="//header" position="replace">
             <t t-call="website.navbar">
                 <t t-set="_navbar_classes" t-valuef="d-none d-lg-block shadow-sm"/>
                 <div class="container-fluid d-flex justify-content-between align-items-center py-3">
