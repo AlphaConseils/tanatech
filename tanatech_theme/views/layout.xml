@@ -84,14 +84,14 @@
                         <div class="row">
                             <!-- Section Newsletter -->
                             <div class="col-md-5 mb-4">
-                                <h5>Inscrivez-vous à notre newsletter pour rester informé des fonctionnalités et des nouveautés.</h5>
+                                <h5>Sign up for our newsletter to stay informed about features and news.</h5>
                                 <form class="d-flex mt-3">
                                     <input type="email" class="form-control me-2 rounded" placeholder="Entrez votre adresse e-mail"/>
                                     <button type="submit" class="btn btn-warning text-white rounded">S'abonner</button>
                                 </form>
                                 <p class="mt-2 small">
-              En vous abonnant, vous acceptez notre
-                                    <a href="/privacy" class="text-white text-underline">Politique de Confidentialité</a> et donnez votre consentement pour recevoir des mises à jour de notre entreprise.
+              By subscribing, you agree to our
+                                    <a href="/privacy" class="text-white text-underline">Privacy Policy</a> and give your consent to receive updates from our company.
                                 </p>
                             </div>
                             <div class="col-md-1 mb-4">
@@ -99,44 +99,44 @@
 
                             <!-- Colonne 1 : Panneaux Solaires -->
                             <div class="col-md-2 mb-4">
-                                <h6 class="fw-bold">Panneaux Solaires</h6>
+                                <h6 class="fw-bold">Solar Panels</h6>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="#" class="text-white">Batteries Solaire</a>
+                                        <a href="#" class="text-white">Solar Batteries</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Accessoires Solaire</a>
+                                        <a href="#" class="text-white">Solar Accessories</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Outils de Montage</a>
+                                        <a href="#" class="text-white">Assembly Tools</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Systèmes de Stockage</a>
+                                        <a href="#" class="text-white">Storage Systems</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Équipements de Sécurité</a>
+                                        <a href="#" class="text-white">Safety Equipment</a>
                                     </li>
                                 </ul>
                             </div>
 
                             <!-- Colonne 2 : Produits -->
                             <div class="col-md-2 mb-4">
-                                <h6 class="fw-bold">Colonne Produits</h6>
+                                <h6 class="fw-bold">Products Column</h6>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="#" class="text-white">Promotions Actuelles</a>
+                                        <a href="#" class="text-white">Current Promotions</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Nouveautés</a>
+                                        <a href="#" class="text-white">New products</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Meilleures Ventes</a>
+                                        <a href="#" class="text-white">Best Sellers</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Avis Clients</a>
+                                        <a href="#" class="text-white">Customer Reviews</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">Contactez-Nous</a>
+                                        <a href="#" class="text-white">Contact Us</a>
                                     </li>
                                 </ul>
                             </div>
@@ -169,26 +169,26 @@
                     <div class="row">
 <!-- <div class="d-flex justify-content-between mt-4 flex-column flex-md-row text-white-50 small col-md-4 mb-4"> -->
                         <div class="col-md-5 mb-4">
-                                © 2024 <a href="/" class="text-white text-decoration-underline">Tanatech</a>. Tous droits réservés.
+                                © 2024 <a href="/" class="text-white text-decoration-underline">Tanatech</a>. All rights reserved.
                         </div>
                         <div class="col-md-1 mb-4">
                         </div>
                         <div class="col-md-2 mb-4 ml-6">
-                            <a href="/privacy" class="me-3 text-white text-decoration-underline">Politique de Confidentialité</a>
+                            <a href="/privacy" class="me-3 text-white text-decoration-underline">Privacy Policy</a>
                             <!-- <a href="/terms" class="me-3 text-white text-decoration-underline">Conditions d'Utilisation</a>
                             <a href="/cookies" class="text-white text-decoration-underline">Paramètres des Cookies</a> -->
                         </div>
 <!-- </div> -->
                         <div class="col-md-2 mb-4 ">
                             <!-- <a href="/privacy" class="me-3 text-white text-decoration-underline">Politique de Confidentialité</a> -->
-                            <a href="/terms" class="me-3 text-white text-decoration-underline">Conditions d'Utilisation</a>
+                            <a href="/terms" class="me-3 text-white text-decoration-underline">Terms of Use</a>
                             <!-- <a href="/cookies" class="text-white text-decoration-underline">Paramètres des Cookies</a> -->
                         </div>
 
                         <div class="col-md-2 mb-4">
                             <!-- <a href="/privacy" class="me-3 text-white text-decoration-underline">Politique de Confidentialité</a> -->
                             <!-- <a href="/terms" class="me-3 text-white text-decoration-underline">Conditions d'Utilisation</a> -->
-                            <a href="/cookies" class="text-o-color-4 text-decoration-underline">Paramètres des Cookies</a>
+                            <a href="/cookies" class="text-o-color-4 text-decoration-underline">Cookie Settings</a>
                         </div>
                     </div>
                 </div>

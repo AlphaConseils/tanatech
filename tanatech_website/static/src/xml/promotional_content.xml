@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="tanatech_website.promotional_snippet">
+        <section class="promotions_section my-5">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold">Our promotional offers</h2>
+                        <p class="text-muted">Discover our discounted solar kits</p>
+                    </div>
+                    <a href="/shop" class="btn btn-primary">See all</a>
+                </div>
+
+                <!-- Swiper Container -->
+                <div class="swiper promotions-carousel">
+                    <div class="swiper-wrapper">
+                        <t t-foreach="result.products" t-as="product" t-key="product.id">
+                            <div class="swiper-slide">
+                                <div class="card h-100 shadow-sm rounded-4">
+                                    <img t-att-src="product.image_url" class="card-img-top" />
+                                    <div class="card-body text-center">
+                                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
+                                        <div class="ratio ratio-1x1">
+                                            <t t-if="product.image_1920">
+                                                <img t-att-src="'data:image/png;base64,' + product.image_1920" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" />
+                                            </t>
+                                            <t t-else="">
+                                                <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" alt="Image par défaut" />
+                                            </t>
+                                        </div>
+
+                                        <h6 class="fw-bold product-title text-truncate">
+                                            <t t-esc="product.name"/>
+                                        </h6>
+                                        <!-- <p class="text-muted">Variante</p> -->
+                                        <p>
+                                            <del class="text-muted">3529000 Ar</del>
+                                            <strong class="ms-2 text-dark">3000000 Ar</strong>
+                                        </p>
+                                        <button class="btn btn-primary">Add to cart</button>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-warning">−</button>
+                                            <input type="text" value="1" class="text-center" style="width: 40px;" />
+                                            <button class="btn btn-warning">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="swiper-bottom-controls">
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-navigation-buttons">
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+    </t>
+</templates>

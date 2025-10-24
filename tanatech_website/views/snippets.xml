@@ -1,0 +1,64 @@
+<odoo>
+
+    <template id="home_slide_template_green_shop" name="Home slide GreenShop">
+        <section class="home_slide_section">
+            <div class="container">
+                <div class="alert alert-info">
+                    <h2 class="">Home slide</h2>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="category_template_green_shop" name="Category GreenShop">
+        <section class="categories_section">
+            <div class="container">
+                <div class="alert alert-info">
+                    <h2 class="">Categories</h2>
+                    <h4>Discover our selection of reliable solar solutions.</h4>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="new_products" name="New products GreenShop">
+        <section class="new_products_section">
+            <div class="container">
+                <div class="alert alert-warning">
+                    <h2 class="">Our new products</h2>
+                    <h4>Discover our current products.</h4>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="promotional_products" name="Promotional GreenShop">
+        <section class="promotions_section">
+            <div class="container">
+                <div class="alert alert-warning">
+                    <h2 class="">Our Promotional products</h2>
+                    <h4>Discover our promotional products.</h4>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+    <template id="snippet_greenshop_groups" name="GreenShop Snippets">
+        <t t-call="website.snippet_group">
+            <t t-set="name">GreenShop</t>            
+            <t t-set="category">green_shop</t>           
+        </t>
+    </template>
+
+
+    <template id="greenshop_snippet" inherit_id="website.snippets" name="GreenShop Snippet">
+        <xpath expr="//snippets[@id='snippet_groups']" position="inside">
+            <t t-snippet="tanatech_website.home_slide_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
+            <t t-snippet="tanatech_website.category_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
+            <t t-snippet="tanatech_website.new_products" t-thumbnail="" t-snippet-category="green_shop"/>
+            <t t-snippet="tanatech_website.promotional_products" t-thumbnail="" t-snippet-category="green_shop"/>
+        </xpath>
+    </template>
+
+
+</odoo>
