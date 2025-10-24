@@ -18,7 +18,7 @@
     "assets": {
         "web.assets_frontend": [
             # "tanatech_website/static/src/scss/web_loging.scss",
-            "tanatech_website/static/lib/**/*",
+            "tanatech_website/static/lib/*",
             "tanatech_website/static/src/**/*",
         ],
     },
