@@ -15,10 +15,12 @@
         "views/res_config_settings_views.xml",
         "views/snippets.xml",
         "views/condition_template.xml",
+        "views/homepage_template.xml",
     ],
     "assets": {
         "web.assets_frontend": [
             # "tanatech_website/static/src/scss/web_loging.scss",
+            "tanatech_website/static/src/libs/fontawesome/css/all.min.css",
             "tanatech_website/static/lib/**/*",
             "tanatech_website/static/src/**/*",
         ],

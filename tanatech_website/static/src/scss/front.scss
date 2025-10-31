@@ -13,3 +13,43 @@
     border: solide 1px;
     border-color: #3b3b3b;
 }
+
+.slide {
+  max-height: 600px;
+  height: 550px;
+}
+
+.titre {
+  margin-top: 20%;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;               /* taille horizontale */
+  height: 10px;              /* taille verticale */
+  border-radius: 50%;        /* rend le bouton rond */
+  background-color: #7a7a7a;    /* couleur du point (blanc ici) */
+  opacity: 0.5;              /* légèrement transparent */
+  transition: all 0.3s ease; /* animation douce */
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+  background-color: #ffffff; /* couleur active (bleu Bootstrap) */
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-color: #96BC1F;
+}
+
+.pub {
+  background-color: #F5F5F5;
+  width: 360px;
+}
