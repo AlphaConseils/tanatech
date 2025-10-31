@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="tanatech_slide_template" name="Tanatech homepage" inherit_id="website.homepage">
+        <div id="wrap" position="inside">
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="carouselExampleIndicators" class="carousel slide p-0" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="0" class="active" aria-current="true"
+                                    aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner slide">
+                                <div class="carousel-item active text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image1.jpeg'); background-size: cover;  background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="titre p-5" style="">
+                                                    <p class="lh-1" style="font-size: 75px;">Le premier concept store solaire à Madagascar</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                    elit. Nobis corporis quaerat, tempore assumenda cum
+                                                    eius quibusdam. Illo reiciendis saepe in quibusdam
+                                                    corporis! Voluptatem, laborum quod laboriosam cum
+                                                    iure nisi est officia soluta blanditiis at sapiente
+                                                    expedita repellendus quasi quas impedit, 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image2.jpeg'); background-size: cover;  background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="titre p-5" style="">
+                                                    <p class="lh-1" style="font-size: 75px;">Le premier concept store solaire à Madagascar</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                    elit. Nobis corporis quaerat, tempore assumenda cum
+                                                    eius quibusdam. Illo reiciendis saepe in quibusdam
+                                                    corporis! Voluptatem, laborum quod laboriosam cum
+                                                    iure nisi est officia soluta blanditiis at sapiente
+                                                    expedita repellendus quasi quas impedit, 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image3.jpeg'); background-size: cover;  background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="titre p-5" style="">
+                                                    <p class="lh-1" style="font-size: 75px;">Le premier concept store solaire à Madagascar</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                    elit. Nobis corporis quaerat, tempore assumenda cum
+                                                    eius quibusdam. Illo reiciendis saepe in quibusdam
+                                                    corporis! Voluptatem, laborum quod laboriosam cum
+                                                    iure nisi est officia soluta blanditiis at sapiente
+                                                    expedita repellendus quasi quas impedit, 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
+                                </div>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-arrow-right" style="color: #000000;"></i>
+                                </div>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container-fluid p-3 my-5">
+                    <div class="row">
+                        <div class="d-flex justify-content-evenly align-items-center px-5" style="">
+                           <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
+                                <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
+                                    <i class="fa-solid fa-sun " style="color: #ffffff;"></i>
+                                </div>
+                                <span class="ms-3 fs-4 fw-light">Who is GreenShop</span>
+                           </div>
+                           <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
+                                <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
+                                    <i class="fa-solid fa-box" style="color: #ffffff;"></i>
+                                </div>
+                                <span class="ms-3 fs-4 fw-light">Home deliverye</span>
+                           </div>
+                           <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
+                                <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
+                                    <i class="fa-solid fa-basket-shopping" style="color: #ffffff;"></i>
+                                </div>
+                                <span class="ms-3 fs-4 fw-light">Authentic products</span>
+                           </div>
+                           <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
+                                <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
+                                    <i class="fa-solid fa-shield" style="color: #ffffff;"></i>
+                                </div>
+                                <span class="ms-3 fs-4 fw-light">Guarantee</span>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </template>
+</odoo>
