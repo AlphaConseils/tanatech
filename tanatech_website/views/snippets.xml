@@ -57,8 +57,12 @@
             <t t-snippet="tanatech_website.category_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.new_products" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.promotional_products" t-thumbnail="" t-snippet-category="green_shop"/>
+            <t t-snippet="tanatech_website.tanatech_slide_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+            <t t-snippet="tanatech_website.tanatech_publicity_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
         </xpath>
     </template>
+
+   
 
 
 </odoo>
