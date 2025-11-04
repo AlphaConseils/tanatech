@@ -69,4 +69,53 @@
 
 .price {
   font-family: raleway-variable, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.faqs {
+    width: 50%;
+    height: 55px;
+    background-color: #f1f1f1;
+}
+
+.bg-cream {
+    background-color: #fffaf2;
+}
+
+.tanatech-help-section .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tanatech-help-section .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.hero{
+  height: 900px;
+}
+
+.discuss {
+    background-color: #ffffff36;
+    border: none;
+}
+
+.legend{
+  // padding-left: 15%;
+  // padding-right: 15%;
+  width: 600px;
+}
+
+.para{
+  font-size: 18px;
+}
+
+.figure{
+  width: 600px;
+  height: 640px;
+}
+
+.figure-img{
+  
 }

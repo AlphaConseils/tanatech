@@ -73,6 +73,7 @@
                 <div class="col-md-6 d-none d-md-block p-0 background">
                 </div>
             </div>
+            <t t-call="tanatech_website.page_below_template"/>
         </xpath>
     </template>
 
@@ -129,6 +130,187 @@
                 </div>
             </div>
         </xpath>
+    </template>
+
+    <template id="page_below_template" name="Page en dessous du login/signup">
+        <section class="hero text-center align-items-center d-flex flex-column justify-content-center text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/tanatech_website/static/src/img/hero.jpg'); background-size: cover;  background-position: center;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12" style="padding-left: 300px; padding-right: 300px;">
+                        <h1 style="font-size: 100px;">Le premier concept <br/>store solaire à <br/>Madagascar</h1>
+                        <p class="lead">Découvrez des produits fiables et un accompagnement humain. Green Shop vous <br/>offre des solutions solaires adaptées à vos besoins.</p>
+                        <div class="btn">
+                            <buton class="btn btn-primary me-3 text-white"><a>Acheter</a></buton>
+                            <buton class="btn discuss text-white"><a>Discuter</a></buton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-image-portrait"></i></p>
+                            <h1>Log in or create your account to take advantage of our services.</h1>
+                            <p class="para">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/placeholder.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/space.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-6">Historique</p>
+                            <h1>Your past orders at your fingertips</h1>
+                            <p class="para">Consultez facilement l'historique de vos commandes. Suivez chaque étape de votre achat.</p>
+                            <div class="row d-flex align-items-center justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-calendar-week"></i></p>
+                                        <h5>Log in or create your account to take advantage of our services.</h5>
+                                        <p class="">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-magnifying-glass"></i></p>
+                                        <h5>Log in or create your account to take advantage of our services.</h5>
+                                        <p class="">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <buton class="btn btn-warning"><a>Voir</a></buton>
+                                <buton class="btn discuss"><a>Détails <b>></b> </a></buton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <h1>Suivez l'avancement de votre commande en toute simplicité.</h1>
+                            <p class="para">Suivez l'avancement de votre commande en toute simplicité.</p>
+                            <div class="row d-flex  justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-bag-shopping"></i></p>
+                                        <h5>Étapes de livraison</h5>
+                                        <p class="">Préparation, expédition, livraison en cours, et enfin, votre commande est livrée.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-bag-shopping"></i></p>
+                                        <h5>Suivi commande</h5>
+                                        <p class="">Cliquez ci-dessous pour suivre votre commande en temps réel.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/sea.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/maj.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-arrows-rotate"></i></p>
+                            <h1>Mettez à jour vos informations personnelles</h1>
+                            <p class="para">Nous vous invitons à vérifier et à mettre à jour vos informations personnelles pour garantir un service optimal. Cela nous aide à mieux vous servir et à vous tenir informé.</p>
+                            <div class="">
+                                <buton class="btn btn-warning"><a>Enregistrer</a></buton>
+                                <buton class="btn discuss"><a>Modifier <b>></b> </a></buton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-gears"></i></p>
+                            <h1>Sécurisez votre compte et personnalisez vos préférences de communication.</h1>
+                            <p class="para">Changez votre mot de passe facilement pour garantir la sécurité de votre compte. Gérez vos préférences de communication pour recevoir uniquement les informations qui vous intéressent.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/sun.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <h1>Découvrez nos produits solaires</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="w-100">Explorez notre gamme de solutions solaires conçues pour répondre à vos besoins. N'hésitez pas à nous contacter pour toute question ou assistance.</p>
+                        <div class="">
+                            <buton class="btn btn-primary me-3 text-white"><a>Voir les produits</a></buton>
+                            <buton class="btn btn-warning text-white"><a>Contacter-nous</a></buton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </template>
 
 </odoo>

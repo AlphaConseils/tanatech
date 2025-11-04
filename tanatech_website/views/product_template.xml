@@ -18,11 +18,11 @@
         </xpath>
 
         <xpath expr="//span[hasclass('h6') and hasclass('mb-0') and hasclass('fw-bolder')]" position="before">
-           <span class="fw-light">Variante</span>
+           <span class="fw-normal">Variante</span>
         </xpath>
 
         <xpath expr="//div[@class='product_price']" position="attributes">
-           <attribute name="class" add="w-100 d-flex justify-content-between" separator=" " />
+           <attribute name="class" add="w-100 d-flex justify-content-between align-items-center" separator=" " />
         </xpath>
     </template>
 

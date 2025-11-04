@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="contactus_template" name="contact us Tanatech" inherit_id="website.contactus">
+        <xpath expr="//section[contains(@class, 's_title')]" position="replace">
+            <section class="s_tanatech_faqs py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center mb-4">
+                            <section class="s_tanatech_faqs py-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 text-center mb-4">
+                                            <h2>FAQs</h2>
+                                            <p class="mt-2">Do you have any questions? Here are the
+                                                answers to the
+                                                most frequently asked questions.</p>
+                                            <form class="d-flex justify-content-center mt-4"
+                                                role="search">
+                                                <input type="text" class="form-control faqs"
+                                                    placeholder="Search for answers..."></input>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tanatech-help-section py-5">
+                                    <div class="container">
+                                        <div class="row g-4 justify-content-center">
+                                            <!-- Adhésion -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fas fa-tag"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">Membership</h5>
+                                                    <p class="fw-light">Discover the exclusive benefits and special offers reserved for members. Learn how to get your membership card.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Paiements -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fa-regular fa-credit-card"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">Payments</h5>
+                                                    <p class="fw-light">Besoin d'aide pour un
+                                                        paiement ?Need help with a payment?
+                                                        We explain the secure payment solutions and
+                                                        options available at Tanatech.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Achats -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fa-solid fa-cart-shopping"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">Purchases</h5>
+                                                    <p class="fw-light">Browse our buying guide
+                                                        to find the products
+                                                        best suited to your technology needs.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Mon compte -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fa-regular fa-user"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">My account</h5>
+                                                    <p class="fw-light">Easily manage your
+                                                        Tanatech account. Modify your
+                                                        preferences, update your information, and
+                                                        personalize your
+                                                        experience.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Livraison & Retours -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fa-solid fa-box"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">Delivery &amp; Returns</h5>
+                                                    <p class="fw-light">See our delivery and return policy. Discover the delivery times, costs, and countries covered by our services.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Magasins -->
+                                            <div class="col-md-4">
+                                                <div
+                                                    class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                    <div class="fs-3 mb-3">
+                                                        <i class="fa-solid fa-shop"></i>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2">Stores</h5>
+                                                    <p class="fw-light">Find the Tanatech store.
+                                                        Check opening hours and
+                                                        take advantage of exclusive in-store offers.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+
+    <template id="faqs_section" name="FAQs Section">
+        <section class="s_tanatech_faqs py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-4">
+                        <section class="s_tanatech_faqs py-5">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 text-center mb-4">
+                                        <h2>FAQs</h2>
+                                        <p class="mt-2">Do you have any questions? Here are the
+                                            answers to the
+                                            most frequently asked questions.</p>
+                                        <form class="d-flex justify-content-center mt-4"
+                                            role="search">
+                                            <input type="text" class="form-control faqs"
+                                                placeholder="Search for answers..."></input>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tanatech-help-section py-5">
+                                <div class="container">
+                                    <div class="row g-4 justify-content-center">
+                                        <!-- Adhésion -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fas fa-tag"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Adhésion</h5>
+                                                <p class="fw-light">Découvrez les avantages
+                                                    exclusifs et les offres spéciales
+                                                    réservés aux membres. Apprenez comment obtenir
+                                                    votre carte
+                                                    de membre.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Paiements -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fa-regular fa-credit-card"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Paiements</h5>
+                                                <p class="fw-light">Besoin d'aide pour un paiement ?
+                                                    Nous vous expliquons les
+                                                    solutions de paiement sécurisées et les options
+                                                    disponibles
+                                                    chez Tanatech.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Achats -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Achats</h5>
+                                                <p class="fw-light">Parcourez notre guide d'achat
+                                                    pour trouver les produits les
+                                                    mieux adaptés à vos besoins technologiques.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mon compte -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fa-regular fa-user"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Mon compte</h5>
+                                                <p class="fw-light">Gérez facilement votre compte
+                                                    Tanatech. Modifiez vos
+                                                    préférences, mettez à jour vos infos et
+                                                    personnalisez votre
+                                                    expérience.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Livraison & Retours -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fa-solid fa-box"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Livraison &amp; Retours</h5>
+                                                <p class="fw-light">Consultez nos modalités de
+                                                    livraison et de retour. Découvrez
+                                                    les délais, les coûts et les pays couverts par
+                                                    nos services.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Magasins -->
+                                        <div class="col-md-4">
+                                            <div
+                                                class="card h-100 text-center p-4 border-0 shadow-sm bg-cream rounded-4">
+                                                <div class="fs-3 mb-3">
+                                                    <i class="fa-solid fa-shop"></i>
+                                                </div>
+                                                <h5 class="fw-bold mb-2">Magasins</h5>
+                                                <p class="fw-light">Trouvez le magasin Tanatech.
+                                                    Consultez les horaires et
+                                                    bénéficiez d'offres exclusives en boutique.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </template>
+</odoo>
