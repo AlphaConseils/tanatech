@@ -143,12 +143,115 @@
   padding-left: 5px;
 }
 
+.new-product-carousel {
+    position: relative;
+    padding-bottom: 40px; /* espace en bas pour navigation */
+}
+
+.new-product-carousel .owl-nav {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 5px;
+}
+
+.new-product-carousel .owl-nav button.owl-prev,
+.new-product-carousel .owl-nav button.owl-next {
+    background: #f1f1f1;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.new-product-carousel .owl-nav button:hover {
+    background: #ddd;
+}
+
+.new-product-carousel {
+    position: relative; /* pour que .owl-nav soit positionné correctement */
+}
+
+/* Centrer les dots à gauche */
+.new-product-carousel .owl-dots {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+}
 
 
 
+.swiper-bottom-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  padding: 0 10px;
+}
 
+.swiper-pagination {
+  position: relative !important;
+  display: flex;
+  justify-content: flex-start;
+}
 
+.swiper-navigation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px; /* espace entre les deux boutons */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
 
+.swiper-button-prev,
+.swiper-button-next {
+  position: relative !important;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  color: #000;
+}
 
+@media (max-width: 768px) {
+    .swiper-slide {
+        max-width: 90%;
+    }
+
+    .swiper-bottom-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .swiper-navigation-buttons {
+        justify-content: center;
+    }
+}
+
+.product-title {
+    max-width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 

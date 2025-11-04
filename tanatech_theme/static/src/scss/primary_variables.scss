@@ -217,3 +217,7 @@ $o-website-values-palettes: (
             border-radius: 0px;
         }
 
+.input-group.footer-newsletter {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

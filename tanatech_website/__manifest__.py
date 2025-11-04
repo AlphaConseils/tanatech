@@ -6,17 +6,23 @@
     "author": "A.Maximilien",
     "depends": ["base", "website_sale", "auth_oauth"],
     "data": [
-        "views/assistance.xml",
         "data/website_page.xml",
+        "security/ir.model.access.csv",
+        "views/website_slider_image_views.xml",
+        "views/assistance.xml",
+        "views/website_form_views.xml",
         "views/login.xml",
         "views/res_config_settings_views.xml",
+        "views/snippets.xml",
         "views/condition_template.xml",
     ],
     "assets": {
         "web.assets_frontend": [
             # "tanatech_website/static/src/scss/web_loging.scss",
+            "tanatech_website/static/lib/**/*",
             "tanatech_website/static/src/**/*",
         ],
     },
     "license": "LGPL-3",
+    "installable": True,
 }
