@@ -89,11 +89,11 @@
         <field name="is_published">True</field>
     </record>
 
-    <!-- Menu dans la barre principale -->
+    <!-- Menu dans la barre principale 
     <record id="menu_condition" model="website.menu">
-        <field name="name">Termes et conditions</field>
+        <field name="name">Termes et conditionaaaas</field>
         <field name="page_id" ref="tanatech_website.condition_page"/>
         <field name="parent_id" ref="website.main_menu"/>
         <field name="sequence">70</field>
-    </record>
+    </record>-->
 </odoo>

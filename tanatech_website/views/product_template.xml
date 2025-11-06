@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     
+<<<<<<< HEAD
     <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
         <xpath expr="//form" position="attributes">
            <attribute name="class" add="p-2 bg-product" separator=" " />
@@ -25,5 +26,133 @@
            <attribute name="class" add="w-100 d-flex justify-content-between align-items-center" separator=" " />
         </xpath>
     </template>
+=======
+   <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
+      <xpath expr="//form" position="attributes">
+         <attribute name="class" add="p-2 bg-product" separator=" " />
+      </xpath>
+      <xpath expr="//span[@t-field='image_holder.image_1920']" position="attributes">
+         <attribute name="t-options">{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
+      </xpath>
+
+      <xpath expr="//h6" position="attributes">
+         <attribute name="class" add="fw-bolder" separator=" " />
+      </xpath>
+
+      <xpath expr="//span[hasclass('h6') and hasclass('mb-0')][1]" position="attributes">
+         <attribute name="class" add="fw-bolder price" separator=" " />
+      </xpath>
+
+      <xpath expr="//span[hasclass('h6') and hasclass('mb-0') and hasclass('fw-bolder')]" position="before">
+         <span class="fw-normal">Variante</span>
+      </xpath>
+
+      <xpath expr="//div[@class='product_price']" position="attributes">
+         <attribute name="class" add="w-100 d-flex justify-content-between align-items-center" separator=" " />
+      </xpath>
+
+   </template>
+
+   <template id="similar_protduct_template" name="Produit similaire" inherit_id="website_sale.alternative_products">
+      <xpath expr="//div[hasclass('css_non_editable_mode_hidden')]" position="before">
+         <h1 class="my-5">Similar products</h1>
+      </xpath>
+
+   </template>
+
+   <template id="similar_product_theme_template" name="Similar Product Theme" inherit_id="website_sale.dynamic_filter_template_product_product_borderless_1">
+      <xpath expr="//div[1]" position="replace">
+         <div class="o_carousel_product_card w-100 card border-0 bg-product">
+            <div t-if="is_sample" class="h5 o_ribbon_right bg-primary text-uppercase">Sample</div>
+            <input type="hidden" name="product-id" t-att-data-product-id="record.id"/>
+            <a class="o_carousel_product_img_link o_dynamic_product_hovered stretched-link p-3" t-att-href="record.website_url">
+               <div class="overflow-hidden rounded">
+                     <img class="card-img-top o_img_product_square o_img_product_cover h-auto" loading="lazy" t-att-src="data['image_512']" t-att-alt="record.display_name"/>
+               </div>
+            </a>
+            <div class="o_carousel_product_card_body d-flex flex-wrap flex-column justify-content-between h-100 p-3">
+               <div class="h6 card-title" t-field="record.display_name"/>
+               <div>
+                     <t t-if="is_view_active('website_sale.product_comment')" t-call="portal_rating.rating_widget_stars_static">
+                        <t t-set="rating_avg" t-value="record.rating_avg"/>
+                        <t t-set="rating_count" t-value="record.rating_count"/>
+                     </t>
+                     <div class="mt-2 text-end">
+                        <t t-call="website_sale.price_dynamic_filter_template_product_product"/>
+                     </div>
+               </div>
+            </div>
+         </div>
+      </xpath>
+   </template>
+
+   <template id="tanatech_product_template" name="Produit Tanatech" inherit_id="website_sale.product">
+      <xpath expr="//h1" position="replace"></xpath>
+      <xpath expr="//t/t/div/section/div[2]/div[2]/t[2]" position="replace"></xpath>
+      <xpath expr="//t/t/div/section/div[2]/div[2]/div[1]" position="replace"></xpath>
+      <xpath expr="//t/t/div/section/div[2]/div[2]/form/div/div[1]/t[1]" position="replace">
+         <div class="d-flex justify-content-between align-items-start">
+            <h1 itemprop="name" t-field="product.name" class="mt-2">Product Name</h1>
+            <t t-call="website_sale.product_price"/>
+         </div>
+         <t t-if="is_view_active('website_sale.product_comment')">
+            <a href="#o_product_page_reviews" class="o_product_page_reviews_link text-decoration-none">
+               <t t-call="portal_rating.rating_widget_stars_static">
+                     <t t-set="rating_avg" t-value="product.rating_avg"/>
+                     <t t-set="trans_text_plural">%s reviews</t>
+                     <t t-set="trans_text_singular">%s review</t>
+                     <t t-set="rating_count" t-value="(trans_text_plural if product.rating_count &gt; 1 else trans_text_singular) % product.rating_count"/>
+               </t>
+            </a>
+         </t>
+         <div t-field="product.description_ecommerce" class="oe_structure my-3" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+      </xpath>
+      
+      <xpath expr="//t[@t-call='website_sale.product_accordion']" position="after">
+         <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#flush-collapseOne" aria-expanded="false"
+                     aria-controls="flush-collapseOne">
+                     Details
+                  </button>
+               </h2>
+               <div id="flush-collapseOne" class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div>
+               </div>
+            </div>
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                     aria-controls="flush-collapseTwo">
+                     Shipping
+                  </button>
+               </h2>
+               <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div> 
+               </div>
+            </div>
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#flush-collapseThree" aria-expanded="false"
+                     aria-controls="flush-collapseThree">
+                     Returns
+                  </button>
+               </h2>
+               <div id="flush-collapseThree" class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div>
+               </div>
+            </div>
+         </div>
+      </xpath>
+      
+   </template>
+>>>>>>> web_backup
 
 </odoo>

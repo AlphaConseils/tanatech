@@ -60,6 +60,11 @@
             <t t-snippet="tanatech_website.tanatech_slide_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_publicity_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.faqs_section" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+<<<<<<< HEAD
+=======
+            <t t-snippet="tanatech_website.tanatech_offer_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+            <t t-snippet="tanatech_website.tanatech_decovery_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+>>>>>>> web_backup
         </xpath>
     </template>
 
