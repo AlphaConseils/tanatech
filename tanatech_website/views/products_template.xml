@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="tanatech_offer_template" name="offre Tanatech">
+        <section class="s_tanatech_offer">
+            <div class="container-fluid my-5">
+                <div class="row px-5">
+                    <span>Offers</span>
+                    <h1>Solar Energy</h1>
+                    <p>Découvrez nos solutions solaires fiables et accessibles pour un avenir plus vert à Madagascar.</p>
+                    <div class="d-flex">
+                        <buton class="btn btn-primary me-3 shadow-sm"><a class="text-decoration-none text-white">Acheter</a></buton>
+                        <buton class="btn btn-warning shadow-sm"><a class="text-decoration-none text-dark">Contact</a></buton>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="tanatech_decovery_template" name="decovery Tanatech">
+        <section class="s_tanatech_decovery">
+            <div class="container-fluid my-5">
+                <div class="row px-5">
+                    <div class="col-md-6">
+                        <div class="w-75">
+                            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, molestias.</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi nemo eius, minus quis facere necessitatibus odit modi! Quisquam, perferendis laudantium dignissimos reiciendis porro quae vitae facilis ex vel, alias aperiam!</p>
+                        <div class="d-flex">
+                            <buton class="btn btn-primary me-3 shadow-sm"><a class="text-decoration-none text-white">Acheter maintenant</a></buton>
+                            <buton class="btn btn-warning shadow-sm"><a class="text-decoration-none text-dark">Discuter</a></buton>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+</odoo>

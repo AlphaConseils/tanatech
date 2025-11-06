@@ -116,6 +116,6 @@
   height: 640px;
 }
 
-.figure-img{
-  
+.accordion-button:not(.collapsed) {
+    background-color: inherit;
 }
