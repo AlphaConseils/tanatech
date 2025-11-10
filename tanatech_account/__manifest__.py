@@ -22,6 +22,7 @@ You could use this simplified accounting in case you work with an (external) acc
         "report/report_invoice.xml",
         "report/inherit_report_invoice_document.xml",
         "report/report_fa_delivery_note.xml",
+        "views/account_move_views.xml",
     ],
     "demo": [],
     "installable": True,

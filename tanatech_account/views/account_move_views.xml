@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View account.move form -->
+    <record id="view_account_move_form_inherited_tanatech" model="ir.ui.view">
+        <field name="name">view.account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="groups">tanatech_account.group_show_put_the_client_invoice</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
