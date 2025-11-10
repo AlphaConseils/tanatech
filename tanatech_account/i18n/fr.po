@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e-20240905\n"
+"Project-Id-Version: Odoo Server 18.0+e-20250801\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 12:44+0000\n"
-"PO-Revision-Date: 2024-09-25 12:44+0000\n"
+"POT-Creation-Date: 2025-11-10 11:52+0000\n"
+"PO-Revision-Date: 2025-11-10 11:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,22 +25,20 @@ msgstr ""
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
-"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Total\n"
+"<span groups=\"tanatech_account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                                <span groups=\"tanatech_account.group_show_line_subtotals_tax_included\">Total\n"
 "                                    Price</span>"
 msgstr ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
-"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Prix\n"
+"<span groups=\"tanatech_account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
+"                                <span groups=\"tanatech_account.group_show_line_subtotals_tax_included\">Prix\n"
 "                                    Total</span>"
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 msgid ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
-"                <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+"<span groups=\"tanatech_account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
+"                <span groups=\"tanatech_account.group_show_line_subtotals_tax_included\">Prix total</span>"
 msgstr ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Montant</span>\n"
-"                <span groups=\"account.group_show_line_subtotals_tax_included\">Total</span>"
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
@@ -57,6 +55,7 @@ msgid "<span style=\"margin: 0px 5px;\">:</span>"
 msgstr ""
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.inherit_report_invoice_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 msgid ""
 "<span>\n"
@@ -65,8 +64,8 @@ msgid ""
 "            </span>"
 msgstr ""
 
-
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.inherit_report_invoice_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 msgid ""
 "<span>\n"
@@ -87,6 +86,11 @@ msgstr ""
 "            </span>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.inherit_report_invoice_document
+msgid "<span>Arrêté à la somme de </span>"
+msgstr ""
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Description</span>"
@@ -100,6 +104,11 @@ msgstr "<span>Rem.%</span>"
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<span>Prix unitaire</span>"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 msgid "<span>Product</span>"
 msgstr "Article"
 
@@ -108,6 +117,11 @@ msgstr "Article"
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Quantity</span>"
 msgstr "<span>Quantité</span>"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+msgid "<span>Quantité</span>"
+msgstr ""
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
@@ -127,7 +141,6 @@ msgid "<span>Taxes</span>"
 msgstr "<span>TVA</span>"
 
 #. module: tanatech_account
-#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "<span>Unit Price</span>"
 msgstr "<span>Prix Unitaire</span>"
@@ -228,6 +241,16 @@ msgid "<strong>Source:</strong>"
 msgstr "<strong>Origine :</strong>"
 
 #. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.invoice_document_tax_totals
+msgid "<strong>Total</strong>"
+msgstr ""
+
+#. module: tanatech_account
+#: model:res.groups,name:tanatech_account.group_show_put_the_client_invoice
+msgid "Can put the client invoice back in draft."
+msgstr "Peut remettre en brouillon la facture client"
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid ""
 "Cancelled\n"
@@ -289,6 +312,39 @@ msgid "Invoices without Payment(A5)"
 msgstr "Factures sans paiment (A5)"
 
 #. module: tanatech_account
+#: model:ir.model,name:tanatech_account.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: tanatech_account
+#: model:ir.model,name:tanatech_account.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: tanatech_account
+#: model:ir.model.fields,field_description:tanatech_account.field_account_bank_statement_line__related_journal
+#: model:ir.model.fields,field_description:tanatech_account.field_account_move__related_journal
+msgid "Journal Name"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Montant TTC"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "Montant Total"
+msgstr ""
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
+#: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
+msgid "NIF:"
+msgstr ""
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid ""
 "Paid\n"
@@ -326,6 +382,11 @@ msgstr ""
 "                    règlement :"
 
 #. module: tanatech_account
+#: model:ir.model.fields,field_description:tanatech_account.field_account_move_line__price_unit_ht
+msgid "Prix"
+msgstr ""
+
+#. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Responsable"
 msgstr ""
@@ -334,6 +395,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "STAT:"
+msgstr ""
+
+#. module: tanatech_account
+#: model:res.groups,comment:tanatech_account.group_show_line_subtotals_tax_included
+msgid "Show line subtotals with taxes included (B2C)"
+msgstr ""
+
+#. module: tanatech_account
+#: model:res.groups,comment:tanatech_account.group_show_line_subtotals_tax_excluded
+msgid "Show line subtotals without taxes (B2B)"
+msgstr ""
+
+#. module: tanatech_account
+#: model:res.groups,name:tanatech_account.group_show_line_subtotals_tax_excluded
+msgid "Tax display B2B"
+msgstr ""
+
+#. module: tanatech_account
+#: model:res.groups,name:tanatech_account.group_show_line_subtotals_tax_included
+msgid "Tax display B2C"
 msgstr ""
 
 #. module: tanatech_account
@@ -352,6 +433,11 @@ msgstr "Facture fournisseur"
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_invoice_document
 msgid "Vendor Credit Note"
 msgstr "Avoir fournisseur"
+
+#. module: tanatech_account
+#: model_terms:ir.ui.view,arch_db:tanatech_account.invoice_document_tax_totals
+msgid "on"
+msgstr ""
 
 #. module: tanatech_account
 #: model_terms:ir.ui.view,arch_db:tanatech_account.tanatech_report_fa_delivery_note_document

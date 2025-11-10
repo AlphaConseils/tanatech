@@ -6,7 +6,9 @@ from odoo import models, fields
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    related_journal = fields.Char(related='journal_id.name', string='Journal Name', readonly=True)
+    related_journal = fields.Char(
+        related="journal_id.name", string="Journal Name", readonly=True
+    )
 
     def _get_reconciled_info_JSON_values(self):
         self.ensure_one()
@@ -63,6 +65,7 @@ class AccountMove(models.Model):
         result = result[0].upper() + result[1:]
         return result
 
+
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
@@ -70,4 +73,6 @@ class AccountMoveLine(models.Model):
 
     def _compute_price_unit_ht(self):
         for rec in self:
-            rec.price_unit_ht = (rec.price_total if rec.price_total else 1) / (rec.quantity if rec.quantity else 1)
+            rec.price_unit_ht = (rec.price_total if rec.price_total else 1) / (
+                rec.quantity if rec.quantity else 1
+            )

@@ -31,6 +31,9 @@
             <xpath expr="//field[@name='tax_totals']" position="after">
                 <field name="amount_total" invisible="related_journal != 'Factures clients NA'" />
             </xpath>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="groups">tanatech_account.group_show_put_the_client_invoice</attribute>            
+            </xpath>
         </field>
     </record>
 
