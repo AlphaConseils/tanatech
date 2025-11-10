@@ -16,6 +16,9 @@
         "views/homepage_template.xml",
         "views/snippets.xml",
         "views/condition_template.xml",
+        "views/product_template.xml",
+        "views/contactus_template.xml",
+        "views/products_template.xml",
     ],
     "assets": {
         "web.assets_frontend": [

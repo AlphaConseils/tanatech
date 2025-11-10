@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     
-<<<<<<< HEAD
     <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
         <xpath expr="//form" position="attributes">
            <attribute name="class" add="p-2 bg-product" separator=" " />
@@ -26,7 +25,6 @@
            <attribute name="class" add="w-100 d-flex justify-content-between align-items-center" separator=" " />
         </xpath>
     </template>
-=======
    <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
       <xpath expr="//form" position="attributes">
          <attribute name="class" add="p-2 bg-product" separator=" " />
@@ -153,6 +151,5 @@
       </xpath>
       
    </template>
->>>>>>> web_backup
 
 </odoo>
