@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_slider_image_user,access_slider_image_user,model_website_slider_image,base.group_user,1,1,1,1
+access_slider_image_public,access_slider_image_public,model_website_slider_image,base.group_public,1,0,0,0

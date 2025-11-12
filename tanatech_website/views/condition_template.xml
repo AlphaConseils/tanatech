@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template QWeb -->
+    <template id="condition_template" name="Termes et conditions">
+        <t t-call="website.layout">
+            <div class="wrap">
+                <div class="container-fluid my-5 px-5">
+                    <section class="banner">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Solaire</p>
+                                    <p><h1 style="font-size: 90px;">Green Shop Madagascar</h1></p>
+                                </div>
+                                <div class="col-6 px-5">
+                                    <p class="mb-3" style="font-size: 20px;">Découvrez notre boutique dédiée à l'énergie solaire. 
+                                    Profitez de produits fiables et d'un service client exceptionnel.</p>
+                                    <buton class="btn btn-primary me-3"><a>Acheter</a></buton>
+                                    <buton class="btn btn-warning"><a>Contact</a></buton>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="container-fluid my-5" style="padding-left: 200px; padding-right: 200px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <h3>Table des matières</h3>
+                            <div class="w-50 title ms-3 d-flex align-items-center">
+                                <h5><a href="" class="text-decoration-none">Titre 2</a></h5>
+                            </div>
+                            <div class="w-50 title ms-4 d-flex align-items-center">
+                                <h5><a href="" class="text-decoration-none">Titre 3</a></h5>
+                            </div>
+                            <div class="w-50 title ms-5 d-flex align-items-center">
+                                <h5><a href="" class="text-decoration-none">Titre 4</a></h5>
+                            </div>
+                            <div class="w-50 title d-flex align-items-center" style=" margin-left: 4rem;">
+                                <h5><a href="" class="text-decoration-none">Titre 5</a></h5>
+                            </div>
+                            <div class="w-50 title d-flex align-items-center" style=" margin-left: 5rem;">
+                                <h5><a href="" class="text-decoration-none">Titre 6</a></h5>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <h2>Heading 2</h2>
+                            <p class="fw-bolder">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem libero modi veritatis cum vero? Accusantium eligendi praesentium mollitia sit incidunt repudiandae soluta quas inventore autem! Ex esse veritatis, minus aliquam ullam obcaecati quisquam asperiores eius laborum, libero earum ipsam temporibus voluptatibus dolorem dolore architecto tenetur. Suscipit itaque rerum aliquid nostrum?</p>
+                            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+
+
+                            <h3>Heading 3</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+                            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+
+                            <h3>Heading 4</h3>
+                            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+
+                            <img src="/tanatech_website/static/src/img/sky.jpg" class="img-fluid mb-5" alt="Condition Image" style=" width: 100%; border-radius: 5%;"/>
+                            
+                            <figcaption class="blockquote-footer mb-5">
+                                Someone famous in <cite title="Source Title">Source Title</cite>
+                            </figcaption>
+
+                            <h3>Heading 5</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+                            <p class="mb-5">
+                                <blockquote class="custom-quote">
+                                    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos fuga magni aspernatur, unde voluptas nobis aut inventore deserunt vitae minima obcaecati quia cupiditate consequuntur sunt temporibus impedit. Necessitatibus voluptatum quod nihil, doloremque aspernatur commodi culpa, nulla ipsum ab quidem at accusamus adipisci velit quo totam iusto, perferendis sunt officia numquam. "
+                                </blockquote>
+                            </p>
+
+
+                            <h3>Heading 6</h3>
+                            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis impedit iste est minima possimus repellendus voluptas odit, deserunt excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque inventore.</p>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Page associée -->
+    <record id="condition_page" model="website.page">
+        <field name="name">Termes et conditions</field>
+        <field name="url">/conditions</field>
+        <field name="view_id" ref="tanatech_website.condition_template"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <!-- Menu dans la barre principale 
+    <record id="menu_condition" model="website.menu">
+        <field name="name">Termes et conditionaaaas</field>
+        <field name="page_id" ref="tanatech_website.condition_page"/>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">70</field>
+    </record>-->
+</odoo>
