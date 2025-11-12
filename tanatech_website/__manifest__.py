@@ -1,0 +1,33 @@
+{
+    "name": "TANATECH Website",
+    "description": "Custom website for TANATECH",
+    "category": "Website",
+    "version": "18.0.2.0.0",
+    "author": "A.Maximilien",
+    "depends": ["base", "website_sale", "auth_oauth"],
+    "data": [
+        # "data/website_page.xml",
+        "security/ir.model.access.csv",
+        "views/website_slider_image_views.xml",
+        "views/assistance.xml",
+        "views/website_form_views.xml",
+        "views/login.xml",
+        "views/res_config_settings_views.xml",
+        "views/homepage_template.xml",
+        "views/snippets.xml",
+        "views/condition_template.xml",
+        "views/product_template.xml",
+        "views/contactus_template.xml",
+        "views/products_template.xml",
+    ],
+    "assets": {
+        "web.assets_frontend": [
+            # "tanatech_website/static/src/scss/web_loging.scss",
+            "tanatech_website/static/src/libs/fontawesome/css/all.min.css",
+            "tanatech_website/static/lib/**/*",
+            "tanatech_website/static/src/**/*",
+        ],
+    },
+    "license": "LGPL-3",
+    "installable": True,
+}

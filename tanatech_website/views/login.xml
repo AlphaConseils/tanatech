@@ -1,0 +1,316 @@
+<odoo>
+    <template id="auth_login" inherit_id="auth_oauth.login" name="OAuth Login buttons">
+        <xpath expr="//t[@t-call='auth_oauth.providers']" position="replace"/>
+    </template>
+
+    <template id="auth_signup" inherit_id="auth_oauth.signup" name="OAuth Signup buttons">
+        <xpath expr="//t[@t-call='auth_oauth.providers']" position="replace"/>
+    </template>
+
+    <template id="login_custom_layout" inherit_id="web.login" name="Login Page with Background Image">
+        <!-- Tout le contenu principal -->
+        <xpath expr="//form" position="replace">
+            <div class="row m-0 vh-100">
+                <!-- Colonne gauche : formulaire -->
+                <div class="col-md-6 bg-white">
+                    <form style="" t-attf-class="oe_login_form_tantech oe_login_form #{'' if login else 'd-none'}" role="form" t-attf-action="/web/login" method="post" onsubmit="this.action = '/web/login' + location.hash">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="text-center">
+                            <h2 class="title_login">Log In</h2>
+                            <div class="o_login_auth"/>
+                        </div>
+
+                        <div class="mb-3" t-if="databases and len(databases) &gt; 1">
+                            <label for="db" class="col-form-label">Database</label>
+                            <div class="input-group">
+                                <input type="text" name="db" t-att-value="request.db" id="db" class="form-control" required="required" readonly="readonly"/>
+                                <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 field-login">
+                            <label for="login" class="form-label d-flex justify-content-between">Email</label>
+                            <input type="text" placeholder="Email" name="login" t-att-value="login" id="login" class="form-control" required="required" autocapitalize="off" autocomplete="username"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label d-flex justify-content-between">
+                        Password 
+                                <a t-if="reset_password_enabled" class="btn btn-link btn-sm" tabindex="1" t-attf-href="/web/reset_password?{{ keep_query() }}">Forgot Your Password?</a>
+                            </label>
+                            <input type="password" placeholder="Password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                        </div>
+
+
+                        <p class="alert alert-danger" t-if="error" role="alert">
+                            <t t-esc="error"/>
+                        </p>
+                        <p class="alert alert-success" t-if="message" role="status">
+                            <t t-esc="message"/>
+                        </p>
+
+
+                        <div class="oe_login_buttons text-center gap-1 d-grid mb-1 pt-3">
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                            <t t-call="auth_oauth.providers"/>
+                            <p class="mt-2 text-center">
+                                <a class="smaller text-decoration-none">Don't have an account?</a>
+                                <a t-if="signup_enabled" class="btn btn-link btn-sm" t-attf-href="/web/signup?{{ keep_query() }}">sign up</a>
+                            </p>
+                            <t t-if="debug">
+                                <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm">Log in as superuser</button>
+                            </t>
+                            <div class="o_login_auth"/>
+                        </div>
+
+                        <input type="hidden" name="type" value="password"/>
+                        <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    </form>
+                </div>
+
+                <!-- Colonne droite : image -->
+                <div class="col-md-6 d-none d-md-block p-0 background">
+                </div>
+            </div>
+            <t t-call="tanatech_website.page_below_template"/>
+        </xpath>
+    </template>
+
+    <template id="auth_signup_custom_layout" inherit_id="auth_signup.signup" name="Sign up login">
+        <xpath expr="//form" position="replace">
+            <div class="row m-0 vh-100">
+                <!-- Colonne gauche : formulaire -->
+                <div class="col-md-6 bg-white">
+                    <form class="oe_login_form_tantech oe_signup_form" role="form" method="post" t-if="not message">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="text-center">
+                            <h2 class="title_login">Sign Up</h2>
+                            <div class="o_login_auth"/>
+                        </div>
+                        <!-- <t t-call="auth_signup.fields"> -->
+                        <t t-set="only_passwords" t-value="bool(token and not invalid_token)"/>
+                        <!-- </t> -->
+                        <div class="mb-3 field-login">
+                            <label for="login">Email</label>
+                            <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+                        </div>
+
+                        <div class="mb-3 field-name">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="e.g. John Doe" required="required" t-att-readonly="'readonly' if only_passwords else None" t-att-autofocus="'autofocus' if login and not only_passwords else None" />
+                        </div>
+
+                        <div class="mb-3 field-password pt-2">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+                        </div>
+
+                        <div class="mb-3 field-confirm_password">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/>
+                        </div>
+
+                        <p class="alert alert-danger" t-if="error" role="alert">
+                            <t t-esc="error"/>
+                        </p>
+                        <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        <input type="hidden" name="token" t-att-value="token"/>
+                        <div class="text-center oe_login_buttons d-grid pt-3">
+                            <button type="submit" class="btn btn-primary"> Sign up</button>
+                            <t t-call="auth_oauth.providers"/>
+                            <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link btn-sm" role="button">Already have an account?</a>
+                            <div class="o_login_auth"/>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Colonne droite : image -->
+                <div class="col-md-6 d-none d-md-block p-0 background">
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="page_below_template" name="Page en dessous du login/signup">
+        <section class="hero text-center align-items-center d-flex flex-column justify-content-center text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/tanatech_website/static/src/img/hero.jpg'); background-size: cover;  background-position: center;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12" style="padding-left: 300px; padding-right: 300px;">
+                        <h1 style="font-size: 100px;">Le premier concept <br/>store solaire à <br/>Madagascar</h1>
+                        <p class="lead">Découvrez des produits fiables et un accompagnement humain. Green Shop vous <br/>offre des solutions solaires adaptées à vos besoins.</p>
+                        <div class="btn">
+                            <buton class="btn btn-primary me-3 text-white"><a>Acheter</a></buton>
+                            <buton class="btn discuss text-white"><a>Discuter</a></buton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-image-portrait"></i></p>
+                            <h1>Log in or create your account to take advantage of our services.</h1>
+                            <p class="para">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/placeholder.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/space.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-6">Historique</p>
+                            <h1>Your past orders at your fingertips</h1>
+                            <p class="para">Consultez facilement l'historique de vos commandes. Suivez chaque étape de votre achat.</p>
+                            <div class="row d-flex align-items-center justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-calendar-week"></i></p>
+                                        <h5>Log in or create your account to take advantage of our services.</h5>
+                                        <p class="">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-magnifying-glass"></i></p>
+                                        <h5>Log in or create your account to take advantage of our services.</h5>
+                                        <p class="">Easily access your order history and track your deliveries. Create an account in a few simple steps for a personalized experience.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <buton class="btn btn-warning"><a>Voir</a></buton>
+                                <buton class="btn discuss"><a>Détails <b>></b> </a></buton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <h1>Suivez l'avancement de votre commande en toute simplicité.</h1>
+                            <p class="para">Suivez l'avancement de votre commande en toute simplicité.</p>
+                            <div class="row d-flex  justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-bag-shopping"></i></p>
+                                        <h5>Étapes de livraison</h5>
+                                        <p class="">Préparation, expédition, livraison en cours, et enfin, votre commande est livrée.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <p class="fs-3"><i class="fa-solid fa-bag-shopping"></i></p>
+                                        <h5>Suivi commande</h5>
+                                        <p class="">Cliquez ci-dessous pour suivre votre commande en temps réel.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/sea.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/maj.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-arrows-rotate"></i></p>
+                            <h1>Mettez à jour vos informations personnelles</h1>
+                            <p class="para">Nous vous invitons à vérifier et à mettre à jour vos informations personnelles pour garantir un service optimal. Cela nous aide à mieux vous servir et à vous tenir informé.</p>
+                            <div class="">
+                                <buton class="btn btn-warning"><a>Enregistrer</a></buton>
+                                <buton class="btn discuss"><a>Modifier <b>></b> </a></buton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <p class="fs-3"><i class="fa-solid fa-gears"></i></p>
+                            <h1>Sécurisez votre compte et personnalisez vos préférences de communication.</h1>
+                            <p class="para">Changez votre mot de passe facilement pour garantir la sécurité de votre compte. Gérez vos préférences de communication pour recevoir uniquement les informations qui vous intéressent.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="img">
+                            <figure class="figure ">
+                                <img src="/tanatech_website/static/src/img/sun.png" class="figure-img img-fluid" alt="..."/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row p-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="legend">
+                            <h1>Découvrez nos produits solaires</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="w-100">Explorez notre gamme de solutions solaires conçues pour répondre à vos besoins. N'hésitez pas à nous contacter pour toute question ou assistance.</p>
+                        <div class="">
+                            <buton class="btn btn-primary me-3 text-white"><a>Voir les produits</a></buton>
+                            <buton class="btn btn-warning text-white"><a>Contacter-nous</a></buton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </template>
+
+</odoo>

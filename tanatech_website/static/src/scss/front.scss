@@ -1,0 +1,126 @@
+.btn-primary {
+    background-color: #96BC1F;
+    border: 0cm ;
+}
+
+.title {
+  height: 50px;
+  padding-left: 5px;
+}
+
+.title:hover{
+    background-color: #f1f1f1;
+    border: solide 1px;
+    border-color: #3b3b3b;
+}
+
+.slide {
+  max-height: 600px;
+  height: 550px;
+}
+
+.titre {
+  margin-top: 20%;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;               /* taille horizontale */
+  height: 10px;              /* taille verticale */
+  border-radius: 50%;        /* rend le bouton rond */
+  background-color: #7a7a7a;    /* couleur du point (blanc ici) */
+  opacity: 0.5;              /* légèrement transparent */
+  transition: all 0.3s ease; /* animation douce */
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+  background-color: #ffffff; /* couleur active (bleu Bootstrap) */
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-color: #96BC1F;
+}
+
+.pub {
+  margin-top: 5px;
+  background-color: #F5F5F5;
+  width: 360px;
+}
+
+.bg-product {
+    background-color: #FEF9ED !important;
+    border-radius: 5%;
+}
+
+.img-product {
+    border-radius: 1.49%;
+}
+
+.text-primary-emphasis {
+    color: #000000 !important;
+}
+
+.price {
+  font-family: raleway-variable, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.faqs {
+    width: 50%;
+    height: 55px;
+    background-color: #f1f1f1;
+}
+
+.bg-cream {
+    background-color: #fffaf2;
+}
+
+.tanatech-help-section .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tanatech-help-section .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.hero{
+  height: 900px;
+}
+
+.discuss {
+    background-color: #ffffff36;
+    border: none;
+}
+
+.legend{
+  // padding-left: 15%;
+  // padding-right: 15%;
+  width: 600px;
+}
+
+.para{
+  font-size: 18px;
+}
+
+.figure{
+  width: 600px;
+  height: 640px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: inherit;
+}
+
+.title-slider {
+    font-size: 75px;
+}

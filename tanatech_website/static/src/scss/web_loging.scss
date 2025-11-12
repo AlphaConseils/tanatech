@@ -1,0 +1,257 @@
+.oe_login_form_tantech {
+  position: relative;
+  left: 64px;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+  // margin: 0px;
+
+  width: 480px;
+  max-width: 480px;
+  height: 126px;
+}
+
+/* Section Title */
+
+.title_login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+
+  width: 480px;
+  max-width: 480px;
+  height: 126px;
+}
+
+.background {
+    background: url('/tanatech_website/static/src/img/sign_in.png') center center / cover no-repeat;
+  }
+
+.btn-assistance{
+  width: 138px;
+  height: 47px;
+  // margin: 10px;
+}
+
+.fa-envelope-greenshop {
+  width:20px;
+  height:16px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/envelope.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.fa-phone-greenshop {
+  width:24px;
+  height:20px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/phone.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.fa-map-marker-greenshop {
+  width:24px;
+  height:24px;
+  &::before{
+      content:"";
+      opacity: 100%;
+      display:inline-block;
+      background:url("/tanatech_website/static/src/img/icon/map.svg") center no-repeat;
+      background-size:100%;
+      width:inherit;
+      height:inherit;
+      color: transparent;
+  }
+}
+
+.search-assistance{
+  background-color: transparent;
+  border-color: transparent!important;
+  width: 671px;
+  height: 59px;
+  background: rgba(8, 9, 2, 0.05);
+  border: 1px solid rgba(8, 9, 2, 0.15)!important;
+    // outline: none!important;
+    border-right: none!important;
+
+    // border-top-right-radius: 12px!important;
+    // border-bottom-right-radius: 12px!important;
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   background:url("/tanatech_website/static/src/img/icon/map.svg") center no-repeat;
+  //   // right: 15px;
+  //   // top: 50%;
+  //   // transform: translateY(-50%);
+  //   // color: #333;
+  //   // pointer-events: none; // empêche de bloquer le clic dans l’input
+  //   // font-size: 16px;
+  // }
+ 
+
+}
+
+.btn-search-assistance{
+  background-color: transparent;
+  border-color: transparent;
+  background: rgba(8, 9, 2, 0.05);
+  border: 1px solid rgba(8, 9, 2, 0.15)!important;
+  outline: none!important;
+  border-left: none!important;
+  color: #333;
+
+}
+
+/* Card 2 */
+
+/* Auto layout */
+// display: flex;
+// flex-direction: row;
+// align-items: flex-start;
+// padding: 0px;
+// gap: 10px;
+
+// width: 1280px;
+// height: 186px;
+
+
+// /* Inside auto layout */
+// flex: none;
+// order: 1;
+// align-self: stretch;
+// flex-grow: 0;
+
+.row-faqs{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.new-product-carousel {
+    position: relative;
+    padding-bottom: 40px; /* espace en bas pour navigation */
+}
+
+.new-product-carousel .owl-nav {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 5px;
+}
+
+.new-product-carousel .owl-nav button.owl-prev,
+.new-product-carousel .owl-nav button.owl-next {
+    background: #f1f1f1;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.new-product-carousel .owl-nav button:hover {
+    background: #ddd;
+}
+
+.new-product-carousel {
+    position: relative; /* pour que .owl-nav soit positionné correctement */
+}
+
+/* Centrer les dots à gauche */
+.new-product-carousel .owl-dots {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+}
+
+
+
+.swiper-bottom-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  padding: 0 10px;
+}
+
+.swiper-pagination {
+  position: relative !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.swiper-navigation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px; /* espace entre les deux boutons */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: relative !important;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        max-width: 90%;
+    }
+
+    .swiper-bottom-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .swiper-navigation-buttons {
+        justify-content: center;
+    }
+}
+
+.product-title {
+    max-width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
