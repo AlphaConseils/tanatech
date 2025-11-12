@@ -171,8 +171,3 @@ class WebsiteProduct(http.Controller):
             "images": slides,
         }
         
-
-class ConditionController(http.Controller):
-    @http.route('/conditions', type='http', auth='public', website=True)
-    def terms_conditions(self, **kw):
-        return request.render('tanatech_website.condition_template', {})

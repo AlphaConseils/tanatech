@@ -50,6 +50,7 @@
 }
 
 .pub {
+  margin-top: 5px;
   background-color: #F5F5F5;
   width: 360px;
 }
@@ -118,4 +119,8 @@
 
 .accordion-button:not(.collapsed) {
     background-color: inherit;
+}
+
+.title-slider {
+    font-size: 75px;
 }
