@@ -73,7 +73,7 @@
                 <div class="col-md-6 d-none d-md-block p-0 background">
                 </div>
             </div>
-            <t t-call="tanatech_website.page_below_template"/>
+            <!-- <t t-call="tanatech_website.page_below_template"/> -->
         </xpath>
     </template>
 
@@ -132,7 +132,7 @@
         </xpath>
     </template>
 
-    <template id="page_below_template" name="Page en dessous du login/signup">
+    <!-- <template id="page_below_template" name="Page en dessous du login/signup">
         <section class="hero text-center align-items-center d-flex flex-column justify-content-center text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/tanatech_website/static/src/img/hero.jpg'); background-size: cover;  background-position: center;">
             <div class="container-fluid">
                 <div class="row">
@@ -311,6 +311,6 @@
             </div>
         </section>
 
-    </template>
+    </template> -->
 
 </odoo>
