@@ -115,7 +115,7 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_1920", "id"], limit=8 
+                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8 
             )
         )
         values = {
@@ -130,7 +130,7 @@ class WebsiteProduct(http.Controller):
             .sudo()
             .search_read(
                 [("is_published", "=", True)],
-                fields=["name", "image_1920", "id", "list_price"],
+                fields=["name", "image_512", "id", "list_price"],
                 # limit=8,
             )
         )
@@ -145,7 +145,7 @@ class WebsiteProduct(http.Controller):
             .sudo()
             .search_read(
                 [("is_published", "=", True)],
-                fields=["name", "image_1920", "id", "list_price"],
+                fields=["name", "image_512", "id", "list_price"],
                 # limit=8,
             )
         )
