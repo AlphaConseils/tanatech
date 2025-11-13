@@ -153,26 +153,21 @@ class WebsiteProduct(http.Controller):
             "products": products,
         }
 
-    @http.route("/get_home_slide", type="json", auth="public", website=True)
-    def get_home_slide(self):
-        slides = (
-            request.env["website.slider.image"]
-            .sudo()
-            .search_read(
-                [("website_published", "=", True)],
-                fields=["name", "image", "id"],
-            )
-        )
-        # for rec in slides:
-        #     if rec["image"]:
-        #         rec["image"] = f"data:image/png;base64,{rec['image']}"
+    # @http.route("/get_home_slide", type="json", auth="public", website=True)
+    # def get_home_slide(self):
+    #     slides = (
+    #         request.env["website.slider.image"]
+    #         .sudo()
+    #         .search_read(
+    #             [("website_published", "=", True)],
+    #             fields=["name", "image", "id"],
+    #         )
+    #     )
+    #     # for rec in slides:
+    #     #     if rec["image"]:
+    #     #         rec["image"] = f"data:image/png;base64,{rec['image']}"
 
-        return {
-            "images": slides,
-        }
+    #     return {
+    #         "images": slides,
+        # }
         
-
-class ConditionController(http.Controller):
-    @http.route('/conditions', type='http', auth='public', website=True)
-    def terms_conditions(self, **kw):
-        return request.render('tanatech_website.condition_template', {})

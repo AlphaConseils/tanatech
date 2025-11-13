@@ -2,11 +2,11 @@
     "name": "TANATECH Website",
     "description": "Custom website for TANATECH",
     "category": "Website",
-    "version": "18.0.2.0.0",
+    "version": "18.0.1.0.0",
     "author": "A.Maximilien",
     "depends": ["base", "website_sale", "auth_oauth"],
     "data": [
-        # "data/website_page.xml",
+        "data/website_page.xml",
         "security/ir.model.access.csv",
         "views/website_slider_image_views.xml",
         "views/assistance.xml",
@@ -19,6 +19,7 @@
         "views/product_template.xml",
         "views/contactus_template.xml",
         "views/products_template.xml",
+        "views/snippets.xml",
     ],
     "assets": {
         "web.assets_frontend": [

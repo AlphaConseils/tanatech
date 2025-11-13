@@ -1,0 +1,212 @@
+<odoo>
+    <template id="template_header_green" inherit_id="website.layout" name="Green Shop Custom Header" active="False">
+        <xpath expr="//header//nav" position="replace">
+            <t t-call="website.navbar">
+                <t t-set="_navbar_classes" t-valuef="d-none d-lg-block shadow-sm"/>
+                <div class="container-fluid d-flex justify-content-between align-items-center py-3">
+                    <div class="d-flex align-items-center">
+                        <t t-call="website.placeholder_header_brand">
+                            <t t-set="_link_class" t-valuef="me-5"/>
+                        </t>
+                    </div>
+
+                    <ul class="navbar-nav align-items-center gap-1 flex-wrap flex-shrink-0 justify-content-end ps-3">
+                        <div id="top_menu_collapse" class="">
+                            <t t-call="website.navbar_nav">
+                                <t t-set="_nav_class" t-valuef="flex-grow-1" />
+                                <!-- Menu -->
+                                <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                    <t t-call="website.submenu">
+                                        <t t-set="item_class" t-valuef="nav-item" />
+                                        <t t-set="link_class" t-valuef="nav-link" />
+                                    </t>
+                                </t>
+                                <t t-call="website.website_search_box_input" t-nocache="The searchbox should not cache previous searches.">
+                                    <t t-set="default_style" t-value="True"/>
+                                    <t t-set="navClass" t-valuef="light"/>
+                                    <t t-set="_submit_classes" t-valuef="btn btn-{{navClass}} search-green-color"/>
+                                    <t t-set="_input_classes" t-valuef="border-0 text-bg-{{navClass}}"/>
+                                    <t t-set="search_type" t-valuef="products"/>
+                                </t>
+
+
+                            </t>
+
+                        </div>
+                        <!-- Language Selector -->
+                        <t t-call="website.placeholder_header_language_selector">
+                            <t t-set="_btn_class" t-valuef="{{_additional_btn_color or 'nav-link'}} d-flex align-items-center w-100 hide-button oi oi-globe"/>
+                            <t t-set="_txt_class" t-valuef="me-auto small hide-text"/>
+                            <t t-set="_flag_class" t-valuef="me-2"/>
+                            <t t-set="_div_classes" t-valuef="dropup"/>
+                            <!-- <t t-set="no_text" t-value="true"/> -->
+
+                            <!-- <t t-set="_dropdown_menu_class" t-valuef="w-100"/> -->
+                        </t>
+
+                        <!-- Sign In -->
+                        <t t-call="portal.placeholder_user_sign_in">
+                            <!-- <t t-set="_icon_class" t-valuef="user-icon-header-greenshop"/> -->
+
+                            <t t-set="_item_class" t-valuef="nav-item ml-5 user-icon-header-greenshop" />
+                            <!-- <t t-set="_link_class" t-valuef="nav-link font-weight-bold" /> -->
+                            <t t-set="_link_class" t-valuef="{{_additional_btn_color or 'nav-link o_nav_link_btn'}} w-100 text-transparent"/>
+
+                        </t>
+                        <!-- User Dropdown -->
+                        <t t-call="portal.user_dropdown">
+                            <t t-set="_icon" t-value="true" />
+                            <t t-set="_icon_class" t-valuef="user-icon-header-greenshop"/>
+                            <t t-set="_item_class" t-valuef="nav-item dropdown ml-5" />
+                            <t t-set="_link_class" t-valuef="nav-link font-weight-bold custom dropdown-toggle-header-greenshop" />
+                        </t>
+
+                        <t t-call="website_sale.header_cart_link">
+                            <t t-set="_icon" t-value="True"/>
+                            <t t-set="_link_class" t-value="'btn position-relative text-center text-reset'"/>
+                            <t t-set="_badge_class" t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>
+                        </t>
+                        <!-- Navbar Toggler -->
+                        <t t-call="website.navbar_toggler">
+                            <t t-set="_toggler_class" t-valuef="mobile-toggler" />
+                        </t>
+                    </ul>
+                </div>
+            </t>
+        </xpath>
+    </template>
+    <!-- Footer templates -->
+    <template id="template_footer_green" inherit_id="website.layout" name="Tanatech Footer" active="False">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo bg-primary" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt40 pb16" data-snippet="s_text_block" data-name="Text">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Section Newsletter -->
+                            <div class="col-md-5 mb-4">
+                                <h5>Sign up for our newsletter to stay informed about features and news.</h5>
+                                <form class="d-flex mt-3">
+                                    <input type="email" class="form-control me-2 rounded" placeholder="Entrez votre adresse e-mail"/>
+                                    <button type="submit" class="btn btn-warning text-white rounded">S'abonner</button>
+                                </form>
+                                <p class="mt-2 small">
+              By subscribing, you agree to our
+                                    <a href="/privacy" class="text-white text-underline">Privacy Policy</a> and give your consent to receive updates from our company.
+                                </p>
+                            </div>
+                            <div class="col-md-1 mb-4">
+                            </div>
+
+                            <!-- Colonne 1 : Panneaux Solaires -->
+                            <div class="col-md-2 mb-4">
+                                <h6 class="fw-bold">Solar Panels</h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#" class="text-white">Solar Batteries</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Solar Accessories</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Assembly Tools</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Storage Systems</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Safety Equipment</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Colonne 2 : Produits -->
+                            <div class="col-md-2 mb-4">
+                                <h6 class="fw-bold">Products Column</h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#" class="text-white">Current Promotions</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">New products</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Best Sellers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Customer Reviews</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-white">Contact Us</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Colonne 3 : Réseaux sociaux -->
+                            <div class="col-md-2 mb-4">
+                                <h6 class="fw-bold">Suivez-nous</h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <i class="icon-green ico-facebook me-2"> </i> Facebook</li>
+                                    <li>
+                                        <i class="icon-green ico-instagram me-2"></i> Instagram</li>
+                                    <li>
+                                        <i class="icon-green ico-x-twitter me-2"></i> X</li>
+                                    <li>
+                                        <i class="icon-green ico-linkedin me-2"></i> LinkedIn</li>
+                                    <li>
+                                        <i class="icon-green ico-youtube me-2"></i> Youtube</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Bas de page -->
+                        
+                    </div>
+                </section>
+
+                <section>
+                <div class="container">
+                    <div class="row">
+<!-- <div class="d-flex justify-content-between mt-4 flex-column flex-md-row text-white-50 small col-md-4 mb-4"> -->
+                        <div class="col-md-5 mb-4">
+                                © 2024 <a href="/" class="text-white text-decoration-underline">Tanatech</a>. All rights reserved.
+                        </div>
+                        <div class="col-md-1 mb-4">
+                        </div>
+                        <div class="col-md-2 mb-4 ml-6">
+                            <a href="/privacy" class="me-3 text-white text-decoration-underline">Privacy Policy</a>
+                            <!-- <a href="/terms" class="me-3 text-white text-decoration-underline">Conditions d'Utilisation</a>
+                            <a href="/cookies" class="text-white text-decoration-underline">Paramètres des Cookies</a> -->
+                        </div>
+<!-- </div> -->
+                        <div class="col-md-2 mb-4 ">
+                            <!-- <a href="/privacy" class="me-3 text-white text-decoration-underline">Politique de Confidentialité</a> -->
+                            <a href="/terms" class="me-3 text-white text-decoration-underline">Terms of Use</a>
+                            <!-- <a href="/cookies" class="text-white text-decoration-underline">Paramètres des Cookies</a> -->
+                        </div>
+
+                        <div class="col-md-2 mb-4">
+                            <!-- <a href="/privacy" class="me-3 text-white text-decoration-underline">Politique de Confidentialité</a> -->
+                            <!-- <a href="/terms" class="me-3 text-white text-decoration-underline">Conditions d'Utilisation</a> -->
+                            <a href="/cookies" class="text-o-color-4 text-decoration-underline">Cookie Settings</a>
+                        </div>
+                    </div>
+                </div>
+                </section>
+            </div>            
+        </xpath>
+    </template>
+
+    <template id="green_snippet_options" name="snippet_options" inherit_id="website.snippet_options">
+        <xpath expr="//we-select[@data-variable='header-template']" position="inside">
+            <!-- Add your fields or attributes here -->
+            <we-button title="GREEN HEADER" data-name="header_green" data-customize-website-views="tanatech_theme.template_header_green" data-customize-website-variable="'greenshop'" data-img="/tanatech_theme/static/src/img/snippets_options/headerDefault.svg" />
+        </xpath>
+        <xpath expr="//we-select[@data-variable='footer-template']" position="inside">
+            <!-- Add your fields or attributes here -->
+            <we-button title="GREEN FOOTER" data-name="footer_green" data-customize-website-views="tanatech_theme.template_footer_green" data-customize-website-variable="'green'" data-img="/tanatech_theme/static/src/img/snippets_options/Tanatech Footer.svg" />
+        </xpath>
+        
+    </template>
+    
+</odoo>
