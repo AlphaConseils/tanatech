@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.new_products_snippet">
-        <section class="new_products_section py-5">
-            <div class="container">
+        <section class="new_products_section p-5">
+            <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h2 class="fw-bold">New products</h2>
@@ -18,29 +18,32 @@
                 <div class="owl-carousel owl-theme new-product-carousel">
                     <t t-foreach="result.products" t-as="product" t-key="product.id">
                         <div class="item px-2">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-product p-3">
                                 <!-- Badge new -->
-                                <span class="badge bg-info position-absolute top-0 start-0 m-2">New</span>
+                                <span class="badge bg-info position-absolute m-2" style="z-index: 2; left: 5%; top: 5%;">New</span>
 
                                 <!-- Image -->
-                                <div class="ratio ratio-1x1">
+                                <div class="ratio ratio-1x1" style="z-index: 1;">
                                     <t t-if="product.image_1920">
                                         <img t-att-src="'data:image/png;base64,' + product.image_1920" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name" />
                                     </t>
                                     
                                     <t t-else="">
-                                        <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" alt="Image par défaut" />
+                                        <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" alt="Image par défaut" />
                                     </t>
                                 </div>
 
                                 <!-- Infos produit -->
-                                <div class="card-body bg-product">
-                                    <h6 class="fw-bold mb-1">
-                                        <t t-esc="product.name"/>
-                                    </h6>
+                                <div class="card-body bg-product p-0 mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="fw-bold mb-1 w-75 text-truncate " style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <t t-esc="product.name"/>
+                                        </h6>
+                                        <span class="text-muted text-decoration-line-through " style="font-size: 15px; white-space: nowrap;">3 529 000 Ar</span>
+                                    </div>
+                                    
                                     <!-- <small class="text-muted d-block mb-2">Variante</small> -->
-                                    <div class="mb-2">
-                                        <span class="text-muted text-decoration-line-through me-2">3 529 000 Ar</span>
+                                    <div class="mb-2 text-end">
                                         <span class="fw-bold text-dark">3 000 000 Ar</span>
                                     </div>
                                     <!-- <div class="d-flex justify-content-between align-items-center">
