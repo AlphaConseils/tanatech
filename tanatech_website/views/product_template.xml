@@ -5,7 +5,7 @@
       <xpath expr="//form" position="attributes">
          <attribute name="class" add="p-2 bg-product" separator=" " />
       </xpath>
-      <xpath expr="//span[@t-field='image_holder.image_512']" position="attributes">
+      <xpath expr="//span[@t-field='image_holder.image_1920']" position="attributes">
          <attribute name="t-options">{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
       </xpath>
 
