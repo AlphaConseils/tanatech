@@ -20,8 +20,8 @@
                                 <!-- <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden"> -->
                                 <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                                     <div class="ratio ratio-1x1">
-                                        <t t-if="category.image_1920">
-                                            <img t-att-src="'data:image/png;base64,' + category.image_1920" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name or 'Image catégorie'" />
+                                        <t t-if="category.image_512">
+                                            <img t-att-src="'data:image/png;base64,' + category.image_512" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name or 'Image catégorie'" />
                                         </t>
                                         <t t-else="">
                                             <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" alt="Image par défaut" />
