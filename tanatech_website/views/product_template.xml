@@ -18,7 +18,7 @@
       </xpath>
 
       <xpath expr="//span[hasclass('h6') and hasclass('mb-0') and hasclass('fw-bolder')]" position="before">
-         <span class="fw-normal">Variante</span>
+         <span class="fw-normal"></span>
       </xpath>
 
       <xpath expr="//div[@class='product_price']" position="attributes">
