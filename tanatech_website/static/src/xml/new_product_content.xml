@@ -24,8 +24,8 @@
 
                                 <!-- Image -->
                                 <div class="ratio ratio-1x1" style="z-index: 1;">
-                                    <t t-if="product.image_1920">
-                                        <img t-att-src="'data:image/png;base64,' + product.image_1920" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name" />
+                                    <t t-if="product.image_512">
+                                        <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name" />
                                     </t>
                                     
                                     <t t-else="">
