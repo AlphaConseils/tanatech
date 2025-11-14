@@ -12,7 +12,7 @@
             <field name="website_published"/>
             <field name="sequence"/>
             <field name="website_id"/>
-            <field name="note" nolabel="1" widget="html" options="{'codeview': true}"/>
+            <field name="note" nolabel="1"/>
           </group>
         </sheet>
       </form>
