@@ -52,7 +52,7 @@
 
     <template id="greenshop_snippet" inherit_id="website.snippets" name="GreenShop Snippet">
         <xpath expr="//snippets[@id='snippet_groups']" position="inside">
-            <t t-snippet="tanatech_website.home_slide_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
+            <!-- <t t-snippet="tanatech_website.home_slide_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/> -->
             <t t-snippet="tanatech_website.category_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.new_products" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.promotional_products" t-thumbnail="" t-snippet-category="green_shop"/>
