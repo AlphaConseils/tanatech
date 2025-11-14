@@ -7,11 +7,12 @@
       <form string="Image of slider">
         <sheet>
           <group>
-            <field name="name"/>
+            <field name="title"/>
             <field name="image" widget="image" class="oe_avatar w-auto float-start"/>
             <field name="website_published"/>
             <field name="sequence"/>
             <field name="website_id"/>
+            <field name="note" nolabel="1" widget="html" options="{'codeview': true}"/>
           </group>
         </sheet>
       </form>
@@ -23,7 +24,7 @@
     <field name="model">website.slider.image</field>
     <field name="arch" type="xml">
       <list>
-        <field name="name"/>
+        <field name="title"/>
         <field name="website_published"/>
         <field name="sequence"/>
       </list>
