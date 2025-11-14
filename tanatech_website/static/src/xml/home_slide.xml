@@ -27,7 +27,7 @@
                                             </div>
                                             <div class="col-lg-6 col-md-12">
                                                 <p class="p-5">
-                                                    <span t-field="img.note"/>
+                                                    <t t-esc="img.note"/>
                                                 </p>
                                             </div>
                                         </div>

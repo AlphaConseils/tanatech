@@ -11,5 +11,5 @@ class SliderImage(models.Model):
     image = fields.Image()
     website_published = fields.Boolean(default=True)
     sequence = fields.Integer(default=10)
-    note = fields.Html(translate=True)
+    note = fields.Text(translate=True)
     website_id = fields.Many2one("website", required=True)
