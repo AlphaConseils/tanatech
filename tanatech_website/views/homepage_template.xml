@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <template id="tanatech_slide_template" name="Tanatech Slider section">
+    <!-- <template id="tanatech_slide_template" name="Tanatech Slider section">
         <section class="s_tanatech_slider">
             <div class="container-fluid">
                 <div class="row">
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </section>
-    </template>
+    </template> -->
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
         <section class="s_tanatech_publicity">
