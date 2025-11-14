@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="carousel-inner slide">
-                            <t t-foreach="result.images" t-as="img" t-index="i" t-key="img.id">
+                            <t t-if='result.images' t-foreach="result.images" t-as="img" t-index="i" t-key="img.id">
                                 <div t-attf-class="'carousel-item text-white ' + (i === 0 ? 'active' : '')" t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                       url(#{ img.image ? 'data:image/png;base64,' + img.image : 'tanatech_website/static/src/img/image3.jpeg' });background-size: cover; background-position: center;">
                                     <div class="container">
@@ -28,6 +28,29 @@
                                             <div class="col-lg-6 col-md-12">
                                                 <p class="p-5">
                                                     <t t-esc="img.note"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="carousel-item text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image2.jpeg'); background-size: cover;  background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="titre p-5" style="">
+                                                    <p class="lh-1 title-slider" style="">Le premier concept store solaire à Madagascar</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                    elit. Nobis corporis quaerat, tempore assumenda cum
+                                                    eius quibusdam. Illo reiciendis saepe in quibusdam
+                                                    corporis! Voluptatem, laborum quod laboriosam cum
+                                                    iure nisi est officia soluta blanditiis at sapiente
+                                                    expedita repellendus quasi quas impedit, 
                                                 </p>
                                             </div>
                                         </div>
