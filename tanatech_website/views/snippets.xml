@@ -1,8 +1,7 @@
 <odoo>
-
-    <template id="home_slide_template_green_shop" name="Home slide GreenShop">
-        <section class="home_slide_section">
-            <div class="container">
+    <template id="tanatech_slide_template" name="Home slide GreenShop">
+        <section class="s_tanatech_slider home_slide_section">
+            <div class="container-fluid">
                 <div class="alert alert-info">
                     <h2 class="">Home slide</h2>
                 </div>

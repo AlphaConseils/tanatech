@@ -2,16 +2,54 @@
 <templates xml:space="preserve">
     <t t-name="tanatech_website.home">
         <section class="home_section py-5">
-            <div class="container">
-
-                <div class="owl-carousel owl-theme">
-                    <t t-foreach="result.images" t-as="image" t-key="image.id">
-                    <t t-log="image"/>
-
-                        <div class="item">
-                            <img  t-att-src="'data:image/png;base64,' + image.image" t-att-alt="image.name" class="img-fluid"/>
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="carouselExampleIndicators" class="carousel slide p-0" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <t t-foreach="result.images" t-as="img" t-index="i" t-key="img.id">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" t-att-data-bs-slide-to="i" t-att-class="i == 0 ? 'active' : ''" t-att-aria-current="i == 0 ? 'true' : 'false'" t-att-aria-label="'Slide ' + (i + 1)">
+                                </button>
+                            </t>
                         </div>
-                    </t>
+
+                        <div class="carousel-inner slide">
+                            <t t-foreach="result.images" t-as="img" t-index="i" t-key="img.id">
+                                <div t-attf-class="'carousel-item text-white ' + (i === 0 ? 'active' : '')" t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                      url(#{ img.image ? 'data:image/png;base64,' + img.image : 'tanatech_website/static/src/img/image3.jpeg' });background-size: cover; background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="titre p-5">
+                                                    <p class="lh-1 title-slider">
+                                                        <t t-esc="img.title"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <p class="p-5">
+                                                    <t t-esc="img.note"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
+                            </div>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-right" style="color: #000000;"></i>
+                            </div>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
