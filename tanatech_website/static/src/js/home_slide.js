@@ -8,7 +8,7 @@ publicWidget.registry.homeSection = publicWidget.Widget.extend({
     selector: '.home_slide_section',
     async willStart() {
          const result = await rpc('/get_home_slide', {});
-        if (result) {
+        if (result && result.images.length !== 0) {
             this.$target.empty().append(renderToElement('tanatech_website.home', { result }));
         }
 
