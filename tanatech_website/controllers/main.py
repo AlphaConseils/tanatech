@@ -6,7 +6,7 @@ from odoo import http
 from odoo.tools import pycompat
 from odoo.tools.translate import _
 from odoo.http import request
-from odoo.addons.web.controllers.home import Home as WebHome
+# from odoo.addons.web.controllers.home import Home as WebHome
 from odoo.addons.web.controllers.utils import ensure_db
 
 SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
@@ -131,7 +131,7 @@ class WebsiteProduct(http.Controller):
             .search_read(
                 [("is_published", "=", True)],
                 fields=["name", "image_512", "id", "list_price"],
-                # limit=8,
+                limit=8,
             )
         )
         return {
@@ -146,7 +146,7 @@ class WebsiteProduct(http.Controller):
             .search_read(
                 [("is_published", "=", True)],
                 fields=["name", "image_512", "id", "list_price"],
-                # limit=8,
+                limit=8,
             )
         )
         return {
@@ -167,4 +167,3 @@ class WebsiteProduct(http.Controller):
         return {
             "images": slides,
         }
-        
