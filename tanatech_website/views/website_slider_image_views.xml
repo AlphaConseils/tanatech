@@ -9,6 +9,9 @@
           <group>
             <field name="title"/>
             <field name="image" widget="image" class="oe_avatar w-auto float-start"/>
+             <div class="text-danger o_form_label">
+                ⚠️ L'image doit être en 1920x550 px
+            </div>
             <field name="website_published"/>
             <field name="sequence"/>
             <field name="website_id"/>
