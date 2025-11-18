@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="tanatech_website.category_data">
         <section class="categories_section py-5">
-            <div class="container">
+            <div class="container-fluid px-4 px-md-5">
                 <!-- Titre de la section -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
@@ -15,7 +15,7 @@
                 <!-- Grille des catégories -->
                 <div class="row g-4">
                     <t t-foreach="result.categories" t-as="category" t-key="category.id">
-                        <div class="col-6 col-md-4 col-lg-3">
+                        <div class="col-6 col-md-4 col-lg-3 mt-5">
                             <a t-att-href="'/shop/category/'+ category.id" class="text-decoration-none text-dark">
                                 <!-- <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden"> -->
                                 <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
@@ -30,7 +30,7 @@
                                     
                                 </div>
                                 <div class="card-body text-center">
-                                    <h6 class="fw-semibold mb-0">
+                                    <h6 class="fw-semibold mb-0 mt-4">
                                         <t t-esc="category.name"/>
                                     </h6>
                                 </div>

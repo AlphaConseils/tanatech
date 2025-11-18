@@ -9,37 +9,39 @@
             <div id="wrap" class="oe_structure oe_empty">
                 <section class="s_text_block pt40 pb40 o_colored_level ">
                     <div class="container">
-                        <div class="container row text-center mb-6">
-                            <t t-foreach="[ 
-                            {'icon': 'fa fa-truck', 'title': 'Membership', 'text': 'Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card.'}, 
-                            {'icon': 'fa fa-undo', 'title': 'Payments', 'text': 'Need help with a payment? We explain the secure payment solutions and options available at Tanatech.'}, 
-                            {'icon': 'fa fa-credit-card', 'title': 'purchase', 'text': 'Browse our buying guide to find the products best suited to your technology needs.'}, 
-                            {'icon': 'fa fa-user', 'title': 'My account', 'text': 'Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience.'}, 
-                            {'icon': 'fa fa-lock', 'title': 'Shipping &amp; Returns', 'text': 'Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services.'}, 
-                            {'icon': 'fa fa-question-circle', 'title': 'Shops', 'text': 'Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers. Find your nearest Tanatech store.'} ]" t-as="faq">
-                                <div class="col-md-4 mb-2 row-faqs">
-                                    <div class="p-4 shadow-sm bg-light rounded h-100" style='gap: 10px;'>
-                                        <i t-att-class="faq['icon'] + ' fa-2x mb-3'"></i>
-                                        <h5>
-                                            <t t-esc="faq['title']"/>
-                                        </h5>
-                                        <p class="text-muted">
-                                            <t t-esc="faq['text']"/>
-                                        </p>
-                                    </div>
-                                </div>
-                            </t>
-                        </div>
                         <div class="text-center mb-5">
                             <h1>FAQs</h1>
                             <p class="text-muted">You can search for one of our most frequently asked questions or contact us.</p>
-                            <div class="col-4" style="margin-left:33.5%">
+                            <div class="d-flex justify-content-center mt-4" style="">
                                 <t t-call="website.website_search_box_input" t-nocache="The searchbox should not cache previous searches.">
                                     <t t-set="default_style" t-value="True"/>
                                     <t t-set="_submit_classes" t-valuef="btn btn-search-assistance"/>
                                     <t t-set="_input_classes" t-valuef="border-1 search-assistance search-assistance-icon"/>
                                     <t t-set="search_type" t-valuef="products"/>
 
+                                </t>
+                            </div>
+                        </div>
+                        <div class="container text-center mb-6">
+                            <div class="row justify-content-center">
+                                <t t-foreach="[ 
+                                {'icon': 'fa fa-truck', 'title': 'Membership', 'text': 'Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card.'}, 
+                                {'icon': 'fa fa-undo', 'title': 'Payments', 'text': 'Need help with a payment? We explain the secure payment solutions and options available at Tanatech.'}, 
+                                {'icon': 'fa fa-credit-card', 'title': 'purchase', 'text': 'Browse our buying guide to find the products best suited to your technology needs.'}, 
+                                {'icon': 'fa fa-user', 'title': 'My account', 'text': 'Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience.'}, 
+                                {'icon': 'fa fa-lock', 'title': 'Shipping &amp; Returns', 'text': 'Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services.'}, 
+                                {'icon': 'fa fa-question-circle', 'title': 'Shops', 'text': 'Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers. Find your nearest Tanatech store.'} ]" t-as="faq">
+                                    <div class="col-md-4 mb-2 row-faqs">
+                                        <div class="p-4 shadow-sm rounded h-100 bg-cream" style=''>
+                                            <i t-att-class="faq['icon'] + ' fa-2x mb-3'"></i>
+                                            <h5>
+                                                <t t-esc="faq['title']"/>
+                                            </h5>
+                                            <p class="text-muted">
+                                                <t t-esc="faq['text']"/>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </t>
                             </div>
                         </div>
@@ -54,11 +56,11 @@
                                 <h2>Contact Us</h2>
                                 <p>Still not satisfied with the FAQ?</p>
                                 <ul class="list-unstyled text-muted">
-                                    <li>
+                                    <li class="mb-2">
                                         <i class="fa fa-envelope-greenshop me-2"></i> support@exemple.com</li>
-                                    <li>
+                                    <li class="mb-2">
                                         <i class="fa fa-phone-greenshop me-2"></i> +261 34 00 000 00</li>
-                                    <li>
+                                    <li class="mb-2">
                                         <i class="fa fa-map-marker-greenshop me-2"></i> Lot XYZ, Antananarivo, Madagascar</li>
                                 </ul>
                             </div>
@@ -96,7 +98,7 @@
                                     </div>
                                     <div class="mb-0 py-2 col-12 s_website_form_submit s_website_form_no_submit_label" data-name="Submit Button">
                                         <div  class="s_website_form_label"/>
-                                        <a href="#" role="button" class="btn btn-primary s_website_form_send btn-assistance">Submit</a>
+                                        <a href="#" role="button" class="btn btn-primary s_website_form_send btn-assistance shadow">Submit</a>
                                         <span id="s_website_form_result"></span>
                                     </div>
 
