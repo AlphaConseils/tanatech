@@ -1,5 +1,67 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+
+    <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
+        <xpath expr="//form" position="attributes">
+            <attribute name="class" add="p-2 bg-product" separator=" " />
+        </xpath>
+        <xpath expr="//span[@t-field='image_holder.image_1920']" position="attributes">
+            <attribute name="t-options">{'widget': 'image', 'preview_image': image_type, 'itemprop':
+                'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
+        </xpath>
+
+        <xpath expr="//h6" position="attributes">
+            <attribute name="class" add="fw-bolder" separator=" " />
+        </xpath>
+
+        <xpath expr="//span[hasclass('h6') and hasclass('mb-0')][1]" position="attributes">
+            <attribute name="class" add="fw-bolder price" separator=" " />
+        </xpath>
+
+        <xpath expr="//span[hasclass('h6') and hasclass('mb-0') and hasclass('fw-bolder')]"
+            position="before">
+            <span class="fw-normal"></span>
+        </xpath>
+
+        <xpath expr="//div[@class='product_price']" position="attributes">
+            <attribute name="class" add="w-100 d-flex justify-content-between align-items-center"
+                separator=" " />
+        </xpath>
+
+        <xpath expr="//div/div[2]" position="after">
+            <!-- Bouton Ajouter au panier -->
+            <div t-if="product._is_add_to_cart_possible()" class="mt-2">
+                <input type="hidden" name="product_id" t-att-value="product.id"/>
+                <input type="hidden" name="add_qty" value="1"/>
+                <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
+                    <button data-animation-selector=".o_wsale_product_images" type="submit" class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
+                        <span class="text-nowrap fw-bolder" style="font-size: 10px;">Ajouter au panier</span>
+                    </button>
+                    <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle" contenteditable="false" style="max-width: 120px; height: 30px;">
+                        <a t-attf-href="#" class="btn btn-link btn-sm js_add_cart_json bg-o-color-2" aria-label="Remove one" title="Remove one">
+                            <i class="fa fa-minus"/>
+                        </a>
+                        <input type="text" class="form-control quantity text-center bg-o-color-2" data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;"/>
+                        <a t-attf-href="#" class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2" aria-label="Add one" title="Add one">
+                            <i class="fa fa-plus"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//form" position="attributes">
+            <attribute name="class">oe_product_cart h-100 d-flex js_add_cart_variants</attribute>
+        </xpath>
+    </template>
+
+    <template id="similar_protduct_template" name="Produit similaire" inherit_id="website_sale.alternative_products">
+        <xpath expr="//div[hasclass('css_non_editable_mode_hidden')]" position="before">
+            <h1 class="my-5">Similar products</h1>
+        </xpath>
+
+    </template>
+
     <template id="tanatech_offer_template" name="offre Tanatech">
         <section class="s_tanatech_offer">
             <div class="container-fluid my-5">

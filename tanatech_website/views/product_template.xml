@@ -1,39 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    
-   <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
-      <xpath expr="//form" position="attributes">
-         <attribute name="class" add="p-2 bg-product" separator=" " />
-      </xpath>
-      <xpath expr="//span[@t-field='image_holder.image_1920']" position="attributes">
-         <attribute name="t-options">{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
-      </xpath>
-
-      <xpath expr="//h6" position="attributes">
-         <attribute name="class" add="fw-bolder" separator=" " />
-      </xpath>
-
-      <xpath expr="//span[hasclass('h6') and hasclass('mb-0')][1]" position="attributes">
-         <attribute name="class" add="fw-bolder price" separator=" " />
-      </xpath>
-
-      <xpath expr="//span[hasclass('h6') and hasclass('mb-0') and hasclass('fw-bolder')]" position="before">
-         <span class="fw-normal"></span>
-      </xpath>
-
-      <xpath expr="//div[@class='product_price']" position="attributes">
-         <attribute name="class" add="w-100 d-flex justify-content-between align-items-center" separator=" " />
-      </xpath>
-
-   </template>
-
-   <template id="similar_protduct_template" name="Produit similaire" inherit_id="website_sale.alternative_products">
-      <xpath expr="//div[hasclass('css_non_editable_mode_hidden')]" position="before">
-         <h1 class="my-5">Similar products</h1>
-      </xpath>
-
-   </template>
-
    <template id="similar_product_theme_template" name="Similar Product Theme" inherit_id="website_sale.dynamic_filter_template_product_product_borderless_1">
       <xpath expr="//div[1]" position="replace">
          <div class="o_carousel_product_card w-100 card border-0 bg-product">
