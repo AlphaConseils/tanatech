@@ -73,6 +73,7 @@
   font-family: raleway-variable, sans-serif;
   font-weight: 700;
   font-style: italic;
+  text-align: end !important;
 }
 
 .faqs {
@@ -124,4 +125,8 @@
 
 .title-slider {
     font-size: 75px;
+}
+
+.prod-name {
+    font-size: 15px !important;
 }

@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
 
-    <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
+    <template id="product_template" name="tanatech product template"
+        inherit_id="website_sale.products_item">
         <xpath expr="//form" position="attributes">
             <attribute name="class" add="p-2 bg-product" separator=" " />
         </xpath>
@@ -10,8 +11,37 @@
                 'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
         </xpath>
 
+        <xpath expr="//div[@class='o_wsale_product_information_text']" position="attributes">
+            <attribute name="class" add="d-flex justify-content-between align-items-center"
+                separator=" " />
+        </xpath>
+
+        <xpath expr="//div/h6" position="after">
+            <div class="d-flex justify-content-end align-items-end gap-2 flex-wrap">
+                <t t-set="template_price_vals" t-value="get_product_prices(product)" />
+                <div class="product_price" itemprop="offers" itemscope="itemscope"
+                    itemtype="http://schema.org/Offer">
+                    <t
+                        t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not website.prevent_zero_price_sale)">
+                        <del t-attf-class="text-muted me-1 h6 mb-2" style="white-space: nowrap;">
+                            <em class="small" t-esc="template_price_vals['base_price']"
+                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        </del>
+                    </t>
+                    <span itemprop="price" style="display:none;"
+                        t-esc="template_price_vals['price_reduce']" />
+                    <span itemprop="priceCurrency" style="display:none;"
+                        t-esc="website.currency_id.name" />
+                </div>
+            </div>
+        </xpath>
+
         <xpath expr="//h6" position="attributes">
-            <attribute name="class" add="fw-bolder" separator=" " />
+            <attribute name="class" add="fw-bolder text-truncate w-50 prod-name" separator=" " />
+        </xpath>
+
+        <xpath expr="//div[2]//div[2]//em" position="attributes">
+            <attribute name="class" add="d-none" separator=" " />
         </xpath>
 
         <xpath expr="//span[hasclass('h6') and hasclass('mb-0')][1]" position="attributes">
@@ -24,26 +54,40 @@
         </xpath>
 
         <xpath expr="//div[@class='product_price']" position="attributes">
-            <attribute name="class" add="w-100 d-flex justify-content-between align-items-center"
+            <attribute name="class" add="w-100 d-flex justify-content-end align-items-center"
                 separator=" " />
+        </xpath>
+        <xpath expr="//div[contains(@class, 'o_wsale_product_sub')]" position="attributes">
+            <attribute name="class">
+                o_wsale_product_sub d-flex justify-content-end align-items-end gap-2 flex-wrap
+            </attribute>
         </xpath>
 
         <xpath expr="//div/div[2]" position="after">
             <!-- Bouton Ajouter au panier -->
             <div t-if="product._is_add_to_cart_possible()" class="mt-2">
-                <input type="hidden" name="product_id" t-att-value="product.id"/>
-                <input type="hidden" name="add_qty" value="1"/>
+                <input type="hidden" name="product_id" t-att-value="product.id" />
+                <input type="hidden" name="add_qty" value="1" />
                 <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
-                    <button data-animation-selector=".o_wsale_product_images" type="submit" class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
-                        <span class="text-nowrap fw-bolder" style="font-size: 10px;">Ajouter au panier</span>
+                    <button data-animation-selector=".o_wsale_product_images" type="submit"
+                        class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
+                        <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Ajouter
+                            au panier</span>
                     </button>
-                    <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle" contenteditable="false" style="max-width: 120px; height: 30px;">
-                        <a t-attf-href="#" class="btn btn-link btn-sm js_add_cart_json bg-o-color-2" aria-label="Remove one" title="Remove one">
-                            <i class="fa fa-minus"/>
+                    <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle"
+                        contenteditable="false" style="max-width: 120px; height: 30px;">
+                        <a t-attf-href="#"
+                            class="btn btn-link btn-sm js_add_cart_json bg-o-color-2 text-white"
+                            aria-label="Remove one" title="Remove one">
+                            <i class="fa fa-minus" />
                         </a>
-                        <input type="text" class="form-control quantity text-center bg-o-color-2" data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;"/>
-                        <a t-attf-href="#" class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2" aria-label="Add one" title="Add one">
-                            <i class="fa fa-plus"/>
+                        <input type="text"
+                            class="form-control quantity text-center bg-o-color-2 text-white"
+                            data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;" />
+                        <a t-attf-href="#"
+                            class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2 text-white"
+                            aria-label="Add one" title="Add one">
+                            <i class="fa fa-plus" />
                         </a>
                     </div>
                 </div>
@@ -53,9 +97,11 @@
         <xpath expr="//form" position="attributes">
             <attribute name="class">oe_product_cart h-100 d-flex js_add_cart_variants</attribute>
         </xpath>
+        
     </template>
 
-    <template id="similar_protduct_template" name="Produit similaire" inherit_id="website_sale.alternative_products">
+    <template id="similar_protduct_template" name="Produit similaire"
+        inherit_id="website_sale.alternative_products">
         <xpath expr="//div[hasclass('css_non_editable_mode_hidden')]" position="before">
             <h1 class="my-5">Similar products</h1>
         </xpath>
@@ -68,10 +114,15 @@
                 <div class="row px-5">
                     <span>Offers</span>
                     <h1>Solar Energy</h1>
-                    <p>Découvrez nos solutions solaires fiables et accessibles pour un avenir plus vert à Madagascar.</p>
+                    <p>Découvrez nos solutions solaires fiables et accessibles pour un avenir plus
+                        vert à Madagascar.</p>
                     <div class="d-flex">
-                        <buton class="btn btn-primary me-3 shadow-sm"><a class="text-decoration-none text-white">Acheter</a></buton>
-                        <buton class="btn btn-warning shadow-sm"><a class="text-decoration-none text-dark">Contact</a></buton>
+                        <buton class="btn btn-primary me-3 shadow-sm">
+                            <a class="text-decoration-none text-white">Acheter</a>
+                        </buton>
+                        <buton class="btn btn-warning shadow-sm">
+                            <a class="text-decoration-none text-dark">Contact</a>
+                        </buton>
                     </div>
                 </div>
             </div>
@@ -84,17 +135,25 @@
                 <div class="row px-5">
                     <div class="col-md-6">
                         <div class="w-75">
-                            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, molestias.</h1>
+                            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem,
+                                molestias.</h1>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi nemo eius, minus quis facere necessitatibus odit modi! Quisquam, perferendis laudantium dignissimos reiciendis porro quae vitae facilis ex vel, alias aperiam!</p>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi nemo
+                            eius, minus quis facere necessitatibus odit modi! Quisquam, perferendis
+                            laudantium dignissimos reiciendis porro quae vitae facilis ex vel, alias
+                            aperiam!</p>
                         <div class="d-flex">
-                            <buton class="btn btn-primary me-3 shadow-sm"><a class="text-decoration-none text-white">Acheter maintenant</a></buton>
-                            <buton class="btn btn-warning shadow-sm"><a class="text-decoration-none text-dark">Discuter</a></buton>
+                            <buton class="btn btn-primary me-3 shadow-sm">
+                                <a class="text-decoration-none text-white">Acheter maintenant</a>
+                            </buton>
+                            <buton class="btn btn-warning shadow-sm">
+                                <a class="text-decoration-none text-dark">Discuter</a>
+                            </buton>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
