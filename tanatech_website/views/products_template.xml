@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
 
-    <template id="product_template" name="tanatech product template"
-        inherit_id="website_sale.products_item">
+    <template id="product_template" name="tanatech product template" inherit_id="website_sale.products_item">
         <xpath expr="//form" position="attributes">
             <attribute name="class" add="p-2 bg-product" separator=" " />
         </xpath>
@@ -92,10 +91,6 @@
                     </div>
                 </div>
             </div>
-        </xpath>
-
-        <xpath expr="//form" position="attributes">
-            <attribute name="class">oe_product_cart h-100 d-flex js_add_cart_variants</attribute>
         </xpath>
         
     </template>
