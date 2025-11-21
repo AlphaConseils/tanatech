@@ -16,20 +16,52 @@
     </xpath>
     <xpath expr="//p[@name='payment_communication']" position="after">
       <div class="row" style="margin-top:100px">
-          <div class="col-8">
-            <span>
-              <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
-                Responsable</span>
-            </span>
-          </div>
-          <div class="col-4">
-            <span>
-              <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
-                Client</span>
-            </span>
-          </div>
+        <div class="col-8">
+          <span>
+            <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
+              Responsable</span>
+          </span>
         </div>
+        <div class="col-4">
+          <span>
+            <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
+              Client</span>
+          </span>
+        </div>
+      </div>
     </xpath>
+    <!-- For factures sans paiement A4 -->
+    <xpath expr="//div[@id='partner_vat_address_not_same_as_shipping']" position="after">
+      <div class="col-8" style="font-size: 13px">
+        <t t-if="o.journal_id.name!='Factures clients NA'">
+          <div t-if="o.partner_id.x_studio_nif_1"> NIF: <span
+              t-field="o.partner_id.x_studio_nif_1" /></div>
+          <div t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span
+              t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
+        </t>
+      </div>
+    </xpath>
+    <xpath expr="//div[@id='partner_vat_address_same_as_shipping']" position="after">
+      <div class="col-8" style="font-size: 13px">
+        <t t-if="o.journal_id.name!='Factures clients NA'">
+          <div t-if="o.partner_id.x_studio_nif_1"> NIF: <span
+              t-field="o.partner_id.x_studio_nif_1" /></div>
+          <div t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span
+              t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
+        </t>
+      </div>
+    </xpath>
+    <xpath expr="//div[@id='partner_vat_no_shipping']" position="after">
+      <div class="col-8" style="font-size: 13px">
+        <t t-if="o.journal_id.name!='Factures clients NA'">
+          <div t-if="o.partner_id.x_studio_nif_1"> NIF: <span
+              t-field="o.partner_id.x_studio_nif_1" /></div>
+          <div t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span
+              t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
+        </t>
+      </div>
+    </xpath>
+    <!-- End factures sans paiement A4 -->
   </template>
 
 </odoo>
