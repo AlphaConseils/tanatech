@@ -130,7 +130,7 @@
                     <span t-field="line.product_uom" />
                   </td>
                   <td name="td_priceunit" class="text-right">
-                    <span t-field="line.price_unit"
+                    <span t-esc="line.price_total / line.product_uom_qty"
                       t-options='{"widget": "monetary", "display_currency": currency_id}'
                     />
                   </td>
@@ -139,7 +139,7 @@
                     <span t-field="line.discount" />
                   </td>
                   <td name="td_subtotal" class="text-right o_price_total">
-                    <span t-field="line.price_subtotal"
+                    <span t-field="line.price_total"
                       t-options='{"widget": "monetary", "display_currency": currency_id}'
                       groups="tanatech_account.group_show_line_subtotals_tax_excluded" />
                     <span t-field="line.price_total"
