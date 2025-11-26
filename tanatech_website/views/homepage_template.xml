@@ -24,24 +24,25 @@
                         <!-- Slides dynamiques -->
                         <div class="carousel-inner slide">
                             <t t-foreach="slider_images" t-as="slide">
-                                <div t-att-class="'carousel-item text-white %s' % ('active' if slide_index == 0 else '')" 
+                                <div
+                                    t-att-class="'carousel-item text-white %s' % ('active' if slide_index == 0 else '')"
                                     t-attf-style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or 'tanatech_website/static/src/img/image1.jpeg'}); background-size: cover; background-position: center;">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-12">
                                                 <div class="titre p-5">
-                                                    <p class="lh-1 title-slider" t-field="slide.title"/>TITLE
-                                                </div>
+                                                    <p class="lh-1 title-slider"
+                                                        t-field="slide.title" />TITLE </div>
                                             </div>
                                             <div class="col-lg-6 col-md-12">
-                                                <p class="p-5" t-field="slide.note"/>
+                                                <p class="p-5" t-field="slide.note" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </t>
                         </div>
-                        
+
                         <!-- Contrôles -->
                         <button class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
