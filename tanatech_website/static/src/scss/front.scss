@@ -130,3 +130,9 @@
 .prod-name {
     font-size: 15px !important;
 }
+
+.container-wide {
+    max-width: 2048px;  /* ou 1400px selon ton design */
+    margin: 0 auto;
+    width: 100%;
+}

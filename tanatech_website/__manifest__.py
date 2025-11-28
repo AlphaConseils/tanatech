@@ -6,7 +6,7 @@
     "author": "A.Maximilien",
     "depends": ["base", "website_sale", "auth_oauth"],
     "data": [
-        # "data/website_page.xml",
+        "data/website_page.xml",
         "security/ir.model.access.csv",
         "views/website_slider_image_views.xml",
         "views/assistance.xml",
