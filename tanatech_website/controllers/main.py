@@ -153,17 +153,17 @@ class WebsiteProduct(http.Controller):
             "products": products,
         }
 
-    @http.route("/get_home_slide", type="json", auth="public", website=True)
-    def get_home_slide(self):
-        slides = (
-            request.env["website.slider.image"]
-            .sudo()
-            .search_read(
-                [("website_published", "=", True)],
-                fields=["title", "image", "id", "note"],
-            )
-        )
+    # @http.route("/get_home_slide", type="json", auth="public", website=True)
+    # def get_home_slide(self):
+    #     slides = (
+    #         request.env["website.slider.image"]
+    #         .sudo()
+    #         .search_read(
+    #             [("website_published", "=", True)],
+    #             fields=["title", "image", "id", "note"],
+    #         )
+    #     )
 
-        return {
-            "images": slides,
-        }
+    #     return {
+    #         "images": slides,
+    #     }
