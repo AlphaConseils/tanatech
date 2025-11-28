@@ -70,8 +70,7 @@
                 <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
                     <button data-animation-selector=".o_wsale_product_images" type="submit"
                         class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
-                        <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Ajouter
-                            au panier</span>
+                        <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
                     </button>
                     <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle"
                         contenteditable="false" style="max-width: 120px; height: 30px;">
