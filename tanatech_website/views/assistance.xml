@@ -131,4 +131,10 @@
             </div>
         </t>
     </template>
+
+    <template id="website_search_box_input_inherit" inherit_id="website.website_search_box_input">
+        <xpath expr="//form" position="attributes">
+            <attribute name="t-attf-class" add="w-75" separator=" "/>
+        </xpath>
+    </template>
 </odoo>
