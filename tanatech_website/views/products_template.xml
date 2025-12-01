@@ -153,5 +153,10 @@
         </section>
     </template>
 
+    <template id="tanatech_add_grid_or_list_option" name="Tanatech grid or list option" inherit_id="website_sale.add_grid_or_list_option">
+        <xpath expr="//div[1]" position="attributes">
+             <attribute name="t-attf-class" add="d-none d-md-flex" separator=" "/>
+        </xpath>
+    </template>
 
 </odoo>
