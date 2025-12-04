@@ -189,7 +189,7 @@
                                                         </label>
                                                         <div class="col-sm">
                                                             <div class="row s_col_no_resize s_col_no_bgcolor s_website_form_multiple" data-name="list_ids" data-display="horizontal">
-                                                                <t t-foreach="request.env['mailing.list'].search([('is_public', '=', True)])" t-as="record">
+                                                                <t t-foreach="request.env['mailing.list'].sudo().search([('is_public', '=', True)])" t-as="record">
                                                                     <div class="checkbox col-12 col-lg-4 col-md-6">
                                                                         <div class="form-check">
                                                                             <input type="checkbox" class="s_website_form_input form-check-input" name="list_ids" t-attf-id="mailing_list_#{record.id}" t-att-value="record.id" required="1" checked="1"/>
