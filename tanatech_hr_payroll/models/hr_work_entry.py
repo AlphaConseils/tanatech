@@ -8,7 +8,7 @@ import pytz
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
 
-    is_just_to_trigger_depends_method = fields.Boolean('Nothing but trigger', compute="_compute_check_overtime_work_entry_type", default=False, store=True)
+    is_just_to_trigger_depends_method = fields.Boolean('Nothing but trigger', compute="_compute_check_overtime_work_entry_type", default=False, store=False)
 
     work_entry_type_id = fields.Many2one('hr.work.entry.type', store=True)
 
