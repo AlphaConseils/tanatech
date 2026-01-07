@@ -12,6 +12,7 @@
     "data": [
         # security
         'security/ir.model.access.csv',
+        'security/res_groups.xml',
         # data
         'data/ir_actions_server_data.xml',
         # views
