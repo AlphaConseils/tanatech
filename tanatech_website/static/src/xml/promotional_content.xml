@@ -18,7 +18,7 @@
                             <div class="swiper-slide">
                                 <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-product p-3">
                                     <img t-att-src="product.image_url" class="card-img-top" />
-                                    <div class="card-body bg-product p-0">
+                                    <div class="card-body shadow-none bg-product p-0">
                                         <span class="badge bg-danger position-absolute m-2" style="z-index: 2; left: 5%; top: 5%;">-15%</span>
                                         <div class="ratio ratio-1x1">
                                             <t t-if="product.image_512">
@@ -30,7 +30,7 @@
                                         </div>
 
                                         <div class="mt-3 d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="fw-bold product-title text-truncate">
+                                            <h6 class="fw-bold product-title text-truncate w-50">
                                                 <t t-esc="product.name"/>
                                             </h6>
                                             <del class="text-muted">3529000 Ar</del>
@@ -40,6 +40,29 @@
                                         <p class="text-end">
                                             <strong class="ms-2 text-dark">3000000 Ar</strong>
                                         </p>
+
+                                        <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
+                                            <button data-animation-selector=".o_wsale_product_images" type="submit"
+                                                class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
+                                                <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
+                                            </button>
+                                            <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle"
+                                                contenteditable="false" style="max-width: 120px; height: 30px;">
+                                                <a t-attf-href="#"
+                                                    class="btn btn-link btn-sm js_add_cart_json bg-o-color-2 text-white"
+                                                    aria-label="Remove one" title="Remove one">
+                                                    <i class="fa fa-minus" />
+                                                </a>
+                                                <input type="text"
+                                                    class="form-control quantity text-center bg-o-color-2 text-white"
+                                                    data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;" />
+                                                <a t-attf-href="#"
+                                                    class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2 text-white"
+                                                    aria-label="Add one" title="Add one">
+                                                    <i class="fa fa-plus" />
+                                                </a>
+                                            </div>
+                                        </div>
                                         <!-- <button class="btn btn-primary">Add to cart</button>
                                         <div class="btn-group btn-group-sm">
                                             <button class="btn btn-warning">−</button>
