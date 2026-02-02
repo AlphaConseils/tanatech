@@ -34,7 +34,7 @@
                                 </div>
 
                                 <!-- Infos produit -->
-                                <div class="card-body bg-product p-0 mt-3">
+                                <div class="card-body bg-product shadow-none p-0 mt-3">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <h6 class="fw-bold mb-1 w-75 text-truncate " style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <t t-esc="product.name"/>
@@ -46,14 +46,28 @@
                                     <div class="mb-2 text-end">
                                         <span class="fw-bold text-dark">3 000 000 Ar</span>
                                     </div>
-                                    <!-- <div class="d-flex justify-content-between align-items-center">
-                                        <button class="btn btn-outline-success btn-sm">Ajouter au panier</button>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-warning">−</button>
-                                            <input type="text" value="1" class="text-center" style="width: 40px;" />
-                                            <button class="btn btn-warning">+</button>
+                                    <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
+                                        <button data-animation-selector=".o_wsale_product_images" type="submit"
+                                            class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
+                                            <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
+                                        </button>
+                                        <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle"
+                                            contenteditable="false" style="max-width: 120px; height: 30px;">
+                                            <a t-attf-href="#"
+                                                class="btn btn-link btn-sm js_add_cart_json bg-o-color-2 text-white"
+                                                aria-label="Remove one" title="Remove one">
+                                                <i class="fa fa-minus" />
+                                            </a>
+                                            <input type="text"
+                                                class="form-control quantity text-center bg-o-color-2 text-white"
+                                                data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;" />
+                                            <a t-attf-href="#"
+                                                class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2 text-white"
+                                                aria-label="Add one" title="Add one">
+                                                <i class="fa fa-plus" />
+                                            </a>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>

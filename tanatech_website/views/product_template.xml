@@ -32,7 +32,7 @@
       <xpath expr="//t/t/div/section/div[2]/div[2]/div[1]" position="replace"></xpath>
       <xpath expr="//t/t/div/section/div[2]/div[2]/form/div/div[1]/t[1]" position="replace">
          <div class="d-flex justify-content-between align-items-start">
-            <h1 itemprop="name" t-field="product.name" class="mt-2">Product Name</h1>
+            <h1 itemprop="name" t-field="product.name" class="mt-2 w-50">Product Name</h1>
             <t t-call="website_sale.product_price"/>
          </div>
          <t t-if="is_view_active('website_sale.product_comment')">
@@ -45,7 +45,17 @@
                </t>
             </a>
          </t>
-         <div t-field="product.description_ecommerce" class="oe_structure my-3" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+         <div t-field="product.description_ecommerce" class="oe_structure my-3 d-none" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+      </xpath>
+
+      <xpath expr="//div[@id='add_to_cart_wrap']" position="replace">
+         <div id="add_to_cart_wrap"
+            t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center mb-2 me-auto w-100">
+            <a data-animation-selector=".o_wsale_product_images" role="button" id="add_to_cart"
+               t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 text-white" href="#">
+               <i class="fa fa-shopping-cart me-2" /> Add to cart </a>
+         </div>
+         <div id="product_option_block" class="d-flex flex-wrap w-100" />
       </xpath>
       
       <xpath expr="//t[@t-call='website_sale.product_accordion']" position="after">
@@ -60,7 +70,10 @@
                </h2>
                <div id="flush-collapseOne" class="accordion-collapse collapse"
                   aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div>
+                  <div class="accordion-body px-0">
+                     <div t-field="product.description_ecommerce" class="oe_structure"
+                        placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features." />
+                  </div>
                </div>
             </div>
             <div class="accordion-item">
