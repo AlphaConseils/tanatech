@@ -2,9 +2,9 @@
 <templates xml:space="preserve">
     <t t-name="tanatech_website.category_data">
         <section class="categories_section py-5">
-            <div class="container-wide px-4 px-md-5">
+            <div class="container-fluid px-md-5">
                 <!-- Titre de la section -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
                     <div>
                         <h2 class="fw-bold">Categories</h2>
                         <p class="text-muted">Discover our selection of reliable solar solutions.</p>
@@ -13,12 +13,12 @@
                 </div>
 
                 <!-- Grille des catégories -->
-                <div class="row g-4">
+                <div class="row g-4 brand-padding">
                     <t t-foreach="result.categories" t-as="category" t-key="category.id">
                         <div class="col-6 col-md-4 col-lg-3 mt-5">
                             <a t-att-href="'/shop/category/'+ category.id" class="text-decoration-none text-dark">
                                 <!-- <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden"> -->
-                                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                                <div class="card shadow-sm border-0 rounded-item overflow-hidden">
                                     <div class="ratio ratio-1x1">
                                         <t t-if="category.image_512">
                                             <img t-att-src="'data:image/png;base64,' + category.image_512" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name or 'Image catégorie'" />

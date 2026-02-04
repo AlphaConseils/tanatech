@@ -31,11 +31,11 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-12">
                                                 <div class="titre p-5">
-                                                    <p class="lh-1 title-slider" t-field="slide.title"/>
+                                                    <p class="lh-1 title-slider fw-semi-bold" t-field="slide.title"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-12">
-                                                <p class="p-5" t-field="slide.note"/>
+                                                <p class="p-5 fs-5" t-field="slide.note"/>
                                             </div>
                                         </div>
                                     </div>
@@ -125,6 +125,7 @@
             <t t-snippet="tanatech_website.faqs_section" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_offer_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_decovery_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+            <t t-snippet="tanatech_website.tanatech_brand_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
         </xpath>
     </template>
 

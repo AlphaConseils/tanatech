@@ -85,33 +85,79 @@
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
         <section class="s_tanatech_publicity">
-            <div class="container-fluid p-3 my-5">
+            <div class="container-fluid py-3 my-5">
                 <div class="row">
-                    <div class="d-flex justify-content-evenly align-items-center flex-wrap px-5" style="">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap brand-padding" style="">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-sun " style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Who is GreenShop</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is GreenShop</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-box" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Home deliverye</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home deliverye</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-basket-shopping" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Authentic products</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Authentic products</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-shield" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Guarantee</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Guarantee</a></span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="tanatech_brand_template" name="Grande marque">
+        <section class="s_tanatech_brand">
+            <div class="container-fluid">
+                <div class="row text-center">
+                    <h1 class="mb-5">Nos grandes marques</h1>
+                    <div class="carousel-wrapper d-flex justify-content-between brand-padding">
+                        <button class="carousel-control-prev" type="button" id="prevBtn">
+                            <div
+                                class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
+                            </div>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+
+                        <div class="carousel-track d-flex justify-content-between" id="carouselTrack">
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/epever.png"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/solis.jpg"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/BYD_Company.svg"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/fronius-hd.png"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Greengywatt.jpg"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Growatt-logo.png"/></button>
+                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Logo_SMA.svg"/></button>
+                        </div>
+
+                        <button class="carousel-control-next" type="button" id="nextBtn">
+                            <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-right" style="color: #000000;"></i>
+                            </div>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <div class="indicators">
+                        <div class="indicator active" data-index="0"></div>
+                        <div class="indicator" data-index="1"></div>
+                        <div class="indicator" data-index="2"></div>
+                        <div class="indicator" data-index="3"></div>
+                        <div class="indicator" data-index="4"></div>
+                        <div class="indicator" data-index="5"></div>
+                        <div class="indicator" data-index="6"></div>
                     </div>
                 </div>
             </div>

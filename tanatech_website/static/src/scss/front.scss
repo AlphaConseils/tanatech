@@ -1,3 +1,5 @@
+
+
 .btn-primary {
     background-color: #96BC1F;
     border: 0cm ;
@@ -20,7 +22,10 @@
 }
 
 .titre {
-  margin-top: 20%;
+  margin-top: 15%;
+  align-items: center;
+  display: flex;
+
 }
 
 .arrow {
@@ -125,7 +130,7 @@
 }
 
 .title-slider {
-    font-size: 75px;
+    font-size: 50px;
 }
 
 .prod-name {
@@ -137,3 +142,182 @@
     margin: 0 auto;
     width: 100%;
 }
+
+.s_tanatech_brand {
+  .container-fluid {
+    // max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    background: white;
+    padding: 40px 20px;
+  }
+
+  .carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+  }
+
+  .brand-padding{
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex: 1;
+    padding: 10px 0;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+  }
+
+    .carousel-button {
+      background: linear-gradient(135deg, #8bc34a 0%, #7cb342 100%);
+      color: white;
+      border: none;
+      padding: 20px 40px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(139, 195, 74, 0.3);
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .carousel-button img {
+      max-width: 100%;
+      max-height: 40px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+  .carousel-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(139, 195, 74, 0.4);
+    background: linear-gradient(135deg, #9ccc65 0%, #8bc34a 100%);
+  }
+
+  .carousel-button:active {
+    transform: translateY(0);
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    width: auto;
+    opacity: 1;
+  }
+
+  .arrow {
+    background: white;
+    border: 2px solid #e0e0e0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .arrow:hover {
+    background: #f5f5f5;
+    border-color: #8bc34a;
+  }
+
+  .arrow i {
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+
+  .arrow:hover i {
+    color: #8bc34a !important;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator.active {
+    background: #333;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .indicator:hover {
+    background: #999;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-button {
+      padding: 16px 32px;
+      font-size: 14px;
+      min-width: 140px;
+    }
+
+    .nav-button {
+      width: 36px;
+      height: 36px;
+    }
+
+    .brand-padding{
+      padding-left: 0rem;
+      padding-right: 0rem;
+    }
+
+    .carousel-wrapper {
+      gap: 10px;
+    }
+  }
+}
+
+.brand-padding{
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
