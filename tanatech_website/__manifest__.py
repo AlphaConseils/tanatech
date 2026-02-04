@@ -4,7 +4,7 @@
     "category": "Website",
     "version": "18.0.2.0.0",
     "author": "A.Maximilien",
-    "depends": ["base", "website_sale", "auth_oauth"],
+    "depends": ["base", "website", "website_sale", "auth_oauth"],
     "data": [
         "views/assistance.xml",
         "data/website_page.xml",
