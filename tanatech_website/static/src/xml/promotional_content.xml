@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.promotional_snippet">
-        <section class="promotions_section">
+        <section class="promotions_section" id="promotions" data-anchor="true">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
                     <div>

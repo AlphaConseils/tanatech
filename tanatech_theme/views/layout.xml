@@ -250,10 +250,10 @@
                                 <h6 class="fw-bold">Nos Produits</h6>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="#" class="text-white">Current Promotions</a>
+                                        <a href="/#promotions" class="text-white">Current Promotions</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">New products</a>
+                                        <a href="/#new_product" class="text-white">New products</a>
                                     </li>
                                     <li>
                                         <a href="#" class="text-white">Best Sellers</a>
