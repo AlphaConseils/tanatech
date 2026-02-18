@@ -229,7 +229,7 @@
                                 <h6 class="fw-bold">Nos Offres</h6>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="#" class="text-white">Kit solaires autonomes</a>
+                                        <a href="#" class="text-white">Kit off-grid</a>
                                     </li>
                                     <li>
                                         <a href="#" class="text-white">Kit on-grid</a>
@@ -250,10 +250,10 @@
                                 <h6 class="fw-bold">Nos Produits</h6>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="#" class="text-white">Current Promotions</a>
+                                        <a href="/#promotions" class="text-white">Current Promotions</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="text-white">New products</a>
+                                        <a href="/#new_product" class="text-white">New products</a>
                                     </li>
                                     <li>
                                         <a href="#" class="text-white">Best Sellers</a>
@@ -271,9 +271,9 @@
                                 <h6 class="fw-bold">Follow us</h6>
                                 <ul class="list-unstyled">
                                     <li><i class="icon-green ico-facebook me-2"></i> <a href="https://www.facebook.com/greenshopmada" target="_blank" class="text-decoration-none text-white">Facebook</a></li>
-                                    <li><i class="icon-green ico-instagram me-2"></i> <a href="#" class="text-decoration-none text-white" target="_blank">Instagram</a></li>
+                                    <li><i class="icon-green ico-instagram me-2"></i> <a href="https://www.instagram.com/green_shop.0?igsh=ZGRnaXd5Z3ZoNHp4" class="text-decoration-none text-white" target="_blank">Instagram</a></li>
                                     <!-- <li><i class="icon-green ico-x-twitter me-2"></i> X</li> -->
-                                    <li><i class="icon-green ico-linkedin me-2"></i> <a href="#" class=" text-decoration-none text-white" target="_blank">LinkedIn</a></li>
+                                    <li><i class="icon-green ico-linkedin me-2"></i> <a href="https://www.linkedin.com/company/31511734" class=" text-decoration-none text-white" target="_blank">LinkedIn</a></li>
                                     <!--<li> <i class="icon-green ico-youtube me-2"></i> Youtube</li> -->
                                 </ul>
                             </div>
