@@ -21,13 +21,17 @@
         "views/products_template.xml",
         "views/snippets.xml",
         "views/cdv_template.xml",
+        
+        # backend views
+        "views/back/logo_view.xml",
+        "views/back/data_logo.xml",
     ],
     "assets": {
         "web.assets_frontend": [
             # "tanatech_website/static/src/scss/web_loging.scss",
             "tanatech_website/static/src/libs/fontawesome/css/all.min.css",
             "tanatech_website/static/src/js/brand.js",
-            "tanatech_website/static/lib/**/*",
+            "tanatech_website/static/lib/**",
             "tanatech_website/static/src/**/*",
         ],
     },
