@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    <record id="partner_logo_1" model="partner.logo">
+        <field name="name">BYD</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/BYD_Company.svg"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_2" model="partner.logo">
+        <field name="name">Epever</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/epever.png"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_3" model="partner.logo">
+        <field name="name">Fronius</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/fronius-hd.png"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_4" model="partner.logo">
+        <field name="name">Greenwatt</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/Greengywatt.jpg"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_5" model="partner.logo">
+        <field name="name">Solis</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/solis.jpg"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_6" model="partner.logo">
+        <field name="name">SMA</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/Logo_SMA.svg"/>
+        <field name="website_published">True</field>
+    </record>
+    <record id="partner_logo_7" model="partner.logo">
+        <field name="name">Growatt</field>
+        <field name="image" type="base64" file="tanatech_website/static/src/img/logo/Growatt-logo.png"/>
+        <field name="website_published">True</field>
+    </record>
+</odoo>

@@ -119,46 +119,43 @@
     </template>
 
     <template id="tanatech_brand_template" name="Grande marque">
-        <section class="s_tanatech_brand">
+        <section class="s_tanatech_brand o_colored_level">
             <div class="container-fluid">
-                <div class="row text-center">
+                <div class="row text-center align-items-center">
                     <h1 class="mb-5">Nos grandes marques</h1>
-                    <div class="carousel-wrapper d-flex justify-content-between brand-padding">
-                        <button class="carousel-control-prev" type="button" id="prevBtn">
-                            <div
-                                class="arrow rounded d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
-                            </div>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
+                    <div class="col-11">
+                        <div class="ref-wrap">
+                            <section class="o_colored_level">
+                                <div class="swiper_client">
+                                    <div class="swiper-wrapper mb64 o_not_editable">
+                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                            t-as="logo">
+                                            <div class="swiper-slide">
+                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                                    class="img img-fluid mx-auto"
+                                                    t-att-alt="logo.name or ''"/>
+                                            </div>
+                                        </t>
 
-                        <div class="carousel-track d-flex justify-content-between" id="carouselTrack">
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/epever.png"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/solis.jpg"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/BYD_Company.svg"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/fronius-hd.png"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Greengywatt.jpg"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Growatt-logo.png"/></button>
-                            <button class="carousel-button"><img src="tanatech_website/static/src/img/Logo_SMA.svg"/></button>
+                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                            t-as="logo">
+                                            <div class="swiper-slide">
+                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                                    class="img img-fluid mx-auto"
+                                                    t-att-alt="logo.name or ''"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="mt-4 d-flex justify-content-space-between">
+                                        <div class="navigation-swip">
+                                            <span class="fa fa-arrow-left text-white me-3 rounded-circle bg-secondary"></span>
+                                            <span class="fa fa-arrow-right text-white rounded-circle bg-secondary"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-
-                        <button class="carousel-control-next" type="button" id="nextBtn">
-                            <div class="arrow rounded d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-arrow-right" style="color: #000000;"></i>
-                            </div>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-
-                    <div class="indicators">
-                        <div class="indicator active" data-index="0"></div>
-                        <div class="indicator" data-index="1"></div>
-                        <div class="indicator" data-index="2"></div>
-                        <div class="indicator" data-index="3"></div>
-                        <div class="indicator" data-index="4"></div>
-                        <div class="indicator" data-index="5"></div>
-                        <div class="indicator" data-index="6"></div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </section>

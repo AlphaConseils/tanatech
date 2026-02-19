@@ -333,3 +333,37 @@
   background-color: #dad9d9;
   font-weight: 700;
 }
+
+.ref-wrap {
+    overflow: hidden;
+}
+.ref-wrap img {
+    width: 80%;
+    height: 100px;
+    object-fit: contain;
+    // filter: grayscale(100%);
+    cursor: pointer;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    object-position: bottom;
+}
+.top_clt {
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.ref-wrap img:hover {
+    // filter: none;
+    transform: scale(1.5);
+}
+
+.swiper_client .swiper-wrapper {
+    transition-timing-function: linear; /* rythme constant, sans accélération/décélération */
+}
+
+.navigation-swip {
+    position: absolute;
+    bottom: -22px;
+    right: 60px;
+    display: flex;
+    // justify-content: space-between;
+    transform: translateY(-50%);
+}
