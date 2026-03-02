@@ -38,7 +38,7 @@
         <field name="priority">100</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="hide_partner" invisible="1" />
+                <field name="hide_partner" />
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="invisible">hide_partner</attribute>

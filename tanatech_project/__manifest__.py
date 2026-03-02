@@ -8,13 +8,14 @@
     "category": "Services/Project",
     "sequence": 999,
     "summary": "Organize and plan Tanatech's projects",
-    "depends": ["project", "sale_project"],
+    "depends": ["project", "sale_project", "industry_fsm"],
     "description": "",
     "data": [
         # data
         # 'data/translation.xml',
         "views/project_views.xml",
         "data/security.xml",
+        "views/project_task_views.xml",
     ],
     "installable": True,
     "auto_install": False,
