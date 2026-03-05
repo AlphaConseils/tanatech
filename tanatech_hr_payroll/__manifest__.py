@@ -9,7 +9,7 @@
     "website": "https://www.nexources.com/",
     "depends": [
         "hr_payroll", 
-        "tanatech_base", 
+        "tanatech_hr_contract", 
         "hr_attendance", 
         "mail", 
         "resource", 

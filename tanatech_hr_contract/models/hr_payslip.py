@@ -7,8 +7,6 @@ class HrPayslip(models.Model):
 
     is_from_undeclared_contract = fields.Boolean('Is from undeclared contract ?', compute='_compute_contract_category', store=True)
 
-    structure_domain_ids = fields.Many2many('hr.payroll.structure', compute='_compute_structure_domain_ids')
-
     @api.depends('contract_id')
     def _compute_contract_category(self):
         for payslip in self:
@@ -16,23 +14,6 @@ class HrPayslip(models.Model):
                 payslip.is_from_undeclared_contract = True
             else:
                 payslip.is_from_undeclared_contract = False
-
-    @api.depends('contract_id')
-    def _compute_structure_domain_ids(self):
-        for payslip in self:
-            if payslip.contract_id.contract_category == 'declared':
-                payslip.structure_domain_ids = self.env['hr.payroll.structure'].search([('is_declared_type', '=', True)])
-            else:
-                payslip.structure_domain_ids = self.env['hr.payroll.structure'].search([('is_declared_type', '=', False)])
-
-    # @api.depends('company_id', 'employee_id')
-    # def _compute_contract_domain_ids(self):
-    #     for payslip in self:
-    #         payslip.contract_domain_ids = self.env['hr.contract'].search([
-    #             ('company_id', '=', payslip.company_id.id),
-    #             ('employee_id', '=', payslip.employee_id.id),
-    #             ('state', 'in', ['open', 'open_not_declared', 'close']),
-    #         ])
 
     @api.model_create_multi
     def create(self, vals_list):

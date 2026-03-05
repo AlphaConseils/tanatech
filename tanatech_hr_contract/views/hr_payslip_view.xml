@@ -6,25 +6,12 @@
         <field name="model">hr.payslip</field>
         <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
         <field name="arch" type="xml">
-
             <xpath expr="//form" position="inside">
                 <field name="is_from_undeclared_contract" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='action_print_payslip']" position="attributes">
                 <attribute name="invisible">not line_ids or is_from_undeclared_contract</attribute>
             </xpath>
-
-            <xpath expr="//field[@name='contract_domain_ids']" position="after">
-                <field name="structure_domain_ids" invisible="1"/>
-            </xpath>
-
-            <xpath expr="//field[@name='struct_id']" position="attributes">
-                <attribute name="domain">[('id', 'in', structure_domain_ids)]</attribute>
-            </xpath>
-
-            <!-- <xpath expr="//button[@name='action_open_salary_attachments']" position="attributes">
-                <attribute name="invisible">salary_attachment_count == 0 or is_from_undeclared_contract</attribute>
-            </xpath> -->
 
         </field>
     </record>

@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='other']" position="inside">
                 <group name="overtime" string="Overtime">
-                    <field name="is_overtime" readonly="1"/>
+                    <field name="is_overtime" />
                     <field name="is_readonly_code" readonly="1" invisible="1"/>
                 </group>
             </xpath>
