@@ -125,32 +125,65 @@ class WebsiteProduct(http.Controller):
 
     @http.route("/get_new_products", auth="public", type="json", website=True)
     def get_new_products(self):
-        products = (
-            request.env["product.product"]
+        data = (
+            request.env["product.template"]
             .sudo()
             .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_512", "id", "list_price"],
+                [("is_published", "=", True), ("sale_ok", "=", True)],
+                fields=["name", "image_512", "list_price", "product_variant_ids"],
                 limit=8,
             )
         )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": tmpl["list_price"],
+            })
         return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
         }
 
     @http.route("/get_promotional_products", auth="public", type="json", website=True)
     def get_promotional_products(self):
-        products = (
-            request.env["product.product"]
+        data = (
+            request.env["product.template"]
             .sudo()
             .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_512", "id", "list_price"],
+                [
+                    ("is_published", "=", True),
+                    ("sale_ok", "=", True),
+                    ("compare_list_price", ">", 0),
+                ],
+                fields=["name", "image_512", "list_price", "compare_list_price", "product_variant_ids"],
                 limit=8,
             )
         )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            price = tmpl["list_price"]
+            compare_price = tmpl["compare_list_price"]
+            discount = round((compare_price - price) / compare_price * 100) if compare_price > price else 0
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": price,
+                "compare_list_price": compare_price,
+                "discount": discount,
+            })
         return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
         }
 
     # @http.route("/get_home_slide", type="json", auth="public", website=True)
