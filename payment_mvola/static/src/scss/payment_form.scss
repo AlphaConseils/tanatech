@@ -1,0 +1,49 @@
+.o_mvola_field {
+    width: 100%;
+}
+
+.o_mvola_input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    padding: 6px 10px;
+    transition: all .2s ease-in-out;
+}
+
+.o_mvola_input_wrapper:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+}
+
+.o_mvola_icon {
+    margin-right: 8px;
+    opacity: 0.6;
+    font-size: 18px;
+}
+
+#o_payment_mvola_num {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    background: transparent !important;
+}
+
+#o_payment_mvola_num::placeholder {
+    color: #aaa;
+}
+
+.o_mvola_error {
+    color: #d40b0b;
+    font-size: 13px;
+    margin-top: 4px;
+    min-height: 18px;
+}
+
+.o_mvola_input_wrapper.o_mvola_invalid {
+    border-color: #d40b0b !important;
+    box-shadow: 0 0 0 3px rgba(212, 11, 11, 0.15) !important;
+}
