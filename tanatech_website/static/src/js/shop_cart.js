@@ -2,6 +2,7 @@
 
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
+import wSaleUtils from "@website_sale/js/website_sale_utils";
 
 publicWidget.registry.TanaShopCart = publicWidget.Widget.extend({
     selector: '.oe_website_sale',
@@ -35,7 +36,7 @@ publicWidget.registry.TanaShopCart = publicWidget.Widget.extend({
         $btn.prop('disabled', true);
         try {
             const cartData = await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
-            this._updateCartCount(cartData);
+            wSaleUtils.updateCartNavBar(cartData);
             const productName = $wrap.closest('form').find('h6').text().trim();
             this._showCartToast(productName, qty);
         } catch (e) {
@@ -43,16 +44,6 @@ publicWidget.registry.TanaShopCart = publicWidget.Widget.extend({
         } finally {
             $btn.prop('disabled', false);
         }
-    },
-
-    _updateCartCount(cartData) {
-        if (!cartData || cartData.cart_quantity === undefined) return;
-        const $count = $('.my_cart_quantity');
-        if (!$count.length) return;
-        $count.text(cartData.cart_quantity);
-        const $icon = $count.closest('a');
-        $icon.addClass('tana-cart-bounce');
-        setTimeout(() => $icon.removeClass('tana-cart-bounce'), 600);
     },
 
     _showCartToast(productName, qty) {

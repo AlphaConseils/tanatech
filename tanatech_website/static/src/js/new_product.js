@@ -3,6 +3,7 @@
 import { renderToElement } from "@web/core/utils/render";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
+import wSaleUtils from "@website_sale/js/website_sale_utils";
 
 publicWidget.registry.NewProduct = publicWidget.Widget.extend({
     selector: '.new_products_section',
@@ -34,17 +35,6 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
                 },
             });
         }, 100);
-    },
-
-    _updateCartCount(cartData) {
-        if (!cartData || cartData.cart_quantity === undefined) return;
-        const $count = $('.my_cart_quantity');
-        if (!$count.length) return;
-        $count.text(cartData.cart_quantity);
-        // Bounce sur l'icône panier
-        const $icon = $count.closest('a');
-        $icon.addClass('tana-cart-bounce');
-        setTimeout(() => $icon.removeClass('tana-cart-bounce'), 600);
     },
 
     _showCartToast(productName, qty) {
@@ -98,7 +88,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
             $btn.prop('disabled', true);
             try {
                 const cartData = await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
-                this._updateCartCount(cartData);
+                wSaleUtils.updateCartNavBar(cartData);
                 this._showCartToast($card.find('h6').text().trim(), qty);
             } catch (e) {
                 console.error('Cart update error:', e);
