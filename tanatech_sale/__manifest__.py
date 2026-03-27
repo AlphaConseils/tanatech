@@ -11,6 +11,7 @@
     "description": "",
     "data": [
         # data
+        "data/sale_config.xml",
         # security
         "security/res_groups.xml",
         # views
