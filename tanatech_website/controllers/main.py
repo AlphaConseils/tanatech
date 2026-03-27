@@ -6,7 +6,7 @@ from odoo import http
 from odoo.tools import pycompat
 from odoo.tools.translate import _
 from odoo.http import request
-from odoo.addons.web.controllers.home import Home as WebHome
+# from odoo.addons.web.controllers.home import Home as WebHome
 from odoo.addons.web.controllers.utils import ensure_db
 
 SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
@@ -115,7 +115,7 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_1920", "id"], limit=8 
+                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8 
             )
         )
         values = {
@@ -125,49 +125,78 @@ class WebsiteProduct(http.Controller):
 
     @http.route("/get_new_products", auth="public", type="json", website=True)
     def get_new_products(self):
-        products = (
-            request.env["product.product"]
+        data = (
+            request.env["product.template"]
             .sudo()
             .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_1920", "id", "list_price"],
-                # limit=8,
+                [("is_published", "=", True), ("sale_ok", "=", True)],
+                fields=["name", "image_512", "list_price", "product_variant_ids"],
+                limit=8,
             )
         )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": tmpl["list_price"],
+            })
         return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
         }
 
     @http.route("/get_promotional_products", auth="public", type="json", website=True)
     def get_promotional_products(self):
-        products = (
-            request.env["product.product"]
+        data = (
+            request.env["product.template"]
             .sudo()
             .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_1920", "id", "list_price"],
-                # limit=8,
+                [
+                    ("is_published", "=", True),
+                    ("sale_ok", "=", True),
+                    ("compare_list_price", ">", 0),
+                ],
+                fields=["name", "image_512", "list_price", "compare_list_price", "product_variant_ids"],
+                limit=8,
             )
         )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            price = tmpl["list_price"]
+            compare_price = tmpl["compare_list_price"]
+            discount = round((compare_price - price) / compare_price * 100) if compare_price > price else 0
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": price,
+                "compare_list_price": compare_price,
+                "discount": discount,
+            })
         return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
         }
 
-    @http.route("/get_home_slide", type="json", auth="public", website=True)
-    def get_home_slide(self):
-        slides = (
-            request.env["website.slider.image"]
-            .sudo()
-            .search_read(
-                [("website_published", "=", True)],
-                fields=["name", "image", "id"],
-            )
-        )
-        # for rec in slides:
-        #     if rec["image"]:
-        #         rec["image"] = f"data:image/png;base64,{rec['image']}"
+    # @http.route("/get_home_slide", type="json", auth="public", website=True)
+    # def get_home_slide(self):
+    #     slides = (
+    #         request.env["website.slider.image"]
+    #         .sudo()
+    #         .search_read(
+    #             [("website_published", "=", True)],
+    #             fields=["title", "image", "id", "note"],
+    #         )
+    #     )
 
-        return {
-            "images": slides,
-        }
-        
+    #     return {
+    #         "images": slides,
+    #     }

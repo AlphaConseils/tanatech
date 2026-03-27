@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_task_form2_inherit_tanatech_project" model="ir.ui.view">
+        <field name="name">project.task.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="priority">2100</field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[2]" position="inside">
+                <field name="hide_partner" invisible="1" />
+            </xpath>
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible">hide_partner</attribute>
+            </field>           
+        </field>
+    </record>
+
+    <record id="project_task_view_tree_main_base_inherit_tanatech_project" model="ir.ui.view">
+        <field name="name">project.task.view.list.main.base</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.project_task_view_tree_main_base" />
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='partner_id']" position="after">
+                <field name="hide_partner" invisible="1"/>
+            </xpath>
+            <xpath expr="//list/field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">hide_partner</attribute>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="inherit_view_id_inherit_module_name" model="ir.ui.view">
+        <field name="name">model.name.view.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="industry_fsm.project_task_in_project_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hide_partner" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">hide_partner</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

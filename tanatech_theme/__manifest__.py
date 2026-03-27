@@ -19,6 +19,7 @@
         # ],
         "web._assets_primary_variables": [
             "tanatech_theme/static/src/scss/primary_variables.scss",
+            "tanatech_theme/static/src/scss/responsive_header.scss",
         ],
         "web.assets_frontend": [
             "tanatech_theme/static/src/core/emoji_picker.scss",

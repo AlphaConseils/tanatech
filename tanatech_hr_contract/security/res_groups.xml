@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Groupe pour restreindre l'accès au champ wage -->
+  <record id="group_restrict_field_wage" model="res.groups">
+    <field name="name">Restrict field wage</field>
+  </record>
+</odoo>

@@ -1,265 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="hr_contract_view_form_extent" model="ir.ui.view">
-        <field name="name">hr.contract.form.extent</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
-        <field name="arch" type="xml">
+  <record id="hr_contract_view_form_extent" model="ir.ui.view">
+    <field name="name">hr.contract.form.extent</field>
+    <field name="model">hr.contract</field>
+    <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+    <field name="arch" type="xml">
 
-            <xpath expr="//form" position="attributes">
-                <attribute name="duplicate">false</attribute>
-            </xpath>
+      <xpath expr="//form" position="attributes">
+        <attribute name="duplicate">false</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='hr_responsible_id']" position="before">
-                <field name="contract_category" readonly="1"/>
-                <field name="contract_id" readonly="1" invisible="contract_category != 'not_declared'" />
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='hr_responsible_id']" position="before">
+        <field name="contract_category" readonly="1"/>
+        <field name="contract_id" readonly="1" invisible="contract_category != 'not_declared'"/>
+      </xpath>
 
-            <xpath expr="//field[@name='name']" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='top_info_left']/field[@name='employee_id']" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//field[@name='name']" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//group[@name='top_info_left']/field[@name='employee_id']" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_left']/field[@name='date_start']" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//group[@name='top_info_left']/field[@name='date_start']" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_left']/div[@id='resource_calendar_warning']/field[@name='resource_calendar_id'][1]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='top_info_left']/div[@id='resource_calendar_warning']/field[@name='resource_calendar_id'][2]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath
+        expr="//group[@name='top_info_left']/div[@id='resource_calendar_warning']/field[@name='resource_calendar_id'][1]"
+        position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath
+        expr="//group[@name='top_info_left']/div[@id='resource_calendar_warning']/field[@name='resource_calendar_id'][2]"
+        position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_left']/field[@name='date_end']" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//group[@name='top_info_left']/field[@name='date_end']" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][1]" position="replace">
-                <field name="structure_type_id" groups="!hr_contract.group_hr_contract_manager" domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]" options="{'no_open': True, 'no_create': True}"/>
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][1]" position="replace">
+        <field name="structure_type_id" groups="!hr_contract.group_hr_contract_manager"
+               domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]"
+               options="{'no_open': True, 'no_create': True}"/>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][2]" position="replace">
-                <field name="structure_type_id" groups="hr_contract.group_hr_contract_manager" domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]"/>
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='structure_type_id'][2]" position="replace">
+        <field name="structure_type_id" groups="hr_contract.group_hr_contract_manager"
+               domain="['&amp;', '|', ('country_id', '=', False), ('country_id', '=', company_country_id), ('structure_category', '=', contract_category)]"/>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='department_id'][1]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='top_info_right']/field[@name='department_id'][2]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='department_id'][1]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='department_id'][2]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='job_id'][1]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='top_info_right']/field[@name='job_id'][2]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='job_id'][1]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='job_id'][2]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <xpath expr="//group[@name='top_info_right']/field[@name='contract_type_id'][1]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='top_info_right']/field[@name='contract_type_id'][2]" position="attributes">
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='contract_type_id'][1]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//group[@name='top_info_right']/field[@name='contract_type_id'][2]" position="attributes">
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
 
-            <!-- <xpath expr="//form/header" position="replace">
-                <header invisible="not id">
-                    <field name="state" groups="!hr_contract.group_hr_contract_manager" widget="statusbar" statusbar_visible="draft,open,close,cancel" readonly="contract_category == 'not_declared'"/>
-                    <field name="state" groups="hr_contract.group_hr_contract_manager" widget="statusbar" statusbar_visible="draft,open,close,cancel" readonly="contract_category == 'not_declared'" options="{'clickable': '1'}"/>
-                </header>
-            </xpath> -->
+      <!-- <xpath expr="//form/header" position="replace">
+          <header invisible="not id">
+              <field name="state" groups="!hr_contract.group_hr_contract_manager" widget="statusbar" statusbar_visible="draft,open,close,cancel" readonly="contract_category == 'not_declared'"/>
+              <field name="state" groups="hr_contract.group_hr_contract_manager" widget="statusbar" statusbar_visible="draft,open,close,cancel" readonly="contract_category == 'not_declared'" options="{'clickable': '1'}"/>
+          </header>
+      </xpath> -->
 
-            <xpath expr="//form/header/field[@name='state'][1]" position="attributes">
-                <attribute name="widget">statusbar_undeclared_contract</attribute>
-                <attribute name="statusbar_visible">draft,open,open_not_declared,close,cancel</attribute>
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//form/header/field[@name='state'][2]" position="attributes">
-                <attribute name="widget">statusbar_undeclared_contract</attribute>
-                <attribute name="statusbar_visible">draft,open,open_not_declared,close,cancel</attribute>
-                <attribute name="readonly">contract_category == 'not_declared'</attribute>
-            </xpath>
-            <xpath expr="//form/sheet/notebook/page[@name='information']/group" position="inside">
-                <group name="allowance_info">
-                    <group name="allowance">
-                        <label for="family_allowance"/>
-                        <div class="o_row mw-50" name="wage">
-                            <field name="family_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
-                        </div>
-                    </group>
-                </group>
-            </xpath>
-            
-        </field>
-    </record>
+      <xpath expr="//form/header/field[@name='state'][1]" position="attributes">
+        <attribute name="widget">statusbar_undeclared_contract</attribute>
+        <attribute name="statusbar_visible">draft,open,open_not_declared,close,cancel</attribute>
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//form/header/field[@name='state'][2]" position="attributes">
+        <attribute name="widget">statusbar_undeclared_contract</attribute>
+        <attribute name="statusbar_visible">draft,open,open_not_declared,close,cancel</attribute>
+        <attribute name="readonly">contract_category == 'not_declared'</attribute>
+      </xpath>
+      <xpath expr="//form/sheet/notebook/page[@name='information']/group" position="inside">
+        <group name="allowance_info">
+          <group name="allowance">
+            <label for="family_allowance"/>
+            <div class="o_row mw-50" name="wage">
+              <field name="family_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+            </div>
+          </group>
+        </group>
+      </xpath>
 
-    <record id="hr_contract_view_tree_extent" model="ir.ui.view">
-        <field name="name">hr.contract.list.extent</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
-        <field name="arch" type="xml">
+      <xpath expr="//field[@name='wage']" position="attributes">
+        <attribute name="groups">!tanatech_hr_contract.group_restrict_field_wage</attribute>
+      </xpath>
 
-            <xpath expr="//list" position="attributes">
-                <attribute name="js_class">contract_list_view</attribute>
-            </xpath>
+    </field>
+  </record>
 
-            <xpath expr="//list/field[@name='contract_type_id']" position="after">
-                <field name="contract_category" optional="hide"/>
-            </xpath>
-            <xpath expr="//list/field[@name='state']" position="replace">
-                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'close'" decoration-success="state in ('open', 'open_not_declared')"/>
-            </xpath>
-            
-        </field>
-    </record>
+  <record id="hr_contract_view_tree_extent" model="ir.ui.view">
+    <field name="name">hr.contract.list.extent</field>
+    <field name="model">hr.contract</field>
+    <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+    <field name="arch" type="xml">
 
-    <record id="hr_contract_view_kanban_extent" model="ir.ui.view">
-        <field name="name">hr.contract.kanban.extent</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
-        <field name="arch" type="xml">
+      <xpath expr="//list" position="attributes">
+        <attribute name="js_class">contract_list_view</attribute>
+      </xpath>
 
-            <xpath expr="//kanban" position="attributes">
-                <attribute name="js_class">contract_kanban_view</attribute>
-            </xpath>
-            
-        </field>
-    </record>
+      <xpath expr="//list/field[@name='contract_type_id']" position="after">
+        <field name="contract_category" optional="hide"/>
+      </xpath>
+      <xpath expr="//list/field[@name='state']" position="replace">
+        <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'close'"
+               decoration-success="state in ('open', 'open_not_declared')"/>
+      </xpath>
 
-    <record model="ir.ui.menu" id="hr_payroll.hr_menu_all_contracts">
-        <field name="active" eval="False" />
-    </record>
+    </field>
+  </record>
 
-    <menuitem
-        id="hr_menu_declared_contracts"
-        name="Declared Contracts"
-        action="hr_contract.action_hr_contract"
-        parent="hr_payroll.menu_hr_payroll_employees_root"
-        sequence="30"/>
+  <record id="hr_contract_view_kanban_extent" model="ir.ui.view">
+    <field name="name">hr.contract.kanban.extent</field>
+    <field name="model">hr.contract</field>
+    <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
+    <field name="arch" type="xml">
 
-    <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
-        <field name="domain">[('employee_id', '!=', False), ('contract_category', '=', 'declared')]</field>
-    </record>
+      <xpath expr="//kanban" position="attributes">
+        <attribute name="js_class">contract_kanban_view</attribute>
+      </xpath>
 
-    <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
-        <field name="context">{'create': True, 'search_default_group_by_state': 1}</field>
-    </record>
+    </field>
+  </record>
 
-    <record id="hr_contract_not_delcared_view_search" model="ir.ui.view">
-        <field name="name">hr.contract.not.declared.search</field>
-        <field name="model">hr.contract</field>
-        <field name="arch" type="xml">
-            <search string="Search Contract">
-                <field name="name" string="Contract"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
-                <field name="employee_id"/>
-                <field name="job_id"/>
-                <field name="contract_category" />
-                <field name="department_id" operator="child_of"/>
-                <field name="resource_calendar_id"/>
-                <filter string="Running Contracts" name="running" domain="[('state', '=', 'open_not_declared'), ('contract_category', '=', 'not_declared')]"/>
-                <filter string="Contracts to review" name="not_running" domain="[('state', 'in', ['draft', 'close']), ('contract_category', '=', 'not_declared')]"/>
-                <separator />
-                <filter string="Start Date" name="start_date" date="date_start" domain="[('contract_category', '=', 'not_declared')]"/>
-                <filter string="End Date" name="end_date" date="date_end" domain="[('contract_category', '=', 'not_declared')]"/>
-                <separator/>
-                <filter string="Archived" name="inactive" domain="[('active', '=', False), ('contract_category', '=', 'not_declared')]"/>
-                <separator/>
-                <group expand="0" string="Group By">
-                    <filter string="Status" name="group_by_state" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'state'}"/>
-                    <filter string="Employee" name="group_by_employee" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'employee_id'}"/>
-                    <filter string="Start Date" name="group_by_date_start" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'date_start'}"/>
-                    <filter string="Job Position" name="group_by_job" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'job_id'}"/>
-                    <filter string="Department" name="group_by_department" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'department_id'}"/>
-                    <filter string="Working Schedule" name="group_by_resource_calendar_id" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'resource_calendar_id'}"/>
-                    <filter string="Salary Structure Type" name="group_by_structure_type_id" domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'structure_type_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+  <record model="ir.ui.menu" id="hr_payroll.hr_menu_all_contracts">
+    <field name="active" eval="False"/>
+  </record>
 
-    <record id="action_hr_contract_not_declared" model="ir.actions.act_window">
-        <field name="name">Undeclared Contracts</field>
-        <field name="res_model">hr.contract</field>
-        <field name="view_mode">list,kanban,form,activity</field>
-        <field name="domain">[('employee_id', '!=', False), ('contract_category', '=', 'not_declared')]</field>
-        <field name="context">{'create': False, 'search_default_group_by_state': 1}</field>
-        <field name="search_view_id" ref="tanatech_hr_contract.hr_contract_not_delcared_view_search"/>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-            No undeclared contracts
-            </p>
-        </field>
-    </record>
+  <menuitem
+    id="hr_menu_declared_contracts"
+    name="Declared Contracts"
+    action="hr_contract.action_hr_contract"
+    parent="hr_payroll.menu_hr_payroll_employees_root"
+    sequence="30"/>
 
-    <menuitem
-        id="hr_menu_contract_not_declared"
-        name="Undeclared Contracts"
-        action="tanatech_hr_contract.action_hr_contract_not_declared"
-        parent="hr_payroll.menu_hr_payroll_employees_root"
-        sequence="31"/>
+  <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+    <field name="domain">[('employee_id', '!=', False), ('contract_category', '=', 'declared')]</field>
+  </record>
 
-    <!-- <record id="hr_contract_form_inherit_extent" model="ir.ui.view">
-        <field name="name">hr.contract.view.form.inherit.extent</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
-        <field name="arch" type="xml">
+  <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+    <field name="context">{'create': True, 'search_default_group_by_state': 1}</field>
+  </record>
 
-            <xpath expr="//button[@name='action_open_salary_attachments']" position="attributes">
-                <attribute name="invisible">contract_category == 'not_declared'</attribute>
-            </xpath>
-            
-        </field>
-    </record> -->
+  <record id="hr_contract_not_delcared_view_search" model="ir.ui.view">
+    <field name="name">hr.contract.not.declared.search</field>
+    <field name="model">hr.contract</field>
+    <field name="arch" type="xml">
+      <search string="Search Contract">
+        <field name="name" string="Contract"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="employee_id"/>
+        <field name="job_id"/>
+        <field name="contract_category"/>
+        <field name="department_id" operator="child_of"/>
+        <field name="resource_calendar_id"/>
+        <filter string="Running Contracts" name="running"
+                domain="[('state', '=', 'open_not_declared'), ('contract_category', '=', 'not_declared')]"/>
+        <filter string="Contracts to review" name="not_running"
+                domain="[('state', 'in', ['draft', 'close']), ('contract_category', '=', 'not_declared')]"/>
+        <separator/>
+        <filter string="Start Date" name="start_date" date="date_start"
+                domain="[('contract_category', '=', 'not_declared')]"/>
+        <filter string="End Date" name="end_date" date="date_end"
+                domain="[('contract_category', '=', 'not_declared')]"/>
+        <separator/>
+        <filter string="Archived" name="inactive"
+                domain="[('active', '=', False), ('contract_category', '=', 'not_declared')]"/>
+        <separator/>
+        <group expand="0" string="Group By">
+          <filter string="Status" name="group_by_state" domain="[('contract_category', '=', 'not_declared')]"
+                  context="{'group_by': 'state'}"/>
+          <filter string="Employee" name="group_by_employee" domain="[('contract_category', '=', 'not_declared')]"
+                  context="{'group_by': 'employee_id'}"/>
+          <filter string="Start Date" name="group_by_date_start" domain="[('contract_category', '=', 'not_declared')]"
+                  context="{'group_by': 'date_start'}"/>
+          <filter string="Job Position" name="group_by_job" domain="[('contract_category', '=', 'not_declared')]"
+                  context="{'group_by': 'job_id'}"/>
+          <filter string="Department" name="group_by_department" domain="[('contract_category', '=', 'not_declared')]"
+                  context="{'group_by': 'department_id'}"/>
+          <filter string="Working Schedule" name="group_by_resource_calendar_id"
+                  domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'resource_calendar_id'}"/>
+          <filter string="Salary Structure Type" name="group_by_structure_type_id"
+                  domain="[('contract_category', '=', 'not_declared')]" context="{'group_by': 'structure_type_id'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
 
-    <!-- action server -->
-    <record model="ir.actions.server" id="action_draft_contracts">
-        <field name="name">Set to draft</field>
-        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                action = records._set_to_draft()
-        </field>
-    </record>
+  <record id="action_hr_contract_not_declared" model="ir.actions.act_window">
+    <field name="name">Undeclared Contracts</field>
+    <field name="res_model">hr.contract</field>
+    <field name="view_mode">list,kanban,form,activity</field>
+    <field name="domain">[('employee_id', '!=', False), ('contract_category', '=', 'not_declared')]</field>
+    <field name="context">{'create': False, 'search_default_group_by_state': 1}</field>
+    <field name="search_view_id" ref="tanatech_hr_contract.hr_contract_not_delcared_view_search"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        No undeclared contracts
+      </p>
+    </field>
+  </record>
 
-    <record model="ir.actions.server" id="action_run_contracts">
-        <field name="name">Set to running</field>
-        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                action = records._set_to_running()
-        </field>
-    </record>
+  <menuitem
+    id="hr_menu_contract_not_declared"
+    name="Undeclared Contracts"
+    action="tanatech_hr_contract.action_hr_contract_not_declared"
+    parent="hr_payroll.menu_hr_payroll_employees_root"
+    sequence="31"/>
 
-    <record model="ir.actions.server" id="action_expire_contracts">
-        <field name="name">Set to expired</field>
-        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                action = records._set_to_expired()
-        </field>
-    </record>
+  <!-- <record id="hr_contract_form_inherit_extent" model="ir.ui.view">
+      <field name="name">hr.contract.view.form.inherit.extent</field>
+      <field name="model">hr.contract</field>
+      <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+      <field name="arch" type="xml">
 
-    <record model="ir.actions.server" id="action_cancel_contracts">
-        <field name="name">Set to cancelled</field>
-        <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                action = records._set_to_cancelled()
-        </field>
-    </record>
+          <xpath expr="//button[@name='action_open_salary_attachments']" position="attributes">
+              <attribute name="invisible">contract_category == 'not_declared'</attribute>
+          </xpath>
+
+      </field>
+  </record> -->
+
+  <!-- action server -->
+  <record model="ir.actions.server" id="action_draft_contracts">
+    <field name="name">Set to draft</field>
+    <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="state">code</field>
+    <field name="code">
+      if records:
+      action = records._set_to_draft()
+    </field>
+  </record>
+
+  <record model="ir.actions.server" id="action_run_contracts">
+    <field name="name">Set to running</field>
+    <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="state">code</field>
+    <field name="code">
+      if records:
+      action = records._set_to_running()
+    </field>
+  </record>
+
+  <record model="ir.actions.server" id="action_expire_contracts">
+    <field name="name">Set to expired</field>
+    <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="state">code</field>
+    <field name="code">
+      if records:
+      action = records._set_to_expired()
+    </field>
+  </record>
+
+  <record model="ir.actions.server" id="action_cancel_contracts">
+    <field name="name">Set to cancelled</field>
+    <field name="model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="binding_model_id" ref="tanatech_hr_contract.model_hr_contract"/>
+    <field name="state">code</field>
+    <field name="code">
+      if records:
+      action = records._set_to_cancelled()
+    </field>
+  </record>
 
 </odoo>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.promotional_snippet">
-        <section class="promotions_section my-5">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+        <section class="promotions_section" id="promotions" data-anchor="true">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
                     <div>
                         <h2 class="fw-bold">Our promotional offers</h2>
                         <p class="text-muted">Discover our discounted solar kits</p>
@@ -11,37 +11,77 @@
                     <a href="/shop" class="btn btn-primary">See all</a>
                 </div>
 
-                <!-- Swiper Container -->
-                <div class="swiper promotions-carousel">
+                <div class="swiper promotions-carousel brand-padding">
                     <div class="swiper-wrapper">
                         <t t-foreach="result.products" t-as="product" t-key="product.id">
                             <div class="swiper-slide">
-                                <div class="card h-100 shadow-sm rounded-4">
-                                    <img t-att-src="product.image_url" class="card-img-top" />
-                                    <div class="card-body text-center">
-                                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
-                                        <div class="ratio ratio-1x1">
-                                            <t t-if="product.image_1920">
-                                                <img t-att-src="'data:image/png;base64,' + product.image_1920" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" />
-                                            </t>
-                                            <t t-else="">
-                                                <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" alt="Image par défaut" />
-                                            </t>
+                                <div class="card h-100 border-0 shadow-sm rounded-item overflow-hidden position-relative bg-product p-3"
+                                    t-att-data-product-id="product.id">
+
+                                    <!-- Badge remise -->
+                                    <span class="badge bg-danger position-absolute m-2" style="z-index: 2; left: 5%; top: 5%;">
+                                        -<t t-esc="product.discount"/>%
+                                    </span>
+
+                                    <!-- Image -->
+                                    <div class="ratio ratio-1x1" style="z-index: 1;">
+                                        <t t-if="product.image_512">
+                                            <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name"/>
+                                        </t>
+                                        <t t-else="">
+                                            <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" alt="Image par défaut"/>
+                                        </t>
+                                    </div>
+
+                                    <div class="card-body shadow-none bg-product p-0 mt-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="fw-bold product-title text-truncate w-50">
+                                                <t t-esc="product.name"/>
+                                            </h6>
+                                            <!-- Prix barré (compare_list_price) -->
+                                            <del class="text-muted" style="font-size:13px;">
+                                                <t t-if="result.currency_position === 'before'">
+                                                    <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.compare_list_price.toLocaleString('fr-FR')"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="product.compare_list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
+                                                </t>
+                                            </del>
                                         </div>
 
-                                        <h6 class="fw-bold product-title text-truncate">
-                                            <t t-esc="product.name"/>
-                                        </h6>
-                                        <!-- <p class="text-muted">Variante</p> -->
-                                        <p>
-                                            <del class="text-muted">3529000 Ar</del>
-                                            <strong class="ms-2 text-dark">3000000 Ar</strong>
+                                        <!-- Prix de vente -->
+                                        <p class="text-end mb-2">
+                                            <strong class="text-dark">
+                                                <t t-if="result.currency_position === 'before'">
+                                                    <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.list_price.toLocaleString('fr-FR')"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="product.list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
+                                                </t>
+                                            </strong>
                                         </p>
-                                        <button class="btn btn-primary">Add to cart</button>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-warning">−</button>
-                                            <input type="text" value="1" class="text-center" style="width: 40px;" />
-                                            <button class="btn btn-warning">+</button>
+
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <button type="button"
+                                                class="btn btn-primary w-50 tana-add-to-cart d-flex align-items-center justify-content-center p-0 py-2">
+                                                <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
+                                            </button>
+                                            <div class="input-group input-group-sm ms-2 align-middle"
+                                                contenteditable="false" style="max-width: 120px; height: 30px;">
+                                                <a href="#"
+                                                    class="btn btn-link btn-sm tana-qty-minus bg-o-color-2 text-white"
+                                                    aria-label="Remove one" title="Remove one">
+                                                    <i class="fa fa-minus"/>
+                                                </a>
+                                                <input type="text"
+                                                    class="form-control tana-qty text-center bg-o-color-2 text-white"
+                                                    data-min="1" value="1" style="max-width: 50px;"/>
+                                                <a href="#"
+                                                    class="btn btn-link btn-sm tana-qty-plus bg-o-color-2 text-white"
+                                                    aria-label="Add one" title="Add one">
+                                                    <i class="fa fa-plus"/>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -49,17 +89,15 @@
                         </t>
                     </div>
 
-                    <div class="swiper-bottom-controls">
+                    <div class="swiper-bottom-controls brand-padding">
                         <div class="swiper-pagination"></div>
                         <div class="swiper-navigation-buttons">
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </section>
-
     </t>
 </templates>

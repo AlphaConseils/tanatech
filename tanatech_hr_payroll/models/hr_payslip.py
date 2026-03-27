@@ -6,7 +6,7 @@ import logging
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
-    is_undeclared_payslip = fields.Boolean('Is undeclared payslip ?', compute="_define_payslip_nature", default=False, store=True)
+    is_undeclared_payslip = fields.Boolean('Is undeclared payslip ?', compute="_define_payslip_nature", default=False, store=False)
     @api.depends('contract_id')
     def _define_payslip_nature(self):
         for payslip in self:
@@ -19,6 +19,15 @@ class HrPayslip(models.Model):
     employee_id = fields.Many2one(
         'hr.employee', required=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), '|', ('active', '=', True), ('active', '=', False)]")
+    
+
+    def _compute_contract_domain_ids(self):
+        for payslip in self:
+            payslip.contract_domain_ids = self.env['hr.contract'].search([
+                ('company_id', '=', payslip.company_id.id),
+                ('employee_id', '=', payslip.employee_id.id),
+                ('state', 'in', ['open', 'open_not_declared', 'close']),
+            ])
 
     def action_open_overtime(self):
         self.ensure_one()

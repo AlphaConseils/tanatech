@@ -1,132 +1,116 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <template id="tanatech_slide_template" name="Tanatech Slider section">
+    <template id="tanatech_slide_template" name="Tanatech Slider section 2">
         <section class="s_tanatech_slider">
             <div class="container-fluid">
                 <div class="row">
+                    <span>etst</span>
                     <div id="carouselExampleIndicators" class="carousel slide p-0" data-bs-ride="carousel">
+                        <t t-set="slider_images" t-value="request.env['website.slider.image'].search([('website_published', '=', True), ('website_id', '=', request.website.id)], order='sequence')"/>
+                        <t t-set="carousel_id" t-value="'carouselTanatech%s' % int(time.time() * 1000)"/>
+                        
+                        <!-- Indicators dynamiques -->
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to="0" class="active" aria-current="true"
-                                aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <t t-foreach="slider_images" t-as="slide">
+                                <button type="button" 
+                                        t-att-data-bs-target="'#' + carousel_id"
+                                        t-att-data-bs-slide-to="slide_index" 
+                                        t-att-class="'active' if slide_index == 0 else ''"
+                                        t-att-aria-current="'true' if slide_index == 0 else None"
+                                        t-att-aria-label="'Slide %s' % (slide_index + 1)"/>
+                            </t>
                         </div>
+                        
+                        <!-- Slides dynamiques -->
                         <div class="carousel-inner slide">
-                            <div class="carousel-item active text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image1.jpeg'); background-size: cover;  background-position: center;">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="titre p-5" style="">
-                                                <p class="lh-1 title-slider" style="">Le premier concept store solaire à Madagascar</p>
+                            <t t-foreach="slider_images" t-as="slide">
+                                <div
+                                    t-att-class="'carousel-item text-white %s' % ('active' if slide_index == 0 else '')"
+                                    t-attf-style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or 'tanatech_website/static/src/img/image1.jpeg'}); background-size: cover; background-position: center;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="titre p-5">
+                                                    <p class="lh-1 title-slider"
+                                                        t-field="slide.title" />TITLE </div>
                                             </div>
-                                            
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
-                                                elit. Nobis corporis quaerat, tempore assumenda cum
-                                                eius quibusdam. Illo reiciendis saepe in quibusdam
-                                                corporis! Voluptatem, laborum quod laboriosam cum
-                                                iure nisi est officia soluta blanditiis at sapiente
-                                                expedita repellendus quasi quas impedit, 
-                                            </p>
+                                            <div class="col-lg-6 col-md-12">
+                                                <p class="p-5" t-field="slide.note" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image2.jpeg'); background-size: cover;  background-position: center;">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="titre p-5" style="">
-                                                <p class="lh-1 title-slider" style="">Le premier concept store solaire à Madagascar</p>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
-                                                elit. Nobis corporis quaerat, tempore assumenda cum
-                                                eius quibusdam. Illo reiciendis saepe in quibusdam
-                                                corporis! Voluptatem, laborum quod laboriosam cum
-                                                iure nisi est officia soluta blanditiis at sapiente
-                                                expedita repellendus quasi quas impedit, 
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item text-white" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('tanatech_website/static/src/img/image3.jpeg'); background-size: cover;  background-position: center;">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="titre p-5" style="">
-                                                <p class="lh-1 title-slider" style="">Le premier concept store solaire à Madagascar</p>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <p class="p-5">Lorem ipsum dolor sit amet consectetur adipisicing
-                                                elit. Nobis corporis quaerat, tempore assumenda cum
-                                                eius quibusdam. Illo reiciendis saepe in quibusdam
-                                                corporis! Voluptatem, laborum quod laboriosam cum
-                                                iure nisi est officia soluta blanditiis at sapiente
-                                                expedita repellendus quasi quas impedit, 
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </t>
                         </div>
+
+                        <!-- Contrôles -->
                         <button class="carousel-control-prev" type="button"
-                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                             <div class="arrow rounded d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
+                                <i class="fa-solid fa-arrow-left" style="color: #000000;"/>
                             </div>
                             <span class="visually-hidden">Previous</span>
                         </button>
                         <button class="carousel-control-next" type="button"
-                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                             <div class="arrow rounded d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-arrow-right" style="color: #000000;"></i>
+                                <i class="fa-solid fa-arrow-right" style="color: #000000;"/>
                             </div>
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
                 </div>
             </div>
+            <!-- Script d'initialisation -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    var carouselElement = document.getElementById('<t t-esc="carousel_id"/>');
+                    if (carouselElement) {
+                        if (typeof bootstrap !== 'undefined' &amp;&amp; bootstrap.Carousel) {
+                            new bootstrap.Carousel(carouselElement, {
+                                interval: 5000,
+                                ride: 'carousel'
+                            });
+                        } else if (typeof $ !== 'undefined' &amp;&amp; $.fn.carousel) {
+                            $(carouselElement).carousel({
+                                interval: 5000,
+                                ride: 'carousel'
+                            });
+                        }
+                    }
+                });
+            </script>
         </section>
     </template>
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
         <section class="s_tanatech_publicity">
-            <div class="container-fluid p-3 my-5">
+            <div class="container-fluid py-3 my-5">
                 <div class="row">
-                    <div class="d-flex justify-content-evenly align-items-center flex-wrap px-5" style="">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap brand-padding" style="">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-sun " style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Who is GreenShop</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is GreenShop</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-box" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Home deliverye</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home deliverye</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-basket-shopping" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Authentic products</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Authentic products</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-shield" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light">Guarantee</span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Guarantee</a></span>
                         </div>
                     </div>
                 </div>
@@ -134,5 +118,47 @@
         </section>
     </template>
 
+    <template id="tanatech_brand_template" name="Grande marque">
+        <section class="s_tanatech_brand o_colored_level">
+            <div class="container-fluid">
+                <div class="row text-center align-items-center">
+                    <h1 class="mb-5">Nos grandes marques</h1>
+                    <div class="col-11">
+                        <div class="ref-wrap">
+                            <section class="o_colored_level">
+                                <div class="swiper_client">
+                                    <div class="swiper-wrapper mb64 o_not_editable">
+                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                            t-as="logo">
+                                            <div class="swiper-slide">
+                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                                    class="img img-fluid mx-auto"
+                                                    t-att-alt="logo.name or ''"/>
+                                            </div>
+                                        </t>
+
+                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                            t-as="logo">
+                                            <div class="swiper-slide">
+                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                                    class="img img-fluid mx-auto"
+                                                    t-att-alt="logo.name or ''"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="mt-4 d-flex justify-content-space-between">
+                                        <div class="navigation-swip">
+                                            <span class="fa fa-arrow-left text-white me-3 rounded-circle bg-secondary"></span>
+                                            <span class="fa fa-arrow-right text-white rounded-circle bg-secondary"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </section>
+    </template>
     
 </odoo>

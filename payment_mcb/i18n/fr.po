@@ -1,0 +1,300 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_mcb
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-11 00:00+0000\n"
+"PO-Revision-Date: 2026-03-11 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# ── Champs du modèle ──────────────────────────────────────────────────────────
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_merchant_id
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Merchant ID"
+msgstr "Identifiant commerçant"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_api_password
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "API Password"
+msgstr "Mot de passe API"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_webhook_secret
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Webhook Secret"
+msgstr "Secret Webhook"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_3ds_enabled
+msgid "Enable 3-D Secure"
+msgstr "Activer 3-D Secure"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_session_id
+msgid "MCB Session ID"
+msgstr "ID de session MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_order_id
+msgid "MCB Order ID"
+msgstr "ID commande MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_transaction_id
+msgid "MCB Transaction ID"
+msgstr "ID transaction MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_auth_code
+msgid "Authorization Code"
+msgstr "Code d'autorisation"
+
+# ── Help / tooltips des champs ────────────────────────────────────────────────
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_merchant_id
+msgid "Merchant identifier provided by MCB Payment Gateway."
+msgstr "Identifiant commerçant fourni par MCB Payment Gateway."
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_api_password
+msgid "API password provided by MCB Payment Gateway."
+msgstr "Mot de passe API fourni par MCB Payment Gateway."
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_webhook_secret
+msgid "Secret used to validate MCB webhook notifications."
+msgstr "Secret utilisé pour valider les notifications Webhook de MCB."
+
+# ── Sélection du provider ─────────────────────────────────────────────────────
+
+#. module: payment_mcb
+#: model:ir.model.fields.selection,name:payment_mcb.selection__payment_provider__code__mcb
+msgid "MCB Payment Gateway"
+msgstr "MCB Payment Gateway"
+
+# ── Vue backend ───────────────────────────────────────────────────────────────
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "API Credentials"
+msgstr "Identifiants API"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Options"
+msgstr "Options"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "URLs to configure in your MCB dashboard"
+msgstr "URLs à configurer dans votre tableau de bord MCB"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Webhook URL:"
+msgstr "URL Webhook :"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "3DS return URL:"
+msgstr "URL de retour 3DS :"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "(prefixed with your domain)"
+msgstr "(préfixée par votre domaine)"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Configuration guide"
+msgstr "Guide de configuration"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Where to find your credentials"
+msgstr "Où trouver vos identifiants"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Log in to your MCB Payment Gateway dashboard"
+msgstr "Connectez-vous à votre tableau de bord MCB Payment Gateway"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Go to Admin &gt; Integration"
+msgstr "Accédez à Admin &gt; Intégration"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "shown in the top-right corner of your dashboard"
+msgstr "affiché en haut à droite de votre tableau de bord"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "generated in Admin &gt; Integration &gt; New API Password"
+msgstr "généré dans Admin &gt; Intégration &gt; Nouveau mot de passe API"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "optional — configured in Admin &gt; Notifications"
+msgstr "facultatif — configuré dans Admin &gt; Notifications"
+
+# ── Template de paiement (frontend) ───────────────────────────────────────────
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Secure Card Payment"
+msgstr "Paiement sécurisé par carte"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "PCI DSS Secured"
+msgstr "Sécurisé PCI DSS"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Card Number"
+msgstr "Numéro de carte"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Cardholder Name"
+msgstr "Nom sur la carte"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "E.g.: JOHN DOE"
+msgstr "Ex : JEAN DUPONT"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Expiry Date"
+msgstr "Date d'expiration"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "3 or 4 digits on the back of your card"
+msgstr "3 ou 4 chiffres au dos de votre carte"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Pay now"
+msgstr "Payer maintenant"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Your data is encrypted and processed directly by MCB Payment Gateway."
+msgstr "Vos données sont chiffrées et traitées directement par MCB Payment Gateway."
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Processing..."
+msgstr "Traitement..."
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Processing your payment..."
+msgstr "Traitement de votre paiement en cours..."
+
+# ── Message initial (pre_msg) ─────────────────────────────────────────────────
+
+#. module: payment_mcb
+#: model_terms:payment.provider,pre_msg:payment_mcb.payment_provider_mcb
+msgid ""
+"Secure card payment via MCB Payment Gateway.\n"
+"            Your data is SSL-protected and PCI DSS compliant."
+msgstr ""
+"Paiement sécurisé par carte bancaire via MCB Payment Gateway.\n"
+"            Vos données sont protégées par SSL et conformes à la norme PCI DSS."
+
+# ── Messages d'erreur Python ──────────────────────────────────────────────────
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/models/payment_provider.py:0
+#, python-format
+msgid "MCB: Unable to create session."
+msgstr "MCB : Impossible de créer la session."
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/models/payment_provider.py:0
+#, python-format
+msgid "MCB: Connection error: %s"
+msgstr "MCB : Erreur de connexion : %s"
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/models/payment_provider.py:0
+#, python-format
+msgid "MCB: Session update error: %s"
+msgstr "MCB : Erreur de mise à jour de la session : %s"
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/models/payment_transaction.py:0
+#, python-format
+msgid "Payment declined (code: %s)"
+msgstr "Paiement refusé (code : %s)"
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/models/payment_transaction.py:0
+#, python-format
+msgid "MCB: No transaction found for reference %s"
+msgstr "MCB : Aucune transaction trouvée pour la référence %s"
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Missing parameters."
+msgstr "Paramètres manquants."
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Transaction not found."
+msgstr "Transaction introuvable."
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Invalid session."
+msgstr "Session invalide."
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Unable to verify session."
+msgstr "Impossible de vérifier la session."
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Payment declined"
+msgstr "Paiement refusé"
+
+#. module: payment_mcb
+#. odoo-python
+#: code:addons/payment_mcb/controllers/payment_mcb.py:0
+#, python-format
+msgid "Unexpected error. Please try again."
+msgstr "Erreur inattendue. Veuillez réessayer."

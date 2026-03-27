@@ -51,11 +51,11 @@
               <br />
             </span>
           </div>
-          <div class="col-4 small">
+          <!-- <div class="col-4 small">
             <span t-if="o.journal_id.name != 'Factures clients NA'">NIF: </span>
             <span t-if="o.journal_id.name != 'Factures clients NA'"
               t-field="o.partner_id.x_studio_nif_1" />
-          </div>
+          </div> -->
         </div>
         <div class="row">
         </div>
@@ -69,11 +69,11 @@
               <br />
             </span>
           </div>
-          <div class="col-4 small">
+          <!-- <div class="col-4 small">
             <span t-if="o.journal_id.name != 'Factures clients NA'">STAT: </span>
             <span t-if="o.journal_id.name != 'Factures clients NA'"
               t-field="o.partner_id.x_studio_char_field_d3loF" />
-          </div>
+          </div> -->
         </div>
         <div class="row">
         </div>
@@ -209,7 +209,12 @@
                   </td>
                   <td
                     t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                    <span class="text-nowrap" t-field="line.price_unit" />
+                    <t t-if="o.journal_id.name == 'Factures clients NA'">
+                      <span class="text-nowrap" t-esc="line.price_total / line.quantity" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"  />
+                    </t>
+                    <t t-else="">
+                      <span class="text-nowrap" t-field="line.price_unit" />
+                    </t>
                   </td>
                   <td t-if="display_discount"
                     t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
@@ -232,10 +237,15 @@
                   <t t-else="">
                   </t>
                   <td class="text-right o_price_total">
-                    <span class="text-nowrap" t-field="line.price_subtotal"
+                    <t t-if="o.journal_id.name == 'Factures clients NA'">
+                      <span class="text-nowrap" t-field="line.price_total" />
+                    </t>
+                    <t t-else="">
+                      <span class="text-nowrap" t-field="line.price_subtotal"
                       groups="tanatech_account.group_show_line_subtotals_tax_excluded" />
-                    <span class="text-nowrap" t-field="line.price_total"
+                      <span class="text-nowrap" t-field="line.price_total"
                       groups="tanatech_account.group_show_line_subtotals_tax_included" />
+                    </t>
                   </td>
                 </t>
                 <t t-if="line.display_type == 'line_section'">
