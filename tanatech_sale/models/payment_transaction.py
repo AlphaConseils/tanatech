@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from odoo import _, models, SUPERUSER_ID
+from odoo import _, Command, models, SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
@@ -46,19 +46,47 @@ class PaymentTransaction(models.Model):
         # Confirm without sending a separate confirmation email —
         # the invoice email below serves as the customer notification.
         unconfirmed_orders.action_confirm()
-        # Create invoices for the confirmed orders.
-        self._invoice_sale_orders()
-        # Post any draft invoices.
-        draft_invoices = self.invoice_ids.filtered(lambda inv: inv.state == "draft")
+
+        # Create final invoices directly from confirmed orders.
+        # We do NOT use _invoice_sale_orders() here because that method creates
+        # a downpayment invoice for non-fully-paid orders — but for wire transfers
+        # no payment has been received yet, so we want a full final invoice.
+        confirmed_orders = self.sale_order_ids.filtered(lambda so: so.state == "sale")
+        if not confirmed_orders:
+            return
+        confirmed_orders._force_lines_to_invoice_policy_order()
+        invoices = confirmed_orders.with_context(
+            raise_if_nothing_to_invoice=False
+        )._create_invoices(final=True)
+        if not invoices:
+            return
+
+        # Link invoices to this transaction and generate portal tokens.
+        self.invoice_ids = [Command.set(invoices.ids)]
+        for invoice in invoices:
+            invoice._portal_ensure_token()
+
+        # Post draft invoices.
+        # journal_false_default_value module intentionally leaves journal_id empty
+        # so accountants can choose it manually. For automated wire transfer processing
+        # we assign the first active sale journal for the company before posting.
+        draft_invoices = invoices.filtered(lambda inv: inv.state == "draft")
+        for invoice in draft_invoices.filtered(lambda inv: not inv.journal_id):
+            invoice.journal_id = self.env["account.journal"].search(
+                [("type", "=", "sale"), ("company_id", "=", invoice.company_id.id)],
+                order="sequence, id",
+                limit=1,
+            )
         if draft_invoices:
             draft_invoices.action_post()
+
         # Send the invoice email (is_move_sent prevents duplicates).
         self._send_invoice()
         _logger.info(
             "Non-immediate payment tx=%s: order(s) %s confirmed, invoice(s) %s created and sent",
             self.reference,
             unconfirmed_orders.mapped("name"),
-            self.invoice_ids.mapped("name"),
+            invoices.mapped("name"),
         )
 
     def _tanatech_send_invoice_email(self):
