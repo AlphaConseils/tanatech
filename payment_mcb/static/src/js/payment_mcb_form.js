@@ -59,6 +59,11 @@ patch(PaymentForm.prototype, {
             }
         }
 
+        // MCB form is now in the DOM. Hide Odoo's submit button (MCB has its own
+        // "Pay now" button) and lift the UI block so iFrames become interactive.
+        this._hideInputs();
+        this.call("ui", "unblock");
+
         // Separate external scripts (session.js) from inline config scripts.
         const externalScripts = Array.from(wrapper.querySelectorAll("script[src]"));
         const inlineScripts = Array.from(
