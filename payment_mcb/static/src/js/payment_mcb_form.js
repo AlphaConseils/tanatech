@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import { patch } from "@web/core/utils/patch";
-import { PaymentForm } from "@payment/js/payment_form";
+import PaymentForm from "@payment/js/payment_form";
 
 /**
  * MCB Payment Gateway — Odoo 18 PaymentForm integration.
