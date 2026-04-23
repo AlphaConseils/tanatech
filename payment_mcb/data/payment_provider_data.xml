@@ -7,8 +7,9 @@
         <record id="payment_provider_mcb" model="payment.provider">
             <field name="name">MCB Payment Gateway</field>
             <field name="code">mcb</field>
+            <field name="module_id" ref="base.module_payment_mcb"/>
             <field name="state">disabled</field>
-            <field name="is_published">False</field>
+            <field name="is_published" eval="False"/>
             <field name="support_tokenization">False</field>
             <field name="capture_manually">False</field>
             <field name="support_manual_capture">False</field>
