@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "MCB Payment Gateway - Hosted Session",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Accounting/Payment Providers",
     "summary": "MCB Payment Gateway integration via Hosted Session",
     "description": """
