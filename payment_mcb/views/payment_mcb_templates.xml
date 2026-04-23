@@ -219,7 +219,6 @@
             // ── Server-to-server submission ────────────────────────────────
             function mcbSubmitPayment(sessionId) {
                 mcbShowLoading(true);
-                // Odoo 18: use fetch with JSON-RPC 2.0
                 fetch('/payment/mcb/pay', {
                     method: 'POST',
                     headers: {
@@ -231,8 +230,16 @@
                         params: { session_id: sessionId, reference: MCB_TX_REF }
                     })
                 })
-                .then(r => r.json())
-                .then(data => {
+                .then(function(r) {
+                    if (!r.ok) {
+                        return r.text().then(function(text) {
+                            console.error('[MCB] HTTP error', r.status, text.substring(0, 500));
+                            throw new Error('HTTP ' + r.status);
+                        });
+                    }
+                    return r.json();
+                })
+                .then(function(data) {
                     mcbShowLoading(false);
                     const res = data.result || data;
                     if (res.success) {
@@ -241,37 +248,48 @@
                         mcbShowError(res.error || 'Payment failed. Please try again.');
                     }
                 })
-                .catch(err => {
+                .catch(function(err) {
                     mcbShowLoading(false);
-                    mcbShowError('Connection error. Please try again.');
-                    console.error('MCB pay error:', err);
+                    console.error('[MCB] Pay error:', err);
+                    mcbShowError('Connection error: ' + err.message);
                 });
             }
 
             // ── UI utilities ───────────────────────────────────────────────
             function mcbShowError(msg) {
-                document.getElementById('mcb-payment-error-message').textContent = msg;
-                document.getElementById('mcb-payment-error').classList.remove('d-none');
+                const errMsg = document.getElementById('mcb-payment-error-message');
+                const errDiv = document.getElementById('mcb-payment-error');
+                if (errMsg) {
+                    errMsg.textContent = msg;
+                } else {
+                    console.error('[MCB] Error display element missing. Message:', msg);
+                }
+                if (errDiv) errDiv.classList.remove('d-none');
             }
             function mcbFieldError(id, msg) {
                 const el = document.getElementById(id);
                 if (el) el.textContent = msg;
             }
             function mcbClearErrors() {
-                document.getElementById('mcb-payment-error').classList.add('d-none');
-                document.querySelectorAll('[id$="-error"]').forEach(el => el.textContent = '');
-                document.querySelectorAll('.mcb-hosted-field').forEach(el => {
-                    el.classList.remove('is-valid','is-invalid');
+                const errDiv = document.getElementById('mcb-payment-error');
+                if (errDiv) errDiv.classList.add('d-none');
+                document.querySelectorAll('[id$="-error"]').forEach(function(el) {
+                    el.textContent = '';
+                });
+                document.querySelectorAll('.mcb-hosted-field').forEach(function(el) {
+                    el.classList.remove('is-valid', 'is-invalid');
                 });
             }
             function mcbShowLoading(show) {
                 const btn     = document.getElementById('mcb-pay-button');
                 const loading = document.getElementById('mcb-loading');
-                btn.disabled  = show;
-                btn.innerHTML = show
-                    ? '<span class="spinner-border spinner-border-sm me-2"/>Processing...'
-                    : '<i class="fa fa-lock me-2"/>Pay now';
-                loading.classList.toggle('d-none', !show);
+                if (btn) {
+                    btn.disabled  = show;
+                    btn.innerHTML = show
+                        ? '<span class="spinner-border spinner-border-sm me-2"/>Processing...'
+                        : '<i class="fa fa-lock me-2"/>Pay now';
+                }
+                if (loading) loading.classList.toggle('d-none', !show);
             }
         </script>
     </template>
