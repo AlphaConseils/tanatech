@@ -67,12 +67,6 @@ class PaymentProvider(models.Model):
             return default_codes
         return ['card']
 
-    # Odoo 18: the inline form is referenced via xml_id
-    def _get_inline_form_xml_id(self):
-        if self.code == 'mcb':
-            return 'payment_mcb.payment_form'
-        return super()._get_inline_form_xml_id()
-
     # ── MCB API Methods ────────────────────────────────────────────────────
 
     def _mcb_get_api_url(self, endpoint=''):
