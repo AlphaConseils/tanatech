@@ -8,6 +8,7 @@
     <record id="payment_provider_mvola" model="payment.provider">
         <field name="name">Mvola</field>
         <field name="code">mvola</field>
+        <field name="module_id" ref="base.module_payment_mvola"/>
         <field name="image_128" type="base64" file="payment_mvola/static/src/img/mvola.png"/>
         <field name="inline_form_view_id" ref="payment_mvola.mvola_payment_form_number"/>
         <field name="payment_method_ids" eval="[Command.set([ref('payment_mvola.payment_method_mvola')])]"/>
