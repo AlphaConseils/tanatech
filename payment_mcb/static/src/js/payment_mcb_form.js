@@ -6,25 +6,25 @@ import PaymentForm from "@payment/js/payment_form";
 /**
  * MCB Payment Gateway — Odoo 18 PaymentForm integration.
  *
- * Odoo's _processRedirectFlow expects a <form> element in redirect_form_html.
- * MCB uses a Hosted Session inline form (no <form> tag).
+ * Odoo generates redirect_form_html from the QWeb template referenced by
+ * provider.redirect_form_view_id after the transaction is created server-side.
  *
- * This patch intercepts the redirect flow for MCB and injects the rendered
- * MCB template (which contains the real session ID + PaymentSession.configure)
- * directly into the checkout page.
+ * This patch intercepts _processRedirectFlow for MCB (instead of submitting
+ * a redirect <form>) and injects the rendered MCB hosted-session HTML into
+ * the inline form container of the checkout page, then loads session.js.
  *
  * Flow:
- *   1. Page loads → MCB inline form placeholder shown (empty session, no iFrames)
- *   2. User clicks "Confirmer la commande"
- *   3. Odoo creates transaction server-side + MCB session created
- *   4. _processRedirectFlow receives redirect_form_html with real session ID
- *   5. This patch injects the HTML + loads session.js + runs PaymentSession.configure
- *   6. MCB iFrames load — user enters card data
- *   7. User clicks "Pay now" inside the MCB form
- *   8. mcbSubmitPayment() calls /payment/mcb/pay → redirect to /payment/status
+ *   1. User clicks "Payer maintenant"
+ *   2. Odoo creates transaction + MCB session (server-side)
+ *   3. redirect_form_html is rendered with session_id / session_js_url
+ *   4. _processRedirectFlow receives that HTML
+ *   5. This patch injects the HTML into the payment option's inline container
+ *   6. session.js loads → PaymentSession.configure() called → MCB iFrames appear
+ *   7. User enters card data → clicks "Pay now" → mcbInitiatePayment()
+ *   8. /payment/mcb/pay → redirect to /payment/status
  */
 patch(PaymentForm.prototype, {
-    _processRedirectFlow(providerCode, paymentOptionId, paymentMethodCode, processingValues) {
+    _processRedirectFlow(providerCode, _paymentOptionId, _paymentMethodCode, processingValues) {
         if (providerCode !== "mcb") {
             return super._processRedirectFlow(...arguments);
         }
@@ -34,36 +34,41 @@ patch(PaymentForm.prototype, {
             return;
         }
 
-        // Build the new MCB form container from the server-rendered HTML.
+        // Build the wrapper from the server-rendered MCB template.
         const wrapper = document.createElement("div");
         wrapper.innerHTML = html;
 
-        // Remove anti-clickjack style before injecting into the page.
+        // Remove anti-clickjack style before attaching to the live document.
         const antiClickjack = wrapper.querySelector("#antiClickjack");
         if (antiClickjack) {
             antiClickjack.remove();
         }
 
-        // Replace the inline placeholder (empty session) with the real form.
-        const placeholder = document.querySelector(".o_payment_mcb_form");
-        if (placeholder) {
-            placeholder.replaceWith(wrapper);
-        } else {
-            const inlineContainer = document.querySelector(
-                '[name="o_payment_inline_form"]'
-            );
-            if (inlineContainer) {
-                inlineContainer.appendChild(wrapper);
-            } else {
-                document.body.appendChild(wrapper);
-            }
+        // Find the inline form container belonging to the selected MCB option.
+        // We use the checked radio → its parent payment-option → its inline form div.
+        const checkedRadio = this.el.querySelector('input[name="o_payment_radio"]:checked');
+        let inlineContainer = null;
+        if (checkedRadio) {
+            const optionBlock = checkedRadio.closest('[name="o_payment_option"]');
+            inlineContainer = optionBlock?.querySelector('[name="o_payment_inline_form"]');
         }
 
-        // Separate external scripts (session.js) from inline config scripts.
+        if (inlineContainer) {
+            inlineContainer.innerHTML = "";
+            inlineContainer.appendChild(wrapper);
+            inlineContainer.classList.remove("d-none");
+        } else {
+            // Fallback: append directly to body (should not happen in normal flow).
+            document.body.appendChild(wrapper);
+        }
+
+        // Hide Odoo's submit button and lift the UI block so MCB iFrames are usable.
+        this._hideInputs();
+        this.call("ui", "unblock");
+
+        // Separate external scripts (session.js) from inline configuration scripts.
         const externalScripts = Array.from(wrapper.querySelectorAll("script[src]"));
-        const inlineScripts = Array.from(
-            wrapper.querySelectorAll("script:not([src])")
-        );
+        const inlineScripts = Array.from(wrapper.querySelectorAll("script:not([src])"));
 
         const runInlineScripts = () => {
             inlineScripts.forEach((oldScript) => {
@@ -74,7 +79,7 @@ patch(PaymentForm.prototype, {
         };
 
         if (externalScripts.length > 0) {
-            // Load external scripts (MCB session.js) first, then run inline scripts.
+            // Load MCB session.js first, then execute the inline PaymentSession.configure().
             let loadedCount = 0;
             externalScripts.forEach((oldScript) => {
                 const newScript = document.createElement("script");

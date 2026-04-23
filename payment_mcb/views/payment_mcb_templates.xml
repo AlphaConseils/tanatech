@@ -11,7 +11,7 @@
         <style id="antiClickjack">body { display: none !important; }</style>
 
         <!-- Load session.js hosted by MCB -->
-        <script t-att-src="rendering_values['session_js_url']" type="text/javascript"/>
+        <script t-att-src="session_js_url" type="text/javascript"/>
 
         <div class="o_payment_mcb_form mt-3">
             <div class="card shadow-sm border-0">
@@ -132,7 +132,7 @@
             }
 
             // ── Values injected by Odoo ────────────────────────────────────
-            const MCB_SESSION_ID  = "<t t-out="rendering_values['session_id']"/>";
+            const MCB_SESSION_ID  = "<t t-out="session_id"/>";
             const MCB_TX_REF      = "<t t-out="reference"/>";
 
             // ── PaymentSession configuration (MCB session.js) ──────────────
