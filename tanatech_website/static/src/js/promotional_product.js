@@ -3,6 +3,7 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement } from "@web/core/utils/render";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 
 publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     selector: '.promotions_section',
@@ -47,7 +48,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_promotional_products', {});
         if (!result) return;
-        this.$target.html(renderToElement('tanatech_website.promotional_snippet', { result }));
+        this.$target.html(renderToElement('tanatech_website.promotional_snippet', { result, _t }));
         this._initSwiper();
         this._bindCartEvents();
     },
