@@ -84,7 +84,6 @@ class PaymentProvider(models.Model):
                 "id": order_id,
                 "amount": float(amount),
                 "currency": currency_name,
-                "description": f"Odoo Payment - {order_id}",
             },
             "interaction": {
                 "operation": "PURCHASE",
