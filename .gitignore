@@ -51,3 +51,26 @@ docs/_build/
 
 #vscode
 .vscode/
+
+logs/
+*.pid
+backups/
+
+# Environnement virtuel
+.venv/
+
+# Données de session
+.claude/
+addons_dev/
+odoo/
+enterprise/
+scripts/
+/CLAUDE.md
+/README.md
+/MCP.md
+/SERVICE.md
+/mcp_bridge_cli.py
+/odoo_mcp_bridge.py
+/test_mcp_tools.py
+*.sh
+/odoo.conf
