@@ -20,9 +20,8 @@ class PaymentTransaction(models.Model):
 
     def _get_specific_rendering_values(self, processing_values):
         """
-        Odoo 18: creates an MCB Hosted Checkout session and returns the
-        redirect URL. The QWeb template does window.location.href to MCB's
-        hosted page — no iframes loaded on the merchant side.
+        Odoo 18: returns the values required by the inline QWeb template.
+        Creates and initialises the MCB Hosted Session server-side.
         """
         res = super()._get_specific_rendering_values(processing_values)
         if self.provider_code != 'mcb':
@@ -34,34 +33,36 @@ class PaymentTransaction(models.Model):
         mcb_order_id = self.reference.replace('/', '-').replace(' ', '-')
         mcb_transaction_id = f"{mcb_order_id}-1"
 
-        # Return URL includes order_id so mcb_return can look up the transaction
-        return_url = (
-            f"{provider.get_base_url()}/payment/mcb/return"
-            f"?order_id={mcb_order_id}"
-        )
-
-        session_id, success_indicator = provider._mcb_create_checkout_session(
+        session_id = provider._mcb_create_session(
             order_id=mcb_order_id,
             amount=self.amount,
             currency_name=self.currency_id.name,
-            return_url=return_url,
+        )
+
+        provider._mcb_update_session(
+            session_id=session_id,
+            amount=self.amount,
+            currency_name=self.currency_id.name,
+            order_reference=mcb_order_id,
         )
 
         self.write({
             'mcb_session_id': session_id,
             'mcb_order_id': mcb_order_id,
             'mcb_transaction_id': mcb_transaction_id,
-            'mcb_success_indicator': success_indicator,
         })
-
-        checkout_url = (
-            f"https://mcb.gateway.mastercard.com/checkout/pay/{session_id}"
-        )
 
         return {
             **res,
             'reference': self.reference,
-            'checkout_url': checkout_url,
+            'session_id': session_id,
+            'session_js_url': provider._mcb_get_session_js_url(),
+            'merchant_id': provider.mcb_merchant_id,
+            'order_id': mcb_order_id,
+            'transaction_id': mcb_transaction_id,
+            'amount': self.amount,
+            'currency': self.currency_id.name,
+            'return_url': provider._mcb_get_return_url(),
         }
 
     # ── MCB Response Processing ────────────────────────────────────────────

@@ -104,15 +104,10 @@ class MCBPaymentController(http.Controller):
         save_session=False,
     )
     def mcb_return(self, **kwargs):
-        """Return page after MCB Hosted Checkout."""
-        order_id = kwargs.get('order_id', '')
-        result_indicator = kwargs.get('resultIndicator', '')
+        """Return page after 3-D Secure authentication."""
+        _logger.info("MCB 3DS return: %s", kwargs)
 
-        _logger.info(
-            "MCB Hosted Checkout return: order_id=%s result_indicator=%s",
-            order_id, result_indicator,
-        )
-
+        order_id = kwargs.get('order_id') or kwargs.get('orderid', '')
         if order_id:
             tx = request.env['payment.transaction'].sudo().search([
                 ('mcb_order_id', '=', order_id),
@@ -120,20 +115,11 @@ class MCBPaymentController(http.Controller):
             ], limit=1)
             if tx:
                 try:
-                    if result_indicator and result_indicator == tx.mcb_success_indicator:
-                        tx._set_done()
-                        _logger.info("MCB: payment confirmed for tx %s", tx.reference)
-                    else:
-                        # Cancelled or failed — retrieve session for full status
-                        session_data = tx.provider_id._mcb_retrieve_session(
-                            tx.mcb_session_id
-                        )
-                        if session_data:
-                            tx._process_notification_data(session_data)
-                        else:
-                            tx._set_canceled(state_message=_("Payment cancelled."))
+                    session_data = tx.provider_id._mcb_retrieve_session(tx.mcb_session_id)
+                    if session_data:
+                        tx._process_notification_data(session_data)
                 except Exception as e:
-                    _logger.error("MCB return processing error: %s", e)
+                    _logger.error("MCB return error: %s", e)
 
         return request.redirect('/payment/status')
 
