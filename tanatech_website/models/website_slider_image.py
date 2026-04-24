@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class SliderImage(models.Model):
     _name = "website.slider.image"
+    _description = "Website Slider Image"
 
     active = fields.Boolean(
         default=True,
