@@ -1,0 +1,1094 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_website
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20250320\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-24 14:16+0000\n"
+"PO-Revision-Date: 2026-04-24 14:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid ""
+"\"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos fuga magni "
+"aspernatur, unde voluptas nobis aut inventore deserunt vitae minima "
+"obcaecati quia cupiditate consequuntur sunt temporibus impedit. "
+"Necessitatibus voluptatum quod nihil, doloremque aspernatur commodi culpa, "
+"nulla ipsum ab quidem at accusamus adipisci velit quo totam iusto, "
+"perferendis sunt officia numquam. \""
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "%s review"
+msgstr "%s avis"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "%s reviews"
+msgstr "%s avis"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "1. Zones de livraison"
+msgstr "1. Zones de livraison"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "2. Modes de livraison"
+msgstr "2. Modes de livraison"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "3. Délais de livraison"
+msgstr "3. Délais de livraison"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "4. Transfert de responsabilité"
+msgstr "4. Transfert de responsabilité"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "5. Force majeure"
+msgstr "5. Force majeure"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "<i class=\"fa fa-envelope-greenshop me-2\"/> support@exemple.com"
+msgstr "<i class=\"fa fa-envelope-greenshop me-2\"/> support@exemple.com"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid ""
+"<i class=\"fa fa-map-marker-greenshop me-2\"/> Lot XYZ, Antananarivo, "
+"Madagascar"
+msgstr ""
+"<i class=\"fa fa-map-marker-greenshop me-2\"/> Lot XYZ, Antananarivo, "
+"Madagascar"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "<i class=\"fa fa-phone-greenshop me-2\"/> +261 34 00 000 00"
+msgstr "<i class=\"fa fa-phone-greenshop me-2\"/> +261 34 00 000 00"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "<i class=\"fa fa-shopping-cart me-2\"/> Add to cart"
+msgstr "<i class=\"fa fa-shopping-cart me-2\"/> Ajouter au panier"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "<span class=\"form-check-label\">I accept the Terms and Conditions.</span>"
+msgstr "<span class=\"form-check-label\">J'accepte les Conditions Générales d'Utilisation.</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid ""
+"<span class=\"s_website_form_label_content\">Email</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">E-mail</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid ""
+"<span class=\"s_website_form_label_content\">Message</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">Message</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid ""
+"<span class=\"s_website_form_label_content\">Name</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">Nom</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+msgid ""
+"<span class=\"text-nowrap fw-bolder text-white\" style=\"font-size: "
+"10px;\">Add to cart</span>"
+msgstr ""
+"<span class=\"text-nowrap fw-bolder text-white\" style=\"font-size: "
+"10px;\">Ajouter au panier</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
+msgid "<span class=\"visually-hidden\">Next</span>"
+msgstr "<span class=\"visually-hidden\">Suivant</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
+msgid "<span class=\"visually-hidden\">Previous</span>"
+msgstr "<span class=\"visually-hidden\">Précédent</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_offer_template
+msgid "<span>Offers</span>"
+msgstr "<span>Offres</span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"A detailed, formatted description to promote your product on this page. Use "
+"'/' to discover more features."
+msgstr ""
+"Une description détaillée et mise en forme pour promouvoir votre produit sur "
+"cette page. Utilisez '/' pour découvrir plus de fonctionnalités."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Achats"
+msgstr "Achats"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_offer_template
+msgid "Acheter"
+msgstr "Acheter"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_decovery_template
+msgid "Acheter maintenant"
+msgstr "Acheter maintenant"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+msgid "Add one"
+msgstr "Ajouter un"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
+msgid "Add slides in Website → Configuration → Slider Images"
+msgstr "Ajouter des diapositives dans Site Web → Configuration → Images du slider"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Adhésion"
+msgstr "Adhésion"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+#. module: tanatech_website
+#: model:ir.model,name:tanatech_website.model_ir_attachment
+#: model:ir.model.fields,field_description:tanatech_website.field_website__attachment_ids
+msgid "Attachment"
+msgstr "Pièce jointe"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
+msgid "Authentic products"
+msgstr "Produits authentiques"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_res_config_settings__background
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Background"
+msgstr "Arrière-plan"
+
+#. module: tanatech_website
+#: model:ir.model.fields,help:tanatech_website.field_res_config_settings__background
+msgid "Background of the login page"
+msgstr "Arrière-plan de la page de connexion"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Besoin d'aide pour un\n"
+"                                                        paiement ?Need help with a payment?\n"
+"                                                        We explain the secure payment solutions and\n"
+"                                                        options available at Tanatech."
+msgstr ""
+"Besoin d'aide pour un\n"
+"                                                        paiement ?\n"
+"                                                        Nous vous expliquons les solutions de paiement\n"
+"                                                        sécurisées et les options disponibles chez Tanatech."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Besoin d'aide pour un paiement ?\n"
+"                                                    Nous vous expliquons les\n"
+"                                                    solutions de paiement sécurisées et les options\n"
+"                                                    disponibles\n"
+"                                                    chez Tanatech."
+msgstr ""
+"Besoin d'aide pour un paiement ?\n"
+"                                                    Nous vous expliquons les\n"
+"                                                    solutions de paiement sécurisées et les options\n"
+"                                                    disponibles\n"
+"                                                    chez Tanatech."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Browse our buying guide\n"
+"                                                        to find the products\n"
+"                                                        best suited to your technology needs."
+msgstr ""
+"Parcourez notre guide d'achat\n"
+"                                                        pour trouver les produits\n"
+"                                                        les mieux adaptés à vos besoins technologiques."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "CONDITION DE LIVRAISON"
+msgstr "CONDITION DE LIVRAISON"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
+msgid "Categories"
+msgstr "Catégories"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_res_config_settings__color
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Color"
+msgstr "Couleur"
+
+#. module: tanatech_website
+#: model:ir.model.fields.selection,name:tanatech_website.selection__res_config_settings__background__color
+msgid "Color Picker"
+msgstr "Sélecteur de couleur"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Condition Image"
+msgstr "Image de condition"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid "Conditionnalités et coûts de livraisons"
+msgstr "Conditionnalités et coûts de livraisons"
+
+#. module: tanatech_website
+#: model:ir.model,name:tanatech_website.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "Confirm Password"
+msgstr "Confirmer le mot de passe"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Consultez nos modalités de\n"
+"                                                    livraison et de retour. Découvrez\n"
+"                                                    les délais, les coûts et les pays couverts par\n"
+"                                                    nos services."
+msgstr ""
+"Consultez nos modalités de\n"
+"                                                    livraison et de retour. Découvrez\n"
+"                                                    les délais, les coûts et les pays couverts par\n"
+"                                                    nos services."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_offer_template
+msgid "Contact"
+msgstr "Contact"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__create_uid
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__create_date
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid ""
+"Customize the login page with change the position of login box and customize"
+" background"
+msgstr ""
+"Personnalisez la page de connexion en modifiant la position du formulaire et "
+"en personnalisant l'arrière-plan"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Database"
+msgstr "Base de données"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "Delivery &amp; Returns"
+msgstr "Livraison &amp; Retours"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "Details"
+msgstr "Détails"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.new_products
+msgid "Discover our current products."
+msgstr "Découvrez nos produits actuels."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.promotional_products
+msgid "Discover our promotional products."
+msgstr "Découvrez nos produits en promotion."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
+msgid "Discover our selection of reliable solar solutions."
+msgstr "Découvrez notre sélection de solutions solaires fiables."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Discover the exclusive benefits and special offers reserved for members. "
+"Learn how to get your membership card."
+msgstr ""
+"Découvrez les avantages exclusifs et les offres spéciales réservés aux "
+"membres. Apprenez comment obtenir votre carte de membre."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_decovery_template
+msgid "Discuter"
+msgstr "Discuter"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__display_name
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Do you have any questions? Here are the\n"
+"                                                answers to the\n"
+"                                                most frequently asked questions."
+msgstr ""
+"Vous avez des questions ? Voici les\n"
+"                                                réponses aux\n"
+"                                                questions les plus fréquemment posées."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Do you have any questions? Here are the\n"
+"                                            answers to the\n"
+"                                            most frequently asked questions."
+msgstr ""
+"Vous avez des questions ? Voici les\n"
+"                                            réponses aux\n"
+"                                            questions les plus fréquemment posées."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte ?"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Découvrez les avantages\n"
+"                                                    exclusifs et les offres spéciales\n"
+"                                                    réservés aux membres. Apprenez comment obtenir\n"
+"                                                    votre carte\n"
+"                                                    de membre."
+msgstr ""
+"Découvrez les avantages\n"
+"                                                    exclusifs et les offres spéciales\n"
+"                                                    réservés aux membres. Apprenez comment obtenir\n"
+"                                                    votre carte\n"
+"                                                    de membre."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_offer_template
+msgid ""
+"Découvrez nos solutions solaires fiables et accessibles pour un avenir plus\n"
+"                        vert à Madagascar."
+msgstr ""
+"Découvrez nos solutions solaires fiables et accessibles pour un avenir plus\n"
+"                        vert à Madagascar."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid ""
+"Découvrez notre boutique dédiée à l'énergie solaire. \n"
+"                                    Profitez de produits fiables et d'un service client exceptionnel."
+msgstr ""
+"Découvrez notre boutique dédiée à l'énergie solaire. \n"
+"                                    Profitez de produits fiables et d'un service client exceptionnel."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Easily manage your\n"
+"                                                        Tanatech account. Modify your\n"
+"                                                        preferences, update your information, and\n"
+"                                                        personalize your\n"
+"                                                        experience."
+msgstr ""
+"Gérez facilement votre\n"
+"                                                        compte Tanatech. Modifiez vos\n"
+"                                                        préférences, mettez à jour vos informations et\n"
+"                                                        personnalisez votre\n"
+"                                                        expérience."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Email"
+msgstr "E-mail"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "FAQs"
+msgstr "FAQ"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"Find the Tanatech store.\n"
+"                                                        Check opening hours and\n"
+"                                                        take advantage of exclusive in-store offers."
+msgstr ""
+"Trouvez le magasin Tanatech.\n"
+"                                                        Consultez les horaires et\n"
+"                                                        profitez des offres exclusives en boutique."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Forgot Your Password?"
+msgstr "Mot de passe oublié ?"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Green Shop Madagascar"
+msgstr "Green Shop Madagascar"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.snippet_greenshop_groups
+msgid "GreenShop"
+msgstr "GreenShop"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
+msgid "Guarantee"
+msgstr "Garantie"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Gérez facilement votre compte\n"
+"                                                    Tanatech. Modifiez vos\n"
+"                                                    préférences, mettez à jour vos infos et\n"
+"                                                    personnalisez votre\n"
+"                                                    expérience."
+msgstr ""
+"Gérez facilement votre compte\n"
+"                                                    Tanatech. Modifiez vos\n"
+"                                                    préférences, mettez à jour vos infos et\n"
+"                                                    personnalisez votre\n"
+"                                                    expérience."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Heading 2"
+msgstr "Titre 2"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Heading 3"
+msgstr "Titre 3"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Heading 4"
+msgstr "Titre 4"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Heading 5"
+msgstr "Titre 5"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Heading 6"
+msgstr "Titre 6"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
+msgid "Home deliverye"
+msgstr "Livraison à domicile"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__id
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__id
+msgid "ID"
+msgstr "ID"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_res_config_settings__image
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__image
+#: model:ir.model.fields.selection,name:tanatech_website.selection__res_config_settings__background__image
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Image"
+msgstr "Image"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.view_tanatech_website_form
+msgid "Image home page"
+msgstr "Image de la page d'accueil"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.view_slider_image_form
+msgid "Image of slider"
+msgstr "Image du slider"
+
+#. module: tanatech_website
+#: model:ir.actions.act_window,name:tanatech_website.action_slider_image
+#: model:ir.ui.menu,name:tanatech_website.menu_slider_image
+msgid "Images of Slider"
+msgstr "Images du slider"
+
+#. module: tanatech_website
+#: model:ir.ui.menu,name:tanatech_website.menu_image_silder_settings
+msgid "Imgae"
+msgstr "Image"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_ir_attachment__is_background
+#: model:ir.model.fields,field_description:tanatech_website.field_product_document__is_background
+#: model:ir.model.fields,field_description:tanatech_website.field_quotation_document__is_background
+msgid "Is Background"
+msgstr "Est un arrière-plan"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"La propriété du colis reste sous la responsabilité de Tanatech jusqu'à la\n"
+"                        livraison effective au client ou jusqu'au transporteur mandaté par ce dernier."
+msgstr ""
+"La propriété du colis reste sous la responsabilité de Tanatech jusqu'à la\n"
+"                        livraison effective au client ou jusqu'au transporteur mandaté par ce dernier."
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__write_uid
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__write_date
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"Le vendeur ne peut être tenu responsable des retards ou échecs de livraison\n"
+"                        dus à des événementsindépendants de sa volonté (grèves, intempéries, conflits, etc.)."
+msgstr ""
+"Le vendeur ne peut être tenu responsable des retards ou échecs de livraison\n"
+"                        dus à des événementsindépendants de sa volonté (grèves, intempéries, conflits, etc.)."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"Les délais sont donnés à titre indicatif et commencent à courir après\n"
+"                        paiement<br/>\n"
+"                        Délais de livraison :<br/>\n"
+"                        • Antananarivo : <b>1 à 2 jours</b><br/>\n"
+"                        • Hors Tana : sur devis<br/>"
+msgstr ""
+"Les délais sont donnés à titre indicatif et commencent à courir après\n"
+"                        paiement<br/>\n"
+"                        Délais de livraison :<br/>\n"
+"                        • Antananarivo : <b>1 à 2 jours</b><br/>\n"
+"                        • Hors Tana : sur devis<br/>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"Les livraisons sont effectuées via :<br/>\n"
+"                        • Coursier<br/>\n"
+"                        • Retrait en point relais (Behoririka) :<br/>\n"
+"                            <span class=\"ms-5\"> ▪ Pour Antananarivo<br/></span>\n"
+"                        • Services de colis acceptés sur la base d'un devis<br/>\n"
+"                        <span class=\"ms-5\">▪ Pour les livraisons en dehors d'Antananarivo<br/></span>"
+msgstr ""
+"Les livraisons sont effectuées via :<br/>\n"
+"                        • Coursier<br/>\n"
+"                        • Retrait en point relais (Behoririka) :<br/>\n"
+"                            <span class=\"ms-5\"> ▪ Pour Antananarivo<br/></span>\n"
+"                        • Services de colis acceptés sur la base d'un devis<br/>\n"
+"                        <span class=\"ms-5\">▪ Pour les livraisons en dehors d'Antananarivo<br/></span>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"Les produits sont livrés :<br/>\n"
+"                        • Sur l'ensemble du territoire national<br/>"
+msgstr ""
+"Les produits sont livrés :<br/>\n"
+"                        • Sur l'ensemble du territoire national<br/>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Livraison &amp; Retours"
+msgstr "Livraison &amp; Retours"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Log In"
+msgstr "Se connecter"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Log in"
+msgstr "Se connecter"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Log in as superuser"
+msgstr "Se connecter en tant que superutilisateur"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Login Page Set-Up"
+msgstr "Configuration de la page de connexion"
+
+#. module: tanatech_website
+#: model:ir.model,name:tanatech_website.model_partner_logo
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__image
+msgid "Logo"
+msgstr "Logo"
+
+#. module: tanatech_website
+#: model:ir.actions.act_window,name:tanatech_website.action_partner_logo
+#: model:ir.ui.menu,name:tanatech_website.menu_partner_logo_root
+msgid "Logos clients"
+msgstr "Logos clients"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid ""
+"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam quis "
+"impedit iste est minima possimus repellendus voluptas odit, deserunt "
+"excepturi eius quaerat architecto maiores nemo reiciendis vel itaque quas "
+"dolor quae cumque nulla incidunt? Aliquam architecto accusamus corrupti "
+"laboriosam soluta aut iusto qui veritatis obcaecati at minima velit illum "
+"animi, cumque, suscipit officiis saepe praesentium perspiciatis ratione illo"
+" pariatur ipsum ipsa atque. Facilis veritatis omnis tempora vero doloremque "
+"inventore."
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint "
+"adipisci quam doloremque, omnis debitis quos repudiandae officia "
+"perspiciatis suscipit autem, placeat assumenda aliquam molestias "
+"voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis "
+"corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. "
+"Voluptas eligendi molestias architecto!"
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid ""
+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem libero "
+"modi veritatis cum vero? Accusantium eligendi praesentium mollitia sit "
+"incidunt repudiandae soluta quas inventore autem! Ex esse veritatis, minus "
+"aliquam ullam obcaecati quisquam asperiores eius laborum, libero earum ipsam"
+" temporibus voluptatibus dolorem dolore architecto tenetur. Suscipit itaque "
+"rerum aliquid nostrum?"
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_decovery_template
+msgid ""
+"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi nemo\n"
+"                            eius, minus quis facere necessitatibus odit modi! Quisquam, perferendis\n"
+"                            laudantium dignissimos reiciendis porro quae vitae facilis ex vel, alias\n"
+"                            aperiam!"
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_decovery_template
+msgid ""
+"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem,\n"
+"                                molestias."
+msgstr ""
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Magasins"
+msgstr "Magasins"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "Membership"
+msgstr "Adhésion"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Mon compte"
+msgstr "Mon compte"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "My account"
+msgstr "Mon compte"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "Name"
+msgstr "Nom"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
+msgid "No slides configured"
+msgstr "Aucune diapositive configurée"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__name
+msgid "Nom du partenaire"
+msgstr "Nom du partenaire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_brand_template
+msgid "Nos grandes marques"
+msgstr "Nos grandes marques"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__note
+msgid "Note"
+msgstr "Note"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.promotional_products
+msgid "Our Promotional products"
+msgstr "Nos produits en promotion"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.new_products
+msgid "Our new products"
+msgstr "Nos nouveaux produits"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Paiements"
+msgstr "Paiements"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Parcourez notre guide d'achat\n"
+"                                                    pour trouver les produits les\n"
+"                                                    mieux adaptés à vos besoins technologiques."
+msgstr ""
+"Parcourez notre guide d'achat\n"
+"                                                    pour trouver les produits les\n"
+"                                                    mieux adaptés à vos besoins technologiques."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "Password"
+msgstr "Mot de passe"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "Payments"
+msgstr "Paiements"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "Product Name"
+msgstr "Nom du produit"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_partner_logo__website_published
+msgid "Publié sur le site"
+msgstr "Publié sur le site"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+msgid "Remove one"
+msgstr "Retirer un"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "Returns"
+msgstr "Retours"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.similar_product_theme_template
+msgid "Sample"
+msgstr "Exemple"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid "Search for answers..."
+msgstr "Rechercher des réponses..."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid ""
+"See our delivery and return policy. Discover the delivery times, costs, and "
+"countries covered by our services."
+msgstr ""
+"Consultez notre politique de livraison et de retour. Découvrez les délais de "
+"livraison, les coûts et les pays couverts par nos services."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid ""
+"Select <i class=\"fa fa-database\" role=\"img\" aria-label=\"Database\" "
+"title=\"Database\"/>"
+msgstr ""
+"Sélectionner <i class=\"fa fa-database\" role=\"img\" aria-label=\"Base de données\" "
+"title=\"Base de données\"/>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Select a login background image from system."
+msgstr "Sélectionner une image d'arrière-plan pour la connexion depuis le système."
+
+#. module: tanatech_website
+#: model:ir.model.fields,help:tanatech_website.field_res_config_settings__url
+msgid "Select and url of image"
+msgstr "Sélectionner une URL d'image"
+
+#. module: tanatech_website
+#: model:ir.model.fields,help:tanatech_website.field_res_config_settings__image
+msgid "Select background image of login page"
+msgstr "Sélectionner l'image d'arrière-plan de la page de connexion"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: tanatech_website
+#: model:ir.model.fields,help:tanatech_website.field_res_config_settings__color
+msgid "Set a colour for background of login page"
+msgstr "Définir une couleur d'arrière-plan pour la page de connexion"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Set a login background color."
+msgstr "Définir une couleur d'arrière-plan pour la connexion."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "Set a url of background image."
+msgstr "Définir une URL pour l'image d'arrière-plan."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "Shipping"
+msgstr "Expédition"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "Sign up"
+msgstr "S'inscrire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.similar_protduct_template
+msgid "Similar products"
+msgstr "Produits similaires"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Solaire"
+msgstr "Solaire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_offer_template
+msgid "Solar Energy"
+msgstr "Énergie solaire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Someone famous in <cite title=\"Source Title\">Source Title</cite>"
+msgstr "Quelqu'un de célèbre dans <cite title=\"Titre de la source\">Titre de la source</cite>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Still not satisfied with the FAQ?"
+msgstr "Pas encore satisfait par la FAQ ?"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+msgid "Stores"
+msgstr "Magasins"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Submit"
+msgstr "Envoyer"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Table des matières"
+msgstr "Table des matières"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__title
+msgid "Title"
+msgstr "Titre"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Titre 2"
+msgstr "Titre 2"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Titre 3"
+msgstr "Titre 3"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Titre 4"
+msgstr "Titre 4"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Titre 5"
+msgstr "Titre 5"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
+msgid "Titre 6"
+msgstr "Titre 6"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
+msgid ""
+"Trouvez le magasin Tanatech.\n"
+"                                                    Consultez les horaires et\n"
+"                                                    bénéficiez d'offres exclusives en boutique."
+msgstr ""
+"Trouvez le magasin Tanatech.\n"
+"                                                    Consultez les horaires et\n"
+"                                                    bénéficiez d'offres exclusives en boutique."
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_res_config_settings__url
+#: model:ir.model.fields.selection,name:tanatech_website.selection__res_config_settings__background__url
+#: model_terms:ir.ui.view,arch_db:tanatech_website.res_config_settings_view_form
+msgid "URL"
+msgstr "URL"
+
+#. module: tanatech_website
+#: model:ir.model,name:tanatech_website.model_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__website_id
+msgid "Website"
+msgstr "Site Web"
+
+#. module: tanatech_website
+#: model:ir.model.fields,field_description:tanatech_website.field_website_slider_image__website_published
+msgid "Website Published"
+msgstr "Publié sur le site"
+
+#. module: tanatech_website
+#: model:ir.model,name:tanatech_website.model_website_slider_image
+msgid "Website Slider Image"
+msgstr "Image du slider du site"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
+msgid "Who is GreenShop"
+msgstr "Qui est GreenShop ?"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Write your message..."
+msgstr "Écrivez votre message..."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid ""
+"You can search for one of our most frequently asked questions or contact us."
+msgstr ""
+"Vous pouvez rechercher l'une de nos questions les plus fréquemment posées ou "
+"nous contacter."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+msgid "e.g. John Doe"
+msgstr "ex. Jean Dupont"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.snippet_greenshop_groups
+msgid "green_shop"
+msgstr "green_shop"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
+msgid "sign up"
+msgstr "s'inscrire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
+msgid ""
+"• Gratuit pour achat à partir de Ar 150,000 sur Antananarivo pour les colis\n"
+"                            de moins\n"
+"                            de 15Kg<br/>\n"
+"                            • Antananarivo : Ar 10,000 / livraison<br/>\n"
+"                            • Hors-Tanà : sur devis<br/>"
+msgstr ""
+"• Gratuit pour achat à partir de Ar 150,000 sur Antananarivo pour les colis\n"
+"                            de moins\n"
+"                            de 15Kg<br/>\n"
+"                            • Antananarivo : Ar 10,000 / livraison<br/>\n"
+"                            • Hors-Tanà : sur devis<br/>"
