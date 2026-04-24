@@ -26,7 +26,7 @@
                         </group>
                     </group>
                     <!-- Configuration guide: where to find each credential -->
-                    <div class="alert alert-info mt-2" colspan="2" invisible="code != 'mcb'">
+                    <div class="alert alert-info mt-2" role="status" colspan="2" invisible="code != 'mcb'">
                         <h6 class="fw-bold mb-2">
                             <i class="fa fa-info-circle me-1"/>
                             Configuration guide

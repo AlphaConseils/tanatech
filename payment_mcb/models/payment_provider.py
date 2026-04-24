@@ -75,6 +75,46 @@ class PaymentProvider(models.Model):
     def _mcb_get_auth(self):
         return HTTPBasicAuth(f'merchant.{self.mcb_merchant_id}', self.mcb_api_password)
 
+    def _mcb_create_checkout_session(self, order_id, amount, currency_name, return_url):
+        """Create a Mastercard Hosted Checkout session (full redirect, no iframes)."""
+        url = self._mcb_get_api_url('/session')
+        payload = {
+            "apiOperation": "CREATE_CHECKOUT_SESSION",
+            "order": {
+                "id": order_id,
+                "amount": float(amount),
+                "currency": currency_name,
+                "description": f"Odoo Payment - {order_id}",
+            },
+            "interaction": {
+                "operation": "PURCHASE",
+                "returnUrl": return_url,
+                "cancelUrl": f"{self.get_base_url()}/payment/status",
+                "timeoutUrl": f"{self.get_base_url()}/payment/status",
+                "displayControl": {
+                    "billingAddress": "HIDE",
+                    "customerEmail": "OPTIONAL",
+                },
+            },
+        }
+        try:
+            resp = requests.post(url, json=payload, auth=self._mcb_get_auth(), timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+            if data.get("result") != "SUCCESS":
+                raise ValidationError(
+                    _("MCB: Checkout session creation failed: %s") % data.get("result")
+                )
+            session_id = data.get("session", {}).get("id")
+            success_indicator = data.get("successIndicator", "")
+            if not session_id:
+                raise ValidationError(_("MCB: Unable to create checkout session."))
+            _logger.info("MCB checkout session: %s (order %s)", session_id, order_id)
+            return session_id, success_indicator
+        except requests.exceptions.RequestException as e:
+            _logger.error("MCB create_checkout_session: %s", e)
+            raise ValidationError(_("MCB: Connection error: %s") % str(e))
+
     def _mcb_create_session(self, order_id, amount, currency_name):
         url = self._mcb_get_api_url('/session')
         try:
