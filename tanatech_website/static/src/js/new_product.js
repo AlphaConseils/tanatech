@@ -90,6 +90,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
                 const cartData = await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
                 wSaleUtils.updateCartNavBar(cartData);
                 this._showCartToast($card.find('h6').text().trim(), qty);
+                $card.find('.tana-qty').val(1);
             } catch (e) {
                 console.error('Cart update error:', e);
             } finally {
