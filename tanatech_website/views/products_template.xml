@@ -68,7 +68,7 @@
                 t-att-data-product-id="product.product_variant_ids[0].id if product.product_variant_ids else product.id">
                 <div class="d-flex align-items-stretch gap-2">
                     <button type="button"
-                        class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center py-2">
+                        class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center">
                         <span class="text-nowrap fw-bold text-white">Add to cart</span>
                     </button>
                     <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
