@@ -66,25 +66,26 @@
             <!-- Bouton Ajouter au panier -->
             <div t-if="product._is_add_to_cart_possible()" class="mt-2"
                 t-att-data-product-id="product.product_variant_ids[0].id if product.product_variant_ids else product.id">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between gap-2">
                     <button type="button"
-                        class="btn btn-primary w-50 tana-add-to-cart d-flex align-items-center justify-content-center p-0 py-2">
+                        class="btn btn-primary rounded-pill flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center p-0 py-2">
                         <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
                     </button>
-                    <div class="input-group input-group-sm ms-2 align-middle"
-                        contenteditable="false" style="max-width: 120px; height: 30px;">
+                    <div class="d-flex align-items-center gap-1" contenteditable="false">
                         <a href="#"
-                            class="btn btn-link btn-sm tana-qty-minus bg-o-color-2 text-white"
+                            class="btn btn-sm tana-qty-minus bg-o-color-2 text-white rounded-circle d-flex align-items-center justify-content-center"
+                            style="width:28px; height:28px;"
                             aria-label="Remove one" title="Remove one">
-                            <i class="fa fa-minus"/>
+                            <i class="fa fa-minus" style="font-size:10px;"/>
                         </a>
                         <input type="text"
-                            class="form-control tana-qty text-center bg-o-color-2 text-white"
-                            data-min="1" value="1" style="max-width: 50px;"/>
+                            class="form-control form-control-sm tana-qty text-center bg-o-color-2 text-white rounded-pill border-0"
+                            data-min="1" value="1" style="width:32px; height:28px; padding:0;"/>
                         <a href="#"
-                            class="btn btn-link btn-sm tana-qty-plus bg-o-color-2 text-white"
+                            class="btn btn-sm tana-qty-plus bg-o-color-2 text-white rounded-circle d-flex align-items-center justify-content-center"
+                            style="width:28px; height:28px;"
                             aria-label="Add one" title="Add one">
-                            <i class="fa fa-plus"/>
+                            <i class="fa fa-plus" style="font-size:10px;"/>
                         </a>
                     </div>
                 </div>
