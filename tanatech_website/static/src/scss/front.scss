@@ -368,6 +368,29 @@
     transform: translateY(-50%);
 }
 
+// Bloc quantité unifié (- 1 +)
+.tana-qty-group {
+    background-color: $o-color-2;
+    min-width: 110px;
+
+    .tana-qty-minus,
+    .tana-qty-plus {
+        cursor: pointer;
+        font-size: 13px;
+        text-decoration: none;
+        user-select: none;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .tana-qty {
+        outline: none;
+        font-size: 14px;
+    }
+}
+
 // Animation bounce icône panier
 @keyframes tana-bounce {
     0%, 100% { transform: scale(1); }
