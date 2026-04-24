@@ -78,16 +78,20 @@ class PaymentProvider(models.Model):
     def _mcb_create_checkout_session(self, order_id, amount, currency_name, return_url):
         """
         Create a Mastercard Hosted Checkout session (full redirect, no iframes).
-
-        Step 1: POST /session with apiOperation + interaction only (no order fields —
-                MCB API v72 rejects amount/description at session creation time).
-        Step 2: PUT /session/{id} to attach order details (amount, currency, orderId).
+        Single POST with all required fields — order + interaction in one call.
+        Returns (checkout_url, success_indicator).
         """
         url = self._mcb_get_api_url('/session')
         payload = {
             "apiOperation": "CREATE_CHECKOUT_SESSION",
             "interaction": {
+                "operation": "PURCHASE",
                 "returnUrl": return_url,
+            },
+            "order": {
+                "amount": float(amount),
+                "currency": currency_name,
+                "id": order_id,
             },
         }
         try:
@@ -109,17 +113,14 @@ class PaymentProvider(models.Model):
             success_indicator = data.get("successIndicator", "")
             if not session_id:
                 raise ValidationError(_("MCB: Unable to create checkout session."))
-            _logger.info("MCB checkout session: %s (order %s)", session_id, order_id)
-
-            # Step 2: attach order details to the session
-            self._mcb_update_session(
-                session_id=session_id,
-                amount=amount,
-                currency_name=currency_name,
-                order_reference=order_id,
+            checkout_url = (
+                f"https://mcb.gateway.mastercard.com/checkout/pay/{session_id}"
             )
-
-            return session_id, success_indicator
+            _logger.info(
+                "MCB checkout session created: %s (order %s) indicator=%s",
+                session_id, order_id, success_indicator,
+            )
+            return checkout_url, success_indicator
         except requests.exceptions.RequestException as e:
             _logger.error("MCB create_checkout_session: %s", e)
             raise ValidationError(_("MCB: Connection error: %s") % str(e))

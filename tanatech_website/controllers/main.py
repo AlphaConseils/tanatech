@@ -1,18 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
-import odoo
 from odoo import http
-from odoo.tools import pycompat
-from odoo.tools.translate import _
 from odoo.http import request
-# from odoo.addons.web.controllers.home import Home as WebHome
-from odoo.addons.web.controllers.utils import ensure_db
-
-SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
-                          'scope', 'mode', 'redirect', 'redirect_hostname',
-                          'email', 'name', 'partner_id', 'password',
-                          'confirm_password', 'city', 'country_id', 'lang'}
 
 
 # class Home(WebHome):
