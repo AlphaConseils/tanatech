@@ -127,7 +127,7 @@
                         <div class="ref-wrap">
                             <section class="o_colored_level">
                                 <div class="swiper_client">
-                                    <div class="swiper-wrapper mb64 o_not_editable">
+                                    <div class="swiper-wrapper o_not_editable">
                                         <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
                                             t-as="logo">
                                             <div class="swiper-slide">
@@ -146,12 +146,9 @@
                                             </div>
                                         </t>
                                     </div>
-                                    <div class="mt-4 d-flex justify-content-space-between">
-                                        <div class="navigation-swip">
-                                            <span class="fa fa-arrow-left text-white me-3 rounded-circle bg-secondary"></span>
-                                            <span class="fa fa-arrow-right text-white rounded-circle bg-secondary"></span>
-                                        </div>
-                                    </div>
+                                    <div class="swiper-button-prev brand-nav-prev"></div>
+                                    <div class="swiper-button-next brand-nav-next"></div>
+                                    <div class="swiper-pagination brand-nav-pagination mt-3"></div>
                                 </div>
                             </section>
                         </div>

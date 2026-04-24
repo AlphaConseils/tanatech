@@ -17,8 +17,12 @@ publicWidget.registry.TanatechBrandSwiper = publicWidget.Widget.extend({
                 disableOnInteraction: false,
             },
             navigation: {
-                nextEl: ".navigation-swip .fa-arrow-right",
-                prevEl: ".navigation-swip .fa-arrow-left",
+                nextEl: ".brand-nav-next",
+                prevEl: ".brand-nav-prev",
+            },
+            pagination: {
+                el: ".brand-nav-pagination",
+                clickable: true,
             },
             breakpoints: {
                 300: { slidesPerView: 1.5 },

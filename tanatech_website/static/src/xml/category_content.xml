@@ -39,7 +39,7 @@
                     </t>
                 </div>
                 <div class="text-center mt-5">
-                    <a href="/shop" class="btn btn-secondary">See all</a>
+                    <a href="/shop" class="btn btn-warning fw-bold">See all</a>
                 </div>
             </div>
         </section>

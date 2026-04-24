@@ -7,10 +7,46 @@ import { rpc } from "@web/core/network/rpc";
 publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     selector: '.promotions_section',
 
-    async willStart() {
+    start() {
+        this._showSkeleton();
+        this._observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                this._observer.disconnect();
+                this._loadAndRender();
+            }
+        }, { rootMargin: '200px' });
+        this._observer.observe(this.el);
+        return this._super(...arguments);
+    },
+
+    destroy() {
+        if (this._observer) this._observer.disconnect();
+        this._super(...arguments);
+    },
+
+    _showSkeleton() {
+        const card = () => `
+            <div style="min-width:220px;flex:1">
+                <div class="tana-skeleton-card rounded-item p-3">
+                    <div class="tana-skeleton-pulse" style="width:100%;padding-top:100%;border-radius:8px;"></div>
+                    <div class="tana-skeleton-pulse mt-3" style="height:14px;width:70%;border-radius:6px;"></div>
+                    <div class="tana-skeleton-pulse mt-2" style="height:12px;width:40%;border-radius:6px;"></div>
+                    <div class="tana-skeleton-pulse mt-3" style="height:36px;border-radius:8px;"></div>
+                </div>
+            </div>`;
+        this.$target.html(`
+            <div class="brand-padding py-3">
+                <div class="tana-skeleton-pulse mb-3" style="height:20px;width:220px;border-radius:6px;"></div>
+                <div class="d-flex gap-3 overflow-hidden">
+                    ${card()}${card()}${card()}${card()}
+                </div>
+            </div>
+        `);
+    },
+
+    async _loadAndRender() {
         const result = await rpc('/get_promotional_products', {});
         if (!result) return;
-
         this.$target.html(renderToElement('tanatech_website.promotional_snippet', { result }));
         this._initSwiper();
         this._bindCartEvents();
@@ -24,7 +60,8 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
                 spaceBetween: 20,
                 pagination: { el: ".swiper-pagination", clickable: true },
                 navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                autoplay: { delay: 4000, disableOnInteraction: false },
+                speed: 900,
+                autoplay: { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true },
                 watchOverflow: true,
                 breakpoints: {
                     0:   { slidesPerView: 1, grid: { rows: 2 } },

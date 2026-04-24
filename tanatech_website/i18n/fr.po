@@ -120,12 +120,8 @@ msgstr ""
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
-msgid ""
-"<span class=\"text-nowrap fw-bolder text-white\" style=\"font-size: "
-"10px;\">Add to cart</span>"
-msgstr ""
-"<span class=\"text-nowrap fw-bolder text-white\" style=\"font-size: "
-"10px;\">Ajouter au panier</span>"
+msgid "<span class=\"text-nowrap fw-bold text-white\">Add to cart</span>"
+msgstr "<span class=\"text-nowrap fw-bold text-white\">Ajouter au panier</span>"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
@@ -1077,6 +1073,11 @@ msgstr "green_shop"
 #: model_terms:ir.ui.view,arch_db:tanatech_website.login_custom_layout
 msgid "sign up"
 msgstr "s'inscrire"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.view_slider_image_form
+msgid "⚠️ L'image doit être en 1920x550 px"
+msgstr "⚠️ L'image doit être en 1920x550 px"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.cdv_template
