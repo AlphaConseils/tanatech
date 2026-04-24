@@ -3,6 +3,7 @@
 import { renderToElement } from "@web/core/utils/render";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 import wSaleUtils from "@website_sale/js/website_sale_utils";
 
 publicWidget.registry.NewProduct = publicWidget.Widget.extend({
@@ -48,7 +49,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_new_products', {});
         if (!result) return;
-        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result }));
+        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result, _t }));
         this._initCarousel();
         this._bindCartEvents();
     },

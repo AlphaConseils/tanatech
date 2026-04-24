@@ -120,40 +120,38 @@
 
     <template id="tanatech_brand_template" name="Grande marque">
         <section class="s_tanatech_brand o_colored_level">
-            <div class="container-fluid">
-                <div class="row text-center align-items-center">
-                    <h1 class="mb-5">Nos grandes marques</h1>
-                    <div class="col-11">
-                        <div class="ref-wrap">
-                            <section class="o_colored_level">
-                                <div class="swiper_client">
-                                    <div class="swiper-wrapper o_not_editable">
-                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
-                                            t-as="logo">
-                                            <div class="swiper-slide">
-                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                                    class="img img-fluid mx-auto"
-                                                    t-att-alt="logo.name or ''"/>
-                                            </div>
-                                        </t>
+            <div class="container-fluid py-4">
+                <h2 class="text-center fw-bold mb-5">Nos grandes marques</h2>
 
-                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
-                                            t-as="logo">
-                                            <div class="swiper-slide">
-                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                                    class="img img-fluid mx-auto"
-                                                    t-att-alt="logo.name or ''"/>
-                                            </div>
-                                        </t>
-                                    </div>
-                                    <div class="swiper-button-prev brand-nav-prev"></div>
-                                    <div class="swiper-button-next brand-nav-next"></div>
-                                    <div class="swiper-pagination brand-nav-pagination mt-3"></div>
+                <!-- Wrapper relatif pour positionner les flèches gauche/droite -->
+                <div class="brand-carousel-wrap position-relative px-5">
+                    <div class="swiper swiper_client">
+                        <div class="swiper-wrapper o_not_editable">
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                        class="img img-fluid mx-auto"
+                                        t-att-alt="logo.name or ''"/>
                                 </div>
-                            </section>
+                            </t>
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                        class="img img-fluid mx-auto"
+                                        t-att-alt="logo.name or ''"/>
+                                </div>
+                            </t>
                         </div>
-                    </div> 
+                    </div>
+                    <!-- Flèches positionnées par rapport au wrapper, pas au swiper -->
+                    <div class="swiper-button-prev brand-nav-prev"></div>
+                    <div class="swiper-button-next brand-nav-next"></div>
                 </div>
+
+                <!-- Pagination en dessous -->
+                <div class="swiper-pagination brand-nav-pagination mt-3"></div>
             </div>
         </section>
     </template>
