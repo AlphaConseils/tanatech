@@ -76,15 +76,16 @@ class PaymentProvider(models.Model):
         return HTTPBasicAuth(f'merchant.{self.mcb_merchant_id}', self.mcb_api_password)
 
     def _mcb_create_checkout_session(self, order_id, amount, currency_name, return_url):
-        """Create a Mastercard Hosted Checkout session (full redirect, no iframes)."""
+        """
+        Create a Mastercard Hosted Checkout session (full redirect, no iframes).
+
+        Step 1: POST /session with apiOperation + interaction only (no order fields —
+                MCB API v72 rejects amount/description at session creation time).
+        Step 2: PUT /session/{id} to attach order details (amount, currency, orderId).
+        """
         url = self._mcb_get_api_url('/session')
         payload = {
             "apiOperation": "CREATE_CHECKOUT_SESSION",
-            "order": {
-                "id": order_id,
-                "amount": float(amount),
-                "currency": currency_name,
-            },
             "interaction": {
                 "operation": "PURCHASE",
                 "returnUrl": return_url,
@@ -112,6 +113,15 @@ class PaymentProvider(models.Model):
             if not session_id:
                 raise ValidationError(_("MCB: Unable to create checkout session."))
             _logger.info("MCB checkout session: %s (order %s)", session_id, order_id)
+
+            # Step 2: attach order details to the session
+            self._mcb_update_session(
+                session_id=session_id,
+                amount=amount,
+                currency_name=currency_name,
+                order_reference=order_id,
+            )
+
             return session_id, success_indicator
         except requests.exceptions.RequestException as e:
             _logger.error("MCB create_checkout_session: %s", e)
