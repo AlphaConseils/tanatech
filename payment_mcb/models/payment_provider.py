@@ -99,9 +99,16 @@ class PaymentProvider(models.Model):
         }
         try:
             resp = requests.post(url, json=payload, auth=self._mcb_get_auth(), timeout=30)
-            resp.raise_for_status()
+            if not resp.ok:
+                _logger.error(
+                    "MCB create_checkout_session HTTP %s: %s", resp.status_code, resp.text
+                )
+                raise ValidationError(
+                    _("MCB: Checkout session error %s: %s") % (resp.status_code, resp.text[:300])
+                )
             data = resp.json()
             if data.get("result") != "SUCCESS":
+                _logger.error("MCB create_checkout_session result: %s", data)
                 raise ValidationError(
                     _("MCB: Checkout session creation failed: %s") % data.get("result")
                 )
