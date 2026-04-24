@@ -91,10 +91,6 @@ class PaymentProvider(models.Model):
                 "returnUrl": return_url,
                 "cancelUrl": f"{self.get_base_url()}/payment/status",
                 "timeoutUrl": f"{self.get_base_url()}/payment/status",
-                "displayControl": {
-                    "billingAddress": "HIDE",
-                    "customerEmail": "OPTIONAL",
-                },
             },
         }
         try:
