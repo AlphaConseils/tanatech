@@ -87,7 +87,6 @@ class PaymentProvider(models.Model):
         payload = {
             "apiOperation": "CREATE_CHECKOUT_SESSION",
             "interaction": {
-                "operation": "PURCHASE",
                 "returnUrl": return_url,
             },
         }
