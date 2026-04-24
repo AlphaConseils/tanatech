@@ -101,8 +101,8 @@
 
                     <!-- Global Error -->
                     <div id="mcb-payment-error" class="alert alert-danger d-none" role="alert">
-                        <i class="fa fa-exclamation-circle me-2"/>
-                        <span id="mcb-payment-error-message"/>
+                        <i class="fa fa-exclamation-circle me-2"></i>
+                        <span id="mcb-payment-error-message"></span>
                     </div>
 
                     <!-- Loader -->
@@ -271,6 +271,7 @@
 
             // ── UI utilities ───────────────────────────────────────────────
             function mcbShowError(msg) {
+                if (!msg) return;
                 const errMsg = document.getElementById('mcb-payment-error-message');
                 const errDiv = document.getElementById('mcb-payment-error');
                 if (errMsg) {
