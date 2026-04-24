@@ -272,14 +272,14 @@
             // ── UI utilities ───────────────────────────────────────────────
             function mcbShowError(msg) {
                 if (!msg) return;
-                const errMsg = document.getElementById('mcb-payment-error-message');
                 const errDiv = document.getElementById('mcb-payment-error');
-                if (errMsg) {
-                    errMsg.textContent = msg;
-                } else {
-                    console.error('[MCB] Error display element missing. Message:', msg);
-                }
-                if (errDiv) errDiv.classList.remove('d-none');
+                if (!errDiv) { console.error('[MCB] Error:', msg); return; }
+                errDiv.innerHTML = '';
+                var icon = document.createElement('i');
+                icon.className = 'fa fa-exclamation-circle me-2';
+                errDiv.appendChild(icon);
+                errDiv.appendChild(document.createTextNode(msg));
+                errDiv.classList.remove('d-none');
             }
             function mcbFieldError(id, msg) {
                 const el = document.getElementById(id);
