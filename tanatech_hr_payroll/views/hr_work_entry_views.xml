@@ -21,15 +21,4 @@
         </field>
     </record>
 
-    <record id="hr_work_entry_view_form_inherit" model="ir.ui.view">
-        <field name="name">hr.work.entry.form.inherit</field>
-        <field name="model">hr.work.entry</field>
-        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='company_id']" position="after">
-                <field name="is_just_to_trigger_depends_method" readonly="1" invisible="1"/>
-            </xpath>
-        </field>
-    </record>
-
 </odoo>
