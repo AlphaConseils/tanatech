@@ -66,26 +66,24 @@
             <!-- Bouton Ajouter au panier -->
             <div t-if="product._is_add_to_cart_possible()" class="mt-2"
                 t-att-data-product-id="product.product_variant_ids[0].id if product.product_variant_ids else product.id">
-                <div class="d-flex align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-stretch gap-2">
                     <button type="button"
-                        class="btn btn-primary rounded-pill flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center p-0 py-2">
-                        <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
+                        class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center py-2">
+                        <span class="text-nowrap fw-bold text-white">Add to cart</span>
                     </button>
-                    <div class="d-flex align-items-center gap-1" contenteditable="false">
+                    <div class="tana-qty-group d-flex align-items-center rounded-3 overflow-hidden" contenteditable="false">
                         <a href="#"
-                            class="btn btn-sm tana-qty-minus bg-o-color-2 text-white rounded-circle d-flex align-items-center justify-content-center"
-                            style="width:28px; height:28px;"
+                            class="tana-qty-minus d-flex align-items-center justify-content-center text-white px-3 h-100"
                             aria-label="Remove one" title="Remove one">
-                            <i class="fa fa-minus" style="font-size:10px;"/>
+                            <i class="fa fa-minus"/>
                         </a>
                         <input type="text"
-                            class="form-control form-control-sm tana-qty text-center bg-o-color-2 text-white rounded-pill border-0"
-                            data-min="1" value="1" style="width:32px; height:28px; padding:0;"/>
+                            class="tana-qty text-center text-white border-0 bg-transparent fw-bold"
+                            data-min="1" value="1" style="width:32px;"/>
                         <a href="#"
-                            class="btn btn-sm tana-qty-plus bg-o-color-2 text-white rounded-circle d-flex align-items-center justify-content-center"
-                            style="width:28px; height:28px;"
+                            class="tana-qty-plus d-flex align-items-center justify-content-center text-white px-3 h-100"
                             aria-label="Add one" title="Add one">
-                            <i class="fa fa-plus" style="font-size:10px;"/>
+                            <i class="fa fa-plus"/>
                         </a>
                     </div>
                 </div>
