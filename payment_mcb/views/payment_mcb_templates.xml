@@ -107,7 +107,7 @@
                     <div class="d-grid mt-4">
                         <button id="mcb-pay-button" type="button"
                                 class="btn btn-primary btn-lg fw-semibold"
-                                onclick="mcbInitiatePayment()">
+                                onclick="mcbInitiatePayment(event)">
                             <i class="fa fa-lock me-2"/>
                             Pay now
                         </button>
@@ -190,7 +190,11 @@
             );
 
             // ── Payment trigger ────────────────────────────────────────────
-            function mcbInitiatePayment() {
+            function mcbInitiatePayment(event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
                 mcbClearErrors();
                 PaymentSession.updateSessionFromForm('card');
             }

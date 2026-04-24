@@ -56,6 +56,7 @@ class PaymentTransaction(models.Model):
 
         return {
             **res,
+            'reference': self.reference,
             'session_id': session_id,
             'session_js_url': provider._mcb_get_session_js_url(),
             'merchant_id': provider.mcb_merchant_id,
