@@ -89,8 +89,6 @@ class PaymentProvider(models.Model):
             "interaction": {
                 "operation": "PURCHASE",
                 "returnUrl": return_url,
-                "cancelUrl": f"{self.get_base_url()}/payment/status",
-                "timeoutUrl": f"{self.get_base_url()}/payment/status",
             },
         }
         try:
@@ -150,13 +148,16 @@ class PaymentProvider(models.Model):
             "order": {
                 "amount": float(amount),
                 "currency": currency_name,
-                "reference": order_reference,
-                "description": f"Odoo Payment - {order_reference}",
+                "id": order_reference,
             }
         }
         try:
             resp = requests.put(url, json=payload, auth=self._mcb_get_auth(), timeout=30)
-            resp.raise_for_status()
+            if not resp.ok:
+                _logger.error("MCB update_session HTTP %s: %s", resp.status_code, resp.text)
+                raise ValidationError(
+                    _("MCB: Session update error %s: %s") % (resp.status_code, resp.text[:300])
+                )
             return True
         except requests.exceptions.RequestException as e:
             _logger.error("MCB update_session: %s", e)
