@@ -39,6 +39,7 @@ publicWidget.registry.TanaShopCart = publicWidget.Widget.extend({
             wSaleUtils.updateCartNavBar(cartData);
             const productName = $wrap.closest('form').find('h6').text().trim();
             this._showCartToast(productName, qty);
+            $wrap.find('.tana-qty').val(1);
         } catch (e) {
             console.error('Cart update error:', e);
         } finally {
