@@ -371,16 +371,14 @@
 // Bloc quantité unifié (- 1 +)
 .tana-qty-group {
     background-color: #f9b807;
+    min-width: 110px;
 
-    .tana-qty-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 12px;
+    .tana-qty-minus,
+    .tana-qty-plus {
         cursor: pointer;
+        font-size: 13px;
+        text-decoration: none;
         user-select: none;
-        font-size: 12px;
-        line-height: 1;
 
         &:hover {
             background-color: rgba(0, 0, 0, 0.1);
@@ -390,9 +388,6 @@
     .tana-qty {
         outline: none;
         font-size: 14px;
-        line-height: 1;
-        padding: 0;
-        min-width: 28px;
     }
 }
 
