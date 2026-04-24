@@ -9,13 +9,6 @@ import pytz
 class HrWorkEntry(models.Model):
     _inherit = "hr.work.entry"
 
-    is_just_to_trigger_depends_method = fields.Boolean(
-        "Nothing but trigger",
-        compute="_compute_check_overtime_work_entry_type",
-        default=False,
-        store=False,
-    )
-
     work_entry_type_id = fields.Many2one("hr.work.entry.type", store=True)
 
     def auto_update_overtime_work_entry_type(self):
@@ -107,7 +100,6 @@ class HrWorkEntry(models.Model):
             work_entries_to_unlink |= existing_work_entries
             if work_entries_vals:
                 self.env["hr.work.entry"].create(work_entries_vals)
-            entry.is_just_to_trigger_depends_method = True
         work_entries_to_unlink.write({"active": False})
         work_entries_to_unlink.unlink()
 
