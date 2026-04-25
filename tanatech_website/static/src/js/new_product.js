@@ -49,7 +49,17 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_new_products', {});
         if (!result) return;
-        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result, _t }));
+        const labels = {
+            newProducts: _t('New products'),
+            discoverNew: _t('Discover our new solar kits'),
+            seeAll: _t('See all'),
+            addToCart: _t('Add to cart'),
+            newBadge: _t('New'),
+            removeOne: _t('Remove one'),
+            addOne: _t('Add one'),
+            defaultImage: _t('Default image'),
+        };
+        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result, labels }));
         this._initCarousel();
         this._bindCartEvents();
     },

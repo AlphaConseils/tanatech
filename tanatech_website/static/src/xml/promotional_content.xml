@@ -5,10 +5,10 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
                     <div>
-                        <h2 class="fw-bold" t-out="_t('Our promotional offers')"/>
-                        <p class="text-muted" t-out="_t('Discover our discounted solar kits')"/>
+                        <h2 class="fw-bold" t-out="labels.ourPromotionalOffers"/>
+                        <p class="text-muted" t-out="labels.discoverDiscounted"/>
                     </div>
-                    <a href="/shop" class="btn btn-primary" t-out="_t('See all')"/>
+                    <a href="/shop" class="btn btn-primary" t-out="labels.seeAll"/>
                 </div>
 
                 <div class="swiper promotions-carousel brand-padding">
@@ -29,7 +29,7 @@
                                             <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name"/>
                                         </t>
                                         <t t-else="">
-                                            <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="_t('Default image')"/>
+                                            <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="labels.defaultImage"/>
                                         </t>
                                     </div>
 
@@ -63,19 +63,21 @@
 
                                         <div class="d-flex align-items-stretch gap-2">
                                             <button type="button"
-                                                class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center">
-                                                <span class="text-nowrap fw-bold text-white" t-out="_t('Add to cart')"/>
+                                                class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
+                                                t-att-title="labels.addToCart">
+                                                <i class="fa fa-shopping-cart"/>
+                                                <span class="text-nowrap fw-bold text-white tana-btn-label" t-out="labels.addToCart"/>
                                             </button>
                                             <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
                                                 <a href="#" class="tana-qty-minus text-white"
-                                                    t-att-aria-label="_t('Remove one')" t-att-title="_t('Remove one')">
+                                                    t-att-aria-label="labels.removeOne" t-att-title="labels.removeOne">
                                                     <i class="fa fa-minus"/>
                                                 </a>
                                                 <input type="text"
                                                     class="tana-qty text-center text-white border-0 bg-transparent fw-bold"
                                                     data-min="1" value="1"/>
                                                 <a href="#" class="tana-qty-plus text-white"
-                                                    t-att-aria-label="_t('Add one')" t-att-title="_t('Add one')">
+                                                    t-att-aria-label="labels.addOne" t-att-title="labels.addOne">
                                                     <i class="fa fa-plus"/>
                                                 </a>
                                             </div>
