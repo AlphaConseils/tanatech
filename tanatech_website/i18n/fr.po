@@ -124,6 +124,11 @@ msgid "<span class=\"text-nowrap fw-bold text-white\">Add to cart</span>"
 msgstr "<span class=\"text-nowrap fw-bold text-white\">Ajouter au panier</span>"
 
 #. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+msgid "<span class=\"fw-bold text-white text-nowrap tana-btn-label\">Add to cart</span>"
+msgstr "<span class=\"fw-bold text-white text-nowrap tana-btn-label\">Ajouter au panier</span>"
+
+#. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_slide_template
 msgid "<span class=\"visually-hidden\">Next</span>"
 msgstr "<span class=\"visually-hidden\">Suivant</span>"
@@ -172,6 +177,7 @@ msgstr "Actif"
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#, python-format
 msgid "Add one"
 msgstr "Ajouter un"
 
@@ -259,6 +265,7 @@ msgstr "CONDITION DE LIVRAISON"
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
 #: code:addons/tanatech_website/static/src/js/product_category.js:0
+#, python-format
 msgid "Categories"
 msgstr "Catégories"
 
@@ -367,6 +374,7 @@ msgstr "Découvrez nos produits en promotion."
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
 #: code:addons/tanatech_website/static/src/js/product_category.js:0
+#, python-format
 msgid "Discover our selection of reliable solar solutions."
 msgstr "Découvrez notre sélection de solutions solaires fiables."
 
@@ -856,6 +864,7 @@ msgstr "Achats"
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#, python-format
 msgid "Remove one"
 msgstr "Retirer un"
 
@@ -1102,21 +1111,25 @@ msgstr ""
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
+#, python-format
 msgid "New products"
 msgstr "Nouveaux produits"
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
+#, python-format
 msgid "Discover our new solar kits"
 msgstr "Découvrez nos nouveaux kits solaires"
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#, python-format
 msgid "Our promotional offers"
 msgstr "Nos offres promotionnelles"
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#, python-format
 msgid "Discover our discounted solar kits"
 msgstr "Découvrez nos kits solaires en promotion"
 
@@ -1124,17 +1137,20 @@ msgstr "Découvrez nos kits solaires en promotion"
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 #: code:addons/tanatech_website/static/src/js/product_category.js:0
+#, python-format
 msgid "See all"
 msgstr "Voir tout"
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
 #: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#, python-format
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
 #. module: tanatech_website
 #: code:addons/tanatech_website/static/src/js/new_product.js:0
+#, python-format
 msgid "New"
 msgstr "Nouveau"
 

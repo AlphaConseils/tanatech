@@ -3,8 +3,6 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement } from "@web/core/utils/render";
 import { rpc } from "@web/core/network/rpc";
-import { _t } from "@web/core/l10n/translation";
-
 publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     selector: '.promotions_section',
 
@@ -48,15 +46,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_promotional_products', {});
         if (!result) return;
-        const labels = {
-            ourPromotionalOffers: _t('Our promotional offers'),
-            discoverDiscounted: _t('Discover our discounted solar kits'),
-            seeAll: _t('See all'),
-            addToCart: _t('Add to cart'),
-            removeOne: _t('Remove one'),
-            addOne: _t('Add one'),
-            defaultImage: _t('Default image'),
-        };
+        const labels = result.labels;
         this.$target.html(renderToElement('tanatech_website.promotional_snippet', { result, labels }));
         this._initSwiper();
         this._bindCartEvents();

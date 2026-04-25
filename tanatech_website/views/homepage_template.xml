@@ -123,9 +123,13 @@
             <div class="container-fluid py-4">
                 <h2 class="text-center fw-bold mb-5">Nos grandes marques</h2>
 
-                <!-- Wrapper relatif pour positionner les flèches gauche/droite -->
-                <div class="brand-carousel-wrap position-relative px-5">
-                    <div class="swiper swiper_client">
+                <!-- Carousel : flèche | slides | flèche -->
+                <div class="brand-carousel-wrap d-flex align-items-center gap-3">
+                    <button class="brand-nav-prev brand-nav-btn" type="button" aria-label="Précédent">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+
+                    <div class="swiper swiper_client flex-grow-1 overflow-hidden">
                         <div class="swiper-wrapper o_not_editable">
                             <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
                                 t-as="logo">
@@ -149,13 +153,14 @@
                             </t>
                         </div>
                     </div>
-                    <!-- Flèches positionnées par rapport au wrapper, pas au swiper -->
-                    <div class="swiper-button-prev brand-nav-prev"></div>
-                    <div class="swiper-button-next brand-nav-next"></div>
+
+                    <button class="brand-nav-next brand-nav-btn" type="button" aria-label="Suivant">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
                 </div>
 
                 <!-- Pagination en dessous -->
-                <div class="swiper-pagination brand-nav-pagination mt-3"></div>
+                <div class="swiper-pagination brand-nav-pagination mt-3 text-center"></div>
             </div>
         </section>
     </template>

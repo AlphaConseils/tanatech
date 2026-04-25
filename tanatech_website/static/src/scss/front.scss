@@ -400,19 +400,48 @@
     border-radius: 8px !important;
 }
 
+// Cartes produit /shop : compacte pour ne pas déborder
+form.bg-product {
+    .tana-add-to-cart {
+        height: 36px !important;
+        min-height: unset !important;
+        padding: 0 8px !important;
+        font-size: 11px;
+    }
+    .tana-btn-label {
+        font-size: 11px;
+    }
+    .tana-qty-group {
+        height: 36px !important;
+        min-height: unset !important;
+        min-width: 82px;
+    }
+    .tana-qty-minus,
+    .tana-qty-plus {
+        width: 26px !important;
+        font-size: 11px;
+    }
+    .tana-qty {
+        width: 30px !important;
+        font-size: 12px;
+    }
+}
+
 // Taille compacte dans les snippets (cartes étroites 4 colonnes)
 .new_products_section,
 .promotions_section {
     .tana-add-to-cart {
-        height: 36px;
-        min-height: 36px;
+        height: 36px !important;
+        min-height: unset !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
         font-size: 12px;
         border-radius: 8px !important;
     }
 
     .tana-qty-group {
-        height: 36px;
-        min-height: 36px;
+        height: 36px !important;
+        min-height: unset !important;
         min-width: 96px;
         border-radius: 8px !important;
 
@@ -498,33 +527,25 @@
     }
 
     .brand-carousel-wrap {
-        // Les flèches se positionnent par rapport à ce wrapper
+        // Flexbox row: btn | swiper | btn — pas de position absolute nécessaire
     }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+    .brand-nav-btn {
+        flex-shrink: 0;
         width: 40px;
         height: 40px;
         border-radius: 10px;
         background: #ffffff;
         border: 1px solid #d8d8d8;
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        transition: border-color 0.25s ease;
-        z-index: 10;
+        transition: border-color 0.25s ease, opacity 0.25s ease;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 0;
-
-        &::after {
-            font-size: 13px;
-            color: #333;
-            font-weight: 700;
-        }
+        font-size: 13px;
+        color: #333;
+        padding: 0;
 
         &:hover {
             border-color: #96bc1f;
@@ -534,14 +555,6 @@
             opacity: 0.35;
             pointer-events: none;
         }
-    }
-
-    .swiper-button-prev {
-        left: 0;
-    }
-
-    .swiper-button-next {
-        right: 0;
     }
 
     .swiper-pagination {
