@@ -400,63 +400,44 @@
     border-radius: 8px !important;
 }
 
-// Cartes produit /shop : compacte pour ne pas déborder
+// Cartes produit /shop : bouton vert = groupe jaune (50/50)
 form.bg-product {
     .tana-add-to-cart {
+        flex: 1 1 0 !important;
         height: 36px !important;
         min-height: unset !important;
         padding: 0 8px !important;
-        font-size: 11px;
+        font-size: 12px;
+        min-width: 0;
+        overflow: hidden;
     }
     .tana-btn-label {
-        font-size: 11px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .tana-qty-group {
+        flex: 1 1 0 !important;
         height: 36px !important;
         min-height: unset !important;
-        min-width: 82px;
+        width: unset !important;
+        min-width: unset !important;
     }
     .tana-qty-minus,
     .tana-qty-plus {
-        width: 26px !important;
-        font-size: 11px;
+        flex-shrink: 0;
+        width: 30px !important;
+        font-size: 13px;
     }
     .tana-qty {
-        width: 30px !important;
-        font-size: 12px;
+        flex: 1 !important;
+        min-width: 0;
+        width: auto !important;
+        font-size: 13px;
     }
 }
 
-// Taille compacte dans les snippets (cartes étroites 4 colonnes)
-.new_products_section,
-.promotions_section {
-    .tana-add-to-cart {
-        height: 36px !important;
-        min-height: unset !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        font-size: 12px;
-        border-radius: 8px !important;
-    }
-
-    .tana-qty-group {
-        height: 36px !important;
-        min-height: unset !important;
-        min-width: 96px;
-        border-radius: 8px !important;
-
-        .tana-qty-minus,
-        .tana-qty-plus {
-            width: 30px;
-            font-size: 12px;
-        }
-
-        .tana-qty {
-            width: 34px;
-            font-size: 13px;
-        }
-    }
-}
 
 // Bloc quantité unifié (- 1 +)
 .tana-qty-group {
@@ -496,6 +477,56 @@ form.bg-product {
         text-align: center;
         color: #ffffff;
     }
+}
+
+// Snippets homepage : bouton vert = groupe jaune (50/50)
+.new_products_section,
+.promotions_section {
+    .tana-add-to-cart {
+        flex: 1 1 0 !important;
+        height: 36px !important;
+        min-height: unset !important;
+        padding: 0 8px !important;
+        font-size: 12px !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+    .tana-btn-label {
+        display: block !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+    .tana-qty-group {
+        flex: 1 1 0 !important;
+        height: 36px !important;
+        min-height: unset !important;
+        width: unset !important;
+        min-width: unset !important;
+    }
+    .tana-qty-minus,
+    .tana-qty-plus {
+        flex-shrink: 0 !important;
+        width: 30px !important;
+        font-size: 13px !important;
+    }
+    .tana-qty {
+        flex: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+        font-size: 13px !important;
+    }
+}
+
+
+// Pagination marques — centrée (hors container Swiper)
+.brand-nav-pagination {
+    position: static !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    left: unset !important;
+    bottom: unset !important;
 }
 
 // Boutons nav — Marques (Swiper)
@@ -563,8 +594,9 @@ form.bg-product {
     }
 }
 
-// Boutons nav — Nouveaux produits (Owl Carousel)
-.new_products_section {
+// Boutons nav — Nouveaux produits + Promotions (Owl Carousel)
+.new_products_section,
+.promotions_section {
     .owl-nav {
         display: flex;
         justify-content: flex-end;
@@ -601,50 +633,53 @@ form.bg-product {
     }
 }
 
-// Boutons nav — Promotions (Swiper)
-.promotions_section {
-    .swiper-bottom-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 24px;
+// Boutons nav — Promotions (Swiper avec div, même style que Owl)
+.promo-nav-div {
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    background: #f0f0f0 !important;
+    border: 1.5px solid #999999 !important;
+    color: #000000 !important;
+    font-size: 15px !important;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    user-select: none;
+
+    &:hover {
+        background: #e0e0e0 !important;
+        border-color: #96bc1f !important;
     }
 
-    .swiper-navigation-buttons {
-        display: flex;
-        gap: 8px;
+    &.swiper-button-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+    }
+}
+
+.promo-pagination {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    position: static !important;
+
+    .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background: #d0d0d0;
+        opacity: 1;
+        transition: background 0.3s ease;
     }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        margin-top: 0;
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        background: #ffffff;
-        border: 1px solid #d8d8d8;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        transition: border-color 0.25s ease;
-        flex-shrink: 0;
-
-        &::after {
-            font-size: 14px;
-            color: #333;
-            font-weight: 700;
-        }
-
-        &:hover {
-            border-color: #96bc1f;
-        }
-
-        &.swiper-button-disabled {
-            opacity: 0.35;
-            pointer-events: none;
-        }
+    .swiper-pagination-bullet-active {
+        background: #333333;
     }
 }
 

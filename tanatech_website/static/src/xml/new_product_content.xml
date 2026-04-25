@@ -9,7 +9,7 @@
                         <p class="text-muted" t-out="labels.discoverNew"/>
                     </div>
                     <div>
-                        <a href="/shop" class="btn btn-primary" t-out="labels.seeAll"/>
+                        <a href="/shop" class="btn btn-primary btn-lg px-4" t-out="labels.seeAll"/>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@
                                         </span>
                                     </div>
 
-                                    <div class="d-flex align-items-stretch gap-2">
+                                    <div class="d-flex align-items-stretch gap-2 overflow-hidden">
                                         <button type="button"
                                             class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                                             t-att-title="labels.addToCart">
