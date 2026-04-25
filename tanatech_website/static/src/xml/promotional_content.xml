@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.promotional_snippet">
-        <section class="promotions_section" id="promotions" data-anchor="true">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
+        <section class="promotions_section o_colored_level" id="promotions" data-anchor="true">
+            <div class="container-xl mx-auto px-3 px-md-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
-                        <h2 class="fw-bold" t-out="labels.ourPromotionalOffers"/>
-                        <p class="text-muted" t-out="labels.discoverDiscounted"/>
+                        <h2 class="fw-bold mb-1" t-out="labels.ourPromotionalOffers"/>
+                        <p class="text-muted mb-0" t-out="labels.discoverDiscounted"/>
                     </div>
-                    <a href="/shop" class="btn btn-primary btn-lg px-4" t-out="labels.seeAll"/>
+                    <a href="/shop" class="btn btn-primary px-3 py-1 small" t-out="labels.seeAll"/>
                 </div>
 
-                <div class="swiper promotions-carousel brand-padding">
+                <div class="swiper promotions-carousel">
                     <div class="swiper-wrapper">
                         <t t-foreach="result.products" t-as="product" t-key="product.id">
                             <div class="swiper-slide">
-                                <div class="card h-100 border-0 shadow-sm rounded-item overflow-hidden position-relative bg-product p-3"
-                                    t-att-data-product-id="product.id">
+                                <div class="tana-product-card position-relative" t-att-data-product-id="product.id">
 
                                     <span class="tana-badge tana-badge-discount position-absolute" style="z-index: 2; left: 10px; top: 10px;">
                                         -<t t-esc="product.discount"/>%
                                     </span>
 
-                                    <div class="ratio ratio-1x1" style="z-index: 1;">
+                                    <div class="tana-card-img ratio ratio-1x1">
                                         <t t-if="product.image_512">
-                                            <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name"/>
+                                            <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name"/>
                                         </t>
                                         <t t-else="">
-                                            <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="labels.defaultImage"/>
+                                            <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="labels.defaultImage"/>
                                         </t>
                                     </div>
 
-                                    <div class="card-body shadow-none bg-product p-0 mt-3">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="fw-bold product-title text-truncate w-50">
+                                    <div class="tana-card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                            <span class="fw-bold text-truncate" style="max-width:60%; font-size:14px;">
                                                 <t t-esc="product.name"/>
-                                            </h6>
-                                            <del class="text-muted" style="font-size:13px;">
+                                            </span>
+                                            <del class="text-muted" style="font-size:12px; white-space:nowrap;">
                                                 <t t-if="result.currency_position === 'before'">
                                                     <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.compare_list_price.toLocaleString('fr-FR')"/>
                                                 </t>
@@ -46,8 +45,8 @@
                                             </del>
                                         </div>
 
-                                        <p class="text-end mb-2">
-                                            <strong class="text-dark">
+                                        <div class="text-end mb-2">
+                                            <strong style="font-size:15px;">
                                                 <t t-if="result.currency_position === 'before'">
                                                     <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.list_price.toLocaleString('fr-FR')"/>
                                                 </t>
@@ -55,16 +54,16 @@
                                                     <t t-esc="product.list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
                                                 </t>
                                             </strong>
-                                        </p>
+                                        </div>
 
                                         <div class="d-flex align-items-stretch gap-2 overflow-hidden">
                                             <button type="button"
-                                                class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
+                                                class="btn btn-primary btn-sm flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                                                 t-att-title="labels.addToCart">
                                                 <i class="fa fa-shopping-cart"/>
                                                 <span class="text-nowrap fw-bold text-white tana-btn-label" t-out="labels.addToCart"/>
                                             </button>
-                                            <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
+                                            <div class="tana-qty-group d-flex align-items-stretch overflow-hidden" contenteditable="false">
                                                 <a href="#" class="tana-qty-minus text-white"
                                                     t-att-aria-label="labels.removeOne" t-att-title="labels.removeOne">
                                                     <i class="fa fa-minus"/>
@@ -85,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mt-3 brand-padding">
+                <div class="d-flex justify-content-between align-items-center mt-2">
                     <div class="promo-pagination"></div>
                     <div class="d-flex gap-2">
                         <div class="promo-nav-prev promo-nav-div" role="button" aria-label="Précédent">
@@ -96,7 +95,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     </t>

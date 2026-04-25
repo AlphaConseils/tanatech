@@ -1,63 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.new_products_snippet">
-        <section class="new_products_section" id="new_product" data-anchor="true">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center mb-4 brand-padding">
+        <section class="new_products_section o_colored_level" id="new_product" data-anchor="true">
+            <div class="container-xl mx-auto px-3 px-md-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
-                        <h2 class="fw-bold" t-out="labels.newProducts"/>
-                        <p class="text-muted" t-out="labels.discoverNew"/>
+                        <h2 class="fw-bold mb-1" t-out="labels.newProducts"/>
+                        <p class="text-muted mb-0" t-out="labels.discoverNew"/>
                     </div>
-                    <div>
-                        <a href="/shop" class="btn btn-primary btn-lg px-4" t-out="labels.seeAll"/>
-                    </div>
+                    <a href="/shop" class="btn btn-primary px-3 py-1" t-out="labels.seeAll"/>
                 </div>
 
-                <div class="owl-carousel owl-theme new-product-carousel brand-padding">
+                <div class="owl-carousel owl-theme new-product-carousel">
                     <t t-foreach="result.products" t-as="product" t-key="product.id">
-                        <div class="item px-2">
-                            <div class="card h-100 border-0 shadow-sm rounded-item overflow-hidden position-relative bg-product p-3"
-                                t-att-data-product-id="product.id">
-                                <!-- Badge new -->
+                        <div class="item px-1">
+                            <div class="tana-product-card position-relative" t-att-data-product-id="product.id">
+
                                 <span class="tana-badge tana-badge-new position-absolute" style="z-index: 2; left: 10px; top: 10px;" t-out="labels.newBadge"/>
 
-                                <!-- Image -->
-                                <div class="ratio ratio-1x1" style="z-index: 1;">
+                                <div class="tana-card-img ratio ratio-1x1">
                                     <t t-if="product.image_512">
-                                        <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="product.name" />
+                                        <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name"/>
                                     </t>
                                     <t t-else="">
-                                        <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100 img-product" t-att-alt="labels.defaultImage" />
+                                        <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="labels.defaultImage"/>
                                     </t>
                                 </div>
 
-                                <!-- Infos produit -->
-                                <div class="card-body bg-product shadow-none p-0 mt-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="fw-bold mb-1 w-75 text-truncate" style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                <div class="tana-card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <span class="fw-bold text-truncate" style="max-width:65%; font-size:14px;">
                                             <t t-esc="product.name"/>
-                                        </h6>
+                                        </span>
                                     </div>
-
-                                    <div class="mb-2 text-end">
-                                        <span class="fw-bold text-dark">
+                                    <div class="text-end mb-2">
+                                        <strong style="font-size:15px;">
                                             <t t-if="result.currency_position === 'before'">
                                                 <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.list_price.toLocaleString('fr-FR')"/>
                                             </t>
                                             <t t-else="">
-                                                <t t-esc="product.list_price.toLocaleString('fr-FR')"/> <t t-esc="result.currency_symbol"/>
+                                                <t t-esc="product.list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
                                             </t>
-                                        </span>
+                                        </strong>
                                     </div>
-
                                     <div class="d-flex align-items-stretch gap-2 overflow-hidden">
                                         <button type="button"
-                                            class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
+                                            class="btn btn-primary btn-sm flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                                             t-att-title="labels.addToCart">
                                             <i class="fa fa-shopping-cart"/>
                                             <span class="text-nowrap fw-bold text-white tana-btn-label" t-out="labels.addToCart"/>
                                         </button>
-                                        <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
+                                        <div class="tana-qty-group d-flex align-items-stretch overflow-hidden" contenteditable="false">
                                             <a href="#" class="tana-qty-minus text-white"
                                                 t-att-aria-label="labels.removeOne" t-att-title="labels.removeOne">
                                                 <i class="fa fa-minus"/>
@@ -76,7 +69,6 @@
                         </div>
                     </t>
                 </div>
-
             </div>
         </section>
     </t>

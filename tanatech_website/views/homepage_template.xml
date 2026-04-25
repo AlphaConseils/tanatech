@@ -84,21 +84,21 @@
     </template>
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
-        <section class="s_tanatech_publicity">
-            <div class="container-fluid py-3 my-5">
+        <section class="s_tanatech_publicity o_colored_level">
+            <div class="container-xl mx-auto py-3 my-5 px-3 px-md-4">
                 <div class="row">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap brand-padding" style="">
+                    <div class="d-flex justify-content-between align-items-center" style="">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-sun " style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is GreenShop</a></span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is Tanatech</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-box" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home deliverye</a></span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home delivery</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
@@ -120,8 +120,8 @@
 
     <template id="tanatech_brand_template" name="Grande marque">
         <section class="s_tanatech_brand o_colored_level">
-            <div class="container-fluid py-4">
-                <h2 class="text-center fw-bold mb-5">Nos grandes marques</h2>
+            <div class="container-xl mx-auto py-4 px-3 px-md-4">
+                <h2 class="text-center fw-bold mb-5">Our top brands</h2>
 
                 <!-- Carousel : flèche | slides | flèche -->
                 <div class="brand-carousel-wrap d-flex align-items-center gap-3">

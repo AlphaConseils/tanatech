@@ -72,13 +72,16 @@
 .icon {
   width: 60px;
   height: 60px;
+  min-width: 60px;
   background-color: #96BC1F;
+  flex-shrink: 0;
 }
 
 .pub {
   margin-top: 5px;
   background-color: #F5F5F5;
-  width: 360px;
+  flex: 0 0 auto;
+  width: 23%;
 }
 
 .bg-product {
@@ -99,7 +102,7 @@
 .price {
   font-family: raleway-variable, sans-serif;
   font-weight: 700;
-  font-style: italic;
+  font-style: normal;
   text-align: end !important;
 }
 
@@ -479,17 +482,43 @@ form.bg-product {
     }
 }
 
-// Snippets homepage : bouton vert = groupe jaune (50/50)
+// Carte produit snippets — coins arrondis
+.rounded-item {
+    border-radius: 16px;
+}
+
+// Carte produit style référence : image pleine largeur + texte en bas
+.tana-product-card {
+    border-radius: 28px;
+    border: 2px solid #e8dfc8;
+    background-color: #FEF9ED;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+
+    .tana-card-img {
+        border-radius: 0;
+        overflow: hidden;
+    }
+
+    .tana-card-body {
+        padding: 10px 12px 12px;
+        background-color: #FEF9ED;
+    }
+}
+
+// Snippets homepage — boutons pill (vert + jaune)
 .new_products_section,
 .promotions_section {
-    .tana-add-to-cart {
+    .tana-add-to-cart,
+    .tana-product-card .tana-add-to-cart {
         flex: 1 1 0 !important;
-        height: 36px !important;
+        height: 38px !important;
         min-height: unset !important;
-        padding: 0 8px !important;
-        font-size: 12px !important;
+        padding: 0 12px !important;
+        font-size: 13px !important;
         min-width: 0 !important;
         overflow: hidden !important;
+        font-weight: 600 !important;
     }
     .tana-btn-label {
         display: block !important;
@@ -497,9 +526,10 @@ form.bg-product {
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
     }
-    .tana-qty-group {
+    .tana-qty-group,
+    .tana-product-card .tana-qty-group {
         flex: 1 1 0 !important;
-        height: 36px !important;
+        height: 38px !important;
         min-height: unset !important;
         width: unset !important;
         min-width: unset !important;
@@ -507,14 +537,16 @@ form.bg-product {
     .tana-qty-minus,
     .tana-qty-plus {
         flex-shrink: 0 !important;
-        width: 30px !important;
-        font-size: 13px !important;
+        width: 34px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
     }
     .tana-qty {
         flex: 1 !important;
         min-width: 0 !important;
         width: auto !important;
-        font-size: 13px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
     }
 }
 
@@ -726,19 +758,24 @@ form.bg-product {
 
 // Badges produit (remise / nouveau)
 .tana-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
     color: #ffffff;
-    line-height: 1.4;
-    letter-spacing: 0.3px;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
 .tana-badge-discount {
     background-color: #e53935;
+    min-width: 52px;
+    text-align: center;
 }
 
 .tana-badge-new {

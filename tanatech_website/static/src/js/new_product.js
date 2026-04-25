@@ -58,7 +58,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
         setTimeout(() => {
             this.$target.find('.owl-carousel').owlCarousel({
                 loop: true,
-                margin: 20,
+                margin: 15,
                 nav: true,
                 dots: true,
                 autoplay: true,
