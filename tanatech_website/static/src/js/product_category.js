@@ -3,8 +3,6 @@
 import { renderToElement } from "@web/core/utils/render";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
-import { _t } from "@web/core/l10n/translation";
-
 publicWidget.registry.CategoriesProduct = publicWidget.Widget.extend({
     selector: '.categories_section',
 
@@ -49,12 +47,7 @@ publicWidget.registry.CategoriesProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_product_categories', {});
         if (result) {
-            const labels = {
-                categories: _t('Categories'),
-                discoverSelection: _t('Discover our selection of reliable solar solutions.'),
-                seeAll: _t('See all'),
-                defaultImage: _t('Default image'),
-            };
+            const labels = result.labels;
             this.$target.empty().html(renderToElement('tanatech_website.category_data', { result, labels }));
         }
     },

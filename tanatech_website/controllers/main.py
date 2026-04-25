@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request
 
 
@@ -104,13 +104,18 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8 
+                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8
             )
         )
-        values = {
+        return {
             "categories": public_categs,
+            "labels": {
+                "categories": _("Categories"),
+                "discoverSelection": _("Discover our selection of reliable solar solutions."),
+                "seeAll": _("See all"),
+                "defaultImage": _("Default image"),
+            },
         }
-        return values
 
     @http.route("/get_new_products", auth="public", type="json", website=True)
     def get_new_products(self):
@@ -137,6 +142,16 @@ class WebsiteProduct(http.Controller):
             "products": products,
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
+            "labels": {
+                "newProducts": _("New products"),
+                "discoverNew": _("Discover our new solar kits"),
+                "seeAll": _("See all"),
+                "addToCart": _("Add to cart"),
+                "newBadge": _("New"),
+                "removeOne": _("Remove one"),
+                "addOne": _("Add one"),
+                "defaultImage": _("Default image"),
+            },
         }
 
     @http.route("/get_promotional_products", auth="public", type="json", website=True)
@@ -173,6 +188,15 @@ class WebsiteProduct(http.Controller):
             "products": products,
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
+            "labels": {
+                "ourPromotionalOffers": _("Our promotional offers"),
+                "discoverDiscounted": _("Discover our discounted solar kits"),
+                "seeAll": _("See all"),
+                "addToCart": _("Add to cart"),
+                "removeOne": _("Remove one"),
+                "addOne": _("Add one"),
+                "defaultImage": _("Default image"),
+            },
         }
 
     # @http.route("/get_home_slide", type="json", auth="public", website=True)
