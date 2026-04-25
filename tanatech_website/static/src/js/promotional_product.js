@@ -58,7 +58,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
             new Swiper(this.$target.find('.promotions-carousel')[0], {
                 slidesPerView: 4,
                 grid: { rows: 2, fill: "row" },
-                spaceBetween: 20,
+                spaceBetween: 15,
                 navigation: { nextEl: this.$target.find('.promo-nav-next')[0], prevEl: this.$target.find('.promo-nav-prev')[0] },
                 pagination: { el: this.$target.find('.promo-pagination')[0], clickable: true },
                 speed: 900,

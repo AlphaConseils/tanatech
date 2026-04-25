@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from odoo import _, http
+from odoo import http
 from odoo.http import request
+from odoo.tools.translate import code_translations
 
 
 # class Home(WebHome):
@@ -97,6 +98,23 @@ from odoo.http import request
 
 
 class WebsiteProduct(http.Controller):
+
+    def _t(self, source):
+        """Translate using the website's default language.
+
+        _() from odoo uses a thread-local set at request start and cannot be
+        overridden mid-request for a different lang. We read directly from the
+        code_translations cache (loaded from the module's .po file) so that
+        labels are always returned in the website's configured language,
+        regardless of the visiting user's account language.
+        """
+        lang_code = request.website.default_lang_id.code
+        try:
+            trans = code_translations.get_python_translations("tanatech_website", lang_code)
+            return trans.get(source) or source
+        except Exception:
+            return source
+
     @http.route("/get_product_categories", auth="public", type="json", website=True)
     def get_product_category(self):
         """Get the website categories for the snippet."""
@@ -110,10 +128,10 @@ class WebsiteProduct(http.Controller):
         return {
             "categories": public_categs,
             "labels": {
-                "categories": _("Categories"),
-                "discoverSelection": _("Discover our selection of reliable solar solutions."),
-                "seeAll": _("See all"),
-                "defaultImage": _("Default image"),
+                "categories": self._t("Categories"),
+                "discoverSelection": self._t("Discover our selection of reliable solar solutions."),
+                "seeAll": self._t("See all"),
+                "defaultImage": self._t("Default image"),
             },
         }
 
@@ -143,14 +161,14 @@ class WebsiteProduct(http.Controller):
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
             "labels": {
-                "newProducts": _("New products"),
-                "discoverNew": _("Discover our new solar kits"),
-                "seeAll": _("See all"),
-                "addToCart": _("Add to cart"),
-                "newBadge": _("New"),
-                "removeOne": _("Remove one"),
-                "addOne": _("Add one"),
-                "defaultImage": _("Default image"),
+                "newProducts": self._t("New products"),
+                "discoverNew": self._t("Discover our new solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "newBadge": self._t("New"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
             },
         }
 
@@ -189,13 +207,13 @@ class WebsiteProduct(http.Controller):
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
             "labels": {
-                "ourPromotionalOffers": _("Our promotional offers"),
-                "discoverDiscounted": _("Discover our discounted solar kits"),
-                "seeAll": _("See all"),
-                "addToCart": _("Add to cart"),
-                "removeOne": _("Remove one"),
-                "addOne": _("Add one"),
-                "defaultImage": _("Default image"),
+                "ourPromotionalOffers": self._t("Our promotional offers"),
+                "discoverDiscounted": self._t("Discover our discounted solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
             },
         }
 

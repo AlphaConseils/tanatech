@@ -22,8 +22,8 @@
                     itemtype="http://schema.org/Offer">
                     <t
                         t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not website.prevent_zero_price_sale)">
-                        <del t-attf-class="text-muted me-1 h6 mb-2" style="white-space: nowrap;">
-                            <em class="small" t-esc="template_price_vals['base_price']"
+                        <del t-attf-class="text-muted me-1 h6 mb-2" style="white-space: nowrap; font-style: normal;">
+                            <span class="small" t-esc="template_price_vals['base_price']"
                                 t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
                         </del>
                     </t>
@@ -70,7 +70,6 @@
                     <button type="button"
                         class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                         title="Add to cart">
-                        <i class="fa fa-shopping-cart"/>
                         <span class="fw-bold text-white text-nowrap tana-btn-label">Add to cart</span>
                     </button>
                     <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
