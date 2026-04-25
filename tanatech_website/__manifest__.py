@@ -8,7 +8,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/website_slider_image_views.xml",
-        "views/assistance.xml",
+        "views/assistance.xml", 
         "views/website_form_views.xml",
         "views/login.xml",
         "views/res_config_settings_views.xml",
