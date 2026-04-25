@@ -24,25 +24,48 @@
                         </div>
                         <div class="container text-center mb-6">
                             <div class="row justify-content-center">
-                                <t t-foreach="[ 
-                                {'icon': 'fa fa-truck', 'title': 'Membership', 'text': 'Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card.'}, 
-                                {'icon': 'fa fa-undo', 'title': 'Payments', 'text': 'Need help with a payment? We explain the secure payment solutions and options available at Tanatech.'}, 
-                                {'icon': 'fa fa-credit-card', 'title': 'purchase', 'text': 'Browse our buying guide to find the products best suited to your technology needs.'}, 
-                                {'icon': 'fa fa-user', 'title': 'My account', 'text': 'Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience.'}, 
-                                {'icon': 'fa fa-lock', 'title': 'Shipping &amp; Returns', 'text': 'Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services.'}, 
-                                {'icon': 'fa fa-question-circle', 'title': 'Shops', 'text': 'Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers. Find your nearest Tanatech store.'} ]" t-as="faq">
-                                    <div class="col-md-4 mb-2 row-faqs">
-                                        <div class="p-4 shadow-sm rounded h-100 bg-cream" style=''>
-                                            <i t-att-class="faq['icon'] + ' fa-2x mb-3'"></i>
-                                            <h5>
-                                                <t t-esc="faq['title']"/>
-                                            </h5>
-                                            <p class="text-muted">
-                                                <t t-esc="faq['text']"/>
-                                            </p>
-                                        </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-id-card fa-2x mb-3"></i>
+                                        <h5>Membership</h5>
+                                        <p class="text-muted">Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card.</p>
                                     </div>
-                                </t>
+                                </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-undo fa-2x mb-3"></i>
+                                        <h5>Payments</h5>
+                                        <p class="text-muted">Need help with a payment? We explain the secure payment solutions and options available at Tanatech.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-credit-card fa-2x mb-3"></i>
+                                        <h5>Purchase</h5>
+                                        <p class="text-muted">Browse our buying guide to find the products best suited to your technology needs.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-user fa-2x mb-3"></i>
+                                        <h5>My account</h5>
+                                        <p class="text-muted">Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-lock fa-2x mb-3"></i>
+                                        <h5>Shipping &amp; Returns</h5>
+                                        <p class="text-muted">Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2 row-faqs">
+                                    <div class="p-4 shadow-sm rounded h-100 bg-cream">
+                                        <i class="fa fa-question-circle fa-2x mb-3"></i>
+                                        <h5>Shops</h5>
+                                        <p class="text-muted">Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

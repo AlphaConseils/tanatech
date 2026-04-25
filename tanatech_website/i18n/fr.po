@@ -88,12 +88,8 @@ msgstr "<i class=\"fa fa-shopping-cart me-2\"/> Ajouter au panier"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
-msgid ""
-"<i class=\"fa fa-shopping-cart\"/>\n"
-"                        <span class=\"fw-bold text-white text-nowrap tana-btn-label\">Add to cart</span>"
-msgstr ""
-"<i class=\"fa fa-shopping-cart\"/>\n"
-"                        <span class=\"fw-bold text-white text-nowrap tana-btn-label\">Ajouter au panier</span>"
+msgid "<span class=\"fw-bold text-white text-nowrap tana-btn-label\">Add to cart</span>"
+msgstr "<span class=\"fw-bold text-white text-nowrap tana-btn-label\">Ajouter au panier</span>"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
@@ -175,6 +171,7 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
 #, python-format
@@ -188,6 +185,7 @@ msgstr ""
 "Ajouter des diapositives dans Site Web → Configuration → Images du slider"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
 #, python-format
@@ -270,6 +268,7 @@ msgid "CONDITION DE LIVRAISON"
 msgstr "CONDITIONS DE LIVRAISON"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
 #, python-format
@@ -379,6 +378,7 @@ msgid "Discover our promotional products."
 msgstr "Découvrez nos produits en promotion."
 
 #. module: tanatech_website
+#. odoo-python
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
@@ -566,7 +566,7 @@ msgstr "Titre 6"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
-msgid "Home deliverye"
+msgid "Home delivery"
 msgstr "Livraison à domicile"
 
 #. module: tanatech_website
@@ -777,6 +777,7 @@ msgstr "Magasins"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
 msgid "Membership"
 msgstr "Adhésion"
 
@@ -787,11 +788,13 @@ msgstr "Mon compte"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
 msgid "My account"
 msgstr "Mon compte"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.auth_signup_custom_layout
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
 msgid "Name"
 msgstr "Nom"
 
@@ -807,7 +810,7 @@ msgstr "Nom du partenaire"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_brand_template
-msgid "Nos grandes marques"
+msgid "Our top brands"
 msgstr "Nos grandes marques"
 
 #. module: tanatech_website
@@ -850,6 +853,7 @@ msgstr "Mot de passe"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.contactus_template
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
 msgid "Payments"
 msgstr "Paiements"
 
@@ -874,6 +878,7 @@ msgid "Purchases"
 msgstr "Achats"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
 #, python-format
@@ -1078,8 +1083,8 @@ msgstr "Image du slider du site"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_publicity_template
-msgid "Who is GreenShop"
-msgstr "Qui est GreenShop ?"
+msgid "Who is Tanatech"
+msgstr "Qui est Tanatech"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
@@ -1129,43 +1134,100 @@ msgstr ""
 msgid "⚠️ L'image doit être en 1920x550 px"
 msgstr "⚠️ L'image doit être en 1920x550 px"
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "See all"
 msgstr "Voir tout"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "Default image"
 msgstr "Image par défaut"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "New products"
 msgstr "Nouveaux produits"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "Discover our new solar kits"
 msgstr "Découvrez nos nouveaux kits solaires"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "New"
 msgstr "Nouveau"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "Our promotional offers"
 msgstr "Nos offres promotionnelles"
 
 #. module: tanatech_website
+#. odoo-python
 #: code:addons/tanatech_website/controllers/main.py:0
 #, python-format
 msgid "Discover our discounted solar kits"
 msgstr "Découvrez nos kits solaires à prix réduit"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Discover the exclusive benefits and special offers reserved for members. Learn how to obtain your membership card."
+msgstr "Découvrez les avantages exclusifs et les offres spéciales réservées aux membres. Apprenez comment obtenir votre carte de membre."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Need help with a payment? We explain the secure payment solutions and options available at Tanatech."
+msgstr "Besoin d'aide avec un paiement ? Nous vous expliquons les solutions de paiement sécurisé et les options disponibles chez Tanatech."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Purchase"
+msgstr "Achat"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Browse our buying guide to find the products best suited to your technology needs."
+msgstr "Parcourez notre guide d'achat pour trouver les produits les mieux adaptés à vos besoins technologiques."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Easily manage your Tanatech account. Change your preferences, update your information, and personalize your experience."
+msgstr "Gérez facilement votre compte Tanatech. Modifiez vos préférences, mettez à jour vos informations et personnalisez votre expérience."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Shipping &amp; Returns"
+msgstr "Livraison &amp; Retours"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Check out our delivery and return policies. Find out about delivery times, costs, and the countries covered by our services."
+msgstr "Découvrez nos politiques de livraison et de retour. Informations sur les délais, les coûts et les pays couverts par nos services."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Shops"
+msgstr "Magasins"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "Find your nearest Tanatech store. Check opening hours and take advantage of exclusive in-store offers."
+msgstr "Trouvez le magasin Tanatech le plus proche. Consultez les horaires d'ouverture et profitez des offres exclusives en magasin."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.page_assistance
+msgid "I accept the Terms and Conditions."
+msgstr "J'accepte les Conditions Générales."
