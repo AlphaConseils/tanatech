@@ -170,6 +170,8 @@ msgstr "Actif"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 msgid "Add one"
 msgstr "Ajouter un"
 
@@ -256,6 +258,7 @@ msgstr "CONDITION DE LIVRAISON"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
+#: code:addons/tanatech_website/static/src/js/product_category.js:0
 msgid "Categories"
 msgstr "Catégories"
 
@@ -363,6 +366,7 @@ msgstr "Découvrez nos produits en promotion."
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.category_template_green_shop
+#: code:addons/tanatech_website/static/src/js/product_category.js:0
 msgid "Discover our selection of reliable solar solutions."
 msgstr "Découvrez notre sélection de solutions solaires fiables."
 
@@ -850,6 +854,8 @@ msgstr "Achats"
 
 #. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.product_template
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 msgid "Remove one"
 msgstr "Retirer un"
 
@@ -1095,49 +1101,46 @@ msgstr ""
 "                            • Hors-Tanà : sur devis<br/>"
 
 #. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
 msgid "New products"
 msgstr "Nouveaux produits"
 
 #. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
 msgid "Discover our new solar kits"
 msgstr "Découvrez nos nouveaux kits solaires"
 
 #. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 msgid "Our promotional offers"
 msgstr "Nos offres promotionnelles"
 
 #. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 msgid "Discover our discounted solar kits"
 msgstr "Découvrez nos kits solaires en promotion"
 
 #. module: tanatech_website
-msgid "Discover our selection of reliable solar solutions."
-msgstr "Découvrez notre sélection de solutions solaires fiables."
-
-#. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#: code:addons/tanatech_website/static/src/js/product_category.js:0
 msgid "See all"
 msgstr "Voir tout"
 
 #. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
 #. module: tanatech_website
-msgid "Remove one"
-msgstr "Retirer un"
-
-#. module: tanatech_website
-msgid "Add one"
-msgstr "Ajouter un"
-
-#. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
 msgid "New"
 msgstr "Nouveau"
 
 #. module: tanatech_website
-msgid "Categories"
-msgstr "Catégories"
-
-#. module: tanatech_website
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#: code:addons/tanatech_website/static/src/js/product_category.js:0
 msgid "Default image"
 msgstr "Image par défaut"

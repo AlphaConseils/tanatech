@@ -49,7 +49,13 @@ publicWidget.registry.CategoriesProduct = publicWidget.Widget.extend({
     async _loadAndRender() {
         const result = await rpc('/get_product_categories', {});
         if (result) {
-            this.$target.empty().html(renderToElement('tanatech_website.category_data', { result, _t }));
+            const labels = {
+                categories: _t('Categories'),
+                discoverSelection: _t('Discover our selection of reliable solar solutions.'),
+                seeAll: _t('See all'),
+                defaultImage: _t('Default image'),
+            };
+            this.$target.empty().html(renderToElement('tanatech_website.category_data', { result, labels }));
         }
     },
 });

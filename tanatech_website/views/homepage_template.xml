@@ -130,17 +130,21 @@
                             <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
                                 t-as="logo">
                                 <div class="swiper-slide">
-                                    <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                        class="img img-fluid mx-auto"
-                                        t-att-alt="logo.name or ''"/>
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
+                                    </div>
                                 </div>
                             </t>
                             <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
                                 t-as="logo">
                                 <div class="swiper-slide">
-                                    <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                        class="img img-fluid mx-auto"
-                                        t-att-alt="logo.name or ''"/>
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
+                                    </div>
                                 </div>
                             </t>
                         </div>
