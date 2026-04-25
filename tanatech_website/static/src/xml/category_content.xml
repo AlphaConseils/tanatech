@@ -34,7 +34,7 @@
                     </t>
                 </div>
                 <div class="text-center mt-5">
-                    <a href="/shop" class="btn btn-warning fw-bold" t-out="labels.seeAll"/>
+                    <a href="/shop" class="btn btn-warning btn-lg px-5 fw-bold" t-out="labels.seeAll"/>
                 </div>
             </div>
         </section>

@@ -24,6 +24,14 @@ publicWidget.registry.TanatechBrandSwiper = publicWidget.Widget.extend({
                 el: ".brand-nav-pagination",
                 clickable: true,
             },
+            on: {
+                init(swiper) {
+                    const paginationEl = swiper.pagination.el;
+                    if (paginationEl) {
+                        paginationEl.style.cssText += ";position:static!important;display:flex!important;justify-content:center!important;left:unset!important;bottom:unset!important;width:100%!important;";
+                    }
+                },
+            },
             breakpoints: {
                 300: { slidesPerView: 1.5 },
                 600: { slidesPerView: 2.5 },
