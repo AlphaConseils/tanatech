@@ -66,7 +66,7 @@
             <!-- Bouton Ajouter au panier -->
             <div t-if="product._is_add_to_cart_possible()" class="mt-2"
                 t-att-data-product-id="product.product_variant_ids[0].id if product.product_variant_ids else product.id">
-                <div class="d-flex align-items-stretch gap-2">
+                <div class="d-flex align-items-stretch gap-2 overflow-hidden">
                     <button type="button"
                         class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                         title="Add to cart">

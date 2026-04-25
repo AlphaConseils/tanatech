@@ -3,6 +3,7 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement } from "@web/core/utils/render";
 import { rpc } from "@web/core/network/rpc";
+
 publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     selector: '.promotions_section',
 
@@ -25,7 +26,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
 
     _showSkeleton() {
         const card = () => `
-            <div style="min-width:220px;flex:1">
+            <div class="px-2" style="min-width:220px;flex:1">
                 <div class="tana-skeleton-card rounded-item p-3">
                     <div class="tana-skeleton-pulse" style="width:100%;padding-top:100%;border-radius:8px;"></div>
                     <div class="tana-skeleton-pulse mt-3" style="height:14px;width:70%;border-radius:6px;"></div>
@@ -54,12 +55,12 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
 
     _initSwiper() {
         setTimeout(() => {
-            new Swiper(".promotions-carousel", {
+            new Swiper(this.$target.find('.promotions-carousel')[0], {
                 slidesPerView: 4,
                 grid: { rows: 2, fill: "row" },
                 spaceBetween: 20,
-                pagination: { el: ".swiper-pagination", clickable: true },
-                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                navigation: { nextEl: this.$target.find('.promo-nav-next')[0], prevEl: this.$target.find('.promo-nav-prev')[0] },
+                pagination: { el: this.$target.find('.promo-pagination')[0], clickable: true },
                 speed: 900,
                 autoplay: { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true },
                 watchOverflow: true,
@@ -71,16 +72,6 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
                 },
             });
         }, 100);
-    },
-
-    _updateCartCount(cartData) {
-        if (!cartData || cartData.cart_quantity === undefined) return;
-        const $count = $('.my_cart_quantity');
-        if (!$count.length) return;
-        $count.text(cartData.cart_quantity);
-        const $icon = $count.closest('a');
-        $icon.addClass('tana-cart-bounce');
-        setTimeout(() => $icon.removeClass('tana-cart-bounce'), 600);
     },
 
     _showCartToast(productName, qty) {
@@ -133,8 +124,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
 
             $btn.prop('disabled', true);
             try {
-                const cartData = await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
-                this._updateCartCount(cartData);
+                await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
                 this._showCartToast($card.find('h6').text().trim(), qty);
                 $card.find('.tana-qty').val('1');
             } catch (e) {
