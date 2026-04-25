@@ -8,11 +8,48 @@ import wSaleUtils from "@website_sale/js/website_sale_utils";
 publicWidget.registry.NewProduct = publicWidget.Widget.extend({
     selector: '.new_products_section',
 
-    async willStart() {
+    start() {
+        this._showSkeleton();
+        this._observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                this._observer.disconnect();
+                this._loadAndRender();
+            }
+        }, { rootMargin: '200px' });
+        this._observer.observe(this.el);
+        return this._super(...arguments);
+    },
+
+    destroy() {
+        if (this._observer) this._observer.disconnect();
+        this._super(...arguments);
+    },
+
+    _showSkeleton() {
+        const card = () => `
+            <div class="px-2" style="min-width:220px;flex:1">
+                <div class="tana-skeleton-card rounded-item p-3">
+                    <div class="tana-skeleton-pulse" style="width:100%;padding-top:100%;border-radius:8px;"></div>
+                    <div class="tana-skeleton-pulse mt-3" style="height:14px;width:70%;border-radius:6px;"></div>
+                    <div class="tana-skeleton-pulse mt-2" style="height:12px;width:40%;border-radius:6px;"></div>
+                    <div class="tana-skeleton-pulse mt-3" style="height:36px;border-radius:8px;"></div>
+                </div>
+            </div>`;
+        this.$target.html(`
+            <div class="brand-padding py-3">
+                <div class="tana-skeleton-pulse mb-3" style="height:20px;width:200px;border-radius:6px;"></div>
+                <div class="d-flex gap-3 overflow-hidden">
+                    ${card()}${card()}${card()}${card()}
+                </div>
+            </div>
+        `);
+    },
+
+    async _loadAndRender() {
         const result = await rpc('/get_new_products', {});
         if (!result) return;
-
-        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result }));
+        const labels = result.labels;
+        this.$target.empty().html(renderToElement('tanatech_website.new_products_snippet', { result, labels }));
         this._initCarousel();
         this._bindCartEvents();
     },
@@ -21,11 +58,13 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
         setTimeout(() => {
             this.$target.find('.owl-carousel').owlCarousel({
                 loop: true,
-                margin: 20,
+                margin: 15,
                 nav: true,
                 dots: true,
                 autoplay: true,
-                autoplayTimeout: 4000,
+                autoplayTimeout: 5000,
+                smartSpeed: 900,
+                autoplayHoverPause: true,
                 navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
                 responsive: {
                     0:   { items: 1 },
@@ -90,6 +129,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
                 const cartData = await rpc('/shop/cart/update_json', { product_id: productId, add_qty: qty });
                 wSaleUtils.updateCartNavBar(cartData);
                 this._showCartToast($card.find('h6').text().trim(), qty);
+                $card.find('.tana-qty').val('1');
             } catch (e) {
                 console.error('Cart update error:', e);
             } finally {

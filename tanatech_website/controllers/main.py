@@ -2,6 +2,7 @@
 
 from odoo import http
 from odoo.http import request
+from odoo.tools.translate import code_translations
 
 
 # class Home(WebHome):
@@ -97,6 +98,23 @@ from odoo.http import request
 
 
 class WebsiteProduct(http.Controller):
+
+    def _t(self, source):
+        """Translate using the website's default language.
+
+        _() from odoo uses a thread-local set at request start and cannot be
+        overridden mid-request for a different lang. We read directly from the
+        code_translations cache (loaded from the module's .po file) so that
+        labels are always returned in the website's configured language,
+        regardless of the visiting user's account language.
+        """
+        lang_code = request.website.default_lang_id.code
+        try:
+            trans = code_translations.get_python_translations("tanatech_website", lang_code)
+            return trans.get(source) or source
+        except Exception:
+            return source
+
     @http.route("/get_product_categories", auth="public", type="json", website=True)
     def get_product_category(self):
         """Get the website categories for the snippet."""
@@ -104,13 +122,18 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8 
+                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8
             )
         )
-        values = {
+        return {
             "categories": public_categs,
+            "labels": {
+                "categories": self._t("Categories"),
+                "discoverSelection": self._t("Discover our selection of reliable solar solutions."),
+                "seeAll": self._t("See all"),
+                "defaultImage": self._t("Default image"),
+            },
         }
-        return values
 
     @http.route("/get_new_products", auth="public", type="json", website=True)
     def get_new_products(self):
@@ -137,6 +160,16 @@ class WebsiteProduct(http.Controller):
             "products": products,
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
+            "labels": {
+                "newProducts": self._t("New products"),
+                "discoverNew": self._t("Discover our new solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "newBadge": self._t("New"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
+            },
         }
 
     @http.route("/get_promotional_products", auth="public", type="json", website=True)
@@ -173,6 +206,15 @@ class WebsiteProduct(http.Controller):
             "products": products,
             "currency_symbol": currency.symbol,
             "currency_position": currency.position,
+            "labels": {
+                "ourPromotionalOffers": self._t("Our promotional offers"),
+                "discoverDiscounted": self._t("Discover our discounted solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
+            },
         }
 
     # @http.route("/get_home_slide", type="json", auth="public", website=True)

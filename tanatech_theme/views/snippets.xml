@@ -28,7 +28,7 @@
                     <div class="text-end o_dynamic_snippet_btn_wrapper" t-if="record._website_show_quick_add()">
                         <t t-set="product_template_id" t-value="record.id if not record.is_product_variant else record.product_tmpl_id.id"/>
                         <t t-set="product_id" t-value="record.id if record.is_product_variant else record.product_variant_id.id"/>
-                        <button type="button" role="button" class="btn btn-primary js_add_cart w-100" title="Add to Cart" t-att-data-product-id="product_id" t-att-data-product-template-id="product_template_id" t-att-data-product-selected="record.is_product_variant" t-att-data-is-combo="record.type == 'combo'">
+                        <button type="button" role="button" class="btn btn-primary rounded-pill js_add_cart w-100" title="Add to Cart" t-att-data-product-id="product_id" t-att-data-product-template-id="product_template_id" t-att-data-product-selected="record.is_product_variant" t-att-data-is-combo="record.type == 'combo'">
                                 Add to Cart
                         </button>
                     </div>
