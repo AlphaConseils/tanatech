@@ -29,6 +29,9 @@ class HrPayslip(models.Model):
                 ('state', 'in', ['open', 'open_not_declared', 'close']),
             ])
 
+    def action_print_nd_payslip(self):
+        return self.env.ref('tanatech_hr_payroll.action_report_nd_payslip').report_action(self)
+
     def action_open_overtime(self):
         self.ensure_one()
         return {
