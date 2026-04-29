@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 80mm thermal receipt paper format -->
+    <record id="paperformat_nd_payslip_ticket" model="report.paperformat">
+        <field name="name">ND Payslip Ticket (80mm)</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_width">80</field>
+        <field name="page_height">297</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_nd_payslip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="
+                        font-family: 'Courier New', Courier, monospace;
+                        font-size: 8pt;
+                        padding: 1mm;
+                        width: 100%;
+                        line-height: 1.4;
+                    ">
+
+                        <!-- ===== TITLE ===== -->
+                        <div style="text-align: center; font-weight: bold; font-size: 11pt; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">
+                            Undeclared Salary
+                        </div>
+                        <div style="border-top: 2px solid #000000; margin-bottom: 2mm;"/>
+
+                        <!-- ===== COMPANY INFO ===== -->
+                        <div style="text-align: center; font-size: 8pt; margin-bottom: 2mm;">
+                            <div><strong t-out="o.company_id.name"/></div>
+                            <div t-if="o.company_id.street">
+                                <t t-out="o.company_id.street"/>
+                                <t t-if="o.company_id.street2">, <t t-out="o.company_id.street2"/></t>
+                            </div>
+                            <div t-if="o.company_id.city"><t t-out="o.company_id.city"/></div>
+                            <div t-if="o.company_id.company_registry">
+                                Stat. No: <t t-out="o.company_id.company_registry"/>
+                            </div>
+                            <div t-if="o.company_id.phone">Tel: <t t-out="o.company_id.phone"/></div>
+                        </div>
+                        <div style="border-top: 1px dashed #000000; margin-bottom: 2mm;"/>
+
+                        <!-- ===== EMPLOYEE INFO ===== -->
+                        <div style="text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 1mm; font-size: 8pt;">
+                            Employee Information
+                        </div>
+                        <div style="border-top: 1px dashed #000000; margin-bottom: 1mm;"/>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
+                            <tr>
+                                <td style="width: 38%; padding: 1px 0; vertical-align: top;">Month</td>
+                                <td style="padding: 1px 0; vertical-align: top;">
+                                    :&#160;<span t-field="o.date_from" t-options="{'format': 'dd/MM'}"/>
+                                    &#160;-&#160;<span t-field="o.date_to" t-options="{'format': 'dd/MM/yyyy'}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1px 0; vertical-align: top;">Name</td>
+                                <td style="padding: 1px 0; vertical-align: top;">:&#160;<span t-field="o.employee_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1px 0; vertical-align: top;">Position</td>
+                                <td style="padding: 1px 0; vertical-align: top;">:&#160;
+                                    <span t-if="o.employee_id.job_id" t-field="o.employee_id.job_id"/>
+                                    <span t-else="">-</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1px 0; vertical-align: top;">Reg. No.</td>
+                                <td style="padding: 1px 0; vertical-align: top;">:&#160;
+                                    <span t-if="o.employee_id.registration_number" t-field="o.employee_id.registration_number"/>
+                                    <span t-else="">-</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1px 0; vertical-align: top;">Department</td>
+                                <td style="padding: 1px 0; vertical-align: top;">:&#160;
+                                    <span t-if="o.employee_id.department_id" t-field="o.employee_id.department_id"/>
+                                    <span t-else="">-</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- ===== LINE COMPUTATION ===== -->
+                        <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
+                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0)"/>
+                        <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0)"/>
+                        <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
+                        <t t-set="deduction_total" t-value="abs(sum(deduction_lines.mapped('total')))"/>
+                        <t t-set="net_salary"      t-value="revenue_total - deduction_total"/>
+
+                        <!-- ===== INCOME LINES ===== -->
+                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0;">Description</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm;">Qty</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0;">Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                            <tbody>
+                                <t t-foreach="income_lines" t-as="line">
+                                    <tr>
+                                        <td style="padding: 1px 0; width: 52%; text-transform: uppercase; word-break: break-word;">
+                                            <span t-out="line.name"/>
+                                        </td>
+                                        <td style="text-align: right; padding: 1px 1mm; width: 16%;">
+                                            <t t-if="line.quantity != 0">
+                                                <t t-set="qty_int" t-value="int(line.quantity)"/>
+                                                <t t-if="line.quantity == qty_int">
+                                                    <span t-out="qty_int"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="qty_fmt" t-value="'{:.2f}'.format(line.quantity)"/>
+                                                    <span t-out="qty_fmt"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td style="text-align: right; padding: 1px 0; width: 32%;">
+                                            <t t-if="line.total != 0">
+                                                <t t-set="total_fmt" t-value="'{:,.0f}'.format(line.total).replace(',', '.')"/>
+                                                <span t-out="total_fmt"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
+                        <div style="text-align: right; font-weight: bold; font-size: 8pt; margin-bottom: 2mm;">
+                            Revenue Total:&#160;
+                            <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
+                            <span t-out="rev_fmt"/>
+                        </div>
+
+                        <!-- ===== DEDUCTION LINES ===== -->
+                        <div style="border-top: 2px solid #000000; margin-bottom: 0.5mm;"/>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0;">Deductions</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm;">Qty</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0;">Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                            <tbody>
+                                <t t-foreach="deduction_lines" t-as="line">
+                                    <tr>
+                                        <td style="padding: 1px 0; width: 52%; text-transform: uppercase; word-break: break-word;">
+                                            <span t-out="line.name"/>
+                                        </td>
+                                        <td style="text-align: right; padding: 1px 1mm; width: 16%;">
+                                            <t t-if="line.quantity != 0">
+                                                <t t-set="qty_int" t-value="int(line.quantity)"/>
+                                                <t t-if="line.quantity == qty_int">
+                                                    <span t-out="qty_int"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="qty_fmt" t-value="'{:.2f}'.format(line.quantity)"/>
+                                                    <span t-out="qty_fmt"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td style="text-align: right; padding: 1px 0; width: 32%;">
+                                            <t t-set="total_fmt" t-value="'{:,.0f}'.format(line.total).replace(',', '.')"/>
+                                            <span t-out="total_fmt"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
+                        <div style="text-align: right; font-weight: bold; font-size: 8pt; text-decoration: underline; margin-bottom: 2mm;">
+                            Total Deductions:&#160;
+                            <t t-set="ded_fmt" t-value="'{:,.0f}'.format(deduction_total).replace(',', '.')"/>
+                            <span t-out="ded_fmt"/>
+                        </div>
+
+                        <!-- ===== NET SALARY BOX ===== -->
+                        <div style="border: 2px solid #000000; padding: 2mm; text-align: right; font-weight: bold; font-size: 9pt; margin-bottom: 3mm;">
+                            Net Salary (Ar):&#160;
+                            <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
+                            <span t-out="net_fmt"/>
+                        </div>
+
+                        <!-- ===== PAYMENT INFO ===== -->
+                        <div style="border-top: 1px dashed #000000; margin-bottom: 1mm;"/>
+                        <table style="width: 100%; font-size: 8pt; border-collapse: collapse; margin-bottom: 3mm;">
+                            <tr>
+                                <td style="width: 42%; padding: 1px 0;">Payment method</td>
+                                <td style="padding: 1px 0;">:&#160;Cash</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1px 0;">Payment date</td>
+                                <td style="padding: 1px 0;">:&#160;
+                                    <span t-field="o.date_to" t-options="{'format': 'MMMM dd, yyyy'}"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- ===== SIGNATURES + LOGO ===== -->
+                        <div style="border-top: 1px dashed #000000; margin-bottom: 2mm;"/>
+                        <table style="width: 100%; font-size: 8pt; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 1px 0; vertical-align: top;">
+                                    <div><strong>Director Signature</strong></div>
+                                    <br/><br/><br/>
+                                    <div><strong>Employee Signature</strong></div>
+                                    <br/><br/><br/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.company_id.logo">
+                                <td style="text-align: center; padding-top: 3mm;">
+                                    <img t-att-src="image_data_uri(o.company_id.logo)"
+                                         alt="Logo"
+                                         style="max-height: 55px; max-width: 90px;"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_nd_payslip" model="ir.actions.report">
+        <field name="name">Undeclared Salary Ticket</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tanatech_hr_payroll.report_nd_payslip</field>
+        <field name="report_file">tanatech_hr_payroll.report_nd_payslip</field>
+        <field name="print_report_name">'Undeclared Salary - %s' % (object.employee_id.name)</field>
+        <field name="paperformat_id" ref="tanatech_hr_payroll.paperformat_nd_payslip_ticket"/>
+        <field name="attachment"></field>
+        <field name="attachment_use" eval="False"/>
+    </record>
+
+</odoo>

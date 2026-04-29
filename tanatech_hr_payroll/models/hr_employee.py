@@ -10,7 +10,7 @@ class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
     classification = fields.Char(string="Classification", groups="hr.group_hr_user")
-    indice = fields.Char(string="Indice", groups="hr.group_hr_user")
+    indice = fields.Char(string="Index", groups="hr.group_hr_user")
 
     overtime_with_datetimes_ids = fields.One2many(
         "hr.attendance.overtime.with.datetimes", "employee_id"
