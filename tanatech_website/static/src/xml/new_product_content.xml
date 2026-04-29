@@ -47,7 +47,6 @@
                                         <button type="button"
                                             class="btn btn-primary btn-sm flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
                                             t-att-title="labels.addToCart">
-                                            <i class="fa fa-shopping-cart"/>
                                             <span class="text-nowrap fw-bold text-white tana-btn-label" t-out="labels.addToCart"/>
                                         </button>
                                         <div class="tana-qty-group d-flex align-items-stretch overflow-hidden" contenteditable="false">
