@@ -225,13 +225,13 @@
             <t t-set="gross_salary" t-value="o.contract_id.wage"/>
 
             <!-- Compute deduction -->
-            <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02'))"/>
+            <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02', ))"/>
             <t t-set="irsa" t-value="sum(payslip_lines_irsa.mapped('amount'))"/>
 
-            <t t-set="payslip_lines_cnaps" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('CNaPS - PS'))"/>
+            <t t-set="payslip_lines_cnaps" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('CNaPS - PS', ))"/>
             <t t-set="cnaps" t-value="sum(payslip_lines_cnaps.mapped('amount'))"/>
 
-            <t t-set="payslip_lines_amit" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('AMIT - PS'))"/>
+            <t t-set="payslip_lines_amit" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.salary_rule_id.code in ('OSTIE - PS', ))"/>
             <t t-set="amit" t-value="sum(payslip_lines_amit.mapped('amount'))"/>
             
             <t t-set="total_deduction" t-value="cnaps + amit + irsa"/>
