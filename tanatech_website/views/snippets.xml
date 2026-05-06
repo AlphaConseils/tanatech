@@ -122,7 +122,7 @@
             <t t-snippet="tanatech_website.promotional_products" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.tanatech_slide_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_publicity_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
-            <t t-snippet="tanatech_website.faqs_section" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+            <!-- <t t-snippet="tanatech_website.faqs_section" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/> -->
             <t t-snippet="tanatech_website.tanatech_offer_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_decovery_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <t t-snippet="tanatech_website.tanatech_brand_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>

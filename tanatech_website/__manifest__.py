@@ -17,7 +17,7 @@
         "views/snippets.xml",
         "views/condition_template.xml",
         "views/product_template.xml",
-        "views/contactus_template.xml",
+        # "views/contactus_template.xml",
         "views/products_template.xml",
         "views/snippets.xml",
         "views/cdv_template.xml",
