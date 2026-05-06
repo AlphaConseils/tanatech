@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from werkzeug.exceptions import HTTPException
-
-from odoo.http import request
-
 from odoo import models, fields
 
 

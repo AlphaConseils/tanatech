@@ -84,21 +84,21 @@
     </template>
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
-        <section class="s_tanatech_publicity">
-            <div class="container-fluid py-3 my-5">
+        <section class="s_tanatech_publicity o_colored_level">
+            <div class="container-xl mx-auto py-3 my-5 px-3 px-md-4">
                 <div class="row">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap brand-padding" style="">
+                    <div class="d-flex justify-content-between align-items-center" style="">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-sun " style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is GreenShop</a></span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Who is Tanatech</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
                                 <i class="fa-solid fa-box" style="color: #ffffff;"></i>
                             </div>
-                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home deliverye</a></span>
+                            <span class="ms-3 fs-4 fw-light"><a href="" class="text-decoration-none text-dark">Home delivery</a></span>
                         </div>
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm">
@@ -120,43 +120,47 @@
 
     <template id="tanatech_brand_template" name="Grande marque">
         <section class="s_tanatech_brand o_colored_level">
-            <div class="container-fluid">
-                <div class="row text-center align-items-center">
-                    <h1 class="mb-5">Nos grandes marques</h1>
-                    <div class="col-11">
-                        <div class="ref-wrap">
-                            <section class="o_colored_level">
-                                <div class="swiper_client">
-                                    <div class="swiper-wrapper mb64 o_not_editable">
-                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
-                                            t-as="logo">
-                                            <div class="swiper-slide">
-                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                                    class="img img-fluid mx-auto"
-                                                    t-att-alt="logo.name or ''"/>
-                                            </div>
-                                        </t>
+            <div class="container-xl mx-auto py-4 px-3 px-md-4">
+                <h2 class="text-center fw-bold mb-5">Our top brands</h2>
 
-                                        <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
-                                            t-as="logo">
-                                            <div class="swiper-slide">
-                                                <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
-                                                    class="img img-fluid mx-auto"
-                                                    t-att-alt="logo.name or ''"/>
-                                            </div>
-                                        </t>
-                                    </div>
-                                    <div class="mt-4 d-flex justify-content-space-between">
-                                        <div class="navigation-swip">
-                                            <span class="fa fa-arrow-left text-white me-3 rounded-circle bg-secondary"></span>
-                                            <span class="fa fa-arrow-right text-white rounded-circle bg-secondary"></span>
-                                        </div>
+                <!-- Carousel : flèche | slides | flèche -->
+                <div class="brand-carousel-wrap d-flex align-items-center gap-3">
+                    <button class="brand-nav-prev brand-nav-btn" type="button" aria-label="Précédent">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+
+                    <div class="swiper swiper_client flex-grow-1 overflow-hidden">
+                        <div class="swiper-wrapper o_not_editable">
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
                                     </div>
                                 </div>
-                            </section>
+                            </t>
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
+                                    </div>
+                                </div>
+                            </t>
                         </div>
-                    </div> 
+                    </div>
+
+                    <button class="brand-nav-next brand-nav-btn" type="button" aria-label="Suivant">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
                 </div>
+
+                <!-- Pagination en dessous -->
+                <div class="swiper-pagination brand-nav-pagination mt-3 text-center"></div>
             </div>
         </section>
     </template>

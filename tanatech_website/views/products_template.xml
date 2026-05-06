@@ -22,8 +22,8 @@
                     itemtype="http://schema.org/Offer">
                     <t
                         t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not website.prevent_zero_price_sale)">
-                        <del t-attf-class="text-muted me-1 h6 mb-2" style="white-space: nowrap;">
-                            <em class="small" t-esc="template_price_vals['base_price']"
+                        <del t-attf-class="text-muted me-1 h6 mb-2" style="white-space: nowrap; font-style: normal;">
+                            <span class="small" t-esc="template_price_vals['base_price']"
                                 t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
                         </del>
                     </t>
@@ -64,28 +64,23 @@
 
         <xpath expr="//div/div[2]" position="after">
             <!-- Bouton Ajouter au panier -->
-            <div t-if="product._is_add_to_cart_possible()" class="mt-2">
-                <input type="hidden" name="product_id" t-att-value="product.id" />
-                <input type="hidden" name="add_qty" value="1" />
-                <div id="add_to_cart_wrap" class="d-flex align-items-center justify-content-between">
-                    <button data-animation-selector=".o_wsale_product_images" type="submit"
-                        class="btn btn-primary btn w-50 js_check_product a-submit d-flex align-items-center justify-content-center p-0 py-2">
-                        <span class="text-nowrap fw-bolder text-white" style="font-size: 10px;">Add to cart</span>
+            <div t-if="product._is_add_to_cart_possible()" class="mt-2"
+                t-att-data-product-id="product.product_variant_ids[0].id if product.product_variant_ids else product.id">
+                <div class="d-flex align-items-stretch gap-2 overflow-hidden">
+                    <button type="button"
+                        class="btn btn-primary rounded-3 flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
+                        title="Add to cart">
+                        <span class="fw-bold text-white text-nowrap tana-btn-label">Add to cart</span>
                     </button>
-                    <div t-attf-class="css_quantity input-group input-group-sm ms-2 align-middle"
-                        contenteditable="false" style="max-width: 120px; height: 30px;">
-                        <a t-attf-href="#"
-                            class="btn btn-link btn-sm js_add_cart_json bg-o-color-2 text-white"
-                            aria-label="Remove one" title="Remove one">
-                            <i class="fa fa-minus" />
+                    <div class="tana-qty-group d-flex align-items-stretch rounded-3 overflow-hidden" contenteditable="false">
+                        <a href="#" class="tana-qty-minus text-white" aria-label="Remove one" title="Remove one">
+                            <i class="fa fa-minus"/>
                         </a>
                         <input type="text"
-                            class="form-control quantity text-center bg-o-color-2 text-white"
-                            data-min="1" name="add_qty" t-att-value="1" style="max-width: 50px;" />
-                        <a t-attf-href="#"
-                            class="btn btn-link btn-sm float_left js_add_cart_json bg-o-color-2 text-white"
-                            aria-label="Add one" title="Add one">
-                            <i class="fa fa-plus" />
+                            class="tana-qty text-center text-white border-0 bg-transparent fw-bold"
+                            data-min="1" value="1"/>
+                        <a href="#" class="tana-qty-plus text-white" aria-label="Add one" title="Add one">
+                            <i class="fa fa-plus"/>
                         </a>
                     </div>
                 </div>

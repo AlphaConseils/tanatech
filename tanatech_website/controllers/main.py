@@ -1,18 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
-import odoo
 from odoo import http
-from odoo.tools import pycompat
-from odoo.tools.translate import _
 from odoo.http import request
-# from odoo.addons.web.controllers.home import Home as WebHome
-from odoo.addons.web.controllers.utils import ensure_db
-
-SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
-                          'scope', 'mode', 'redirect', 'redirect_hostname',
-                          'email', 'name', 'partner_id', 'password',
-                          'confirm_password', 'city', 'country_id', 'lang'}
+from odoo.tools.translate import code_translations
 
 
 # class Home(WebHome):
@@ -108,6 +98,23 @@ SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
 
 
 class WebsiteProduct(http.Controller):
+
+    def _t(self, source):
+        """Translate using the website's default language.
+
+        _() from odoo uses a thread-local set at request start and cannot be
+        overridden mid-request for a different lang. We read directly from the
+        code_translations cache (loaded from the module's .po file) so that
+        labels are always returned in the website's configured language,
+        regardless of the visiting user's account language.
+        """
+        lang_code = request.website.default_lang_id.code
+        try:
+            trans = code_translations.get_python_translations("tanatech_website", lang_code)
+            return trans.get(source) or source
+        except Exception:
+            return source
+
     @http.route("/get_product_categories", auth="public", type="json", website=True)
     def get_product_category(self):
         """Get the website categories for the snippet."""
@@ -115,42 +122,99 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8 
-            )
-        )
-        values = {
-            "categories": public_categs,
-        }
-        return values
-
-    @http.route("/get_new_products", auth="public", type="json", website=True)
-    def get_new_products(self):
-        products = (
-            request.env["product.product"]
-            .sudo()
-            .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_512", "id", "list_price"],
-                limit=8,
+                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8
             )
         )
         return {
+            "categories": public_categs,
+            "labels": {
+                "categories": self._t("Categories"),
+                "discoverSelection": self._t("Discover our selection of reliable solar solutions."),
+                "seeAll": self._t("See all"),
+                "defaultImage": self._t("Default image"),
+            },
+        }
+
+    @http.route("/get_new_products", auth="public", type="json", website=True)
+    def get_new_products(self):
+        data = (
+            request.env["product.template"]
+            .sudo()
+            .search_read(
+                [("is_published", "=", True), ("sale_ok", "=", True)],
+                fields=["name", "image_512", "list_price", "product_variant_ids"],
+                limit=8,
+            )
+        )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": tmpl["list_price"],
+            })
+        return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
+            "labels": {
+                "newProducts": self._t("New products"),
+                "discoverNew": self._t("Discover our new solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "newBadge": self._t("New"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
+            },
         }
 
     @http.route("/get_promotional_products", auth="public", type="json", website=True)
     def get_promotional_products(self):
-        products = (
-            request.env["product.product"]
+        data = (
+            request.env["product.template"]
             .sudo()
             .search_read(
-                [("is_published", "=", True)],
-                fields=["name", "image_512", "id", "list_price"],
+                [
+                    ("is_published", "=", True),
+                    ("sale_ok", "=", True),
+                    ("compare_list_price", ">", 0),
+                ],
+                fields=["name", "image_512", "list_price", "compare_list_price", "product_variant_ids"],
                 limit=8,
             )
         )
+        currency = request.env.company.currency_id
+        products = []
+        for tmpl in data:
+            variant_ids = tmpl.get("product_variant_ids") or []
+            price = tmpl["list_price"]
+            compare_price = tmpl["compare_list_price"]
+            discount = round((compare_price - price) / compare_price * 100) if compare_price > price else 0
+            products.append({
+                "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "name": tmpl["name"],
+                "image_512": tmpl["image_512"],
+                "list_price": price,
+                "compare_list_price": compare_price,
+                "discount": discount,
+            })
         return {
             "products": products,
+            "currency_symbol": currency.symbol,
+            "currency_position": currency.position,
+            "labels": {
+                "ourPromotionalOffers": self._t("Our promotional offers"),
+                "discoverDiscounted": self._t("Discover our discounted solar kits"),
+                "seeAll": self._t("See all"),
+                "addToCart": self._t("Add to cart"),
+                "removeOne": self._t("Remove one"),
+                "addOne": self._t("Add one"),
+                "defaultImage": self._t("Default image"),
+            },
         }
 
     # @http.route("/get_home_slide", type="json", auth="public", website=True)

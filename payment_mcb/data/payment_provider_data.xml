@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+        <!--
+            Initial MCB provider data for Odoo 18.
+            `allow_tokenization` was renamed to `support_tokenization` in v18.
+        -->
+        <record id="payment_provider_mcb" model="payment.provider">
+            <field name="name">MCB Payment Gateway</field>
+            <field name="code">mcb</field>
+            <field name="module_id" ref="base.module_payment_mcb"/>
+            <field name="state">disabled</field>
+            <field name="is_published" eval="False"/>
+            <field name="support_tokenization">False</field>
+            <field name="capture_manually">False</field>
+            <field name="support_manual_capture">False</field>
+            <field name="support_express_checkout">False</field>
+            <field name="image_128" type="base64" file="payment_mcb/static/src/img/mcb.png"/>
+            <field name="redirect_form_view_id" ref="payment_mcb.payment_form"/>
+            <field name="payment_method_ids" eval="[(4, ref('payment.payment_method_card'))]"/>
+        </record>
+</odoo>
