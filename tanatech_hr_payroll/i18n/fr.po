@@ -411,8 +411,8 @@ msgstr "Paiement"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Employee Information"
-msgstr "Informations des Travailleurs"
+msgid "Information"
+msgstr "Informations"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
@@ -421,18 +421,8 @@ msgstr "Mois"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Position"
-msgstr "Poste"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Reg. No."
-msgstr "Numéro Matricule"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Department"
-msgstr "Département"
+msgid "Full name"
+msgstr "Nom et prénom"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
@@ -441,58 +431,28 @@ msgstr "Description"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Qty"
+msgid "Quantity"
 msgstr "Quantité"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Amount"
+msgid "Total"
 msgstr "Total"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Revenue Total:"
-msgstr "Revenu total :"
+msgid "Subtotal:"
+msgstr "Sous-total :"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Deductions"
-msgstr "Déductions"
+msgid "Total:"
+msgstr "Total :"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Total Deductions:"
-msgstr "Total déduction :"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Net Payment (Ar):"
-msgstr "Net Paiement Ariary :"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Payment method"
-msgstr "Mode de paiement"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Payment date"
-msgstr "Date de paiement"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Cash"
-msgstr "Paiement espèces"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Director Signature"
-msgstr "Signature Direction"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Employee Signature"
-msgstr "Signature Travailleur"
+msgid "Signature"
+msgstr "Signature"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_hr_payslip_form_inherit
