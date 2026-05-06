@@ -401,13 +401,13 @@ msgstr "<strong>Employé</strong>"
 
 #. module: tanatech_hr_payroll
 #: model:ir.actions.report,name:tanatech_hr_payroll.action_report_nd_payslip
-msgid "Undeclared Salary Ticket"
-msgstr "Ticket Salaire Non Affecté"
+msgid "Undeclared Payment Ticket"
+msgstr "Ticket Paiement"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Undeclared Salary"
-msgstr "Salaire Non Affecté"
+msgid "Payment"
+msgstr "Paiement"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
@@ -466,8 +466,8 @@ msgstr "Total déduction :"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
-msgid "Net Salary (Ar):"
-msgstr "Net Salaire Ariary :"
+msgid "Net Payment (Ar):"
+msgstr "Net Paiement Ariary :"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip

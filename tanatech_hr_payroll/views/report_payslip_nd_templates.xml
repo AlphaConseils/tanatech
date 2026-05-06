@@ -32,7 +32,7 @@
 
                         <!-- ===== TITLE ===== -->
                         <div style="text-align: center; font-weight: bold; font-size: 11pt; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">
-                            Undeclared Salary
+                            Payment
                         </div>
                         <div style="border-top: 2px solid #000000; margin-bottom: 2mm;"/>
 
@@ -44,9 +44,6 @@
                                 <t t-if="o.company_id.street2">, <t t-out="o.company_id.street2"/></t>
                             </div>
                             <div t-if="o.company_id.city"><t t-out="o.company_id.city"/></div>
-                            <div t-if="o.company_id.company_registry">
-                                Stat. No: <t t-out="o.company_id.company_registry"/>
-                            </div>
                             <div t-if="o.company_id.phone">Tel: <t t-out="o.company_id.phone"/></div>
                         </div>
                         <div style="border-top: 1px dashed #000000; margin-bottom: 2mm;"/>
@@ -96,9 +93,10 @@
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
                         <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0)"/>
                         <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0)"/>
-                        <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
                         <t t-set="deduction_total" t-value="abs(sum(deduction_lines.mapped('total')))"/>
-                        <t t-set="net_salary"      t-value="revenue_total - deduction_total"/>
+                        <!-- Use Odoo's computed net_wage to avoid double-counting intermediate lines -->
+                        <t t-set="net_salary"      t-value="o.net_wage"/>
+                        <t t-set="revenue_total"   t-value="net_salary + deduction_total"/>
 
                         <!-- ===== INCOME LINES ===== -->
                         <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
@@ -198,9 +196,9 @@
                             <span t-out="ded_fmt"/>
                         </div>
 
-                        <!-- ===== NET SALARY BOX ===== -->
+                        <!-- ===== NET PAYMENT BOX ===== -->
                         <div style="border: 2px solid #000000; padding: 2mm; text-align: right; font-weight: bold; font-size: 9pt; margin-bottom: 3mm;">
-                            Net Salary (Ar):&#160;
+                            Net Payment (Ar):&#160;
                             <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
                             <span t-out="net_fmt"/>
                         </div>
@@ -220,7 +218,7 @@
                             </tr>
                         </table>
 
-                        <!-- ===== SIGNATURES + LOGO ===== -->
+                        <!-- ===== SIGNATURES ===== -->
                         <div style="border-top: 1px dashed #000000; margin-bottom: 2mm;"/>
                         <table style="width: 100%; font-size: 8pt; border-collapse: collapse;">
                             <tr>
@@ -229,13 +227,6 @@
                                     <br/><br/><br/>
                                     <div><strong>Employee Signature</strong></div>
                                     <br/><br/><br/>
-                                </td>
-                            </tr>
-                            <tr t-if="o.company_id.logo">
-                                <td style="text-align: center; padding-top: 3mm;">
-                                    <img t-att-src="image_data_uri(o.company_id.logo)"
-                                         alt="Logo"
-                                         style="max-height: 55px; max-width: 90px;"/>
                                 </td>
                             </tr>
                         </table>
@@ -247,12 +238,12 @@
     </template>
 
     <record id="action_report_nd_payslip" model="ir.actions.report">
-        <field name="name">Undeclared Salary Ticket</field>
+        <field name="name">Undeclared Payment Ticket</field>
         <field name="model">hr.payslip</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">tanatech_hr_payroll.report_nd_payslip</field>
         <field name="report_file">tanatech_hr_payroll.report_nd_payslip</field>
-        <field name="print_report_name">'Undeclared Salary - %s' % (object.employee_id.name)</field>
+        <field name="print_report_name">'Undeclared Payment - %s' % (object.employee_id.name)</field>
         <field name="paperformat_id" ref="tanatech_hr_payroll.paperformat_nd_payslip_ticket"/>
         <field name="attachment"></field>
         <field name="attachment_use" eval="False"/>
