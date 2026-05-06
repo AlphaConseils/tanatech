@@ -152,7 +152,7 @@
                             <div class="col-md-1 mb-4">
                             </div>
 
-                            <div class="col-md-2 mb-4">
+                            <div class="col-md-2 mb-4 d-none">
                                 <h6 class="fw-bold">Nos Offres</h6>
                                 <ul class="list-unstyled">
                                     <li>
@@ -185,7 +185,7 @@
                                     <li>
                                         <a href="#" class="text-white">Best Sellers</a>
                                     </li>
-                                    <li>
+                                    <li class="d-none">
                                         <a href="#" class="text-white">Customer Reviews</a>
                                     </li>
                                     <li>

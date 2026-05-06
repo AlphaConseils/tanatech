@@ -68,6 +68,51 @@
   opacity: 1;
   background-color: #ffffff; /* couleur active (bleu Bootstrap) */
 }
+.s_tanatech_slider .carousel-item {
+    position: relative;
+    height: 85vh;
+    min-height: 300px;
+    max-height: 700px;
+}
+
+/* L'image couvre toujours 100% — jamais de bandes */
+.s_tanatech_slider .slide-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;        /* ← cover et non contain */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Contenu centré par-dessus */
+.s_tanatech_slider .slide-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.s_tanatech_slider .title-slider {
+    font-size: clamp(1.4rem, 4vw, 3rem);
+    font-weight: 700;
+}
+
+.s_tanatech_slider .slide-note {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+@media (max-width: 767px) {
+    .s_tanatech_slider .carousel-item {
+        height: 70vh;
+    }
+    .s_tanatech_slider .slide-content .row {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}
 
 .icon {
   width: 60px;
@@ -80,8 +125,8 @@
 .pub {
   margin-top: 5px;
   background-color: #F5F5F5;
-  flex: 0 0 auto;
-  width: 23%;
+  // flex: 0 0 auto;
+  // width: 23%;
 }
 
 .bg-product {
@@ -809,3 +854,12 @@ form.bg-product {
 .tana-cart-bounce {
     animation: tana-bounce 0.6s ease;
 }
+
+// #products_grid {
+//   &.o_wsale_layout_list {
+//     .btn-shop-list {
+//       // display: none;
+//       flex-direction: column;
+//     }
+//   }
+// }
