@@ -17,11 +17,6 @@
                             Payment
                         </div>
 
-                        <!-- COMPANY NAME -->
-                        <div style="text-align: center; font-size: 10pt; margin-bottom: 5mm;">
-                            <strong t-out="o.company_id.name"/>
-                        </div>
-
                         <div style="border-top: 2px solid #000000; margin-bottom: 6mm;"/>
 
                         <!-- SECTION: INFORMATION -->
@@ -46,13 +41,13 @@
                         </table>
 
                         <!-- LINE COMPUTATION -->
+                        <!-- Filter out intermediate summary lines by category: Brut (Salaire imposable), Net (Salaire net + SALAIRE NET A PAYER) -->
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
-                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0)"/>
                         <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0)"/>
+                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="deduction_total" t-value="abs(sum(deduction_lines.mapped('total')))"/>
-                        <!-- Use Odoo's computed net_wage to avoid double-counting intermediate lines -->
-                        <t t-set="net_salary"      t-value="o.net_wage"/>
-                        <t t-set="revenue_total"   t-value="net_salary + deduction_total"/>
+                        <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
+                        <t t-set="net_salary"      t-value="revenue_total - deduction_total"/>
 
                         <!-- INCOME TABLE -->
                         <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 2mm;">
@@ -67,7 +62,8 @@
                                 <t t-foreach="income_lines" t-as="line">
                                     <tr>
                                         <td style="padding: 2px 0; text-transform: uppercase;">
-                                            <span t-out="line.name"/>
+                                            <t t-if="line.salary_rule_id.code == 'BASIC'">Budget</t>
+                                            <t t-else=""><span t-out="line.name"/></t>
                                         </td>
                                         <td style="text-align: right; padding: 2px 8px;">
                                             <t t-if="line.quantity != 0">
@@ -98,6 +94,12 @@
                             <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
                             <span t-out="rev_fmt"/>
                         </div>
+
+                        <!-- DEDUCTION SECTION HEADER -->
+                        <div style="font-weight: bold; text-transform: uppercase; font-size: 10pt; margin-bottom: 1mm;">
+                            Deductions
+                        </div>
+                        <div style="border-top: 1px solid #000000; margin-bottom: 2mm;"/>
 
                         <!-- DEDUCTION TABLE -->
                         <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 2mm;">

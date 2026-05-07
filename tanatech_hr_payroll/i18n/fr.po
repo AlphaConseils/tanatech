@@ -441,6 +441,16 @@ msgstr "Total"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Budget"
+msgstr "Budget"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Deductions"
+msgstr "Déduction"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
 msgid "Subtotal:"
 msgstr "Sous-total :"
 
