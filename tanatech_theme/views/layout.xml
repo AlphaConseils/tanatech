@@ -81,13 +81,13 @@
     <!-- Footer templates -->
     <template id="template_footer_green" inherit_id="website.layout" name="Tanatech Footer">
         <xpath expr="//div[@id='footer']" position="replace">
-            <div id="footer" class="oe_structure oe_structure_solo bg-primary" t-ignore="true" t-if="not no_footer">
+            <div id="footer" class="oe_structure oe_structure_solo bg-primary py-5" t-ignore="true" t-if="not no_footer">
                 <section class="s_text_block pt40 pb16" data-snippet="s_text_block" data-name="Text">
                     <div class="container">
                         <div class="row">
                             <!-- Section Newsletter -->
                             <div class="col-md-5 mb-4">
-                                <h5>Sign up for our newsletter to stay informed about features and news.</h5>
+                                <h5 class="lh-base text-white">Sign up for our newsletter to stay informed about features and news.</h5>
                                 <!-- <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
                                     <form class="d-flex mt-3" action="/website/form" method="post" enctype="multipart/form-data" data-mark="*" data-model_name="mailing.contact" data-success-mode="message" hide-change-model="true">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -144,8 +144,8 @@
                                         </div>
                                     </div>
                                 </section>
-                                <p class="mt-2 small">
-              By subscribing, you agree to our
+                                <p class="mt-2 small text-white">
+                                    By subscribing, you agree to our
                                     <a href="/privacy" class="text-white text-underline">Privacy Policy</a> and give your consent to receive updates from our company.
                                 </p>
                             </div>
@@ -154,7 +154,7 @@
 
                             <div class="col-md-2 mb-4 d-none">
                                 <h6 class="fw-bold">Nos Offres</h6>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled lh-lg">
                                     <li>
                                         <a href="#" class="text-white">Kit off-grid</a>
                                     </li>
@@ -175,7 +175,7 @@
 
                             <div class="col-md-2 mb-4">
                                 <h6 class="fw-bold">Nos Produits</h6>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled lh-lg">
                                     <li>
                                         <a href="/#promotions" class="text-white">Current Promotions</a>
                                     </li>
@@ -196,11 +196,11 @@
 
                             <div class="col-md-2 mb-4">
                                 <h6 class="fw-bold">Follow us</h6>
-                                <ul class="list-unstyled">
-                                    <li><i class="icon-green ico-facebook me-2"></i> <a href="https://www.facebook.com/greenshopmada" target="_blank" class="text-decoration-none text-white">Facebook</a></li>
-                                    <li><i class="icon-green ico-instagram me-2"></i> <a href="https://www.instagram.com/green_shop.0?igsh=ZGRnaXd5Z3ZoNHp4" class="text-decoration-none text-white" target="_blank">Instagram</a></li>
+                                <ul class="list-unstyled lh-lg">
+                                    <li class="d-flex align-items-center"><i class="icon-green ico-facebook me-3"></i> <a href="https://www.facebook.com/greenshopmada" target="_blank" class="text-decoration-none text-white">Facebook</a></li>
+                                    <li class="d-flex align-items-center"><i class="icon-green ico-instagram me-3"></i> <a href="https://www.instagram.com/green_shop.0?igsh=ZGRnaXd5Z3ZoNHp4" class="text-decoration-none text-white" target="_blank">Instagram</a></li>
                                     <!-- <li><i class="icon-green ico-x-twitter me-2"></i> X</li> -->
-                                    <li><i class="icon-green ico-linkedin me-2"></i> <a href="https://www.linkedin.com/company/31511734" class=" text-decoration-none text-white" target="_blank">LinkedIn</a></li>
+                                    <li class="d-flex align-items-center"><i class="icon-green ico-linkedin me-3"></i> <a href="https://www.linkedin.com/company/31511734" class=" text-decoration-none text-white" target="_blank">LinkedIn</a></li>
                                     <!--<li> <i class="icon-green ico-youtube me-2"></i> Youtube</li> -->
                                 </ul>
                             </div>
