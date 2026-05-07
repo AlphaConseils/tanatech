@@ -1,0 +1,20 @@
+#footer {
+    // min-height: 460px !important;
+
+    #mailing_sub2 {
+        border: 1px solid #08090226;
+        background-color: #8fb31e !important;
+
+        &::placeholder {
+            color: rgb(255, 255, 255);
+        }
+    }
+
+    .text-white {
+        color: #F4F8E8 !important;
+    }
+
+    .lh-lg {
+        line-height: 2.5 !important;
+    }
+}
