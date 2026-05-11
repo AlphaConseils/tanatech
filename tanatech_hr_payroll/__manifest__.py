@@ -20,6 +20,7 @@
     "data": [
         "data/hr_work_entry_data.xml",
         "data/hr_attendance_overtime_type_data.xml",
+        
         # views
         "views/hr_employee_view.xml",
         "views/report_payslip_templates.xml",
