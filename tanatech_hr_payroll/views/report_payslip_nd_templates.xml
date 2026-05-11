@@ -1,41 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- 80mm thermal receipt paper format -->
+    <record id="paperformat_nd_payslip_ticket" model="report.paperformat">
+        <field name="name">ND Payslip Ticket (80mm)</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_width">80</field>
+        <field name="page_height">297</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
     <template id="report_nd_payslip">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.basic_layout">
                     <div class="page" style="
-                        font-family: Arial, Helvetica, sans-serif;
-                        font-size: 10pt;
-                        padding: 15mm 20mm;
-                        line-height: 1.6;
+                        font-family: 'Courier New', Courier, monospace;
+                        font-size: 8pt;
+                        padding: 1mm;
+                        width: 100%;
+                        line-height: 1.3;
                     ">
 
                         <!-- TITLE -->
-                        <div style="text-align: center; font-weight: bold; font-size: 32pt; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 3mm;">
+                        <div style="text-align: center; font-weight: bold; font-size: 13pt; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2mm;">
                             Payment
                         </div>
-
-                        <div style="border-top: 2px solid #000000; margin-bottom: 6mm;"/>
+                        <div style="border-top: 2px solid #000000; margin-bottom: 2mm;"/>
 
                         <!-- SECTION: INFORMATION -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 10pt; margin-bottom: 1mm;">
+                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
                             Information
                         </div>
-                        <div style="border-top: 1px solid #000000; margin-bottom: 4mm;"/>
+                        <div style="border-top: 1px solid #000000; margin-bottom: 1mm;"/>
 
-                        <table style="width: 60%; border-collapse: collapse; font-size: 10pt; margin-bottom: 6mm;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
                             <tr>
-                                <td style="padding: 2px 0; width: 35%; font-weight: bold;">Month</td>
-                                <td style="padding: 2px 0; text-transform: uppercase;">
-                                    <span t-field="o.date_from" t-options="{'format': 'MMMM yyyy'}"/>
+                                <td style="padding: 1px 0; width: 38%; vertical-align: top; font-weight: bold;">Month</td>
+                                <td style="padding: 1px 0; vertical-align: top; text-transform: uppercase;">
+                                    :&#160;<span t-field="o.date_from" t-options="{'format': 'MMMM yyyy'}"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 2px 0; font-weight: bold;">Full name</td>
-                                <td style="padding: 2px 0; text-transform: uppercase;">
-                                    <span t-field="o.employee_id.name"/>
+                                <td style="padding: 1px 0; vertical-align: top; font-weight: bold;">Full name</td>
+                                <td style="padding: 1px 0; vertical-align: top; text-transform: uppercase; word-break: break-word;">
+                                    :&#160;<span t-field="o.employee_id.name"/>
                                 </td>
                             </tr>
                         </table>
@@ -49,23 +66,27 @@
                         <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
                         <t t-set="net_salary"      t-value="revenue_total - deduction_total"/>
 
-                        <!-- INCOME TABLE -->
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 2mm;">
+                        <!-- INCOME TABLE HEADER -->
+                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
-                                    <th style="text-align: left; padding: 3px 0; font-weight: bold; text-decoration: underline; width: 55%;">Description</th>
-                                    <th style="text-align: right; padding: 3px 8px; font-weight: bold; text-decoration: underline; width: 20%;">Quantity</th>
-                                    <th style="text-align: right; padding: 3px 0; font-weight: bold; text-decoration: underline; width: 25%;">Total</th>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0; text-decoration: underline;">Description</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; text-decoration: underline;">Quantity</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0; text-decoration: underline;">Total</th>
                                 </tr>
                             </thead>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="income_lines" t-as="line">
                                     <tr>
-                                        <td style="padding: 2px 0; text-transform: uppercase;">
+                                        <td style="padding: 1px 0; width: 52%; text-transform: uppercase; word-break: break-word;">
                                             <t t-if="line.salary_rule_id.code == 'BASIC'">Budget</t>
                                             <t t-else=""><span t-out="line.name"/></t>
                                         </td>
-                                        <td style="text-align: right; padding: 2px 8px;">
+                                        <td style="text-align: right; padding: 1px 1mm; width: 16%;">
                                             <t t-if="line.quantity != 0">
                                                 <t t-set="qty_int" t-value="int(line.quantity)"/>
                                                 <t t-if="line.quantity == qty_int">
@@ -77,7 +98,7 @@
                                                 </t>
                                             </t>
                                         </td>
-                                        <td style="text-align: right; padding: 2px 0;">
+                                        <td style="text-align: right; padding: 1px 0; width: 32%;">
                                             <t t-if="line.total != 0">
                                                 <t t-set="total_fmt" t-value="'{:,.0f}'.format(line.total).replace(',', '.')"/>
                                                 <span t-out="total_fmt"/>
@@ -88,28 +109,28 @@
                             </tbody>
                         </table>
 
-                        <!-- INCOME SUBTOTAL -->
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 10pt; margin-bottom: 5mm;">
+                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
                             Subtotal:&#160;
                             <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
                             <span t-out="rev_fmt"/>
                         </div>
 
                         <!-- DEDUCTION SECTION HEADER -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 10pt; margin-bottom: 1mm;">
+                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
                             Deductions
                         </div>
-                        <div style="border-top: 1px solid #000000; margin-bottom: 2mm;"/>
+                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
 
                         <!-- DEDUCTION TABLE -->
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 2mm;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="deduction_lines" t-as="line">
                                     <tr>
-                                        <td style="padding: 2px 0; text-transform: uppercase; width: 55%;">
+                                        <td style="padding: 1px 0; width: 52%; text-transform: uppercase; word-break: break-word;">
                                             <span t-out="line.name"/>
                                         </td>
-                                        <td style="text-align: right; padding: 2px 8px; width: 20%;">
+                                        <td style="text-align: right; padding: 1px 1mm; width: 16%;">
                                             <t t-if="line.quantity != 0">
                                                 <t t-set="qty_int" t-value="int(line.quantity)"/>
                                                 <t t-if="line.quantity == qty_int">
@@ -121,7 +142,7 @@
                                                 </t>
                                             </t>
                                         </td>
-                                        <td style="text-align: right; padding: 2px 0; width: 25%;">
+                                        <td style="text-align: right; padding: 1px 0; width: 32%;">
                                             <t t-set="total_fmt" t-value="'{:,.0f}'.format(line.total).replace(',', '.')"/>
                                             <span t-out="total_fmt"/>
                                         </td>
@@ -130,24 +151,24 @@
                             </tbody>
                         </table>
 
-                        <!-- DEDUCTION SUBTOTAL -->
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 10pt; margin-bottom: 5mm;">
+                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
                             Subtotal:&#160;
                             <t t-set="ded_fmt" t-value="'{:,.0f}'.format(deduction_total).replace(',', '.')"/>
                             <span t-out="ded_fmt"/>
                         </div>
 
                         <!-- NET TOTAL BOX -->
-                        <div style="border: 2px solid #000000; padding: 3mm 5mm; text-align: right; font-weight: bold; font-size: 12pt; margin-bottom: 12mm; text-transform: uppercase;">
+                        <div style="border: 2px solid #000000; padding: 2mm; text-align: right; font-weight: bold; font-size: 9pt; margin-bottom: 3mm; text-transform: uppercase;">
                             Total:&#160;
                             <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
                             <span t-out="net_fmt"/>
                         </div>
 
                         <!-- SIGNATURE -->
-                        <div style="font-size: 10pt; margin-top: 8mm;">
+                        <div style="font-size: 8pt; margin-top: 4mm;">
                             <strong>Signature</strong>
-                            <br/><br/><br/><br/>
+                            <br/><br/><br/>
                         </div>
 
                     </div>
@@ -163,6 +184,7 @@
         <field name="report_name">tanatech_hr_payroll.report_nd_payslip</field>
         <field name="report_file">tanatech_hr_payroll.report_nd_payslip</field>
         <field name="print_report_name">'Undeclared Payment - %s' % (object.employee_id.name)</field>
+        <field name="paperformat_id" ref="tanatech_hr_payroll.paperformat_nd_payslip_ticket"/>
         <field name="attachment"></field>
         <field name="attachment_use" eval="False"/>
     </record>
