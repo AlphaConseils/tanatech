@@ -69,7 +69,7 @@
     </template>
 
     <template id="new_products" name="New products GreenShop">
-        <section class="new_products_section">
+        <section class="new_products_section" id="new_product" data-anchor="true">
             <div class="container">
                 <div class="alert alert-warning">
                     <h2 class="">Our new products</h2>
@@ -80,7 +80,7 @@
     </template>
 
     <template id="promotional_products" name="Promotional GreenShop">
-        <section class="promotions_section">
+        <section class="promotions_section" id="promotions" data-anchor="true">
             <div class="container">
                 <div class="alert alert-warning">
                     <h2 class="">Our Promotional products</h2>
