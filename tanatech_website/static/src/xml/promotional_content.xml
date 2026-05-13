@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="tanatech_website.promotional_snippet">
-        <section class="promotions_section o_colored_level" id="promotions" data-anchor="true">
+        <section class="promotions_section o_colored_level">
             <div class="container-xl mx-auto px-3 px-md-4">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
