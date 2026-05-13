@@ -19,12 +19,7 @@
                                 <span class="tana-badge tana-badge-new position-absolute" style="z-index: 2; left: 10px; top: 10px;" t-out="labels.newBadge"/>
 
                                 <div class="tana-card-img ratio ratio-1x1">
-                                    <t t-if="product.image_512">
-                                        <img t-att-src="'data:image/png;base64,' + product.image_512" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name"/>
-                                    </t>
-                                    <t t-else="">
-                                        <img src="/web/image/placeholder.png" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="labels.defaultImage"/>
-                                    </t>
+                                    <img t-att-src="'/web/image/product.template/' + product.template_id + '/image_512' + (product.write_date ? '?unique=' + encodeURIComponent(product.write_date) : '')" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" loading="lazy" decoding="async"/>
                                 </div>
 
                                 <div class="tana-card-body">

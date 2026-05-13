@@ -12,22 +12,39 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
             this.el.id = 'promotions';
         }
         this._showSkeleton();
-        this._observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                this._observer.disconnect();
-                this._loadAndRender();
-            }
-        }, { rootMargin: '200px' });
-        this._observer.observe(this.el);
-        this._handleAnchor();
-        this._onHashChange = this._handleAnchor.bind(this);
+        const hashMatches = window.location.hash === '#' + this.el.id;
+        if (hashMatches) {
+            this._loadAndRender().then(() => this._scrollToSelf());
+        } else {
+            this._observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    this._observer.disconnect();
+                    this._loadAndRender();
+                }
+            }, { rootMargin: '200px' });
+            this._observer.observe(this.el);
+        }
+        this._onHashChange = this._handleHashChange.bind(this);
         window.addEventListener('hashchange', this._onHashChange);
         return this._super(...arguments);
     },
 
-    _handleAnchor() {
-        if (window.location.hash === '#' + this.el.id) {
+    _scrollToSelf() {
+        requestAnimationFrame(() => {
             this.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    },
+
+    _handleHashChange() {
+        if (window.location.hash === '#' + this.el.id) {
+            if (this._observer) {
+                this._observer.disconnect();
+            }
+            if (!this._rendered) {
+                this._loadAndRender().then(() => this._scrollToSelf());
+            } else {
+                this._scrollToSelf();
+            }
         }
     },
 
@@ -62,6 +79,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
         if (!result) return;
         const labels = result.labels;
         this.$target.html(renderToElement('tanatech_website.promotional_snippet', { result, labels }));
+        this._rendered = true;
         this._initSwiper();
         this._bindCartEvents();
     },
