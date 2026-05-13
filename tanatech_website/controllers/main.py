@@ -118,13 +118,21 @@ class WebsiteProduct(http.Controller):
     @http.route("/get_product_categories", auth="public", type="json", website=True)
     def get_product_category(self):
         """Get the website categories for the snippet."""
-        public_categs = (
+        rows = (
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "id"], limit=8
+                [("parent_id", "=", False)], fields=["name", "id", "write_date"], limit=8
             )
         )
+        public_categs = []
+        for c in rows:
+            unique = int(c["write_date"].timestamp()) if c.get("write_date") else 0
+            public_categs.append({
+                "id": c["id"],
+                "name": c["name"],
+                "image_url": "/web/image/product.public.category/%s/image_512?unique=%s" % (c["id"], unique),
+            })
         return {
             "categories": public_categs,
             "labels": {
@@ -150,12 +158,12 @@ class WebsiteProduct(http.Controller):
         products = []
         for tmpl in data:
             variant_ids = tmpl.get("product_variant_ids") or []
+            unique = int(tmpl["write_date"].timestamp()) if tmpl.get("write_date") else 0
             products.append({
                 "id": variant_ids[0] if variant_ids else tmpl["id"],
-                "template_id": tmpl["id"],
                 "name": tmpl["name"],
                 "list_price": tmpl["list_price"],
-                "write_date": tmpl["write_date"].isoformat() if tmpl.get("write_date") else "",
+                "image_url": "/web/image/product.template/%s/image_512?unique=%s" % (tmpl["id"], unique),
             })
         return {
             "products": products,
@@ -195,14 +203,14 @@ class WebsiteProduct(http.Controller):
             price = tmpl["list_price"]
             compare_price = tmpl["compare_list_price"]
             discount = round((compare_price - price) / compare_price * 100) if compare_price > price else 0
+            unique = int(tmpl["write_date"].timestamp()) if tmpl.get("write_date") else 0
             products.append({
                 "id": variant_ids[0] if variant_ids else tmpl["id"],
-                "template_id": tmpl["id"],
                 "name": tmpl["name"],
                 "list_price": price,
                 "compare_list_price": compare_price,
                 "discount": discount,
-                "write_date": tmpl["write_date"].isoformat() if tmpl.get("write_date") else "",
+                "image_url": "/web/image/product.template/%s/image_512?unique=%s" % (tmpl["id"], unique),
             })
         return {
             "products": products,

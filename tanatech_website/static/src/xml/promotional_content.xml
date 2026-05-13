@@ -22,7 +22,7 @@
                                     </span>
 
                                     <div class="tana-card-img ratio ratio-1x1">
-                                        <img t-att-src="'/web/image/product.template/' + product.template_id + '/image_512' + (product.write_date ? '?unique=' + encodeURIComponent(product.write_date) : '')" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" loading="lazy" decoding="async"/>
+                                        <img t-att-src="product.image_url" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" loading="lazy" decoding="async"/>
                                     </div>
 
                                     <div class="tana-card-body">
