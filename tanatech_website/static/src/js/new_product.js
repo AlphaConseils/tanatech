@@ -9,6 +9,9 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
     selector: '.new_products_section',
 
     start() {
+        if (!this.el.id) {
+            this.el.id = 'new_product';
+        }
         this._showSkeleton();
         this._observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
@@ -17,11 +20,21 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
             }
         }, { rootMargin: '200px' });
         this._observer.observe(this.el);
+        this._handleAnchor();
+        this._onHashChange = this._handleAnchor.bind(this);
+        window.addEventListener('hashchange', this._onHashChange);
         return this._super(...arguments);
+    },
+
+    _handleAnchor() {
+        if (window.location.hash === '#' + this.el.id) {
+            this.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     },
 
     destroy() {
         if (this._observer) this._observer.disconnect();
+        if (this._onHashChange) window.removeEventListener('hashchange', this._onHashChange);
         this._super(...arguments);
     },
 
