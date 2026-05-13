@@ -122,7 +122,7 @@ class WebsiteProduct(http.Controller):
             request.env["product.public.category"]
             .sudo()
             .search_read(
-                [("parent_id", "=", False)], fields=["name", "image_512", "id"], limit=8
+                [("parent_id", "=", False)], fields=["name", "id"], limit=8
             )
         )
         return {
@@ -142,7 +142,7 @@ class WebsiteProduct(http.Controller):
             .sudo()
             .search_read(
                 [("is_published", "=", True), ("sale_ok", "=", True)],
-                fields=["name", "image_512", "list_price", "product_variant_ids"],
+                fields=["name", "list_price", "product_variant_ids", "write_date"],
                 limit=8,
             )
         )
@@ -152,9 +152,10 @@ class WebsiteProduct(http.Controller):
             variant_ids = tmpl.get("product_variant_ids") or []
             products.append({
                 "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "template_id": tmpl["id"],
                 "name": tmpl["name"],
-                "image_512": tmpl["image_512"],
                 "list_price": tmpl["list_price"],
+                "write_date": tmpl["write_date"].isoformat() if tmpl.get("write_date") else "",
             })
         return {
             "products": products,
@@ -183,7 +184,7 @@ class WebsiteProduct(http.Controller):
                     ("sale_ok", "=", True),
                     ("compare_list_price", ">", 0),
                 ],
-                fields=["name", "image_512", "list_price", "compare_list_price", "product_variant_ids"],
+                fields=["name", "list_price", "compare_list_price", "product_variant_ids", "write_date"],
                 limit=8,
             )
         )
@@ -196,11 +197,12 @@ class WebsiteProduct(http.Controller):
             discount = round((compare_price - price) / compare_price * 100) if compare_price > price else 0
             products.append({
                 "id": variant_ids[0] if variant_ids else tmpl["id"],
+                "template_id": tmpl["id"],
                 "name": tmpl["name"],
-                "image_512": tmpl["image_512"],
                 "list_price": price,
                 "compare_list_price": compare_price,
                 "discount": discount,
+                "write_date": tmpl["write_date"].isoformat() if tmpl.get("write_date") else "",
             })
         return {
             "products": products,
