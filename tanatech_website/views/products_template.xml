@@ -10,6 +10,15 @@
                 'image', 'class': 'h-100 w-100 position-absolute img-product'}</attribute>
         </xpath>
 
+        <xpath expr="//div[hasclass('oe_product_image')]" position="inside">
+            <t t-set="tana_price_vals" t-value="get_product_prices(product)"/>
+            <t t-if="'base_price' in tana_price_vals and tana_price_vals['base_price'] &gt; tana_price_vals['price_reduce'] and tana_price_vals['price_reduce']">
+                <span class="tana-badge tana-badge-discount position-absolute" style="z-index: 2; left: 10px; top: 10px;">
+                    -<t t-esc="round((tana_price_vals['base_price'] - tana_price_vals['price_reduce']) / tana_price_vals['base_price'] * 100)"/>%
+                </span>
+            </t>
+        </xpath>
+
         <xpath expr="//div[@class='o_wsale_product_information_text']" position="attributes">
             <attribute name="class" add="d-flex justify-content-between align-items-center"
                 separator=" " />
