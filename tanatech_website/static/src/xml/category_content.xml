@@ -13,7 +13,7 @@
                         <div class="col-6 col-md-3">
                             <a t-att-href="'/shop/category/'+ category.id" class="text-decoration-none text-dark">
                                 <div class="ratio ratio-1x1 rounded-item overflow-hidden">
-                                    <img t-att-src="'/web/image/product.public.category/' + category.id + '/image_512'" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name" loading="lazy" decoding="async"/>
+                                    <img t-att-src="category.image_url" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name" loading="lazy" decoding="async"/>
                                 </div>
                                 <p class="fw-semibold text-center mt-2 mb-0 small">
                                     <t t-esc="category.name"/>
