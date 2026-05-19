@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="res_partner_view_form_tanatech" model="ir.ui.view">
+    <field name="name">res.partner.view.form.inherit.tanatech</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet/group/group[1]" position="inside">
+        <field name="cin" invisible="is_company == False"/>
+        <field name="rcs" invisible="is_company == False"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>
