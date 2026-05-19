@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="inherit_report_saleorder_document" inherit_id="purchase.report_purchaseorder_document">
+    <xpath expr="//div[@id='total']" position="replace">
+      <div id="total" class="row mt-n3" name="total">
+        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+          <table class="o_total_table table table-borderless">
+            <!-- Tax totals -->
+            <t t-call="tanatech_sale.sale_document_tax_totals">
+              <t t-set="doc" t-value="o"/>
+              <t t-set="tax_totals" t-value="o.tax_totals"/>
+              <t t-set="currency" t-value="o.currency_id"/>
+            </t>
+          </table>
+        </div>
+      </div>
+    </xpath>
+
+    <xpath expr="//span[@t-field='o.payment_term_id']" position="after">
+        <div>
+          Arrêté le présent bon de commande à TOTAL TTC :
+          <strong t-field="o.amount_in_words"/>
+        </div>
+        <div>Merci de porter le numéro de notre commande en référence sur votre facture</div>
+        <div style="margin-top: 5%">
+          <div class="row" style="text-align: center;">
+            <div class="col-3">
+              <span>Responsable/Demandeur</span>
+            </div>
+            <div class="col-3">
+              Responsable Achat
+            </div>
+            <div class="col-3">
+              Direction Supply Chain
+            </div>
+            <div class="col-3">
+              Direction Générale
+            </div>
+          </div>
+        </div>
+      </xpath>
+    <xpath expr="//t[@t-set='address']" position="inside">
+      <div style="font-size: 12px">
+        <div style="color: black!important;" t-if="o.partner_id.x_studio_nif_1">NIF:
+          <span style="color: black!important;"
+                t-field="o.partner_id.x_studio_nif_1"/>
+        </div>
+        <div style="color: black!important;" t-if="o.partner_id.x_studio_char_field_d3loF">STAT:
+          <span style="color: black!important;"
+                t-field="o.partner_id.x_studio_char_field_d3loF"/>
+        </div>
+        <div style="color: black!important;" t-if="o.partner_id.rcs">RCS:
+          <span t-field="o.partner_id.rcs"/>
+        </div>
+        <div style="color: black!important;" t-if="o.partner_id.cin">CIN:
+          <span style="color: black!important;" t-field="o.partner_id.cin"/>
+        </div>
+      </div>
+    </xpath>
+
+    <xpath expr="//div[@class='page']" position="attributes">
+      <attribute name="style">margin-top: 40px</attribute>
+    </xpath>
+  </template>
+
+</odoo>
