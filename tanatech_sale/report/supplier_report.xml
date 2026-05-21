@@ -206,6 +206,10 @@
         <t t-call="tanatech_sale.report_purchaseorder_document"
            t-lang="o.partner_id.lang"/>
       </t>
+      <t t-foreach="docs" t-as="o">
+        <t t-call="tanatech_sale.report_purchaseorder_document"
+           t-lang="o.partner_id.lang"/>
+      </t>
     </t>
   </template>
 
