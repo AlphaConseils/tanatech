@@ -6,12 +6,12 @@ _logger = logging.getLogger(__name__)
 
 # Contexte standard pour désactiver tous les effets de bord pendant la migration
 _MIGRATION_CTX = {
-    'tracking_disable':          True,   # pas de tracking des champs
-    'mail_notrack':              True,   # pas de chatter automatique
-    'mail_create_nosubscribe':   True,   # pas d'abonnement auto à la création
-    'mail_create_nolog':         True,   # pas de log "Document créé"
-    'no_recompute':              True,   # pas de recalcul des champs stockés
-    'recompute':                 False,
+    'tracking_disable':              True,   # pas de tracking des champs
+    'mail_notrack':                  True,   # pas de chatter automatique
+    'mail_create_nosubscribe':       True,   # pas d'abonnement auto à la création
+    'mail_create_nolog':             True,   # pas de log "Document créé"
+    'no_recompute':                  True,   # pas de recalcul des champs stockés
+    'recompute':                     False,
 }
 
 
@@ -39,6 +39,16 @@ class HrMigrationApi(models.AbstractModel):
                 "hr.migration.api : accès réservé aux administrateurs système."
             )
 
+    def _migration_env(self):
+        """
+        Retourne un env avec le contexte de migration et toutes les sociétés
+        dans allowed_company_ids, ce qui désactive les vérifications cross-company
+        (_check_company) sur les champs many2one.
+        """
+        all_co_ids = self.env['res.company'].sudo().search([]).ids
+        ctx = dict(self.env.context, **_MIGRATION_CTX, allowed_company_ids=all_co_ids)
+        return self.env(context=ctx)
+
     # ─── CRÉATION GÉNÉRIQUE AVEC FORÇAGE DU STATE ──────────────────────────────
 
     @api.model
@@ -50,9 +60,12 @@ class HrMigrationApi(models.AbstractModel):
         Retourne l'ID du nouvel enregistrement.
         """
         self._check_access()
-        env = self.env(context=dict(self.env.context, **_MIGRATION_CTX))
+        env = self._migration_env()
+        model_env = env[model].sudo()
+        if vals.get('company_id'):
+            model_env = model_env.with_company(vals['company_id'])
 
-        record = env[model].sudo().create(vals)
+        record = model_env.create(vals)
         _logger.info('migration_create_record: %s id=%s créé', model, record.id)
 
         if state:
@@ -71,9 +84,13 @@ class HrMigrationApi(models.AbstractModel):
         Retourne la liste des IDs créés (dans le même ordre).
         """
         self._check_access()
-        env = self.env(context=dict(self.env.context, **_MIGRATION_CTX))
+        env = self._migration_env()
+        company_id = vals_list[0].get('company_id') if vals_list else None
+        model_env = env[model].sudo()
+        if company_id:
+            model_env = model_env.with_company(company_id)
 
-        records = env[model].sudo().create(vals_list)
+        records = model_env.create(vals_list)
         new_ids = records.ids
         _logger.info('migration_create_records_batch: %s — %d enregistrements créés', model, len(new_ids))
 
@@ -213,7 +230,7 @@ class HrMigrationApi(models.AbstractModel):
         Retourne {full_src_id: full_tgt_id} pour traçabilité.
         """
         self._check_access()
-        env = self.env(context=dict(self.env.context, **_MIGRATION_CTX))
+        env = self._migration_env()
 
         # 1. account.full.reconcile en premier (FK depuis partial)
         full_id_map = {}
@@ -275,6 +292,42 @@ class HrMigrationApi(models.AbstractModel):
             and finfo.get('store', True)
             and finfo.get('type') != 'one2many'
         }
+
+    @api.model
+    def migration_create_expense_sheet(self, vals: dict, expense_ids: list, state: str = None) -> int:
+        """
+        Crée un hr.expense.sheet en liant directement les dépenses via expense_line_ids.
+        Le recompute est activé pour que employee_id et total_amount soient calculés
+        depuis les dépenses — contrairement à _MIGRATION_CTX qui le désactive.
+        """
+        self._check_access()
+        all_co_ids = self.env['res.company'].sudo().search([]).ids
+        ctx = {
+            'tracking_disable':        True,
+            'mail_notrack':            True,
+            'mail_create_nosubscribe': True,
+            'mail_create_nolog':       True,
+            'allowed_company_ids':     all_co_ids,
+        }
+        env = self.env(context=dict(self.env.context, **ctx))
+
+        if expense_ids:
+            vals['expense_line_ids'] = [(6, 0, expense_ids)]
+
+        sheet = env['hr.expense.sheet'].sudo().create(vals)
+        if state:
+            sheet.sudo()._write({'state': state})
+        return sheet.id
+
+    @api.model
+    def migration_force_write(self, model: str, res_id: int, vals: dict) -> bool:
+        """
+        Force l'écriture de champs via _write() — contourne readonly et les
+        contraintes ORM. Utile pour des champs comme sheet_id sur hr.expense.
+        """
+        self._check_access()
+        self.env[model].sudo().browse(res_id).with_context(**_MIGRATION_CTX)._write(vals)
+        return True
 
     @api.model
     def migration_ping(self) -> str:
