@@ -311,14 +311,21 @@ class HrMigrationApi(models.AbstractModel):
         }
         env = self.env(context=dict(self.env.context, **ctx))
 
-        if expense_ids:
-            vals['expense_line_ids'] = [(6, 0, expense_ids)]
-
         model_env = env['hr.expense.sheet'].sudo()
         if vals.get('company_id'):
             model_env = model_env.with_company(vals['company_id'])
 
         sheet = model_env.create(vals)
+
+        if expense_ids:
+            # SQL direct pour contourner la contrainte "même société" qui bloque
+            # toute liaison ORM (create avec expense_line_ids ou _write).
+            self.env.cr.execute(
+                'UPDATE hr_expense SET sheet_id = %s WHERE id = ANY(%s)',
+                (sheet.id, expense_ids),
+            )
+            self.env['hr.expense'].browse(expense_ids).invalidate_recordset()
+
         if state:
             sheet.sudo()._write({'state': state})
         return sheet.id
