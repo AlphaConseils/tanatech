@@ -314,7 +314,11 @@ class HrMigrationApi(models.AbstractModel):
         if expense_ids:
             vals['expense_line_ids'] = [(6, 0, expense_ids)]
 
-        sheet = env['hr.expense.sheet'].sudo().create(vals)
+        model_env = env['hr.expense.sheet'].sudo()
+        if vals.get('company_id'):
+            model_env = model_env.with_company(vals['company_id'])
+
+        sheet = model_env.create(vals)
         if state:
             sheet.sudo()._write({'state': state})
         return sheet.id
