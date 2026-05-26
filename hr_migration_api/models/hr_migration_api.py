@@ -333,11 +333,43 @@ class HrMigrationApi(models.AbstractModel):
     @api.model
     def migration_force_write(self, model: str, res_id: int, vals: dict) -> bool:
         """
-        Force l'écriture de champs via _write() — contourne readonly et les
-        contraintes ORM. Utile pour des champs comme sheet_id sur hr.expense.
+        Force l'écriture de champs en contournant readonly et _check_company.
+        - Champs scalaires (many2one, selection, …) : via _write() (bypass contraintes Python).
+        - Champs many2many : via SQL direct car _write() ne supporte pas column_type=None.
         """
         self._check_access()
-        self.env[model].sudo().browse(res_id).with_context(**_MIGRATION_CTX)._write(vals)
+        fields_info = self.env[model]._fields
+        record = self.env[model].sudo().browse(res_id)
+
+        scalar = {k: v for k, v in vals.items()
+                  if not fields_info.get(k) or fields_info[k].type != 'many2many'}
+        m2m    = {k: v for k, v in vals.items()
+                  if fields_info.get(k) and fields_info[k].type == 'many2many'}
+
+        if scalar:
+            record.with_context(**_MIGRATION_CTX)._write(scalar)
+
+        cr = self.env.cr
+        for fname, cmds in m2m.items():
+            field = fields_info[fname]
+            ids_to_set = []
+            for cmd in (cmds or []):
+                if isinstance(cmd, (list, tuple)):
+                    if cmd[0] == 6:
+                        ids_to_set = list(cmd[2])
+                    elif cmd[0] in (4, 1):
+                        ids_to_set.append(cmd[1])
+                elif isinstance(cmd, int):
+                    ids_to_set.append(cmd)
+            cr.execute(f'DELETE FROM "{field.relation}" WHERE "{field.column1}" = %s', (res_id,))
+            for cid in ids_to_set:
+                cr.execute(
+                    f'INSERT INTO "{field.relation}" ("{field.column1}", "{field.column2}")'
+                    f' VALUES (%s, %s) ON CONFLICT DO NOTHING',
+                    (res_id, cid),
+                )
+            record.invalidate_recordset()
+
         return True
 
     @api.model
