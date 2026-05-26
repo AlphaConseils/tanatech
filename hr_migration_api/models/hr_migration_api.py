@@ -341,6 +341,21 @@ class HrMigrationApi(models.AbstractModel):
         return True
 
     @api.model
+    def migration_force_write_domain(self, model: str, domain: list, vals: dict) -> int:
+        """
+        Force _write() sur tous les enregistrements correspondant au domain.
+        Utile pour mettre à jour en masse des champs readonly/computed stockés
+        (ex. hr.expense.state qui est un related de sheet_id.state).
+        Retourne le nombre d'enregistrements mis à jour.
+        """
+        self._check_access()
+        env = self._migration_env()
+        records = env[model].sudo().search(domain)
+        if records:
+            records._write(vals)
+        return len(records)
+
+    @api.model
     def migration_ping(self) -> str:
         """Vérifie que le module est installé et l'utilisateur autorisé."""
         self._check_access()
