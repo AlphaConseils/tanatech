@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+  <template id="report_purchaseorder_document">
+
+    <t t-call="tanatech_sale_report.tanatech_external_layout_a5">
+
+      <div class="page">
+        <div class="oe_structure"/>
+        <div class="row mb-4" style="font-size:12px;">
+          <div class="col-4">
+            <div t-if="o.dest_address_id">
+              <strong class="d-block mt-3">Shipping address</strong>
+              <div t-if="o.dest_address_id">
+                <div t-field="o.dest_address_id"
+                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' name="purchase_shipping_address"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+          </div>
+          <div class="col-4" style="color: black!important; font-size: 12px;">
+            <address t-field="o.partner_id"
+                     t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}'/>
+            <div t-if="o.partner_id.x_studio_nif_1">NIF:
+              <span t-field="o.partner_id.x_studio_nif_1"/>
+            </div>
+            <div t-if="o.partner_id.x_studio_char_field_d3loF">STAT:
+              <span t-field="o.partner_id.x_studio_char_field_d3loF"/>
+            </div>
+            <div t-if="o.partner_id.rcs">RCS:
+              <span t-field="o.partner_id.rcs"/>
+            </div>
+            <div t-if="o.partner_id.cin">CIN:
+              <span t-field="o.partner_id.cin"/>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 mb-2" style="font-size:12px;">
+          <h5 style="font-weight: bold;">
+            <t t-if="o.state in ['draft', 'sent', 'to approve']">Request for Quotation #
+              <span t-field="o.name"/>
+            </t>
+            <t t-if="o.state in ['purchase', 'done']">Purchase Order #
+              <span t-field="o.name"/>
+            </t>
+            <t t-if="o.state == 'cancel'">Cancelled Purchase Order #
+              <span t-field="o.name"/>
+            </t>
+          </h5>
+        </div>
+        <div id="informations" style="font-size:12px;" class="row mb-4">
+          <div t-if="o.user_id" class="col">
+            <strong>Buyer</strong>
+            <div t-field="o.user_id"/>
+          </div>
+          <div t-if="o.partner_ref" class="col">
+            <strong>Your Order Reference</strong>
+            <div t-field="o.partner_ref"/>
+          </div>
+          <div t-if="o.state in ['purchase','done'] and o.date_approve" class="col-3 bm-2">
+            <strong>Order Date:</strong>
+            <p t-field="o.date_approve" t-options="{'date_only': 'true'}" class="m-0"/>
+          </div>
+          <div t-elif="o.date_order" class="col-2 bm-2">
+            <strong>Order Deadline:</strong>
+            <p t-field="o.date_order" t-options="{'date_only': 'true'}" class="m-0"/>
+          </div>
+          <div t-if="o.date_planned" class="col-2 bm-2">
+            <strong>Expected Arrival:</strong>
+            <p t-field="o.date_planned" t-options="{'date_only': 'true'}" class="m-0"/>
+          </div>
+        </div>
+
+        <table style="color: black;font-size:12px;" class="table table-sm o_main_table table_striped">
+          <thead style="display: table-row-group ;font-weight: bold !important;">
+            <tr>
+              <th name="th_description" class="text-start">
+                <strong>Description</strong>
+              </th>
+              <th name="th_quantity" class="text-end">
+                <strong>Qty</strong>
+              </th>
+              <th name="th_price_unit" class="text-end">
+                <strong>Unit Price</strong>
+              </th>
+              <th name="th_discount" class="text-end">
+                <strong>Disc.</strong>
+              </th>
+              <th name="th_taxes" class="text-end">
+                <strong>Taxes</strong>
+              </th>
+              <th name="th_subtotal" class="text-end">
+                <strong>Amount</strong>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="sale_tbody">
+            <t t-set="current_subtotal" t-value="0"/>
+            <t t-foreach="o.order_line" t-as="line">
+              <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+
+              <tr t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                <t t-if="not line.display_type">
+                  <td id="product" class="text-start">
+                    <span t-field="line.name"/>
+                  </td>
+                  <td class="text-end">
+                    <span t-field="line.product_qty"/>
+                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                    <span t-if="line.product_packaging_id">
+                      (
+                      <span t-field="line.product_packaging_qty" t-options='{"widget": "integer"}'/>
+                      <span t-field="line.product_packaging_id"/>)
+                    </span>
+                  </td>
+                  <td class="text-end">
+                    <span t-field="line.price_unit"/>
+                  </td>
+                  <td class="text-end">
+                    <span class="text-align-bottom"><span t-field="line.discount"/>%
+                    </span>
+                  </td>
+                  <td class="text-end">
+                    <span t-out="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id])"/>
+                  </td>
+                  <td class="text-end">
+                    <span t-field="line.price_subtotal"
+                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                  </td>
+                </t>
+                <t t-if="line.display_type == 'line_section'">
+                  <td colspan="99" id="section">
+                    <span t-field="line.name"/>
+                  </td>
+                  <t t-set="current_section" t-value="line"/>
+                  <t t-set="current_subtotal" t-value="0"/>
+                </t>
+                <t t-if="line.display_type == 'line_note'">
+                  <td colspan="99" id="note">
+                    <span t-field="line.name"/>
+                  </td>
+                </t>
+              </tr>
+
+              <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                <tr class="is-subtotal text-end">
+                  <td colspan="99" id="subtotal">
+                    <strong class="mr16">Subtotal</strong>
+                    <span t-out="current_subtotal"
+                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                  </td>
+                </tr>
+              </t>
+            </t>
+          </tbody>
+        </table>
+
+        <div style="color: black;font-size:12px;" class="clearfix" name="so_total_summary">
+          <div id="total" class="row mt-n3" name="total">
+            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+              <table class="o_total_table table table-borderless">
+                <!-- Tax totals -->
+                <t t-call="tanatech_sale.sale_document_tax_totals">
+                  <t t-set="doc" t-value="o"/>
+                  <t t-set="tax_totals" t-value="o.tax_totals"/>
+                  <t t-set="currency" t-value="o.currency_id"/>
+                </t>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="oe_structure"/>
+        <div t-if="o.payment_term_id" style="font-size:12px;">Modalités de paiement :
+          <span t-field="o.payment_term_id" class="mt-4"></span>
+        </div>
+        <div style="font-size:12px;">
+          Arrêté le présent bon de commande à TOTAL TTC:
+          <strong t-field="o.amount_in_words"/>
+        </div>
+        <div>Merci de porter le numéro de notre commande en référence sur votre facture</div>
+        <div style="margin-top: 3%; font-size:12px;">
+          <div class="row" style="text-align: center;">
+            <div class="col-3">
+              <span>Responsable/Demandeur</span>
+            </div>
+            <div class="col-3">
+              Responsable Achat
+            </div>
+            <div class="col-3">
+              Direction Supply Chain
+            </div>
+            <div class="col-3">
+              Direction Générale
+            </div>
+          </div>
+        </div>
+      </div>
+    </t>
+  </template>
+
+  <template id="tanatech_report_purchaseorder">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-set="is_na" t-value="False"/>
+        <t t-call="tanatech_sale.report_purchaseorder_document"
+           t-lang="o.partner_id.lang"/>
+      </t>
+      <t t-foreach="docs" t-as="o">
+        <t t-call="tanatech_sale.report_purchaseorder_document"
+           t-lang="o.partner_id.lang"/>
+      </t>
+    </t>
+  </template>
+
+
+  <record id="action_report_supplierorder" model="ir.actions.report">
+    <field name="name">Supplier order(A5)</field>
+    <field name="model">purchase.order</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">tanatech_sale.tanatech_report_purchaseorder</field>
+    <field name="report_file">tanatech_sale.tanatech_report_purchaseorder</field>
+    <field name="print_report_name">'Supplier order - %s' % (object.name)</field>
+    <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+    <field name="paperformat_id" ref="tanatech_base.tanatech_paperformat"/>
+    <field name="binding_type">report</field>
+  </record>
+</odoo>
