@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
-        <field name="name">overtime.smartbutton.hr.payslip.view.form.inherit</field>
-        <field name="model">hr.payslip</field>
-        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//form/header" position="before">
-                <field name="is_undeclared_payslip" invisible="1" />
-            </xpath>
-            <xpath expr="//button[@name='action_print_payslip']" position="after">
-                <button string="Print" name="action_print_nd_payslip" type="object"
-                        invisible="not line_ids or not is_undeclared_payslip"/>
-            </xpath>
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="action_open_overtime"
-                    class="oe_stat_button"
-                    icon="fa-history"
-                    type="object"
-                    invisible="overtime_hours_count == 0.0 or is_undeclared_payslip">
-                    <div class="o_stat_info">
-                        <span class="o_stat_value text-success" invisible="overtime_hours_count &lt; 0">
-                            <field name="overtime_hours_count" widget="float_time"/>
-                        </span>
-                        <span class="o_stat_value text-danger" invisible="overtime_hours_count &gt;= 0">
-                            <field name="overtime_hours_count" widget="float_time"/>
-                        </span>
-                        <span class="o_stat_text">Overtime</span>
-                    </div>
-                </button>
-            </xpath>
-        </field>
-    </record>
+  <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+    <field name="name">overtime.smartbutton.hr.payslip.view.form.inherit</field>
+    <field name="model">hr.payslip</field>
+    <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form/header" position="before">
+        <field name="is_undeclared_payslip" invisible="1"/>
+      </xpath>
+      <xpath expr="//field[@name='number_of_hours']" position="attributes">
+        <attribute name="widget"></attribute>
+      </xpath>
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button name="action_open_overtime"
+                class="oe_stat_button"
+                icon="fa-history"
+                type="object"
+                invisible="overtime_hours_count == 0.0 or is_undeclared_payslip">
+          <div class="o_stat_info">
+            <span class="o_stat_value text-success" invisible="overtime_hours_count &lt; 0">
+              <field name="overtime_hours_count" widget="float_time"/>
+            </span>
+            <span class="o_stat_value text-danger" invisible="overtime_hours_count &gt;= 0">
+              <field name="overtime_hours_count" widget="float_time"/>
+            </span>
+            <span class="o_stat_text">Overtime</span>
+          </div>
+        </button>
+      </xpath>
+    </field>
+  </record>
 
 </odoo>
