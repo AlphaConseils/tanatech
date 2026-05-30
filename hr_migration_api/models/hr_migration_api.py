@@ -388,6 +388,21 @@ class HrMigrationApi(models.AbstractModel):
         return len(records)
 
     @api.model
+    def migration_recompute(self, model: str, method_name: str, domain: list = None) -> int:
+        """
+        Déclenche le recalcul d'un champ computed stocké en dehors du contexte
+        de migration (qui désactive le recompute). Typiquement utilisé pour
+        recalculer hr.expense.sheet.payment_state après que les account.move
+        sont rattachés via patch_expense_sheet_moves.
+        Retourne le nombre d'enregistrements retraités.
+        """
+        self._check_access()
+        records = self.env[model].sudo().search(domain or [])
+        if records:
+            getattr(records, method_name)()
+        return len(records)
+
+    @api.model
     def migration_ping(self) -> str:
         """Vérifie que le module est installé et l'utilisateur autorisé."""
         self._check_access()
