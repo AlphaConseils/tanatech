@@ -52,3 +52,15 @@ class HrPayslip(models.Model):
                 aggregates=['duration:sum']
             ))
             payslip.overtime_hours_count = mapped_validated_overtimes.get(payslip.employee_id, 0)
+
+
+
+    def compute_sheet(self):
+        for slip in self:
+            slip.employee_id.generate_work_entries(
+                slip.date_from,
+                slip.date_to,
+                force=True,
+            )
+
+        return super().compute_sheet()
