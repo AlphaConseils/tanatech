@@ -1,0 +1,132 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_approvals
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20260608\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 10:59+0000\n"
+"PO-Revision-Date: 2026-06-08 10:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tanatech_approvals
+#: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_hr_expense_view_form_inherit_documents_hr_expense
+msgid "<span class=\"o_stat_text\">Approval</span>"
+msgstr "<span class=\"o_stat_text\">Validations</span>"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,help:tanatech_approvals.field_approval_category__approval_type
+msgid ""
+"Allows you to define which documents you would like to create once the "
+"request has been approved"
+msgstr ""
+"Vous permet de définir quels documents vous voulez créer lorsque la demande "
+"à été approuvée"
+
+#. module: tanatech_approvals
+#: model:ir.model,name:tanatech_approvals.model_approval_category
+msgid "Approval Category"
+msgstr "Catégorie de validation"
+
+#. module: tanatech_approvals
+#: model:ir.model,name:tanatech_approvals.model_approval_request
+#: model:ir.model.fields,field_description:tanatech_approvals.field_hr_expense__approval_request_id
+msgid "Approval Request"
+msgstr "Demande de validation"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_category__approval_type
+msgid "Approval Type"
+msgstr "Type de validation"
+
+#. module: tanatech_approvals
+#: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_approval_request_view_form
+msgid "Create Expenses"
+msgstr "Créer des dépenses"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields.selection,name:tanatech_approvals.selection__approval_category__approval_type__create_expenses
+msgid "Create expenses"
+msgstr ""
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_hr_expense__approval_date_end
+msgid "Date end"
+msgstr "à"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_hr_expense__approval_date_start
+msgid "Date start"
+msgstr "De"
+
+#. module: tanatech_approvals
+#: model:ir.model,name:tanatech_approvals.model_hr_expense
+msgid "Expense"
+msgstr "Dépense"
+
+#. module: tanatech_approvals
+#. odoo-python
+#: code:addons/tanatech_approvals/models/approval_request.py:0
+msgid "Expenses created"
+msgstr "Dépenses créées"
+
+#. module: tanatech_approvals
+#: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_hr_expense_view_form
+msgid "From:"
+msgstr "De:"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_request__is_create_expenses
+msgid "Is Create Expenses"
+msgstr "Est un type de validation qui crée des dépenses"
+
+#. module: tanatech_approvals
+#: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_hr_expense_view_form
+msgid "Period"
+msgstr "Période"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_product_line__price
+msgid "Price"
+msgstr "Prix"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,help:tanatech_approvals.field_approval_product_line__price
+msgid "Price unit (TTC)"
+msgstr "Prix unitaire (TTC)"
+
+#. module: tanatech_approvals
+#: model:ir.model,name:tanatech_approvals.model_approval_product_line
+msgid "Product Line"
+msgstr "Ligne de produit"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_hr_expense__approval_reference
+msgid "Reference of the approval request"
+msgstr "Référence de la demande de validation"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_product_line__total
+msgid "Total"
+msgstr ""
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_request__total_ttc
+msgid "Total TTC"
+msgstr ""
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,help:tanatech_approvals.field_approval_product_line__total
+msgid "Total price (Price × Quantity)"
+msgstr "Prix total (Prix × Quantité)"
+
+#. module: tanatech_approvals
+#: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_hr_expense_view_form
+msgid "to:"
+msgstr "à:"
