@@ -53,7 +53,7 @@ msgstr "Créer des dépenses"
 #. module: tanatech_approvals
 #: model:ir.model.fields.selection,name:tanatech_approvals.selection__approval_category__approval_type__create_expenses
 msgid "Create expenses"
-msgstr ""
+msgstr "Créer des dépenses"
 
 #. module: tanatech_approvals
 #: model:ir.model.fields,field_description:tanatech_approvals.field_hr_expense__approval_date_end
