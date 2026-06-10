@@ -7,12 +7,13 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='change_request_owner']" position="after">
                 <field name="is_create_expenses" invisible="1"/>
+                <field name="hide_price_and_total" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="after">
               <button name="action_create_expenses" type="object" groups="purchase.group_purchase_user" string="Create Expenses" class="btn-primary" data-hotkey="g" invisible="approval_type != 'create_expenses' or request_status != 'approved'"/>
             </xpath>
             <xpath expr="//field[@name='product_line_ids']" position="after">
-                <group col="2" class="mt16" invisible="not is_create_expenses" >
+                <group col="2" class="mt16" invisible="hide_price_and_total" >
                     <group/>
                     <group class="oe_subtotal_footer oe_right">
                         <field name="total_ttc" readonly="1"/>

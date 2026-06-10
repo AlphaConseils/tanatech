@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="approvals.approval_product_line_view_tree_independent"></field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_uom_id']" position="after">
-                <field name="price" column_invisible="not parent.is_create_expenses"/>
-                <field name="total" column_invisible="not parent.is_create_expenses"/>
+                <field name="price" column_invisible="parent.hide_price_and_total"/>
+                <field name="total" column_invisible="parent.hide_price_and_total"/>
             </xpath>
         </field>
     </record>
@@ -20,8 +20,8 @@
         <field name="inherit_id" ref="approvals.approval_product_line_view_tree"></field>
         <field name="arch" type="xml">
             <field name="product_uom_id" position="after">
-                <field name="price" column_invisible="not parent.is_create_expenses"/>
-                <field name="total" column_invisible="not parent.is_create_expenses"/>
+                <field name="price" column_invisible="parent.hide_price_and_total"/>
+                <field name="total" column_invisible="parent.hide_price_and_total"/>
             </field>
         </field>
     </record>
@@ -33,8 +33,8 @@
         <field name="inherit_id" ref="approvals.approval_product_line_view_form"></field>
         <field name="arch" type="xml">
             <field name="product_uom_id" position="after">
-                <field name="price" invisible="not parent.is_create_expenses"/>
-                <field name="total" invisible="not parent.is_create_expenses"/>
+                <field name="price" invisible="parent.hide_price_and_total"/>
+                <field name="total" invisible="parent.hide_price_and_total"/>
             </field>
         </field>
     </record>
