@@ -19,6 +19,13 @@ class ApprovalRequest(models.Model):
         store=True,
     )
 
+    hide_price_and_total = fields.Boolean(
+        string="Hide price and total",
+        help="If checked, the price and total amount will be hidden in the approval request.",
+        related="category_id.hide_price_and_total",
+        store=True,
+    )
+
     @api.depends("category_id")
     def _compute_is_create_expenses(self):
         for request in self:

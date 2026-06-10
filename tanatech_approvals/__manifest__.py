@@ -9,6 +9,7 @@
     "depends": ["approvals", "purchase", "hr_expense", "documents_hr_expense"],
     "data": [
         # 'security/ir.model.access.csv',
+        "views/approval_category_views.xml",
         "views/approval_product_line_views.xml",
         "views/approval_request_view.xml",
         "views/hr_expenses_views.xml",
