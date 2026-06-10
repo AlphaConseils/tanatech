@@ -82,6 +82,20 @@ msgid "From:"
 msgstr "De:"
 
 #. module: tanatech_approvals
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_category__hide_price_and_total
+#: model:ir.model.fields,field_description:tanatech_approvals.field_approval_request__hide_price_and_total
+msgid "Hide price and total"
+msgstr "Masquer le prix et le total"
+
+#. module: tanatech_approvals
+#: model:ir.model.fields,help:tanatech_approvals.field_approval_category__hide_price_and_total
+#: model:ir.model.fields,help:tanatech_approvals.field_approval_request__hide_price_and_total
+msgid ""
+"If checked, the price and total amount will be hidden in the approval "
+"request."
+msgstr "Si coché, le prix et le montant total seront masqués dans la demande de validation."
+
+#. module: tanatech_approvals
 #: model:ir.model.fields,field_description:tanatech_approvals.field_approval_request__is_create_expenses
 msgid "Is Create Expenses"
 msgstr "Est un type de validation qui crée des dépenses"
