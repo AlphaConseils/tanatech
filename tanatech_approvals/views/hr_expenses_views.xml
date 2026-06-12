@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_hr_expense_view_form" model="ir.ui.view">
+        <field name="name">hr.expense.view.form.inherit</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="approval_reference" />
+                <label for="approval_date_start" string="Period"/>
+                <div >
+                    <div>
+                        <label for="approval_date_start" class="col-lg-2" string="From:"/>
+                        <field name="approval_date_start" class="oe_inline" />
+                    </div>
+                    <div>
+                        <label for="approval_date_end" class="col-lg-2" string="to:"/>
+                        <field name="approval_date_end" class="oe_inline" />
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_hr_expense_view_form_inherit_documents_hr_expense" model="ir.ui.view">
+        <field name="name">hr.expense.documents.view.form.inherit</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="documents_hr_expense.hr_expense_view_form_inherit_documents_hr_expense"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="approval_request_id" invisible="1"/>
+                <button class="oe_stat_button" type="object"
+                        name="action_open_approval_request"
+                        icon="fa-check-circle"
+                        invisible="not approval_request_id">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Approval</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

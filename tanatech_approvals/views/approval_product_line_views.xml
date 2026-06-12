@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Modify the independent tree view to add price and total columns -->
+    <record id="inherit_approval_product_line_view_tree_independent" model="ir.ui.view">
+        <field name="name">approval.product.line.view.list.inherit</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_tree_independent"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="price" column_invisible="parent.hide_price_and_total"/>
+                <field name="total" column_invisible="parent.hide_price_and_total"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Modify the main tree view to add price and total columns -->
+    <record id="inherit_approval_product_line_view_tree" model="ir.ui.view">
+        <field name="name">approval.product.line.view.list.inherit</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_tree"></field>
+        <field name="arch" type="xml">
+            <field name="product_uom_id" position="after">
+                <field name="price" column_invisible="parent.hide_price_and_total"/>
+                <field name="total" column_invisible="parent.hide_price_and_total"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Modify the form view to add price and total fields -->
+    <record id="inherit_approval_product_line_view_form" model="ir.ui.view">
+        <field name="name">approval.product.line.view.form.inherit</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_form"></field>
+        <field name="arch" type="xml">
+            <field name="product_uom_id" position="after">
+                <field name="price" invisible="parent.hide_price_and_total"/>
+                <field name="total" invisible="parent.hide_price_and_total"/>
+            </field>
+        </field>
+    </record>
+</odoo>
