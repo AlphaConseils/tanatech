@@ -77,6 +77,12 @@ msgid "Expenses created"
 msgstr "Dépenses créées"
 
 #. module: tanatech_approvals
+#. odoo-python
+#: code:addons/tanatech_approvals/models/approval_request.py:0
+msgid "Expenses created : <ul>%s</ul>"
+msgstr "Dépenses créées : <ul>%s</ul>"
+
+#. module: tanatech_approvals
 #: model_terms:ir.ui.view,arch_db:tanatech_approvals.inherit_hr_expense_view_form
 msgid "From:"
 msgstr "De:"
@@ -93,7 +99,9 @@ msgstr "Masquer le prix et le total"
 msgid ""
 "If checked, the price and total amount will be hidden in the approval "
 "request."
-msgstr "Si coché, le prix et le montant total seront masqués dans la demande de validation."
+msgstr ""
+"Si coché, le prix et le montant total seront masqués dans la demande de "
+"validation."
 
 #. module: tanatech_approvals
 #: model:ir.model.fields,field_description:tanatech_approvals.field_approval_request__is_create_expenses
