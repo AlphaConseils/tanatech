@@ -16,7 +16,6 @@ class ApprovalRequest(models.Model):
     is_create_expenses = fields.Boolean(
         string="Is Create Expenses",
         compute="_compute_is_create_expenses",
-        store=True,
     )
 
     hide_price_and_total = fields.Boolean(
@@ -26,7 +25,7 @@ class ApprovalRequest(models.Model):
         store=True,
     )
 
-    @api.depends("category_id")
+    @api.depends("category_id.approval_type")
     def _compute_is_create_expenses(self):
         for request in self:
             request.is_create_expenses = (
@@ -73,7 +72,7 @@ class ApprovalRequest(models.Model):
                 for e in created
             )
             self.message_post(
-                body=Markup("Expenses created : <ul>%s</ul>") % Markup(lines_html),
+                body=Markup(_("Expenses created : <ul>%s</ul>")) % Markup(lines_html),
                 message_type="notification",
             )
             message = _("Expenses created")
