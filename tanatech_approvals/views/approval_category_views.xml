@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='sequence_code']" position="after">
                 <field name="hide_price_and_total"/>
+                <field name="activity_user_ids" widget="many2many_tags" invisible="approval_type != 'create_expenses'"/>
             </xpath>
         </field>
     </record>

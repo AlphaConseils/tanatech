@@ -25,6 +25,13 @@ class ApprovalRequest(models.Model):
         store=True,
     )
 
+    activity_user_ids = fields.Many2many(
+        "res.users",
+        string="Utilisateurs pour l'activité",
+        related="category_id.activity_user_ids",
+        readonly=True,
+    )
+
     @api.depends("category_id.approval_type")
     def _compute_is_create_expenses(self):
         for request in self:
@@ -62,12 +69,35 @@ class ApprovalRequest(models.Model):
                         "approval_reference": self.name,
                         "approval_date_start": self.date_start,
                         "approval_date_end": self.date_end,
+                        "payment_mode": "company_account",
                     }
                 )
                 created |= expense
 
         if created:
+            sheet = self.env["hr.expense.sheet"].sudo().create(
+                {
+                    "name": self.name,
+                    "employee_id": self.x_studio_demandeur.id,
+                    "expense_line_ids": [(6, 0, created.ids)],
+                }
+            )
+            sheet.action_submit_sheet()
+            sheet.action_approve_expense_sheets()
+
+            for user in self.activity_user_ids:
+                sheet.activity_schedule(
+                    "mail.mail_activity_data_todo",
+                    user_id=user.id,
+                    summary=_("Notification de décaissement"),
+                    note=_(
+                        "Le rapport de dépense pour la demande %s a été généré et approuvé."
+                    )
+                    % self.name,
+                )
+
             lines_html = "".join(
+
                 "<li><a href='/web#id=%d&model=hr.expense'>%s</a></li>" % (e.id, e.name)
                 for e in created
             )
@@ -75,7 +105,7 @@ class ApprovalRequest(models.Model):
                 body=Markup(_("Expenses created : <ul>%s</ul>")) % Markup(lines_html),
                 message_type="notification",
             )
-            message = _("Expenses created")
+            message = _("Expenses created and approved")
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",
