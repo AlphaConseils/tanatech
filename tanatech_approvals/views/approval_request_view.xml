@@ -8,9 +8,10 @@
             <xpath expr="//field[@name='change_request_owner']" position="after">
                 <field name="is_create_expenses" invisible="1"/>
                 <field name="hide_price_and_total" invisible="1"/>
+                <field name="activity_user_ids" widget="many2many_tags" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="after">
-              <button name="action_create_expenses" type="object" groups="purchase.group_purchase_user" string="Create Expenses" class="btn-primary" data-hotkey="g" invisible="approval_type != 'create_expenses' or request_status != 'approved'"/>
+              <button name="action_create_expenses" type="object" string="Create Expenses" class="btn-primary" data-hotkey="g" invisible="approval_type != 'create_expenses' or request_status != 'approved'"/>
             </xpath>
             <xpath expr="//field[@name='product_line_ids']" position="after">
                 <group col="2" class="mt16" invisible="hide_price_and_total" >
