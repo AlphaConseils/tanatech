@@ -25,7 +25,11 @@
             <xpath expr="//field[@name='company_id'][2]" position="before">
                 <field name="contract_id" optional="hide"/>
             </xpath>
-            
+
+            <field name="net_wage" position="after">
+                <field name="net_to_pay_wage" sum="Total" optional="show"/>
+            </field>
+
         </field>
     </record>
 
