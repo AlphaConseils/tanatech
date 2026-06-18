@@ -7,6 +7,18 @@ class HrPayslip(models.Model):
 
     is_from_undeclared_contract = fields.Boolean('Is from undeclared contract ?', compute='_compute_contract_category', store=True)
 
+    net_to_pay_wage = fields.Monetary(
+        string="Salaire net à payer",
+        compute='_compute_net_to_pay_wage',
+        store=True,
+    )
+
+    @api.depends('line_ids.total')
+    def _compute_net_to_pay_wage(self):
+        line_values = self._origin._get_line_values(['SALNETAP'])
+        for payslip in self:
+            payslip.net_to_pay_wage = line_values['SALNETAP'][payslip._origin.id]['total']
+
     @api.depends('contract_id')
     def _compute_contract_category(self):
         for payslip in self:
