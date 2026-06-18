@@ -43,6 +43,12 @@ msgstr "Matricule"
 #. module: tanatech_hr_payroll
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance__overtime_type
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime__overtime_type
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type
+#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type_ids
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_tree
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_overtime_type_view
+#: model:ir.actions.act_window,name:tanatech_hr_contract.hr_attendance_overtime_type_action
 msgid "Overtime Type"
 msgstr "Type d'heures supplémentaires"
 
@@ -53,6 +59,7 @@ msgstr "Est-ce des heures supplémentaires"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_view_form
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_view_form
 msgid "Employee overtime"
 msgstr "Heures supplémentaires des employés"
 
@@ -160,16 +167,6 @@ msgid "Duration"
 msgstr "Durée"
 
 #. module: tanatech_hr_payroll
-#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type
-#: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_type_ids
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_form
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_type_view_tree
-#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_overtime_type_view
-#: model:ir.actions.act_window,name:tanatech_hr_contract.hr_attendance_overtime_type_action
-msgid "Overtime Type"
-msgstr "Type d'heures supplémentaires"
-
-#. module: tanatech_hr_payroll
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_hr_attendance_overtime_with_datetimes__overtime_threshold
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_res_config_settings__overtime_threshold
 #: model:ir.model.fields,field_description:tanatech_hr_payroll.field_res_company__overtime_threshold
@@ -207,7 +204,8 @@ msgstr "Heures supplémentaires ce mois-ci"
 
 #. module: tanatech_hr_payroll
 #: model:ir.ui.menu,name:tanatech_hr_payroll.main_menu_hr_attendance_ovetime_view
-#: model:ir.ui.menu,name:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
+#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_view
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
 msgid "Overtime"
 msgstr "Heures supplémentaires"
 
@@ -215,11 +213,6 @@ msgstr "Heures supplémentaires"
 #: model_terms:ir.actions.act_window,help:tanatech_hr_payroll.hr_attendance_overtime_type_action
 msgid "Create Overtime Type. Use Overtime Type to categorize your Overtime"
 msgstr "Créez un type d'heures supplémentaires. Utilisez-le pour catégoriser vos heures supplémentaires."
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_view_form
-msgid "Employee overtime"
-msgstr "Heures supplémentaires des employés"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_view_form
@@ -234,12 +227,12 @@ msgstr "Grouper par"
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_attendance_overtime_with_datetimes_search
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.actions.act_window,help:tanatech_hr_payroll.hr_attendance_overtime_with_datetimes_action
@@ -270,11 +263,6 @@ msgstr "<strong>Bulletin de paie</strong>"
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
 msgid "<strong class=\"me-2\">Pay Period from</strong>"
 msgstr "<strong class=\"me-2\">Période du</strong>"
-
-#. module: tanatech_hr_payroll
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
-msgid "<strong class=\"me-2\">Company Name or Reason</strong>"
-msgstr "<strong class=\"me-2\">Nom ou Raison de l'Entreprise</strong>"
 
 #. module: tanatech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_payslip_inherit
@@ -412,7 +400,71 @@ msgid "<strong>Employee</strong>"
 msgstr "<strong>Employé</strong>"
 
 #. module: tanatech_hr_payroll
-#: model:ir.ui.menu,name:tanatech_hr_payroll.menu_hr_attendance_ovetime_view
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.hr_work_entry_type_view_form_inherit
-msgid "Overtime"
-msgstr "Heures supplémentaires"
+#: model:ir.actions.report,name:tanatech_hr_payroll.action_report_nd_payslip
+msgid "Undeclared Payment Ticket"
+msgstr "Ticket Paiement"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Payment"
+msgstr "Paiement"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Information"
+msgstr "Informations"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Month"
+msgstr "Mois"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Full name"
+msgstr "Nom et prénom"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Description"
+msgstr "Description"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Total"
+msgstr "Total"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Budget"
+msgstr "Budget"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Deductions"
+msgstr "Déduction"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Subtotal:"
+msgstr "Sous-total :"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Total:"
+msgstr "Total :"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.report_nd_payslip
+msgid "Signature"
+msgstr "Signature"
+
+#. module: tanatech_hr_payroll
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_payroll.view_hr_payslip_form_inherit
+msgid "Print"
+msgstr "Imprimer"
