@@ -60,11 +60,11 @@
                         <!-- LINE COMPUTATION -->
                         <!-- Filter out intermediate summary lines by category: Brut (Salaire imposable), Net (Salaire net + SALAIRE NET A PAYER) -->
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
-                        <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0)"/>
+                        <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="deduction_total" t-value="abs(sum(deduction_lines.mapped('total')))"/>
                         <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
-                        <t t-set="net_salary"      t-value="revenue_total - deduction_total"/>
+                        <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
 
                         <!-- INCOME TABLE HEADER -->
                         <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
