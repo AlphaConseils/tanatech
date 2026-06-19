@@ -62,7 +62,7 @@
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
                         <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
-                        <t t-set="deduction_total" t-value="abs(sum(deduction_lines.mapped('total')))"/>
+                        <t t-set="deduction_total" t-value="sum(deduction_lines.mapped('total'))"/>
                         <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
                         <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
 
