@@ -9,6 +9,10 @@
       <xpath expr="//form/header" position="before">
         <field name="is_undeclared_payslip" invisible="1"/>
       </xpath>
+      <xpath expr="//button[@name='action_print_payslip']" position="after">
+                <button string="Print" name="action_print_nd_payslip" type="object"
+                        invisible="not line_ids or not is_undeclared_payslip"/>
+            </xpath>
       <xpath expr="//field[@name='number_of_hours']" position="attributes">
         <attribute name="widget"></attribute>
       </xpath>
