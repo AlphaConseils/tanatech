@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="res_partner_view_form_tanatech_contact" model="ir.ui.view">
+    <field name="name">res.partner.view.form.inherit.tanatech.contact</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet/group/group[2]" position="inside">
+        <field name="client_code"/>
+      </xpath>
+      <xpath expr="//field[@name='phone']" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='street']" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='name'][1]" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='name'][2]" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_res_partner_filter_inherit_tanatech_contact" model="ir.ui.view">
+    <field name="name">res.partner.select.inherit.tanatech.contact</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_res_partner_filter"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="after">
+        <field name="client_code" filter_domain="[('client_code', 'ilike', self)]"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>
