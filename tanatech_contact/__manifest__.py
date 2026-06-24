@@ -10,6 +10,7 @@
         "data/ir_sequence_data.xml",
         "views/res_partner_views.xml",
         "views/crm_lead_views.xml",
+        "views/res_company.xml"
     ],
     # "post_init_hook": "post_init_hook",
     "installable": True,
