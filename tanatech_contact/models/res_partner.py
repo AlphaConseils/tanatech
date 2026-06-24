@@ -147,6 +147,74 @@ class ResPartner(models.Model):
 
         return res
 
+    def unlink(self):
+        # Group affected partners by company before deletion
+        company_ids = set(self.mapped("company_id").ids) or {False}
+        res = super().unlink()
+        for company_id in company_ids:
+            self._realign_client_code_sequence(company_id or False)
+        return res
+
+    @api.depends("name", "client_code")
+    def _compute_display_name(self):
+        super()._compute_display_name()
+        if self.env.context.get("show_client_code_only"):
+            for partner in self:
+                partner.display_name = partner.client_code or _("[Pas de code]")
+
+    @api.model
+    def _name_search(
+        self, name, args=None, operator="ilike", limit=100, name_get_uid=None
+    ):
+        args = args or []
+        if name:
+            domain = ["|", ("name", operator, name), ("client_code", operator, name)]
+            return self._search(
+                domain + args, limit=limit, access_rights_uid=name_get_uid
+            )
+        return super(ResPartner, self)._name_search(
+            name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid
+        )
+
+    # ----------------------------------------
+    # Sequence helpers
+    # ----------------------------------------
+
+    @api.model
+    def _get_sequence_for_company(self, company_id=False):
+        """Return the dedicated client code sequence for a company.
+        If the company doesn't have one yet, try to create it on the fly.
+        Falls back to the sequence with no company if nothing matches."""
+        domain = [("code", "=", "res.partner.client.code")]
+        if company_id:
+            domain.append(("company_id", "=", company_id))
+        else:
+            domain.append(("company_id", "=", False))
+            
+        sequence = self.env["ir.sequence"].sudo().search(domain, limit=1)
+
+        if not sequence and company_id:
+            company = self.env["res.company"].sudo().browse(company_id)
+            if company.exists():
+                # Lazily create the sequence if the company has a
+                # prefix_sequence but no sequence yet
+                sequence = company._ensure_client_code_sequence()
+
+        if not sequence and company_id:
+            # Fallback to no-company sequence
+            sequence = (
+                self.env["ir.sequence"]
+                .sudo()
+                .search(
+                    [
+                        ("code", "=", "res.partner.client.code"),
+                        ("company_id", "=", False),
+                    ],
+                    limit=1,
+                )
+            )
+        return sequence
+
     @api.model
     def _get_unique_client_code(self, company_id=False, reserved_codes=None):
         """Generate a unique client code that doesn't exist in DB or reserved list."""
@@ -167,7 +235,7 @@ class ResPartner(models.Model):
                     num_part = code[len(prefix):]
                     if num_part.isdigit():
                         try:
-                            number = int(num_part)  # Utiliser int() explicitement
+                            number = int(num_part)
                             existing_numbers.add(number)
                         except (ValueError, TypeError):
                             pass
@@ -194,13 +262,11 @@ class ResPartner(models.Model):
         partners = self.sudo().search([('client_code', 'like', f'{prefix}%')])
         for partner in partners:
             code = partner.client_code
-            if code and code.startswith(prefix):
+            if code and code.startswith(prefix) and not code.startswith('__TMP__'):
                 num_part = code[len(prefix):]
                 if num_part.isdigit():
                     try:
-                        # Utiliser la fonction builtins.int explicitement
-                        import builtins
-                        number = builtins.int(num_part)
+                        number = int(num_part)
                         all_numbers.add(number)
                     except (ValueError, TypeError):
                         pass
@@ -209,7 +275,7 @@ class ResPartner(models.Model):
     @api.model
     def _get_existing_client_code_numbers(self, prefix, company_id=False):
         """Récupère les numéros existants pour un préfixe et une société."""
-        domain = [('client_code', 'like', f'{prefix}%')]
+        domain = [('client_code', 'like', f'{prefix}%'), ('client_code', 'not like', '__TMP__%')]
         if company_id:
             domain.append(('company_id', '=', company_id))
         else:
@@ -223,9 +289,7 @@ class ResPartner(models.Model):
                 num_part = code[len(prefix):]
                 if num_part.isdigit():
                     try:
-                        # Utiliser la fonction builtins.int explicitement
-                        import builtins
-                        number = builtins.int(num_part)
+                        number = int(num_part)
                         numbers.add(number)
                     except (ValueError, TypeError):
                         pass
@@ -248,4 +312,161 @@ class ResPartner(models.Model):
         if sequence.number_next_actual <= max_number:
             sequence.number_next = max_number + 1
 
-    # ... Reste des méthodes inchangées
+    # ----------------------------------------
+    # Maintenance actions
+    # ----------------------------------------
+
+    def action_assign_client_code(self):
+        """Maintenance action: assign a client code to partners that don't
+        have one yet (e.g. legacy data created before this module, or
+        imported records). Fills the lowest available gap."""
+        reserved_codes = set()
+        for partner in self:
+            if not partner.client_code:
+                company_id = partner.company_id.id
+                code = self._get_unique_client_code(company_id, reserved_codes)
+                partner.client_code = code
+                reserved_codes.add(code)
+
+    # ----------------------------------------
+    # View customization for Studio fields
+    # ----------------------------------------
+
+    @api.model
+    def get_views(self, views, options=None):
+        res = super().get_views(views, options=options)
+        if "form" in res["views"]:
+            arch = etree.fromstring(res["views"]["form"]["arch"])
+            modified = False
+            for field_name in ["x_studio_nif_1", "x_studio_char_field_d3loF"]:
+                for node in arch.xpath(f"//field[@name='{field_name}']"):
+                    node.set("required", "is_company")
+                    modified = True
+            if modified:
+                res["views"]["form"]["arch"] = etree.tostring(arch, encoding="unicode")
+        return res
+
+    @api.model
+    def action_clear_all_client_codes(self):
+        """Maintenance: clear client_code on ALL partners via raw SQL."""
+        self.env.cr.execute("""
+            UPDATE res_partner
+            SET client_code = NULL
+            WHERE client_code IS NOT NULL;
+        """)
+        self.env.cr.commit()
+
+    @api.model
+    def cron_backfill_client_codes(self):
+        """Scheduled action: backfill client_code for all partners missing
+        one, scoped per company, using raw SQL for performance on large
+        datasets. Also realigns each company's sequence afterward.
+        Uses res_company.prefix_sequence as the source of truth for
+        each company's prefix instead of a hardcoded mapping."""
+
+        # Step 0: make sure every company has a prefix_sequence set,
+        # falling back to initials derived from the company name
+        self.env.cr.execute("""
+            UPDATE res_company
+            SET prefix_sequence = UPPER(
+                LEFT(regexp_replace(name, '\\s+.*', ''), 3)
+            )
+            WHERE prefix_sequence IS NULL OR prefix_sequence = '';
+        """)
+
+        # Step 1: backfill partners that belong to a company
+        self.env.cr.execute("""
+            WITH company_prefix AS (
+                SELECT id AS company_id, prefix_sequence AS prefix
+                FROM res_company
+                WHERE prefix_sequence IS NOT NULL AND prefix_sequence != ''
+            ),
+            existing_max AS (
+                SELECT p.company_id, cp.prefix,
+                    COALESCE(MAX(
+                        CASE WHEN p.client_code ~ ('^' || cp.prefix || '[0-9]+$')
+                            THEN substring(p.client_code FROM length(cp.prefix) + 1)::int
+                        END
+                    ), 0) AS max_num
+                FROM res_partner p
+                JOIN company_prefix cp ON cp.company_id = p.company_id
+                GROUP BY p.company_id, cp.prefix
+            ),
+            to_fill AS (
+                SELECT p.id, p.company_id,
+                    ROW_NUMBER() OVER (PARTITION BY p.company_id ORDER BY p.create_date, p.id) AS rn
+                FROM res_partner p
+                WHERE p.client_code IS NULL
+                AND p.company_id IS NOT NULL
+            )
+            UPDATE res_partner p
+            SET client_code = cp.prefix || LPAD((COALESCE(em.max_num, 0) + tf.rn)::text, 5, '0')
+            FROM to_fill tf
+            JOIN company_prefix cp ON cp.company_id = tf.company_id
+            LEFT JOIN existing_max em ON em.company_id = tf.company_id
+            WHERE p.id = tf.id;
+        """)
+
+        # Step 2: backfill partners with no company (fallback prefix "CL")
+        self.env.cr.execute("""
+            WITH existing_max_nocompany AS (
+                SELECT COALESCE(MAX(
+                    CASE WHEN client_code ~ '^CL[0-9]+$'
+                        THEN substring(client_code FROM 3)::int
+                    END
+                ), 0) AS max_num
+                FROM res_partner
+                WHERE company_id IS NULL
+            ),
+            to_fill_nocompany AS (
+                SELECT id,
+                    ROW_NUMBER() OVER (ORDER BY create_date, id) AS rn
+                FROM res_partner
+                WHERE client_code IS NULL
+                AND company_id IS NULL
+            )
+            UPDATE res_partner p
+            SET client_code = 'CL' || LPAD((em.max_num + tf.rn)::text, 5, '0')
+            FROM to_fill_nocompany tf, existing_max_nocompany em
+            WHERE p.id = tf.id;
+        """)
+
+        # Step 3: realign per-company sequences
+        self.env.cr.execute("""
+            UPDATE ir_sequence seq
+            SET number_next = sub.max_num + 1
+            FROM (
+                SELECT
+                    cp.id AS company_id,
+                    cp.prefix_sequence AS prefix,
+                    COALESCE(MAX(
+                        CASE WHEN p.client_code ~ ('^' || cp.prefix_sequence || '[0-9]+$')
+                            THEN substring(p.client_code FROM length(cp.prefix_sequence) + 1)::int
+                        END
+                    ), 0) AS max_num
+                FROM res_company cp
+                LEFT JOIN res_partner p ON p.company_id = cp.id
+                WHERE cp.prefix_sequence IS NOT NULL AND cp.prefix_sequence != ''
+                GROUP BY cp.id, cp.prefix_sequence
+            ) sub
+            WHERE seq.code = 'res.partner.client.code'
+            AND seq.company_id = sub.company_id;
+        """)
+
+        # Step 4: realign the fallback (no-company) sequence
+        self.env.cr.execute("""
+            UPDATE ir_sequence
+            SET number_next = (
+                SELECT COALESCE(MAX(substring(client_code FROM 3)::int), 0) + 1
+                FROM res_partner
+                WHERE client_code ~ '^CL[0-9]+$' AND company_id IS NULL
+            )
+            WHERE code = 'res.partner.client.code' AND company_id IS NULL;
+        """)
+
+        # Step 5: ensure ir.sequence records exist for any company that
+        # has a prefix_sequence but no sequence yet
+        for company in self.env["res.company"].search(
+            [("prefix_sequence", "!=", False)]
+        ):
+            company._ensure_client_code_sequence()
