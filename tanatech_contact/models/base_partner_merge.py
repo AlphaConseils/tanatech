@@ -74,8 +74,8 @@ class BasePartnerMergeAutomaticWizard(models.TransientModel):
                     partner.client_code = new_code
 
         # Reset the sequence so the next generated code continues logically
-        max_number = max(
-            (code_to_number(p.client_code) for p in all_partners if p.client_code),
-            default=0,
-        )
+        computed_numbers = [
+            n for n in (code_to_number(p.client_code) for p in all_partners) if n is not None
+        ]
+        max_number = max(computed_numbers, default=0)
         sequence.number_next = max_number + 1
