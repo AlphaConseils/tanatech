@@ -83,7 +83,9 @@ class PaymentProvider(models.Model):
         """
         url = self._mcb_get_api_url('/session')
         payload = {
-            "apiOperation": "CREATE_CHECKOUT_SESSION",
+            # MCB gateway v72 uses INITIATE_CHECKOUT (the legacy name
+            # CREATE_CHECKOUT_SESSION is rejected with "Unexpected parameter").
+            "apiOperation": "INITIATE_CHECKOUT",
             "interaction": {
                 "operation": "PURCHASE",
                 "returnUrl": return_url,
