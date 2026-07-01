@@ -27,6 +27,48 @@ class HrPayslip(models.Model):
             else:
                 payslip.is_from_undeclared_contract = False
 
+    def _compute_input_line_ids(self):
+        """ Restrict salary-attachment input lines to the attachments whose target
+        structure (``structure_category``) matches this payslip's structure.
+
+        The core method adds every open salary attachment of the employee to every
+        payslip, regardless of its structure. Here we let it run, then rebuild the
+        attachment lines keeping only those targeting the current payslip's structure
+        (Declared vs Undeclared). This prevents an adjustment (advance, deduction, ...)
+        from being imputed on the NA structure for employees who have no NA salary. """
+        super()._compute_input_line_ids()
+        attachment_types = self._get_attachment_types()
+        attachment_type_ids = [f.id for f in attachment_types.values()]
+        for slip in self:
+            # Drop the attachment lines produced by the core computation...
+            lines_to_remove = slip.input_line_ids.filtered(
+                lambda x: x.input_type_id.id in attachment_type_ids
+            )
+            input_line_vals = [Command.unlink(line.id) for line in lines_to_remove]
+
+            if slip.employee_id.salary_attachment_ids and slip.date_to and slip.struct_id:
+                slip_category = 'declared' if slip.struct_id.is_declared_type else 'not_declared'
+                valid_attachments = slip.employee_id.salary_attachment_ids.filtered(
+                    lambda a: a.state == 'open'
+                    and a.structure_category == slip_category
+                    and a.date_start <= slip.date_to
+                    and (not a.date_end or a.date_end >= slip.date_from)
+                )
+                deduction_types = list(set(valid_attachments.other_input_type_id.mapped('code')))
+                for deduction_type in deduction_types:
+                    attachments = valid_attachments.filtered(
+                        lambda a: a.other_input_type_id.code == deduction_type
+                    )
+                    amount = attachments._get_active_amount()
+                    name = ', '.join(attachments.mapped('description'))
+                    input_type_id = attachment_types[deduction_type].id
+                    input_line_vals.append(Command.create({
+                        'name': name,
+                        'amount': amount if not slip.credit_note else -amount,
+                        'input_type_id': input_type_id,
+                    }))
+            slip.update({'input_line_ids': input_line_vals})
+
     @api.model_create_multi
     def create(self, vals_list):
         """ 
