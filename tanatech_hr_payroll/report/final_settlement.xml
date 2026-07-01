@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- =========================================================
+       REPORT ACTION
+       ========================================================= -->
+  <record id="action_report_final_settlement" model="ir.actions.report">
+    <field name="name">Solde de tout compte</field>
+    <field name="model">hr.payslip</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">tanatech_hr_payroll.report_final_settlement</field>
+    <field name="report_file">tanatech_hr_payroll.report_final_settlement</field>
+    <field name="print_report_name">'Solde de tout compte - %s' % (object.employee_id.name)</field>
+    <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <!-- =========================================================
+       QWEB TEMPLATE
+       ========================================================= -->
+  <template id="report_final_settlement">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.external_layout">
+          <style>
+              .signature-table,
+              .signature-table tr,
+              .signature-table td,
+              .signature-table th,
+              .signature-table tbody {
+              border: 0 !important;
+              outline: none !important;
+              }
+            </style>
+          <div class="page" style="font-family: 'Times New Roman', serif;">
+
+            <h1 class="text-center" style="font-weight:bold; letter-spacing:2px;">
+              SOLDE DE TOUT COMPTE
+            </h1>
+
+            <!-- ===== Identification block ===== -->
+            <table class="signature-table" style="width:100%;  margin-bottom:15px;">
+              <tr>
+                <td style="width:20%; padding:5px;">
+                  <strong>Matricule</strong>
+                  <br/>
+                  <span t-field="o.employee_id.registration_number"/>
+                </td>
+                <td style="width:30%; padding:5px;">
+                  <strong>Nom et prenom</strong>
+                  <br/>
+                  <span t-field="o.employee_id.name"/>
+                </td>
+                <td style="width:25%; padding:5px;">
+                  <strong>Departement</strong>
+                  <br/>
+                  <span t-field="o.employee_id.department_id.name"/>
+                </td>
+                <td style="width:25%; padding:5px;">
+                  <strong>Poste</strong>
+                  <br/>
+                  <span t-field="o.employee_id.job_id.name"/>
+                </td>
+              </tr>
+            </table>
+
+            <p class="text-center" style="margin-bottom:15px;">
+              <strong>Date fin du periode :</strong>
+              <span t-field="o.date_to" t-options='{"widget": "date", "format": "d MMMM y"}'/>
+            </p>
+
+            <!-- ===== Salary / Deductions tables block ===== -->
+            <!-- Pull the line recordsets once, both columns share the same data source -->
+            <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM'])"/>
+            <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code == 'DED')"/>
+
+            <!-- Dynamic spacer: pad the shorter column with empty rows so both
+                 tables end up with the same height, no matter how many lines
+                 each side has -->
+            <t t-set="max_rows" t-value="max(len(salary_lines), len(deduction_lines))"/>
+
+            <!-- Running totals, computed dynamically from the actual lines -->
+            <t t-set="total_salary_qty" t-value="sum(salary_lines.mapped('quantity'))"/>
+            <t t-set="total_salary_amount" t-value="sum(salary_lines.mapped('total'))"/>
+            <t t-set="total_deduction_amount" t-value="sum(deduction_lines.mapped('total'))"/>
+
+            <table style="width:100%; border-collapse:collapse; margin-bottom:15px;">
+              <tr>
+                <!-- TOTAL SALAIRE column -->
+                <td style="width:50%; vertical-align:top; padding-right:8px;">
+                  <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                      <tr style="background-color:#c9d6f0;">
+                        <th style="border:1px solid #2952a3; padding:5px; text-transform:uppercase;">Total salaire</th>
+                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Quantité</th>
+                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Calcule</th>
+                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Montant</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <t t-foreach="salary_lines" t-as="line">
+                        <tr>
+                          <td style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.name"/>
+                          </td>
+                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.quantity"/>
+                          </td>
+                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.rate"/>
+                          </td>
+                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                          </td>
+                        </tr>
+                      </t>
+                      <!-- Empty filler rows so this table matches the height of the deductions table -->
+                      <t t-foreach="range(max_rows - len(salary_lines))" t-as="filler">
+                        <tr>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                        </tr>
+                      </t>
+                      <!-- Total row -->
+                      <tr style="font-weight:bold;">
+                        <td style="border:1px solid #2952a3; padding:5px;">Revenu total</td>
+                        <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                          <span t-esc="total_salary_qty"/>
+                        </td>
+                        <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                        <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                          <span t-esc="total_salary_amount"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+
+                <!-- DEDUCTIONS column -->
+                <td style="width:50%; vertical-align:top; padding-left:8px;">
+                  <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                      <tr style="background-color:#c9d6f0;">
+                        <th style="border:1px solid #2952a3; padding:5px;">Deductions</th>
+                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Quantité</th>
+                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Montant</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <t t-foreach="deduction_lines" t-as="line">
+                        <tr>
+                          <td style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.name"/>
+                          </td>
+                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.quantity"/>
+                          </td>
+                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                            <span t-field="line.total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                          </td>
+                        </tr>
+                      </t>
+                      <!-- Empty filler rows so this table matches the height of the salary table -->
+                      <t t-foreach="range(max_rows - len(deduction_lines))" t-as="filler">
+                        <tr>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                        </tr>
+                      </t>
+                      <!-- Total row -->
+                      <tr style="font-weight:bold;">
+                        <td style="border:1px solid #2952a3; padding:5px;">Total Deductions</td>
+                        <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
+                        <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
+                          <span t-esc="total_deduction_amount"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- ===== Net amounts ===== -->
+            <table style="width:50%; margin-left:auto; border-collapse:collapse; margin-bottom:20px;">
+              <tr>
+                <td style="border:1px solid #2952a3; background-color:#c9d6f0; padding:6px;">
+                  <strong>Net Salary Ariary</strong>
+                </td>
+                <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
+                  <strong>
+                    <span t-esc="'{:,.0f}'.format(total_salary_amount - total_deduction_amount)"/>
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="border:1px solid #2952a3; background-color:#c9d6f0; padding:6px;">
+                  <strong>Net à Paie Ariary</strong>
+                </td>
+                <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
+                  <strong>
+                    <span t-field="o.net_wage" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                  </strong>
+                </td>
+              </tr>
+            </table>
+
+            <!-- ===== Payment info ===== -->
+            <table class="signature-table" style="width:100%; margin-bottom:30px;">
+              <tr>
+                <td style="width:50%; padding:3px 5px;">
+                  <strong>Mode paiement</strong>
+                  :
+                  <span t-field="o.paid_date" t-options='{"widget": "date", "format": "d MMMM y"}'/>
+                </td>
+              </tr>
+              <tr>
+                <td style="width:50%; padding:3px 5px;">
+                  <strong>Date de paiement</strong>
+                  :
+                  <span t-field="o.paid_date" t-options='{"widget": "date", "format": "d MMMM y"}'/>
+
+                </td>
+              </tr>
+            </table>
+
+            <!-- ===== Signatures ===== -->
+            <table class="signature-table" style="width:100%; margin-top:40px; border-collapse:collapse;">
+              <tr>
+                <td style="width:50%;">
+                  <strong>Signature Entreprise</strong>
+                </td>
+                <td style="width:50%; text-align:right;">
+                  <strong>Signature travailleur</strong>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+
+</odoo>
