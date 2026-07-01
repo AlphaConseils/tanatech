@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="hr_salary_attachment_view_form_inherit" model="ir.ui.view">
+    <field name="name">hr.salary.attachment.form.inherit.tanatech</field>
+    <field name="model">hr.salary.attachment</field>
+    <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='other_input_type_id']" position="after">
+        <field name="can_choose_structure" invisible="1"/>
+        <field name="structure_category"
+               readonly="not can_choose_structure or has_done_payslip"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="hr_salary_attachment_view_tree_inherit" model="ir.ui.view">
+    <field name="name">hr.salary.attachment.list.inherit.tanatech</field>
+    <field name="model">hr.salary.attachment</field>
+    <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='other_input_type_id']" position="after">
+        <field name="can_choose_structure" column_invisible="1"/>
+        <field name="structure_category"
+               readonly="not can_choose_structure or has_done_payslip"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="hr_salary_attachment_view_search_inherit" model="ir.ui.view">
+    <field name="name">hr.salary.attachment.search.inherit.tanatech</field>
+    <field name="model">hr.salary.attachment</field>
+    <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_search"/>
+    <field name="arch" type="xml">
+      <xpath expr="//filter[@name='other_input_type_id']" position="after">
+        <filter string="Salary Structure to Impute" name="group_by_structure_category"
+                context="{'group_by': 'structure_category'}"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

@@ -36,6 +36,7 @@ msgstr "Contrat Source"
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__state__open_not_declared
 msgid "Running Undeclared"
 msgstr "En cours non affecté"
+msgstr "En cours non affecté"
 
 #. module: tanatech_hr_contract
 #: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payslip__is_from_undeclared_contract
