@@ -204,7 +204,7 @@
                 </td>
                 <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
                   <strong>
-                    <span t-field="o.net_wage" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    <span t-field="o.net_to_pay_wage" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                   </strong>
                 </td>
               </tr>
