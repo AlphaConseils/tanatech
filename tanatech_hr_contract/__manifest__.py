@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Contracts",
-    "version": "1.2",
+    "version": "1.3",
     "summary": "Manage your Contracts activities",
     "description": "",
     "website": "https://www.nexources.com/",
@@ -22,6 +22,7 @@
         'views/hr_payroll_report_views.xml',
         'views/hr_payroll_structure_type_views.xml',
         'views/hr_payroll_structure_views.xml',
+        'views/hr_salary_attachment_views.xml',
         # wizard
         'wizard/hr_payroll_index_wizard_views.xml',
     ],

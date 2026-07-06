@@ -8,7 +8,7 @@ class HrPayrollStructure(models.Model):
 
     is_declared_type = fields.Boolean('Is declared type ?', compute='_compute_type', store=True)
 
-    @api.depends('type_id')
+    @api.depends('type_id', 'type_id.structure_category')
     def _compute_type(self):
         for structure in self:
             if structure.type_id.structure_category == 'declared':

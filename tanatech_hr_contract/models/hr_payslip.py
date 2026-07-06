@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+from collections import defaultdict
+
 from odoo import api, Command, models, fields
 
 
@@ -26,6 +28,119 @@ class HrPayslip(models.Model):
                 payslip.is_from_undeclared_contract = True
             else:
                 payslip.is_from_undeclared_contract = False
+
+    def _get_nd_capacity_wage(self):
+        """ Wage of the employee's "Undeclared" (NA) contract overlapping this
+        payslip period.
+
+        It is used as the ceiling that can be absorbed on the NA structure before the
+        remainder of an adjustment overflows to the declared structure. """
+        self.ensure_one()
+        if self.contract_id.contract_category == 'not_declared':
+            return self.contract_id.wage
+        nd_contract = self.env['hr.contract'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('company_id', '=', self.company_id.id),
+            ('contract_category', '=', 'not_declared'),
+            ('date_start', '<=', self.date_to),
+            '|', ('date_end', '=', False), ('date_end', '>=', self.date_from),
+        ], order='date_start desc', limit=1)
+        return nd_contract.wage if nd_contract else 0.0
+
+    def _split_salary_attachment_amounts(self, attachments, nd_wage):
+        """ Split each adjustment (salary attachment) between the NA (undeclared) and
+        declared structures.
+
+        Returns ``{code: {'not_declared': amount, 'declared': amount}}`` where:
+        - attachments targeting the declared structure are imputed there in full;
+        - attachments targeting the NA structure are imputed on NA up to ``nd_wage``
+          (a ceiling shared by all NA-routed adjustments); the uncovered remainder
+          overflows to the declared structure.
+
+        This implements: NA salary absorbs the adjustment first, the rest is carried
+        over to the declared payslip, and when there is no NA salary (``nd_wage`` = 0)
+        the whole adjustment lands on the declared payslip. """
+        self.ensure_one()
+        declared_by_code = defaultdict(float)
+        nd_by_code = defaultdict(float)
+        for attachment in attachments:
+            code = attachment.other_input_type_id.code
+            amount = attachment._get_active_amount()
+            if attachment.structure_category == 'declared':
+                declared_by_code[code] += amount
+            else:
+                nd_by_code[code] += amount
+
+        result = defaultdict(lambda: {'not_declared': 0.0, 'declared': 0.0})
+        for code, amount in declared_by_code.items():
+            result[code]['declared'] += amount
+
+        remaining = nd_wage
+        for code in sorted(nd_by_code):
+            amount = nd_by_code[code]
+            if amount <= 0:
+                # Refund / credit: it increases the net, no ceiling to apply.
+                result[code]['not_declared'] += amount
+                continue
+            absorbed = min(amount, remaining) if remaining > 0 else 0.0
+            result[code]['not_declared'] += absorbed
+            overflow = amount - absorbed
+            if overflow > 0:
+                result[code]['declared'] += overflow
+            remaining -= absorbed
+        return result
+
+    def _compute_input_line_ids(self):
+        """ Route salary-attachment input lines to the right structure, splitting an
+        adjustment between the NA and declared payslips when needed.
+
+        The core method adds every open salary attachment of the employee to every
+        payslip regardless of its structure (hence the same advance/deduction was
+        imputed twice, once per structure). Here we let it run, then rebuild the
+        attachment lines so that:
+        - each adjustment is imputed on the structure chosen on the attachment
+          (``structure_category``);
+        - an NA-routed adjustment is capped at the NA contract wage, the uncovered
+          remainder overflowing to the declared payslip;
+        - an employee without NA salary gets the whole adjustment on the declared
+          payslip (no more negative net on the NA structure). """
+        super()._compute_input_line_ids()
+        attachment_types = self._get_attachment_types()
+        attachment_type_ids = [f.id for f in attachment_types.values()]
+        for slip in self:
+            # Drop the attachment lines produced by the core computation...
+            lines_to_remove = slip.input_line_ids.filtered(
+                lambda x: x.input_type_id.id in attachment_type_ids
+            )
+            input_line_vals = [Command.unlink(line.id) for line in lines_to_remove]
+
+            if slip.employee_id.salary_attachment_ids and slip.date_to and slip.struct_id:
+                # Use the structure *type* category as the source of truth: the stored
+                # ``is_declared_type`` on the structure can be stale (it only recomputes
+                # when ``type_id`` changes, not when the type's category changes).
+                target = 'not_declared' if slip.struct_id.type_id.structure_category == 'not_declared' else 'declared'
+                valid_attachments = slip.employee_id.salary_attachment_ids.filtered(
+                    lambda a: a.state == 'open'
+                    and a.date_start <= slip.date_to
+                    and (not a.date_end or a.date_end >= slip.date_from)
+                )
+                nd_wage = slip._get_nd_capacity_wage()
+                amounts_by_code = slip._split_salary_attachment_amounts(valid_attachments, nd_wage)
+                for code, amounts in amounts_by_code.items():
+                    amount = amounts[target]
+                    if not amount:
+                        continue
+                    attachments = valid_attachments.filtered(
+                        lambda a: a.other_input_type_id.code == code
+                    )
+                    name = ', '.join(attachments.mapped('description'))
+                    input_type_id = attachment_types[code].id
+                    input_line_vals.append(Command.create({
+                        'name': name,
+                        'amount': amount if not slip.credit_note else -amount,
+                        'input_type_id': input_type_id,
+                    }))
+            slip.update({'input_line_ids': input_line_vals})
 
     @api.model_create_multi
     def create(self, vals_list):
