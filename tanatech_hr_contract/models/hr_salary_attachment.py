@@ -17,7 +17,6 @@ class HrSalaryAttachment(models.Model):
         compute='_compute_structure_category',
         store=True,
         readonly=False,
-        required=True,
         tracking=True,
         help="Salary structure on which the adjustment (advance, deduction, ...) "
              "will be imputed when computing the payslip.",
