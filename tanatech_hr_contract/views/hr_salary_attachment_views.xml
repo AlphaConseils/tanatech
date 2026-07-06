@@ -8,7 +8,7 @@
     <field name="arch" type="xml">
       <xpath expr="//field[@name='other_input_type_id']" position="after">
         <field name="can_choose_structure" invisible="1"/>
-        <field name="structure_category"
+        <field name="structure_category" required="1"
                readonly="not can_choose_structure or has_done_payslip"/>
       </xpath>
     </field>
