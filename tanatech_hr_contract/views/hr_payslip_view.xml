@@ -10,7 +10,7 @@
                 <field name="is_from_undeclared_contract" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='action_print_payslip']" position="attributes">
-                <attribute name="invisible">not line_ids or is_from_undeclared_contract</attribute>
+                <attribute name="invisible">not line_ids</attribute>
             </xpath>
 
         </field>
