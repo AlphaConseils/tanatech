@@ -24,10 +24,7 @@ class HrPayslip(models.Model):
     @api.depends('contract_id')
     def _compute_contract_category(self):
         for payslip in self:
-            if payslip.contract_id and payslip.contract_id.contract_category == 'not_declared':
-                payslip.is_from_undeclared_contract = True
-            else:
-                payslip.is_from_undeclared_contract = False
+            payslip.is_from_undeclared_contract = False
 
     def _get_nd_capacity_wage(self):
         """ Wage of the employee's "Undeclared" (NA) contract overlapping this
