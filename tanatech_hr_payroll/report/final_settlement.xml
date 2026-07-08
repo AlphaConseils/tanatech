@@ -23,15 +23,15 @@
       <t t-foreach="docs" t-as="o">
         <t t-call="web.external_layout">
           <style>
-              .signature-table,
-              .signature-table tr,
-              .signature-table td,
-              .signature-table th,
-              .signature-table tbody {
-              border: 0 !important;
-              outline: none !important;
-              }
-            </style>
+            .signature-table,
+            .signature-table tr,
+            .signature-table td,
+            .signature-table th,
+            .signature-table tbody {
+            border: 0 !important;
+            outline: none !important;
+            }
+          </style>
           <div class="page" style="font-family: 'Times New Roman', serif;">
 
             <h1 class="text-center" style="font-weight:bold; letter-spacing:2px;">
@@ -72,7 +72,7 @@
             <!-- ===== Salary / Deductions tables block ===== -->
             <!-- Pull the line recordsets once, both columns share the same data source -->
             <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM'])"/>
-            <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code == 'DED')"/>
+            <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['DED', 'IRSA02', 'AJUST'])"/>
 
             <!-- Dynamic spacer: pad the shorter column with empty rows so both
                  tables end up with the same height, no matter how many lines
@@ -153,7 +153,16 @@
                       <t t-foreach="deduction_lines" t-as="line">
                         <tr>
                           <td style="border:1px solid #2952a3; padding:5px;">
-                            <span t-field="line.name"/>
+                            <t t-if="'CNAPS' in line.name">
+                              CNAPS
+                            </t>
+                            <t t-if="'Cotisation santé' in line.name">
+                              AMIT
+                            </t>
+                            <t t-if="'IRSA' in line.name">
+                              IRSA
+                            </t>
+<!--                            <span t-field="line.name"/>-->
                           </td>
                           <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
                             <span t-field="line.quantity"/>
@@ -190,21 +199,12 @@
             <table style="width:50%; margin-left:auto; border-collapse:collapse; margin-bottom:20px;">
               <tr>
                 <td style="border:1px solid #2952a3; background-color:#c9d6f0; padding:6px;">
-                  <strong>Net Salary Ariary</strong>
+                  <strong>Net à Payer Ariary</strong>
                 </td>
                 <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
                   <strong>
-                    <span t-esc="'{:,.0f}'.format(total_salary_amount - total_deduction_amount)"/>
-                  </strong>
-                </td>
-              </tr>
-              <tr>
-                <td style="border:1px solid #2952a3; background-color:#c9d6f0; padding:6px;">
-                  <strong>Net à Paie Ariary</strong>
-                </td>
-                <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
-                  <strong>
-                    <span t-field="o.net_to_pay_wage" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    <t t-set="net_to_pay" t-value="total_salary_amount + total_deduction_amount"/>
+                    <span t-esc="net_to_pay" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                   </strong>
                 </td>
               </tr>
