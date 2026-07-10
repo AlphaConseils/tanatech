@@ -42,7 +42,7 @@
                         </div>
                         <div style="border-top: 1px solid #000000; margin-bottom: 1mm;"/>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
                             <tr>
                                 <td style="padding: 1px 0; width: 38%; vertical-align: top; font-weight: bold;">Month</td>
                                 <td style="padding: 1px 0; vertical-align: top; text-transform: uppercase;">
@@ -69,7 +69,7 @@
 
                         <!-- INCOME TABLE HEADER -->
                         <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
                                     <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Description</th>
@@ -79,7 +79,7 @@
                             </thead>
                         </table>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="income_lines" t-as="line">
                                     <tr>
@@ -119,7 +119,7 @@
 
                         <!-- DEDUCTION SECTION HEADER (same 3-column layout as the income table) -->
                         <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
                                     <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Deductions</th>
@@ -130,7 +130,7 @@
                         </table>
 
                         <!-- DEDUCTION TABLE -->
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="deduction_lines" t-as="line">
                                     <tr>
