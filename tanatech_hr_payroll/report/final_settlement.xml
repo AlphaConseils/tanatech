@@ -156,13 +156,16 @@
                             <t t-if="'CNAPS' in line.name">
                               CNAPS
                             </t>
-                            <t t-if="'Cotisation santé' in line.name">
+                            <t t-elif="'Cotisation santé' in line.name">
                               AMIT
                             </t>
-                            <t t-if="'IRSA' in line.name">
+                            <t t-elif="'IRSA' in line.name">
                               IRSA
                             </t>
-<!--                            <span t-field="line.name"/>-->
+                            <t t-else="">
+                              <span t-field="line.name"/>
+                            </t>
+
                           </td>
                           <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
                             <span t-field="line.quantity"/>
@@ -203,7 +206,15 @@
                 </td>
                 <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
                   <strong>
-                    <t t-set="net_to_pay" t-value="total_salary_amount + total_deduction_amount"/>
+
+                    <t t-if="total_deduction_amount &lt; 0">
+                      <t t-set="net_to_pay" t-value="total_salary_amount + total_deduction_amount"/>
+                    </t>
+
+                    <t t-else="">
+                      <t t-set="net_to_pay" t-value="total_salary_amount - total_deduction_amount"/>
+                    </t>
+
                     <span t-esc="net_to_pay" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                   </strong>
                 </td>
