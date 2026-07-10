@@ -37,7 +37,7 @@
                         }
                     </style>
                     <div class="page nd_ticket" style="
-                        font-family: 'Times New Roman', Times, serif;
+                        font-family: 'Liberation Serif', 'Times New Roman', Times, serif;
                         font-size: 8pt;
                         padding: 1mm;
                         width: 100%;
@@ -45,7 +45,7 @@
                     ">
 
                         <!-- TITLE: heavy sans-serif, contrasting with the serif body -->
-                        <div style="text-align: center; font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-size: 20pt; text-transform: uppercase; margin-bottom: 3mm;">
+                        <div style="text-align: center; font-family: 'Liberation Sans', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 20pt; text-transform: uppercase; margin-bottom: 3mm;">
                             Payment
                         </div>
 
