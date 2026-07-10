@@ -45,16 +45,16 @@
                     ">
 
                         <!-- TITLE: heavy sans-serif, contrasting with the serif body -->
-                        <div style="text-align: center; font-family: 'Liberation Sans', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 20pt; text-transform: uppercase; margin-bottom: 3mm;">
+                        <div style="text-align: center; font-family: 'Liberation Sans', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 20pt; text-transform: uppercase; margin-bottom: 6mm;">
                             Payment
                         </div>
 
                         <!-- SECTION: INFORMATION -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
+                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 1.5mm;">
                             Information
                         </div>
 
-                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 6mm;">
                             <tr>
                                 <td style="padding: 1px 0; width: 38%; vertical-align: top; font-weight: bold;">Month</td>
                                 <td style="padding: 1px 0; vertical-align: top; text-transform: uppercase;">
@@ -80,7 +80,7 @@
                         <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
 
                         <!-- INCOME TABLE HEADER -->
-                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 1mm;">
                             <thead>
                                 <tr>
                                     <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Description</th>
@@ -121,14 +121,14 @@
                             </tbody>
                         </table>
 
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-top: 1.5mm; margin-bottom: 6mm;">
                             Subtotal:&#160;
                             <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
                             <span t-out="rev_fmt"/>
                         </div>
 
                         <!-- DEDUCTION SECTION HEADER (same 3-column layout as the income table) -->
-                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 1mm;">
                             <thead>
                                 <tr>
                                     <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Deductions</th>
@@ -167,7 +167,7 @@
                             </tbody>
                         </table>
 
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-top: 1.5mm; margin-bottom: 6mm;">
                             Subtotal:&#160;
                             <t t-set="ded_fmt" t-value="'{:,.0f}'.format(deduction_total).replace(',', '.')"/>
                             <span t-out="ded_fmt"/>
@@ -180,7 +180,7 @@
                         </div>
 
                         <!-- SIGNATURE -->
-                        <div style="font-size: 8pt; margin-top: 4mm;">
+                        <div style="font-size: 8pt; margin-top: 10mm;">
                             <strong>Signature</strong>
                             <br/><br/><br/>
                         </div>
