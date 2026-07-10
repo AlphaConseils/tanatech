@@ -37,15 +37,15 @@
                         }
                     </style>
                     <div class="page nd_ticket" style="
-                        font-family: 'Courier New', Courier, monospace;
+                        font-family: 'Times New Roman', Times, serif;
                         font-size: 8pt;
                         padding: 1mm;
                         width: 100%;
                         line-height: 1.3;
                     ">
 
-                        <!-- TITLE -->
-                        <div style="text-align: center; font-weight: bold; font-size: 13pt; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2mm;">
+                        <!-- TITLE: heavy sans-serif, contrasting with the serif body -->
+                        <div style="text-align: center; font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-size: 20pt; text-transform: uppercase; margin-bottom: 3mm;">
                             Payment
                         </div>
 
@@ -174,12 +174,9 @@
                         </div>
 
                         <!-- NET TOTAL BOX: compact frame fitted to its content, right-aligned -->
+                        <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
                         <div style="text-align: right; margin-bottom: 3mm;">
-                            <div style="display: inline-block; border: 2px solid #000000; padding: 2mm 4mm; font-weight: bold; font-size: 9pt; text-transform: uppercase;">
-                                Total:&#160;
-                                <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
-                                <span t-out="net_fmt"/>
-                            </div>
+                            <span style="display: inline-block; white-space: nowrap; border: 2px solid #000000; padding: 2mm 4mm; font-weight: bold; font-size: 9pt; text-transform: uppercase;">Total:&#160;<t t-out="net_fmt"/></span>
                         </div>
 
                         <!-- SIGNATURE -->
