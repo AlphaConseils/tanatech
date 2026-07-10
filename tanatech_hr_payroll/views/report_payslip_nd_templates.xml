@@ -22,7 +22,21 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="
+                    <!-- The company document layout (e.g. "Boxed") draws a grid on every
+                         report table; force-remove any border/background inside the ticket. -->
+                    <style>
+                        .nd_ticket table, .nd_ticket thead, .nd_ticket tbody,
+                        .nd_ticket tr, .nd_ticket th, .nd_ticket td {
+                            border: none !important;
+                            box-shadow: none !important;
+                            background: transparent !important;
+                        }
+                        .nd_ticket table::before, .nd_ticket table::after {
+                            content: none !important;
+                            border: none !important;
+                        }
+                    </style>
+                    <div class="page nd_ticket" style="
                         font-family: 'Courier New', Courier, monospace;
                         font-size: 8pt;
                         padding: 1mm;
