@@ -60,14 +60,15 @@ msgstr "Catégorie de contrat"
 #. module: tanatech_hr_contract
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_structure_type__structure_category__declared
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__declared
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_salary_attachment__structure_category__declared
 msgid "Declared"
-msgstr "affecté"
+msgstr "Déclaré"
 
 #. module: tanatech_hr_contract
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_structure_type__structure_category__not_declared
 #: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_contract__contract_category__not_declared
 msgid "Undeclared"
-msgstr "non affecté"
+msgstr "Non Affecté"
 
 #. module: tanatech_hr_contract
 #. odoo-python
@@ -149,11 +150,13 @@ msgstr "Contrats en cours"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__date_from
 msgid "Start Date"
 msgstr "Date de début"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__date_to
 msgid "End Date"
 msgstr "Date de fin"
 
@@ -169,21 +172,25 @@ msgstr "Statut"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__employee_id
 msgid "Employee"
 msgstr "Employé"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__job_id
 msgid "Job Position"
 msgstr "Poste"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__department_id
 msgid "Department"
 msgstr "Département"
 
 #. module: tanatech_hr_contract
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_contract_not_delcared_view_search
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_payroll_undeclared_report__work_entry_source__calendar
 msgid "Working Schedule"
 msgstr "Horaire de travail"
 
@@ -782,3 +789,57 @@ msgstr "D'un contrat affecté"
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.view_hr_payslip_filter_inherit
 msgid "From undeclared contract"
 msgstr "D'un contrat non affecté"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_salary_attachment__structure_category
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.hr_salary_attachment_view_search_inherit
+msgid "Salary Structure to Impute"
+msgstr "Structure salariale à imputer"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields.selection,name:tanatech_hr_contract.selection__hr_salary_attachment__structure_category__not_declared
+msgid "Undeclared (NA)"
+msgstr "Non Affecté (NA)"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,help:tanatech_hr_contract.field_hr_salary_attachment__structure_category
+msgid ""
+"Salary structure on which the adjustment (advance, deduction, ...) will be "
+"imputed when computing the payslip."
+msgstr ""
+"Structure salariale sur laquelle l'ajustement (avance, retenue, ...) sera "
+"imputé lors du calcul de la paie."
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_salary_attachment__can_choose_structure
+msgid "Structure Choice Allowed"
+msgstr "Choix de structure possible"
+
+#. module: tanatech_hr_contract
+#: model:ir.model.fields,help:tanatech_hr_contract.field_hr_salary_attachment__can_choose_structure
+msgid ""
+"True when the employee(s) have a salary on both structures (Declared and "
+"Undeclared). Only in that case can the target salary structure be chosen "
+"manually."
+msgstr ""
+"Vrai lorsque le(s) salarié(s) dispose(nt) d'un salaire sur les deux "
+"structures (Déclaré et Non Affecté). Ce n'est que dans ce cas que la "
+"structure d'imputation peut être choisie manuellement."
+
+#. module: tanatech_hr_contract
+#: code:addons/tanatech_hr_contract/models/hr_salary_attachment.py:0
+msgid ""
+"The employee only has a salary on the Undeclared (NA) structure: the "
+"adjustment must be imputed on that structure."
+msgstr ""
+"Le salarié ne dispose d'un salaire que sur la structure Non Affecté (NA) : "
+"l'ajustement doit être imputé sur cette structure."
+
+#. module: tanatech_hr_contract
+#: code:addons/tanatech_hr_contract/models/hr_salary_attachment.py:0
+msgid ""
+"The employee has no salary on the Undeclared (NA) structure: the adjustment "
+"must be imputed on the Declared structure."
+msgstr ""
+"Le salarié ne dispose pas de salaire sur la structure Non Affecté (NA) : "
+"l'ajustement doit être imputé sur la structure Déclaré."
