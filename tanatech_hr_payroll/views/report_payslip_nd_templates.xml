@@ -61,7 +61,8 @@
                         <!-- Filter out intermediate summary lines by category: Brut (Salaire imposable), Net (Salaire net + SALAIRE NET A PAYER) -->
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
                         <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
-                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
+                        <!-- Only income lines with an actual amount: hide the zero-total rows (unused overtime types, etc.) -->
+                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="deduction_total" t-value="sum(deduction_lines.mapped('total'))"/>
                         <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
                         <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
@@ -71,9 +72,9 @@
                         <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
-                                    <th style="text-align: left;  width: 52%; padding: 1px 0; text-decoration: underline;">Description</th>
-                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; text-decoration: underline;">Quantity</th>
-                                    <th style="text-align: right; width: 32%; padding: 1px 0; text-decoration: underline;">Total</th>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Description</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; font-weight: bold; text-transform: uppercase;">Quantity</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Total</th>
                                 </tr>
                             </thead>
                         </table>
@@ -116,11 +117,17 @@
                             <span t-out="rev_fmt"/>
                         </div>
 
-                        <!-- DEDUCTION SECTION HEADER -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
-                            Deductions
-                        </div>
+                        <!-- DEDUCTION SECTION HEADER (same 3-column layout as the income table) -->
                         <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Deductions</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; font-weight: bold; text-transform: uppercase;">Quantity</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Total</th>
+                                </tr>
+                            </thead>
+                        </table>
 
                         <!-- DEDUCTION TABLE -->
                         <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
