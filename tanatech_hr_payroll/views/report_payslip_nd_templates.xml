@@ -48,13 +48,11 @@
                         <div style="text-align: center; font-weight: bold; font-size: 13pt; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2mm;">
                             Payment
                         </div>
-                        <div style="border-top: 2px solid #000000; margin-bottom: 2mm;"/>
 
                         <!-- SECTION: INFORMATION -->
                         <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
                             Information
                         </div>
-                        <div style="border-top: 1px solid #000000; margin-bottom: 1mm;"/>
 
                         <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
                             <tr>
@@ -82,7 +80,6 @@
                         <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
 
                         <!-- INCOME TABLE HEADER -->
-                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
                         <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
@@ -124,7 +121,6 @@
                             </tbody>
                         </table>
 
-                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
                         <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
                             Subtotal:&#160;
                             <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
@@ -132,7 +128,6 @@
                         </div>
 
                         <!-- DEDUCTION SECTION HEADER (same 3-column layout as the income table) -->
-                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
                         <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <thead>
                                 <tr>
@@ -172,18 +167,19 @@
                             </tbody>
                         </table>
 
-                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
                         <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
                             Subtotal:&#160;
                             <t t-set="ded_fmt" t-value="'{:,.0f}'.format(deduction_total).replace(',', '.')"/>
                             <span t-out="ded_fmt"/>
                         </div>
 
-                        <!-- NET TOTAL BOX -->
-                        <div style="border: 2px solid #000000; padding: 2mm; text-align: right; font-weight: bold; font-size: 9pt; margin-bottom: 3mm; text-transform: uppercase;">
-                            Total:&#160;
-                            <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
-                            <span t-out="net_fmt"/>
+                        <!-- NET TOTAL BOX: compact frame fitted to its content, right-aligned -->
+                        <div style="text-align: right; margin-bottom: 3mm;">
+                            <div style="display: inline-block; border: 2px solid #000000; padding: 2mm 4mm; font-weight: bold; font-size: 9pt; text-transform: uppercase;">
+                                Total:&#160;
+                                <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
+                                <span t-out="net_fmt"/>
+                            </div>
                         </div>
 
                         <!-- SIGNATURE -->
