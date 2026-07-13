@@ -6,7 +6,9 @@ import logging
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
-    is_undeclared_payslip = fields.Boolean('Is undeclared payslip ?', compute="_define_payslip_nature", default=False, store=False)
+    is_undeclared_payslip = fields.Boolean('Is undeclared payslip ?', compute="_define_payslip_nature", default=False,
+                                           store=False)
+
     @api.depends('contract_id')
     def _define_payslip_nature(self):
         for payslip in self:
@@ -14,12 +16,11 @@ class HrPayslip(models.Model):
             if payslip.contract_id and payslip.contract_id.contract_category == 'not_declared':
                 payslip.is_undeclared_payslip = True
 
-    overtime_hours_count = fields.Float(compute='_compute_overtime_hours') 
+    overtime_hours_count = fields.Float(compute='_compute_overtime_hours')
 
     employee_id = fields.Many2one(
         'hr.employee', required=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), '|', ('active', '=', True), ('active', '=', False)]")
-    
 
     def _compute_contract_domain_ids(self):
         for payslip in self:
@@ -39,11 +40,13 @@ class HrPayslip(models.Model):
             'name': _('Overtime This Month'),
             'view_mode': 'list,form',
             'res_model': 'hr.attendance.overtime.with.datetimes',
-            'domain': [('employee_id', '=', self.employee_id.id), ('date', '>=', self.date_from), ('date', '<=', self.date_to)],
+            'domain': [('employee_id', '=', self.employee_id.id), ('date', '>=', self.date_from),
+                       ('date', '<=', self.date_to)],
             'context': "{'create': False}",
         }
 
-    @api.depends('date_from', 'date_to', 'employee_id.overtime_with_datetimes_ids.duration', 'employee_id.attendance_ids')
+    @api.depends('date_from', 'date_to', 'employee_id.overtime_with_datetimes_ids.duration',
+                 'employee_id.attendance_ids')
     def _compute_overtime_hours(self):
         for payslip in self:
             mapped_validated_overtimes = dict(self.env['hr.attendance.overtime.with.datetimes']._read_group(
@@ -52,3 +55,27 @@ class HrPayslip(models.Model):
                 aggregates=['duration:sum']
             ))
             payslip.overtime_hours_count = mapped_validated_overtimes.get(payslip.employee_id, 0)
+
+    def compute_sheet(self):
+        for slip in self:
+            slip.employee_id.generate_work_entries(
+                slip.date_from,
+                slip.date_to,
+                force=True,
+            )
+
+        return super().compute_sheet()
+
+    def _get_pdf_reports(self):
+        res = super()._get_pdf_reports()
+
+        if len(self) == 1 and self.struct_id and 'Solde Tout Compte' in self.struct_id.name:
+            final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
+            for payslip in self:
+                for report in list(res.keys()):
+                    if report != final_settlement_template:
+                        res[report] -= payslip
+
+                res[final_settlement_template] |= payslip
+
+        return res
