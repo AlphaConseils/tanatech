@@ -241,8 +241,17 @@
             <!-- Compute family allowance -->
             <t t-set="total_allowance" t-value="o.contract_id.family_allowance * o.employee_id.children if o.employee_id.children else 0"/>
 
+            <!-- Lines the engine adds between SALAIRE NET and SALAIRE NET A PAYER (bank fees,
+                 advances, adjustments, ...): rendered dynamically so any new rule inserted in
+                 that sequence range shows up without editing this report. The family allowance
+                 keeps its dedicated row below, hence the ALLOC exclusion. -->
+            <t t-set="net_line" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.code == 'NET')[:1]"/>
+            <t t-set="net_to_pay_line" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.code == 'SALNETAP')[:1]"/>
+            <t t-set="complementary_lines" t-value="payslip_lines.filtered(lambda payslip_line: net_line.sequence &lt; payslip_line.sequence &lt; net_to_pay_line.sequence and payslip_line.code != 'ALLOC' and payslip_line.total) if net_line and net_to_pay_line else payslip_lines.browse()"/>
+            <t t-set="total_complementary" t-value="sum(complementary_lines.mapped('total'))"/>
+
             <!-- Compute grand total -->
-            <t t-set="grand_total" t-value="taxable_salary + total_allowance"/>
+            <t t-set="grand_total" t-value="taxable_salary + total_allowance + total_complementary"/>
 
             <div class="row">
                 <div class="col-6">
@@ -388,6 +397,17 @@
                                 <span t-out="formatted_total_allowance" />
                             </td>
                         </tr>
+                        <t t-foreach="complementary_lines" t-as="complementary_line">
+                            <tr>
+                                <td style=" width: 70%;">
+                                    <strong><span t-out="complementary_line.name"/></strong>
+                                </td>
+                                <td>
+                                    <t t-set="formatted_amount_complementary" t-value="'{0:,.2f}'.format(complementary_line.total)"/>
+                                    <span t-out="formatted_amount_complementary" />
+                                </td>
+                            </tr>
+                        </t>
                         <tr style="border: 2px solid #000000;">
                             <td style="text-transform: uppercase; width: 70%;">
                                 <strong><span>Grand total</span></strong>
