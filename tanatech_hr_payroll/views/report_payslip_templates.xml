@@ -241,8 +241,12 @@
             <!-- Compute family allowance -->
             <t t-set="total_allowance" t-value="o.contract_id.family_allowance * o.employee_id.children if o.employee_id.children else 0"/>
 
+            <!-- Compute adjustments (special advances, fortnight advances, ...), negative on the payslip -->
+            <t t-set="adjustment_lines" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code == 'AJUST')"/>
+            <t t-set="total_adjustment" t-value="sum(adjustment_lines.mapped('total'))"/>
+
             <!-- Compute grand total -->
-            <t t-set="grand_total" t-value="taxable_salary + total_allowance"/>
+            <t t-set="grand_total" t-value="taxable_salary + total_allowance + total_adjustment"/>
 
             <div class="row">
                 <div class="col-6">
@@ -388,6 +392,17 @@
                                 <span t-out="formatted_total_allowance" />
                             </td>
                         </tr>
+                        <t t-foreach="adjustment_lines" t-as="adjustment_line">
+                            <tr>
+                                <td style=" width: 70%;">
+                                    <strong><span t-out="adjustment_line.name"/></strong>
+                                </td>
+                                <td>
+                                    <t t-set="formatted_amount_adjustment" t-value="'{0:,.2f}'.format(adjustment_line.total)"/>
+                                    <span t-out="formatted_amount_adjustment" />
+                                </td>
+                            </tr>
+                        </t>
                         <tr style="border: 2px solid #000000;">
                             <td style="text-transform: uppercase; width: 70%;">
                                 <strong><span>Grand total</span></strong>
