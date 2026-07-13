@@ -22,27 +22,39 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="
-                        font-family: 'Courier New', Courier, monospace;
+                    <!-- The company document layout (e.g. "Boxed") draws a grid on every
+                         report table; force-remove any border/background inside the ticket. -->
+                    <style>
+                        .nd_ticket table, .nd_ticket thead, .nd_ticket tbody,
+                        .nd_ticket tr, .nd_ticket th, .nd_ticket td {
+                            border: none !important;
+                            box-shadow: none !important;
+                            background: transparent !important;
+                        }
+                        .nd_ticket table::before, .nd_ticket table::after {
+                            content: none !important;
+                            border: none !important;
+                        }
+                    </style>
+                    <div class="page nd_ticket" style="
+                        font-family: 'Liberation Serif', 'Times New Roman', Times, serif;
                         font-size: 8pt;
                         padding: 1mm;
                         width: 100%;
                         line-height: 1.3;
                     ">
 
-                        <!-- TITLE -->
-                        <div style="text-align: center; font-weight: bold; font-size: 13pt; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2mm;">
+                        <!-- TITLE: heavy sans-serif, contrasting with the serif body -->
+                        <div style="text-align: center; font-family: 'Liberation Sans', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 20pt; text-transform: uppercase; margin-bottom: 6mm;">
                             Payment
                         </div>
-                        <div style="border-top: 2px solid #000000; margin-bottom: 2mm;"/>
 
                         <!-- SECTION: INFORMATION -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
+                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 1.5mm;">
                             Information
                         </div>
-                        <div style="border-top: 1px solid #000000; margin-bottom: 1mm;"/>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 2mm;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 6mm;">
                             <tr>
                                 <td style="padding: 1px 0; width: 38%; vertical-align: top; font-weight: bold;">Month</td>
                                 <td style="padding: 1px 0; vertical-align: top; text-transform: uppercase;">
@@ -61,24 +73,24 @@
                         <!-- Filter out intermediate summary lines by category: Brut (Salaire imposable), Net (Salaire net + SALAIRE NET A PAYER) -->
                         <t t-set="visible_lines"   t-value="o.line_ids.filtered(lambda l: l.appears_on_payslip)"/>
                         <t t-set="deduction_lines" t-value="visible_lines.filtered(lambda l: l.total &lt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
-                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt;= 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
+                        <!-- Only income lines with an actual amount: hide the zero-total rows (unused overtime types, etc.) -->
+                        <t t-set="income_lines"    t-value="visible_lines.filtered(lambda l: l.total &gt; 0 and l.category_id.code not in ['NET', 'BRUT', 'GROSS'])"/>
                         <t t-set="deduction_total" t-value="sum(deduction_lines.mapped('total'))"/>
                         <t t-set="revenue_total"   t-value="sum(income_lines.mapped('total'))"/>
                         <t t-set="net_salary"      t-value="sum(visible_lines.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP').mapped('total'))"/>
 
                         <!-- INCOME TABLE HEADER -->
-                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 1mm;">
                             <thead>
                                 <tr>
-                                    <th style="text-align: left;  width: 52%; padding: 1px 0; text-decoration: underline;">Description</th>
-                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; text-decoration: underline;">Quantity</th>
-                                    <th style="text-align: right; width: 32%; padding: 1px 0; text-decoration: underline;">Total</th>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Description</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; font-weight: bold; text-transform: uppercase;">Quantity</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Total</th>
                                 </tr>
                             </thead>
                         </table>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="income_lines" t-as="line">
                                     <tr>
@@ -109,21 +121,25 @@
                             </tbody>
                         </table>
 
-                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-top: 1.5mm; margin-bottom: 6mm;">
                             Subtotal:&#160;
                             <t t-set="rev_fmt" t-value="'{:,.0f}'.format(revenue_total).replace(',', '.')"/>
                             <span t-out="rev_fmt"/>
                         </div>
 
-                        <!-- DEDUCTION SECTION HEADER -->
-                        <div style="font-weight: bold; text-transform: uppercase; font-size: 8pt; margin-bottom: 0.5mm;">
-                            Deductions
-                        </div>
-                        <div style="border-top: 1px solid #000000; margin-bottom: 0.5mm;"/>
+                        <!-- DEDUCTION SECTION HEADER (same 3-column layout as the income table) -->
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 1mm;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;  width: 52%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Deductions</th>
+                                    <th style="text-align: right; width: 16%; padding: 1px 1mm; font-weight: bold; text-transform: uppercase;">Quantity</th>
+                                    <th style="text-align: right; width: 32%; padding: 1px 0; font-weight: bold; text-transform: uppercase;">Total</th>
+                                </tr>
+                            </thead>
+                        </table>
 
                         <!-- DEDUCTION TABLE -->
-                        <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+                        <table class="o_ignore_layout_styling" style="width: 100%; border-collapse: collapse; font-size: 8pt;">
                             <tbody>
                                 <t t-foreach="deduction_lines" t-as="line">
                                     <tr>
@@ -151,22 +167,20 @@
                             </tbody>
                         </table>
 
-                        <div style="border-top: 1px solid #000000; margin: 0.5mm 0;"/>
-                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-bottom: 2mm;">
+                        <div style="text-align: right; font-weight: bold; text-decoration: underline; font-size: 8pt; margin-top: 1.5mm; margin-bottom: 6mm;">
                             Subtotal:&#160;
                             <t t-set="ded_fmt" t-value="'{:,.0f}'.format(deduction_total).replace(',', '.')"/>
                             <span t-out="ded_fmt"/>
                         </div>
 
-                        <!-- NET TOTAL BOX -->
-                        <div style="border: 2px solid #000000; padding: 2mm; text-align: right; font-weight: bold; font-size: 9pt; margin-bottom: 3mm; text-transform: uppercase;">
-                            Total:&#160;
-                            <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
-                            <span t-out="net_fmt"/>
+                        <!-- NET TOTAL BOX: compact frame fitted to its content, right-aligned -->
+                        <t t-set="net_fmt" t-value="'{:,.0f}'.format(net_salary).replace(',', '.')"/>
+                        <div style="text-align: right; margin-bottom: 3mm;">
+                            <span style="display: inline-block; white-space: nowrap; border: 2px solid #000000; padding: 2mm 4mm; font-weight: bold; font-size: 9pt; text-transform: uppercase;">Total:&#160;<t t-out="net_fmt"/></span>
                         </div>
 
                         <!-- SIGNATURE -->
-                        <div style="font-size: 8pt; margin-top: 4mm;">
+                        <div style="font-size: 8pt; margin-top: 10mm;">
                             <strong>Signature</strong>
                             <br/><br/><br/>
                         </div>
