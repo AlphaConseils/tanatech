@@ -16,6 +16,20 @@ class HrPayslip(models.Model):
             if payslip.contract_id and payslip.contract_id.contract_category == 'not_declared':
                 payslip.is_undeclared_payslip = True
 
+    is_nd_ticket_payslip = fields.Boolean(
+        'Prints the N.D. 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
+
+    @api.depends('contract_id', 'struct_id')
+    def _compute_is_nd_ticket_payslip(self):
+        # Only undeclared payslips whose structure is NOT routed to report_final_settlement
+        # (i.e. struct name does not contain 'Solde Tout Compte') keep the dedicated 80mm
+        # "PAIEMENT" ticket (report_nd_payslip). This mirrors the exact substring used by
+        # _get_pdf_reports, so the "Solde Tout Compte - NA" structure (which DOES contain it)
+        # is excluded and follows the standard flow like declared payslips.
+        for payslip in self:
+            undeclared = bool(payslip.contract_id and payslip.contract_id.contract_category == 'not_declared')
+            payslip.is_nd_ticket_payslip = undeclared and 'Solde Tout Compte' not in (payslip.struct_id.name or '')
+
     overtime_hours_count = fields.Float(compute='_compute_overtime_hours')
 
     employee_id = fields.Many2one(
