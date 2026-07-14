@@ -71,8 +71,10 @@
 
             <!-- ===== Salary / Deductions tables block ===== -->
             <!-- Pull the line recordsets once, both columns share the same data source -->
-            <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM'])"/>
-            <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['DED', 'IRSA02', 'AJUST'])"/>
+            <!-- Gains: n'affiche que les lignes non nulles; GROSS/NET (totaux) exclus car hors liste -->
+            <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM', 'HSUPP', 'HSUPPEXO30', 'ALW'] and l.total != 0)"/>
+            <!-- Retenues: DED/IRSA02 conservés pour les bulletins déclarés; AJUST/ABS pour les N.D. -->
+            <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['DED', 'IRSA02', 'AJUST', 'ABS'] and l.total != 0)"/>
 
             <!-- Dynamic spacer: pad the shorter column with empty rows so both
                  tables end up with the same height, no matter how many lines
@@ -83,6 +85,12 @@
             <t t-set="total_salary_qty" t-value="sum(salary_lines.mapped('quantity'))"/>
             <t t-set="total_salary_amount" t-value="sum(salary_lines.mapped('total'))"/>
             <t t-set="total_deduction_amount" t-value="sum(deduction_lines.mapped('total'))"/>
+
+            <!-- Net à payer: la ligne de code règle SALNETAP fait foi; à défaut, somme
+                 ALGÉBRIQUE des gains et retenues (les retenues sont déjà négatives en base,
+                 donc addition, surtout pas gains - déductions). -->
+            <t t-set="salnetap_lines" t-value="o.line_ids.filtered(lambda l: l.salary_rule_id.code == 'SALNETAP')"/>
+            <t t-set="net_to_pay" t-value="sum(salnetap_lines.mapped('total')) if salnetap_lines else (total_salary_amount + total_deduction_amount)"/>
 
             <table style="width:100%; border-collapse:collapse; margin-bottom:15px;">
               <tr>
@@ -206,15 +214,6 @@
                 </td>
                 <td class="text-end" style="border:1px solid #2952a3; background-color:#e0e0e0; padding:6px;">
                   <strong>
-
-                    <t t-if="total_deduction_amount &lt; 0">
-                      <t t-set="net_to_pay" t-value="total_salary_amount + total_deduction_amount"/>
-                    </t>
-
-                    <t t-else="">
-                      <t t-set="net_to_pay" t-value="total_salary_amount - total_deduction_amount"/>
-                    </t>
-
                     <span t-esc="net_to_pay" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                   </strong>
                 </td>
