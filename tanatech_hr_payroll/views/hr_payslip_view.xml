@@ -8,16 +8,19 @@
     <field name="arch" type="xml">
       <xpath expr="//form/header" position="before">
         <field name="is_undeclared_payslip" invisible="1"/>
+        <field name="is_nd_ticket_payslip" invisible="1"/>
       </xpath>
       <xpath expr="//button[@name='action_print_payslip']" position="attributes">
-                <!-- Hide the standard "Pay slip" (BULLETIN DE PAIE) print on undeclared
-                     payslips: it reads contract_id.wage (0 for N.D.) and prints all zeros.
-                     N.D. payslips must be printed with the dedicated ticket below. -->
-                <attribute name="invisible">not line_ids or is_undeclared_payslip</attribute>
+                <!-- Standard print flow -> _get_pdf_reports -> report_final_settlement.
+                     Visible for declared AND for "Solde Tout Compte - NA"; hidden only for
+                     N.D. ticket payslips (which use the 80mm "PAIEMENT" ticket below). -->
+                <attribute name="invisible">not line_ids or is_nd_ticket_payslip</attribute>
             </xpath>
       <xpath expr="//button[@name='action_print_payslip']" position="after">
+                <!-- 80mm "PAIEMENT" ticket: visible ONLY for N.D. payslips
+                     (undeclared and not routed to report_final_settlement). -->
                 <button string="Print" name="action_print_nd_payslip" type="object"
-                        invisible="not line_ids or not is_undeclared_payslip"/>
+                        invisible="not line_ids or not is_nd_ticket_payslip"/>
             </xpath>
       <xpath expr="//field[@name='number_of_hours']" position="attributes">
         <attribute name="widget"></attribute>
