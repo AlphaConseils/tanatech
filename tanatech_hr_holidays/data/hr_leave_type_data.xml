@@ -2,8 +2,14 @@
 <odoo>
     <data noupdate="0">
 
+        <!--
+            Neutralisation du décompte custom "week-end inclus" sur le type "Congés payés".
+            La valeur est forcée à False (noupdate="0") pour être appliquée à l'upgrade,
+            afin de revenir au décompte standard Odoo (jours ouvrables selon l'horaire,
+            hors dimanches et jours fériés légaux).
+        -->
         <record id="hr_holidays.holiday_status_cl" model="hr.leave.type">
-            <field name="is_deducted_if_weekend_included">True</field>
+            <field name="is_deducted_if_weekend_included">False</field>
         </record>
 
     </data>
