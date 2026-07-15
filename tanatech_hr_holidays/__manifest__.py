@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Holidays",
-    "version": "1.0",
+    "version": "1.1",
     "summary": "Manage your Holidays activities",
     "description": "",
     "website": "https://www.nexources.com/",
