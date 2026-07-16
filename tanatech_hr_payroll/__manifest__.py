@@ -20,6 +20,7 @@
     "data": [
         "data/hr_work_entry_data.xml",
         "data/hr_attendance_overtime_type_data.xml",
+        "data/ir_actions_server.xml",
         "report/final_settlement.xml",
 
         # views
