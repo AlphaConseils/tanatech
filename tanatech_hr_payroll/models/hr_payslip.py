@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
+from datetime import datetime, time
+
 from odoo import api, Command, models, fields, _
 import logging
+
+from .hr_work_entry import OVERTIME_WORK_ENTRY_CODES
 
 
 class HrPayslip(models.Model):
@@ -77,8 +81,40 @@ class HrPayslip(models.Model):
                 slip.date_to,
                 force=True,
             )
+            slip._anchor_overtime_on_nd_contract()
 
         return super().compute_sheet()
+
+    def _anchor_overtime_on_nd_contract(self):
+        """ Overtime (HS) is an N.D. element: its work entries must be anchored
+        on the employee's N.D. contract so that they show up on the undeclared
+        payslip — the "Solde Tout Compte - NA" one for a leaving employee —
+        and never on the declared one. Entries generated before 03/2026 were
+        anchored on the declared contract: re-anchor them (scoped to the slip
+        period) when (re)computing a payslip.
+        """
+        self.ensure_one()
+        if not self.employee_id or not self.date_from or not self.date_to:
+            return
+        nd_contract = (
+            self.employee_id._get_nd_contract(self.date_from)
+            or self.employee_id._get_nd_contract(self.date_to)
+        )
+        if not nd_contract:
+            return
+        entries = self.env['hr.work.entry'].search([
+            ('employee_id', '=', self.employee_id.id),
+            '|',
+            ('work_entry_type_id.is_overtime', '=', True),
+            ('work_entry_type_id.code', 'in', OVERTIME_WORK_ENTRY_CODES),
+            ('state', 'in', ['draft', 'validated']),
+            ('contract_id', '!=', nd_contract.id),
+            ('contract_id.contract_category', '=', 'declared'),
+            ('date_start', '<=', datetime.combine(self.date_to, time.max)),
+            ('date_stop', '>=', datetime.combine(self.date_from, time.min)),
+        ])
+        if entries:
+            entries.write({'contract_id': nd_contract.id})
 
     def _get_pdf_reports(self):
         res = super()._get_pdf_reports()

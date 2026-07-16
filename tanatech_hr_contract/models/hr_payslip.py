@@ -155,12 +155,16 @@ class HrPayslip(models.Model):
                     ('contract_category', '=', 'not_declared'),
                     ('state', 'in', ['open_not_declared', 'close']),
                 ], order='create_date desc')
-                non_declared_structure = self.env['hr.payroll.structure'].search([
-                    ('is_declared_type', '=', False)
-                ])
                 name = ' '
                 non_declared_contract_id = non_declared_contract[0]
-                non_declared_structure_id = non_declared_structure[0]
+                # Mirror the declared structure on the undeclared side ("Solde
+                # Tout Compte" -> "Solde Tout Compte - NA" for an STC), so the
+                # N.D. elements (overtime, bonuses...) follow the NA structure.
+                non_declared_structure_id = (
+                    (payslip.struct_id and payslip.struct_id._get_category_counterpart('not_declared'))
+                    or non_declared_contract_id.structure_type_id.default_struct_id
+                    or self.env['hr.payroll.structure'].search([('is_declared_type', '=', False)], limit=1)
+                )
                 date_from = payslip.date_from
                 date_to = payslip.date_to
                 state = payslip.state

@@ -5,6 +5,19 @@ import logging
 from datetime import date, datetime
 import pytz
 
+# Codes of the detailed overtime (HS) work entry types created by
+# ``auto_update_overtime_work_entry_type``. Their ``is_overtime`` flag is
+# deliberately not set (so they escape the generic-overtime cleanup below),
+# hence the explicit list to identify them elsewhere.
+OVERTIME_WORK_ENTRY_CODES = [
+    "DAYWORKONREGULARDAY",
+    "CASUALNIGHTWORKONREGULARDAY",
+    "OCCASIONALNIGHTWORKONWEEKENDS",
+    "DAYWORKONSUNDAY",
+    "NIGHTWORKONSUNDAY",
+    "WORKONPUBLICHOLIDAYS",
+]
+
 
 class HrWorkEntry(models.Model):
     _inherit = "hr.work.entry"
@@ -13,6 +26,7 @@ class HrWorkEntry(models.Model):
 
     def auto_update_overtime_work_entry_type(self):
         work_entries_to_unlink = self.env[self._name]
+        work_entries_to_keep = self.env[self._name]
         for entry in self:
             date_start_tz = pytz.utc.localize(entry.date_start).astimezone(
                 pytz.timezone(entry.employee_id._get_tz())
@@ -23,6 +37,15 @@ class HrWorkEntry(models.Model):
             )
             work_entries_vals = []
             for overtime in overtimes:
+                # Overtime is an N.D. element: anchor it on the N.D. contract.
+                # For a leaving employee that contract is already closed, hence
+                # the fallback on the N.D. contract covering the overtime day.
+                nd_contract = (
+                    overtime.employee_id._get_nd_running_contract()[:1]
+                    or overtime.employee_id._get_nd_contract(overtime.date)
+                )
+                if not nd_contract:
+                    continue
                 work_type_domain = []
                 if overtime.overtime_type == "day_work_on_regular_day":
                     work_type_domain = [("code", "=", "DAYWORKONREGULARDAY")]
@@ -41,24 +64,27 @@ class HrWorkEntry(models.Model):
                 work_entry_type = self.env["hr.work.entry.type"].search(
                     work_type_domain
                 )
-                date_start_utc = pytz.utc.localize(overtime.start_date).astimezone(
-                    pytz.utc
-                )
-                date_stop_utc = pytz.utc.localize(overtime.end_date).astimezone(
-                    pytz.utc
-                )
+                # Compare naive UTC datetimes: the stored values are naive, a
+                # tz-aware operand never matches and the dedup becomes useless.
                 domain = [
-                    ("date_start", "=", date_start_utc),
-                    ("date_stop", "=", date_stop_utc),
+                    ("date_start", "=", overtime.start_date),
+                    ("date_stop", "=", overtime.end_date),
                     ("employee_id", "=", overtime.employee_id.id),
-                    ("contract_id", "=", overtime.employee_id.contract_id.id),
+                    ("contract_id", "=", nd_contract.id),
                     ("company_id", "=", overtime.employee_id.company_id.id),
                     ("attendance_id", "=", overtime.attendance_id.id),
-                    ("state", "=", "draft"),
+                    # A live entry may transiently be in 'conflict' with a stale
+                    # generic overtime entry removed below: it still counts as
+                    # existing, otherwise every pass creates a duplicate.
+                    ("state", "!=", "cancelled"),
                 ]
                 if work_entry_type:
                     domain.append(("work_entry_type_id", "=", work_entry_type.id))
-                if self.env["hr.work.entry"].search_count(domain):
+                existing_hs_entries = self.env["hr.work.entry"].search(domain)
+                if existing_hs_entries:
+                    # Already anchored on the N.D. contract: keep it, do not let
+                    # the cleanup below wipe it out.
+                    work_entries_to_keep |= existing_hs_entries
                     continue
 
                 date_start = pytz.utc.localize(overtime.start_date).astimezone(
@@ -81,7 +107,7 @@ class HrWorkEntry(models.Model):
                             work_entry_type.id if work_entry_type else False
                         ),
                         "employee_id": overtime.employee_id.id,
-                        "contract_id": overtime.employee_id._get_nd_running_contract().id,
+                        "contract_id": nd_contract.id,
                         "company_id": overtime.employee_id.company_id.id,
                         "attendance_id": overtime.attendance_id.id,
                         "state": "draft",
@@ -99,7 +125,8 @@ class HrWorkEntry(models.Model):
             )
             work_entries_to_unlink |= existing_work_entries
             if work_entries_vals:
-                self.env["hr.work.entry"].create(work_entries_vals)
+                work_entries_to_keep |= self.env["hr.work.entry"].create(work_entries_vals)
+        work_entries_to_unlink -= work_entries_to_keep
         work_entries_to_unlink.write({"active": False})
         work_entries_to_unlink.unlink()
 
