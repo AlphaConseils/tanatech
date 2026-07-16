@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Payroll",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "summary": "Manage your Payroll activities",
     "description": "",
     "website": "https://www.nexources.com/",
@@ -20,6 +20,7 @@
     "data": [
         "data/hr_work_entry_data.xml",
         "data/hr_attendance_overtime_type_data.xml",
+        "data/ir_actions_server.xml",
         "report/final_settlement.xml",
 
         # views
