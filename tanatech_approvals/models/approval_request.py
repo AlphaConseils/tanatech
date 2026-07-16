@@ -32,6 +32,8 @@ class ApprovalRequest(models.Model):
         readonly=True,
     )
 
+    expenses_created = fields.Boolean(default=False)
+
     @api.depends("category_id.approval_type")
     def _compute_is_create_expenses(self):
         for request in self:
@@ -75,6 +77,7 @@ class ApprovalRequest(models.Model):
                 created |= expense
 
         if created:
+            self.expenses_created = True
             sheet = self.env["hr.expense.sheet"].sudo().create(
                 {
                     "name": self.name,
