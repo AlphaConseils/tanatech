@@ -15,6 +15,24 @@ from odoo.tools import format_date
 class HrPayslipEmployees(models.TransientModel):
     _inherit = 'hr.payslip.employees'
 
+    def _get_contract_struct(self, contract):
+        """ Structure to apply on the payslip generated for ``contract``.
+
+        The structure selected on the wizard is applied to every contract of
+        the batch, but an employee has two contracts here (declared + N.D.),
+        so a declared-type structure must not land on the undeclared contract
+        (and conversely). In that case the counterpart structure of the same
+        name is used — e.g. "Solde Tout Compte" -> "Solde Tout Compte - NA"
+        for the STC, so that the N.D. elements (overtime, bonuses...) end up
+        on the NA structure — with the contract's default structure as
+        fallback.
+        """
+        struct = self.structure_id
+        category = 'not_declared' if contract.contract_category == 'not_declared' else 'declared'
+        if struct and struct.type_id.structure_category != category:
+            struct = struct._get_category_counterpart(category)
+        return struct or contract.structure_type_id.default_struct_id
+
     def compute_sheet(self):
         self.ensure_one()
         if not self.env.context.get('active_id'):
@@ -109,7 +127,7 @@ class HrPayslipEmployees(models.TransientModel):
                 'date_from': payslip_run.date_start,
                 'date_to': payslip_run.date_end,
                 'contract_id': contract.id,
-                'struct_id': self.structure_id.id or contract.structure_type_id.default_struct_id.id,
+                'struct_id': self._get_contract_struct(contract).id,
             })
             payslips_vals.append(values)
         payslips = Payslip.with_context(tracking_disable=True).create(payslips_vals)
