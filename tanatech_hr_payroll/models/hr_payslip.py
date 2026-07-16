@@ -117,15 +117,31 @@ class HrPayslip(models.Model):
             entries.write({'contract_id': nd_contract.id})
 
     def _get_pdf_reports(self):
+        # Route every "Solde Tout Compte" payslip to the final settlement report,
+        # whatever the size of the print batch: this method is the single routing
+        # point of the /print/payslips flow (form button and list server action),
+        # so the reroute must not be restricted to single-slip prints.
+        # The substring criterion matches both STC structures (SD and NA) and is
+        # kept in sync with _compute_is_nd_ticket_payslip.
         res = super()._get_pdf_reports()
 
-        if len(self) == 1 and self.struct_id and 'Solde Tout Compte' in self.struct_id.name:
-            final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
-            for payslip in self:
-                for report in list(res.keys()):
-                    if report != final_settlement_template:
-                        res[report] -= payslip
+        final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
+        stc_payslips = self.filtered(
+            lambda slip: slip.struct_id and 'Solde Tout Compte' in slip.struct_id.name
+        )
+        if not stc_payslips:
+            return res
 
-                res[final_settlement_template] |= payslip
+        for report in list(res.keys()):
+            if report == final_settlement_template:
+                continue
+            remaining = res[report] - stc_payslips
+            if remaining:
+                res[report] = remaining
+            else:
+                # No slip left on this report: drop the entry so no empty PDF
+                # rendering is triggered downstream.
+                del res[report]
+        res[final_settlement_template] |= stc_payslips
 
         return res
