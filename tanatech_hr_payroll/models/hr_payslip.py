@@ -104,6 +104,15 @@ class HrPayslip(models.Model):
             ))
         return super(HrPayslip, printable_payslips).action_print_payslip()
 
+    def action_print_nd_tickets(self):
+        # Grouped counterpart of the form ticket button (action_print_nd_payslip):
+        # same report action, so same 80mm paperformat and template — the template
+        # iterates over docs, one merged PDF comes out natively.
+        nd_ticket_payslips = self._filter_nd_ticket_payslips()
+        if not nd_ticket_payslips:
+            raise UserError(_("Aucun bulletin NA dans la sélection."))
+        return self.env.ref('tanatech_hr_payroll.action_report_nd_payslip').report_action(nd_ticket_payslips)
+
     def _get_pdf_reports(self):
         # Route every "Solde Tout Compte" payslip to the final settlement report,
         # whatever the size of the print batch: this method is the single routing
