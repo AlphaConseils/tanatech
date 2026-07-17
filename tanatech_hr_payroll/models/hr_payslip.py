@@ -99,8 +99,8 @@ class HrPayslip(models.Model):
         printable_payslips = self - self._filter_nd_ticket_payslips()
         if not printable_payslips:
             raise UserError(_(
-                "Les bulletins NA s'impriment individuellement via leur ticket "
-                "dédié (bouton Imprimer de la fiche)."
+                "Aucun bulletin A4 dans la sélection. Pour les bulletins NA, "
+                "utilisez « Imprimer les tickets (NA) »."
             ))
         return super(HrPayslip, printable_payslips).action_print_payslip()
 
