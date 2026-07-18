@@ -3,7 +3,7 @@
 
     <!-- 80mm thermal receipt paper format -->
     <record id="paperformat_nd_payslip_ticket" model="report.paperformat">
-        <field name="name">ND Payslip Ticket (80mm)</field>
+        <field name="name">NA Payslip Ticket (80mm)</field>
         <field name="default" eval="False"/>
         <field name="format">custom</field>
         <field name="page_width">80</field>
