@@ -22,7 +22,7 @@ class HrPayslip(models.Model):
                 payslip.is_undeclared_payslip = True
 
     is_nd_ticket_payslip = fields.Boolean(
-        'Prints the N.D. 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
+        'Prints the NA 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
 
     @api.depends('contract_id', 'struct_id')
     def _compute_is_nd_ticket_payslip(self):
