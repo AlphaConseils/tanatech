@@ -148,7 +148,7 @@ class HrContract(models.Model):
                 if vals.get('state') == 'open':
                     if not not_declared_contract:
                         new_not_declared_contract = contract.copy({
-                            'name' : f'{contract.name} - N.D.',
+                            'name' : f'{contract.name} - NA',
                             'date_start' : contract.date_start,
                             'contract_category' : 'not_declared',
                             'state' : 'open_not_declared',
@@ -171,7 +171,7 @@ class HrContract(models.Model):
                         self.env.cr.commit()
                     else:
                         new_not_declared_contract = contract.copy({
-                            'name' : f'{contract.name} - N.D.',
+                            'name' : f'{contract.name} - NA',
                             'date_start' : contract.date_start,
                             'contract_category' : 'not_declared',
                             'state' : 'draft',
@@ -187,7 +187,7 @@ class HrContract(models.Model):
                         self.env.cr.commit()
                     else:
                         new_not_declared_contract = contract.copy({
-                            'name' : f'{contract.name} - N.D.',
+                            'name' : f'{contract.name} - NA',
                             'date_start' : contract.date_start,
                             'date_end' : contract.date_end,
                             'contract_category' : 'not_declared',
@@ -204,7 +204,7 @@ class HrContract(models.Model):
                         self.env.cr.commit()
                     else:
                         new_not_declared_contract = contract.copy({
-                            'name' : f'{contract.name} - N.D.',
+                            'name' : f'{contract.name} - NA',
                             'date_start' : contract.date_start,
                             'contract_category' : 'not_declared',
                             'state' : 'cancel',
@@ -281,7 +281,7 @@ class HrContract(models.Model):
             # name
             if 'name' in vals:
                 if not_declared_contract:
-                    name = f"{contract.name} - N.D."
+                    name = f"{contract.name} - NA"
                     self.env.cr.execute("""
                         UPDATE hr_contract
                         SET name = %s

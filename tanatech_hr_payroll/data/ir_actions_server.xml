@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Single entry point for printing payslips from the list view: triggers the
+         same /print/payslips flow as the form button, so _get_pdf_reports routes
+         each slip to its own report (custom payslip, final settlement, ...). -->
+    <record id="action_server_print_payslips" model="ir.actions.server">
+        <field name="name">Imprimer les bulletins (A4)</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_print_payslip()</field>
+    </record>
+
+    <!-- Grouped print of the monthly NA payslips on their dedicated 80mm ticket:
+         same report action as the form ticket button, rendered on the filtered
+         selection so the merged PDF is identical to the individual tickets. -->
+    <record id="action_server_print_nd_tickets" model="ir.actions.server">
+        <field name="name">Imprimer les tickets (NA)</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_print_nd_tickets()</field>
+    </record>
+
+    <!-- Unbind the direct report actions from the list "Print" menu: printing them
+         directly bypasses _get_pdf_reports, so grouped prints came out on the
+         standard template. The server action above is now the only list entry. -->
+    <record id="hr_payroll.action_report_payslip" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+    <record id="hr_payroll.action_report_light_payslip" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+</odoo>

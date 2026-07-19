@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from odoo import api, Command, models, fields, _
+from odoo.exceptions import UserError
 import logging
 
 
@@ -17,7 +18,7 @@ class HrPayslip(models.Model):
                 payslip.is_undeclared_payslip = True
 
     is_nd_ticket_payslip = fields.Boolean(
-        'Prints the N.D. 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
+        'Prints the NA 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
 
     @api.depends('contract_id', 'struct_id')
     def _compute_is_nd_ticket_payslip(self):
@@ -80,16 +81,69 @@ class HrPayslip(models.Model):
 
         return super().compute_sheet()
 
+    def _filter_nd_ticket_payslips(self):
+        """ Monthly NA payslips: undeclared structure category and not routed to
+        the final settlement report. They must only be printed through their
+        dedicated 80mm ticket (action_print_nd_payslip). """
+        return self.filtered(
+            lambda slip: slip.struct_id.type_id.structure_category == 'not_declared'
+            and 'Solde Tout Compte' not in (slip.struct_id.name or '')
+        )
+
+    def action_print_payslip(self):
+        # Guard raised here and not in _get_pdf_reports: that one is also called
+        # by _generate_pdf on payslip confirmation, where a UserError would block
+        # the validation of an ND-only batch. Here the server action / form button
+        # runs in a regular RPC, so the error shows up as a clean dialog instead
+        # of the empty zero-page PDF the /print/payslips controller would return.
+        printable_payslips = self - self._filter_nd_ticket_payslips()
+        if not printable_payslips:
+            raise UserError(_(
+                "Aucun bulletin A4 dans la sélection. Pour les bulletins NA, "
+                "utilisez « Imprimer les tickets (NA) »."
+            ))
+        return super(HrPayslip, printable_payslips).action_print_payslip()
+
+    def action_print_nd_tickets(self):
+        # Grouped counterpart of the form ticket button (action_print_nd_payslip):
+        # same report action, so same 80mm paperformat and template — the template
+        # iterates over docs, one merged PDF comes out natively.
+        nd_ticket_payslips = self._filter_nd_ticket_payslips()
+        if not nd_ticket_payslips:
+            raise UserError(_("Aucun bulletin NA dans la sélection."))
+        return self.env.ref('tanatech_hr_payroll.action_report_nd_payslip').report_action(nd_ticket_payslips)
+
     def _get_pdf_reports(self):
+        # Route every "Solde Tout Compte" payslip to the final settlement report,
+        # whatever the size of the print batch: this method is the single routing
+        # point of the /print/payslips flow (form button and list server action),
+        # so the reroute must not be restricted to single-slip prints.
+        # The substring criterion matches both STC structures (SD and NA) and is
+        # kept in sync with _compute_is_nd_ticket_payslip.
+        # Monthly NA payslips are dropped from the mapping: they must never come
+        # out of a batch print nor get the standard A4 slip attached on
+        # confirmation — their 80mm ticket is the only printable form.
         res = super()._get_pdf_reports()
 
-        if len(self) == 1 and self.struct_id and 'Solde Tout Compte' in self.struct_id.name:
-            final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
-            for payslip in self:
-                for report in list(res.keys()):
-                    if report != final_settlement_template:
-                        res[report] -= payslip
+        final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
+        stc_payslips = self.filtered(
+            lambda slip: slip.struct_id and 'Solde Tout Compte' in slip.struct_id.name
+        )
+        nd_ticket_payslips = self._filter_nd_ticket_payslips()
+        if not stc_payslips and not nd_ticket_payslips:
+            return res
 
-                res[final_settlement_template] |= payslip
+        for report in list(res.keys()):
+            remaining = res[report] - nd_ticket_payslips
+            if report != final_settlement_template:
+                remaining -= stc_payslips
+            if remaining:
+                res[report] = remaining
+            else:
+                # No slip left on this report: drop the entry so no empty PDF
+                # rendering is triggered downstream.
+                del res[report]
+        if stc_payslips:
+            res[final_settlement_template] |= stc_payslips
 
         return res
