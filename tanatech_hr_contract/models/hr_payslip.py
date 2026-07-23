@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
+import logging
 from collections import defaultdict
 
 from odoo import api, Command, models, fields
+
+_logger = logging.getLogger(__name__)
 
 
 class HrPayslip(models.Model):
@@ -141,54 +144,68 @@ class HrPayslip(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """ 
-        Override the create method to create a non-declared payslip once a declared one is created.
-        """
+        """ Override the create method to create the NA (non-declared) mirror
+        payslip once a declared one is created individually (outside a batch).
+
+        The ``skip_na_mirror`` context flag short-circuits the whole override:
+        it is set on the creation of the mirror itself to cut the recursion,
+        and can be used by any caller that must create a payslip without
+        triggering the mirror. """
+        if self.env.context.get('skip_na_mirror'):
+            return super().create(vals_list)
         res = super().create(vals_list)
         for payslip in res:
             if payslip.contract_id.contract_category == 'declared' and not payslip.payslip_run_id:
-                # contract = vals.get('contract_id')
-                # employee = vals.get('employee_id')
-                non_declared_contract = self.env['hr.contract'].search([
-                    ('company_id', '=', payslip.company_id.id),
-                    ('employee_id', '=', payslip.employee_id.id),
-                    ('contract_category', '=', 'not_declared'),
-                    ('state', 'in', ['open_not_declared', 'close']),
-                ], order='create_date desc')
-                name = ' '
-                non_declared_contract_id = non_declared_contract[0]
-                # Mirror the declared structure on the undeclared side ("Solde
-                # Tout Compte" -> "Solde Tout Compte - NA" for an STC), so the
-                # N.D. elements (overtime, bonuses...) follow the NA structure.
-                non_declared_structure_id = (
-                    (payslip.struct_id and payslip.struct_id._get_category_counterpart('not_declared'))
-                    or non_declared_contract_id.structure_type_id.default_struct_id
-                    or self.env['hr.payroll.structure'].search([('is_declared_type', '=', False)], limit=1)
-                )
-                date_from = payslip.date_from
-                date_to = payslip.date_to
-                state = payslip.state
-                company_id = payslip.company_id.id
-                
-                self.env.cr.execute("""
-                        INSERT INTO hr_payslip (name, employee_id, contract_id, struct_id, date_from, date_to, company_id, state)
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                        RETURNING id
-                    """,
-                    [
-                        name,
-                        payslip.employee_id.id, 
-                        non_declared_contract_id.id, 
-                        non_declared_structure_id.id, 
-                        date_from, 
-                        date_to, 
-                        company_id, 
-                        state
-                    ]
-                )
-                # self.env.cr.execute(query)
-                # self.env.cr.commit()
-                not_declared_payslip_id = self.env.cr.fetchone()
-                created_not_declared_payslip_id = self.env['hr.payslip'].search([('id', '=', not_declared_payslip_id)], limit=1)
-                created_not_declared_payslip_id._compute_worked_days_line_ids()
+                payslip._create_na_mirror_payslip()
         return res
+
+    def _create_na_mirror_payslip(self):
+        """ Create the NA mirror payslip of this declared payslip through the
+        ORM (the historical raw SQL INSERT skipped the name sequence, the
+        stored computes and compute_sheet(), leaving an empty NA slip).
+
+        - the NA structure comes from the explicit mapping
+          ``struct_id.na_structure_id`` (never "the first not_declared one");
+        - the contract is the employee's not_declared mirror contract;
+        - if either is missing: clear log and clean abort, no ghost slip. """
+        self.ensure_one()
+        na_structure = self.struct_id.na_structure_id
+        if not na_structure:
+            _logger.warning(
+                "Fiche NA non créée pour le bulletin %s (id %s) : aucune "
+                "structure NA associée (na_structure_id) sur la structure %r.",
+                self.name, self.id, self.struct_id.name,
+            )
+            return self.env['hr.payslip']
+        na_contract = self.env['hr.contract'].search([
+            ('company_id', '=', self.company_id.id),
+            ('employee_id', '=', self.employee_id.id),
+            ('contract_category', '=', 'not_declared'),
+            ('state', 'in', ['open_not_declared', 'close']),
+        ], order='create_date desc', limit=1)
+        if not na_contract:
+            _logger.warning(
+                "Fiche NA non créée pour le bulletin %s (id %s) : aucun "
+                "contrat miroir not_declared pour l'employé %r.",
+                self.name, self.id, self.employee_id.name,
+            )
+            return self.env['hr.payslip']
+        # 1. Create in draft (no state in the vals): the ORM computes the
+        #    name and the worked days lines, like the batch wizard flow.
+        na_payslip = self.env['hr.payslip'].with_context(skip_na_mirror=True).create({
+            'employee_id': self.employee_id.id,
+            'contract_id': na_contract.id,
+            'struct_id': na_structure.id,
+            'date_from': self.date_from,
+            'date_to': self.date_to,
+            'company_id': self.company_id.id,
+        })
+        # 2. Explicit compute_sheet() while still in draft: salary lines and
+        #    NA amount are generated.
+        na_payslip.compute_sheet()
+        # 3. Align the state on the declared payslip afterwards (the raw SQL
+        #    used to copy it at insert time; compute_sheet only runs on
+        #    draft/verify slips, hence the alignment comes last).
+        if na_payslip.state != self.state:
+            na_payslip.state = self.state
+        return na_payslip
