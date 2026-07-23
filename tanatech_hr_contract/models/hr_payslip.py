@@ -3,6 +3,7 @@ import logging
 from collections import defaultdict
 
 from odoo import api, Command, models, fields
+from odoo.tools import format_date
 
 _logger = logging.getLogger(__name__)
 
@@ -196,9 +197,27 @@ class HrPayslip(models.Model):
                 self.name, self.id, self.employee_id.name,
             )
             return self.env['hr.payslip']
+        # hr_payslip.name is required but its stored compute is not
+        # precomputed at create time on this codebase (the historical reason
+        # for the raw INSERT's name=' '): creating without an explicit name
+        # raises a "required field" ValidationError before the compute runs.
+        # Build it here with the same format as hr_payroll's _compute_name:
+        # "<payslip_name|Salary Slip> - <employee> - <month year>", in the
+        # employee's language.
+        lang = self.employee_id.lang or self.env.user.lang
+        payslip_name = (
+            na_structure.with_context(lang=lang).payslip_name
+            or self.with_context(lang=lang).env._('Salary Slip')
+        )
+        na_name = '%s - %s - %s' % (
+            payslip_name,
+            self.employee_id.name or '',
+            format_date(self.env, self.date_from, date_format="MMMM y", lang_code=lang),
+        )
         # 1. Create in draft (no state in the vals): the ORM computes the
-        #    name and the worked days lines, like the batch wizard flow.
+        #    worked days lines, like the batch wizard flow.
         na_payslip = self.env['hr.payslip'].with_context(skip_na_mirror=True).create({
+            'name': na_name,
             'employee_id': self.employee_id.id,
             'contract_id': na_contract.id,
             'struct_id': na_structure.id,
