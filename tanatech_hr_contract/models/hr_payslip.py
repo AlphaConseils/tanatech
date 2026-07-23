@@ -24,10 +24,16 @@ class HrPayslip(models.Model):
         for payslip in self:
             payslip.net_to_pay_wage = line_values['SALNETAP'][payslip._origin.id]['total']
 
-    @api.depends('contract_id')
+    @api.depends('contract_id.contract_category', 'struct_id.type_id.structure_category')
     def _compute_contract_category(self):
+        # NA (undeclared) payslip: undeclared mirror contract or undeclared
+        # structure. The 552f225 regression forced False everywhere, which made
+        # the declared/undeclared payroll analysis reports mix both worlds.
         for payslip in self:
-            payslip.is_from_undeclared_contract = False
+            payslip.is_from_undeclared_contract = (
+                payslip.contract_id.contract_category == 'not_declared'
+                or payslip.struct_id.type_id.structure_category == 'not_declared'
+            )
 
     def _get_nd_capacity_wage(self):
         """ Wage of the employee's "Undeclared" (NA) contract overlapping this
