@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Contracts",
-    "version": "1.4",
+    "version": "1.5",
     "summary": "Manage your Contracts activities",
     "description": "",
     "website": "https://www.nexources.com/",
