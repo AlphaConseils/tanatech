@@ -8,6 +8,14 @@ from odoo import api, SUPERUSER_ID
 _logger = logging.getLogger(__name__)
 
 
+def _normalize(label):
+    import unicodedata, re
+    s = unicodedata.normalize('NFKD', label or '')
+    s = ''.join(c for c in s if not unicodedata.combining(c))
+    s = re.sub(r'[^0-9a-zA-Z]+', ' ', s).strip().lower()
+    return s
+
+
 # ---------------------------------------------------------------------------
 # Rule code bodies (stored verbatim as amount_python_compute / condition_python)
 # ---------------------------------------------------------------------------
@@ -119,14 +127,28 @@ def _create_cp_salary_rules(env):
     Structure = env['hr.payroll.structure']
     category_cache = {}
 
+    # Index of every structure by its normalized name, so the target labels are
+    # matched despite case / accent / separator differences (e.g. the production
+    # 'Paie régulière NA' vs the coded 'Paie Régulière NA'). Several structures
+    # can collapse onto the same normalized key: keep them all and skip that key.
+    structures_by_norm = {}
+    for structure in Structure.with_context(active_test=False).search([]):
+        structures_by_norm.setdefault(_normalize(structure.name), Structure)
+        structures_by_norm[_normalize(structure.name)] |= structure
+
     for struct_name, rules in _rule_specs().items():
-        structures = Structure.search([('name', '=', struct_name)])
-        if len(structures) != 1:
+        structure = structures_by_norm.get(_normalize(struct_name))
+        if not structure:
             _logger.warning(
-                "CP rules migration: payroll structure %r not found (or "
-                "multiple), its rules are skipped.", struct_name)
+                "CP rules migration: payroll structure %r not found, its "
+                "rules are skipped.", struct_name)
             continue
-        structure = structures
+        if len(structure) > 1:
+            _logger.warning(
+                "CP rules migration: %s payroll structures normalize to %r, "
+                "its rules are skipped (manual disambiguation required).",
+                len(structure), struct_name)
+            continue
 
         for spec in rules:
             existing = Rule.search_count([
