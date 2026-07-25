@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+from datetime import datetime, time
+
 from odoo import api, Command, models, fields, _
 from odoo.exceptions import UserError
 import logging
@@ -72,7 +74,41 @@ class HrPayslip(models.Model):
             payslip.overtime_hours_count = mapped_validated_overtimes.get(payslip.employee_id, 0)
 
     def compute_sheet(self):
+        # generate_work_entries(force=True) court-circuite le garde-fou
+        # date_generated_from/to et NE supprime PAS l'existant : sans nettoyage
+        # préalable, chaque recalcul de bulletin empile un jeu complet d'entrées
+        # de travail identiques (doublons). On reproduit donc le pattern
+        # d'archivage de hr_attendance._regenerate_work_entries : archiver avant
+        # de régénérer.
+        #
+        # Déduplication des couples (employee_id, date_from, date_to) : lors d'un
+        # calcul par lot, la fiche SD et sa jumelle NA portent le même employé et
+        # la même période ; sans cela elles déclencheraient deux fois le même
+        # archivage + régénération (redondant, quoique idempotent).
+        seen = set()
         for slip in self:
+            key = (slip.employee_id.id, slip.date_from, slip.date_to)
+            if key in seen:
+                continue
+            seen.add(key)
+
+            # Même source de vérité que hr_employee.generate_work_entries pour la
+            # liste d'états : on archive exactement l'ensemble qui va être
+            # régénéré (ni les entrées SD légitimes en 'open', ni les entrées
+            # hors période, ni les entrées déjà validées).
+            contracts = slip.employee_id._get_contracts(
+                slip.date_from,
+                slip.date_to,
+                states=["open_not_declared", "close"],
+            )
+            work_entries = self.env['hr.work.entry'].search([
+                ('contract_id', 'in', contracts.ids),
+                ('date_stop', '>=', datetime.combine(slip.date_from, time.min)),
+                ('date_start', '<=', datetime.combine(slip.date_to, time.max)),
+                ('state', '!=', 'validated'),
+            ])
+            work_entries.write({'active': False})
+
             slip.employee_id.generate_work_entries(
                 slip.date_from,
                 slip.date_to,
