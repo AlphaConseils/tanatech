@@ -222,7 +222,11 @@
             <t t-set="overtime_70" t-value="sum(worked_days_lines_overtime_70.mapped('amount'))"/>
             <t t-set="overtime_100" t-value="sum(worked_days_lines_overtime_100.mapped('amount'))"/>
             <t t-set="gross_salary" t-value="overtime_30 + overtime_40 + overtime_50 + overtime_70 + overtime_100 + o.contract_id.wage"/> -->
-            <t t-set="gross_salary" t-value="o.contract_id.wage"/>
+            <t t-set="basic_line" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.code == 'BASIC')[:1]"/>
+            <t t-set="gross_line" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.code == 'GROSS')[:1]"/>
+            <t t-set="basic_salary" t-value="basic_line.total if basic_line else o.contract_id.wage"/>
+            <t t-set="gross_salary" t-value="gross_line.total if gross_line else o.contract_id.wage"/>
+            <t t-set="intermediate_lines" t-value="payslip_lines.filtered(lambda payslip_line: basic_line.sequence &lt; payslip_line.sequence &lt; gross_line.sequence and payslip_line.total and payslip_line.category_id.code not in ('TOTAL01',)) if basic_line and gross_line else payslip_lines.browse()"/>
 
             <!-- Compute deduction -->
             <t t-set="payslip_lines_irsa" t-value="payslip_lines.filtered(lambda payslip_line: payslip_line.category_id.code in ('IRSA02', ))"/>
@@ -261,14 +265,21 @@
                                 <span>Basic salary</span>
                             </td>
                             <td>
-                                <span t-if="o.contract_id.wage">
-                                    <t t-set="formatted_amount_wage" t-value="'{0:,.2f}'.format(o.contract_id.wage)"/>
-                                    <span t-out="formatted_amount_wage" />
-                                </span>
-                                <!-- <span t-if="o.contract_id.wage" t-field="o.contract_id.wage"/> -->
-                                <span t-else="">0</span>
+                                <t t-set="formatted_amount_wage" t-value="'{0:,.2f}'.format(basic_salary)"/>
+                                <span t-out="formatted_amount_wage" />
                             </td>
                         </tr>
+                        <t t-foreach="intermediate_lines" t-as="intermediate_line">
+                            <tr>
+                                <td style=" width: 70%;">
+                                    <span t-out="intermediate_line.name"/>
+                                </td>
+                                <td>
+                                    <t t-set="formatted_amount_intermediate" t-value="'{0:,.2f}'.format(intermediate_line.total)"/>
+                                    <span t-out="formatted_amount_intermediate"/>
+                                </td>
+                            </tr>
+                        </t>
                         <!-- <tr>
                             <td style=" width: 70%;">
                                 <span>Overtime at 30%</span>
