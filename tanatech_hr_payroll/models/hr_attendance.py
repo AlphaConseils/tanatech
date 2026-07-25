@@ -102,7 +102,7 @@ class HrAttendanceInherit(models.Model):
             # ('calendar_id', '=', overtime.employee_id.company_id.resource_calendar_id.id),  #Considering employee's calendar or company
             ('resource_id', '=', False)  # resource_id = False => Public holidays
         ])
-        user_tz = timezone(self.env.user.tz or self._context.get('tz') or self.company_id.resource_calendar_id.tz or 'UTC')
+        user_tz = timezone(self.env.user.tz or self._context.get('tz') or self.env.company.resource_calendar_id.tz or 'UTC')
         if public_holidays:
             for holiday in public_holidays:
                 date_from = utc.localize(holiday.date_from).astimezone(user_tz)
