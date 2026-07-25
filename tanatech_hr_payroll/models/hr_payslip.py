@@ -20,16 +20,16 @@ class HrPayslip(models.Model):
     is_nd_ticket_payslip = fields.Boolean(
         'Prints the NA 80mm ticket ?', compute="_compute_is_nd_ticket_payslip", store=False)
 
-    @api.depends('contract_id', 'struct_id')
+    @api.depends('contract_id', 'struct_id', 'struct_id.is_stc')
     def _compute_is_nd_ticket_payslip(self):
         # Only undeclared payslips whose structure is NOT routed to report_final_settlement
-        # (i.e. struct name does not contain 'Solde Tout Compte') keep the dedicated 80mm
-        # "PAIEMENT" ticket (report_nd_payslip). This mirrors the exact substring used by
-        # _get_pdf_reports, so the "Solde Tout Compte - NA" structure (which DOES contain it)
-        # is excluded and follows the standard flow like declared payslips.
+        # (i.e. struct_id.is_stc is False) keep the dedicated 80mm "PAIEMENT" ticket
+        # (report_nd_payslip). This mirrors the exact criterion used by _get_pdf_reports,
+        # so the STC NA structure (flagged is_stc) is excluded and follows the standard
+        # flow like declared payslips.
         for payslip in self:
             undeclared = bool(payslip.contract_id and payslip.contract_id.contract_category == 'not_declared')
-            payslip.is_nd_ticket_payslip = undeclared and 'Solde Tout Compte' not in (payslip.struct_id.name or '')
+            payslip.is_nd_ticket_payslip = undeclared and not payslip.struct_id.is_stc
 
     overtime_hours_count = fields.Float(compute='_compute_overtime_hours')
 
@@ -87,7 +87,7 @@ class HrPayslip(models.Model):
         dedicated 80mm ticket (action_print_nd_payslip). """
         return self.filtered(
             lambda slip: slip.struct_id.type_id.structure_category == 'not_declared'
-            and 'Solde Tout Compte' not in (slip.struct_id.name or '')
+            and not slip.struct_id.is_stc
         )
 
     def action_print_payslip(self):
@@ -114,21 +114,19 @@ class HrPayslip(models.Model):
         return self.env.ref('tanatech_hr_payroll.action_report_nd_payslip').report_action(nd_ticket_payslips)
 
     def _get_pdf_reports(self):
-        # Route every "Solde Tout Compte" payslip to the final settlement report,
-        # whatever the size of the print batch: this method is the single routing
-        # point of the /print/payslips flow (form button and list server action),
-        # so the reroute must not be restricted to single-slip prints.
-        # The substring criterion matches both STC structures (SD and NA) and is
-        # kept in sync with _compute_is_nd_ticket_payslip.
+        # Route every STC payslip (struct_id.is_stc) to the final settlement
+        # report, whatever the size of the print batch: this method is the single
+        # routing point of the /print/payslips flow (form button and list server
+        # action), so the reroute must not be restricted to single-slip prints.
+        # The is_stc flag matches both STC structures (SD and NA) and is kept in
+        # sync with _compute_is_nd_ticket_payslip.
         # Monthly NA payslips are dropped from the mapping: they must never come
         # out of a batch print nor get the standard A4 slip attached on
         # confirmation — their 80mm ticket is the only printable form.
         res = super()._get_pdf_reports()
 
         final_settlement_template = self.env.ref('tanatech_hr_payroll.action_report_final_settlement')
-        stc_payslips = self.filtered(
-            lambda slip: slip.struct_id and 'Solde Tout Compte' in slip.struct_id.name
-        )
+        stc_payslips = self.filtered(lambda slip: slip.struct_id.is_stc)
         nd_ticket_payslips = self._filter_nd_ticket_payslips()
         if not stc_payslips and not nd_ticket_payslips:
             return res
