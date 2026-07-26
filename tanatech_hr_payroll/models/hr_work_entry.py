@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from odoo import api, Command, models, fields, _
+import itertools
 import logging
 
 from datetime import date, datetime
@@ -10,6 +11,57 @@ class HrWorkEntry(models.Model):
     _inherit = "hr.work.entry"
 
     work_entry_type_id = fields.Many2one("hr.work.entry.type", store=True)
+
+    def _mark_conflicting_work_entries(self, start, stop):
+        """ Surcharge : neutralise le conflit structurel entre les deux contrats
+        miroirs d'un même employé (déclaré 'open' et non-déclaré
+        'open_not_declared'), qui génèrent des entrées de travail sur des
+        créneaux rigoureusement identiques et seraient donc systématiquement
+        marquées en conflit par le core (qui ne joint que sur employee_id).
+
+        On réécrit la requête du core à l'identique en y ajoutant deux LEFT JOIN
+        sur hr_contract (hc1 sur b1.contract_id, hc2 sur b2.contract_id) et une
+        clause excluant les paires miroirs. Le lien miroir est porté par le champ
+        custom hr_contract.contract_id ('Source Contract'), renseigné sur le
+        contrat NA et pointant vers le contrat SD.
+
+        NULL-safe : le lien est unidirectionnel (renseigné côté NA seulement) et
+        souvent NULL. Une clause NOT (hc1.contract_id = hc2.id OR hc2.contract_id
+        = hc1.id) vaudrait NULL dès qu'un contract_id est NULL, et PostgreSQL
+        traite une ligne dont le WHERE est NULL comme non retenue : la paire
+        serait alors écartée de la détection à tort (faux négatif de conflit).
+        On enveloppe donc chaque comparaison dans COALESCE(..., FALSE) = FALSE :
+        lien absent (NULL) -> COALESCE rend FALSE -> la condition reste vraie et
+        la paire est conservée pour la détection normale ; seule une égalité
+        miroir avérée (TRUE) fait basculer COALESCE à TRUE et exclut la paire.
+        """
+        self.flush_model(['date_start', 'date_stop', 'employee_id', 'active'])
+        query = """
+            SELECT b1.id,
+                   b2.id
+              FROM hr_work_entry b1
+              JOIN hr_work_entry b2
+                ON b1.employee_id = b2.employee_id
+               AND b1.id <> b2.id
+         LEFT JOIN hr_contract hc1
+                ON hc1.id = b1.contract_id
+         LEFT JOIN hr_contract hc2
+                ON hc2.id = b2.contract_id
+             WHERE b1.date_start <= %(stop)s
+               AND b1.date_stop >= %(start)s
+               AND b1.active = TRUE
+               AND b2.active = TRUE
+               AND tsrange(b1.date_start, b1.date_stop, '()') && tsrange(b2.date_start, b2.date_stop, '()')
+               AND COALESCE(hc1.contract_id = hc2.id, FALSE) = FALSE
+               AND COALESCE(hc2.contract_id = hc1.id, FALSE) = FALSE
+               AND {}
+        """.format("b2.id IN %(ids)s" if self.ids else "b2.date_start <= %(stop)s AND b2.date_stop >= %(start)s")
+        self.env.cr.execute(query, {"stop": stop, "start": start, "ids": tuple(self.ids)})
+        conflicts = set(itertools.chain.from_iterable(self.env.cr.fetchall()))
+        self.browse(conflicts).write({
+            'state': 'conflict',
+        })
+        return bool(conflicts)
 
     def auto_update_overtime_work_entry_type(self):
         work_entries_to_unlink = self.env[self._name]
