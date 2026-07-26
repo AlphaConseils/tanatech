@@ -39,8 +39,22 @@ class HrAttendanceInherit(models.Model):
         # Last time of the day (23:59:59)
         last_time = datetime.combine(date_start_tz.date(), time.max)
         last_time_utc = pytz.utc.localize(last_time).astimezone(pytz.utc)
+        # Restreindre l'archivage aux seuls contrats qui seront effectivement
+        # régénérés par generate_work_entries (via la surcharge hr_employee :
+        # open_not_declared, close). Sans ce filtre, les entrées des contrats SD
+        # ('open') sont archivées mais jamais reconstruites (generate ne les
+        # cible pas et date_generated_from/to reste inchangé, donc le cron ne les
+        # rejoue pas) -> bulletins SD sans jours travaillés.
+        # _get_contracts attend des dates : on passe .date(), exactement comme le
+        # fait generate_work_entries en interne (fields.Date.to_date sur ces
+        # mêmes bornes datetime), pour archiver le même ensemble que celui régénéré.
+        contracts = attendance.employee_id._get_contracts(
+            first_time_utc.date(),
+            last_time_utc.date(),
+            states=["open_not_declared", "close"],
+        )
         work_entries = self.env['hr.work.entry'].search([
-            ('employee_id', '=', attendance.employee_id.id),
+            ('contract_id', 'in', contracts.ids),
             ('date_stop', '>=', first_time_utc),
             ('date_start', '<=', last_time_utc),
             ('state', '!=', 'validated')])
