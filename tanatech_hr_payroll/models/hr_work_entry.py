@@ -6,11 +6,85 @@ import logging
 from datetime import date, datetime
 import pytz
 
+_logger = logging.getLogger(__name__)
+
 
 class HrWorkEntry(models.Model):
     _inherit = "hr.work.entry"
 
     work_entry_type_id = fields.Many2one("hr.work.entry.type", store=True)
+
+    def _get_undeclared_scope(self):
+        """ Entrées de travail relevant de l'univers non déclaré.
+
+        Le critère porte sur le contrat et non sur la structure de paie : c'est
+        le contrat qui ancre l'entrée de travail. Le double critère
+        (contract_category ET state) est volontaire — la catégorie est la donnée
+        de référence, l'état 'open_not_declared' rattrape les contrats miroirs
+        dont la catégorie n'aurait pas été renseignée.
+        """
+        return self.filtered(
+            lambda entry: entry.contract_id.contract_category == 'not_declared'
+            or entry.contract_id.state == 'open_not_declared'
+        )
+
+    def action_validate(self):
+        """ Surcharge : seules les entrées de l'univers déclaré atteignent
+        l'état 'validated'.
+
+        La contrainte d'exclusion du core ('_work_entries_no_validated_conflict',
+        hr_work_entry/models/hr_work_entry.py:55-65) interdit à deux entrées
+        validées et actives de se chevaucher pour un même employee_id ; le
+        contrat ne figure pas dans la clé. Or les deux contrats miroirs d'un même
+        salarié partagent le même calendrier et produisent des entrées sur des
+        créneaux rigoureusement identiques : les valider toutes lève une
+        ExclusionViolation PostgreSQL, que rien ne peut rattraper applicativement.
+
+        Pourquoi ne pas simplement restreindre la validation au contrat porteur
+        du bulletin : le bulletin NA est lui aussi un bulletin « régulier » au
+        sens de action_payslip_done (hr_payroll/models/hr_payslip.py:480), la
+        structure NA étant le default_struct_id de son propre type — voir
+        _compute_struct_id, même fichier ligne 1030. Il déclenche donc à son tour
+        la validation de SES entrées, qui heurteraient celles déjà validées par
+        le bulletin déclaré. Et la validation par lot est pire : hr.payslip.run
+        passe tous les bulletins en un seul appel, la boucle des lignes 481-487
+        unionne les recordsets et un unique action_validate() écrit l'ensemble —
+        les deux univers sont alors validés dans la MÊME transaction.
+
+        On tranche donc au seul endroit du code qui écrit state='validated' via
+        l'ORM (hr_work_entry/models/hr_work_entry.py:113-124), ce qui couvre
+        d'un coup les deux chemins. Surcharger action_payslip_done aurait imposé
+        d'en recopier le corps — le search visé y est écrit en dur, sans point
+        d'insertion — donc de rompre la chaîne d'héritage, au premier rang de
+        laquelle hr_payroll_account, qui génère la pièce comptable du bulletin.
+
+        Les entrées non déclarées restent en 'draft'. C'est déjà leur état
+        aujourd'hui, et il est sans incidence sur les montants : le calcul des
+        heures (hr_payroll/models/hr_contract.py:344-393, _get_work_hours) et
+        celui des jours travaillés (hr_payroll/models/hr_payslip.py:1143-1146)
+        filtrent sur le contrat, jamais sur l'état de l'entrée.
+        """
+        undeclared = self._get_undeclared_scope()
+        declared = self - undeclared
+        if undeclared:
+            _logger.info(
+                "Validation des entrées de travail : %s entrée(s) de l'univers "
+                "non déclaré écartée(s) du passage à 'validated'.",
+                len(undeclared),
+            )
+        result = super(HrWorkEntry, declared).action_validate()
+        if declared and not result:
+            # Le core renvoie False sans rien valider et sans lever : sans cette
+            # trace, un conflit résiduel côté déclaré passerait la validation du
+            # bulletin en 'done' tout en laissant l'intégralité du lot non
+            # validée, silencieusement.
+            _logger.warning(
+                "Validation des entrées de travail : échec sur le périmètre "
+                "déclaré (chevauchement résiduel ou entrée sans type). Aucune "
+                "des %s entrée(s) n'a été validée ; ids=%s",
+                len(declared), declared.ids[:50],
+            )
+        return result
 
     def _mark_conflicting_work_entries(self, start, stop):
         """ Surcharge : neutralise le conflit structurel entre les deux contrats
@@ -34,6 +108,21 @@ class HrWorkEntry(models.Model):
         lien absent (NULL) -> COALESCE rend FALSE -> la condition reste vraie et
         la paire est conservée pour la détection normale ; seule une égalité
         miroir avérée (TRUE) fait basculer COALESCE à TRUE et exclut la paire.
+
+        Second filet, indépendant de la qualité de la donnée : la détection est
+        restreinte aux paires de MÊME univers (contract_category). Le lien miroir
+        hr_contract.contract_id n'est renseigné que côté NA et peut manquer ; une
+        paire miroir orpheline de ce lien resterait alors marquée en conflit,
+        _check_if_error renverrait True et action_validate abandonnerait — sans
+        lever, donc en silence — la validation de TOUT le recordset, c'est-à-dire
+        du lot entier en validation groupée. Un seul contrat mal apparié
+        suffirait à ne rien valider des 566 bulletins.
+
+        Ce second filet ne peut pas masquer un conflit qui compterait vraiment :
+        depuis action_validate ci-dessus, seul l'univers déclaré atteint
+        'validated', donc un chevauchement inter-univers ne peut par construction
+        jamais être soumis à la contrainte d'exclusion. Les chevauchements
+        intra-univers, eux, restent intégralement détectés.
         """
         self.flush_model(['date_start', 'date_stop', 'employee_id', 'active'])
         query = """
@@ -54,6 +143,7 @@ class HrWorkEntry(models.Model):
                AND tsrange(b1.date_start, b1.date_stop, '()') && tsrange(b2.date_start, b2.date_stop, '()')
                AND COALESCE(hc1.contract_id = hc2.id, FALSE) = FALSE
                AND COALESCE(hc2.contract_id = hc1.id, FALSE) = FALSE
+               AND COALESCE(hc1.contract_category, 'declared') = COALESCE(hc2.contract_category, 'declared')
                AND {}
         """.format("b2.id IN %(ids)s" if self.ids else "b2.date_start <= %(stop)s AND b2.date_stop >= %(start)s")
         self.env.cr.execute(query, {"stop": stop, "start": start, "ids": tuple(self.ids)})
