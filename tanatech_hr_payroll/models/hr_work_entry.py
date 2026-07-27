@@ -15,13 +15,13 @@ class HrWorkEntry(models.Model):
     work_entry_type_id = fields.Many2one("hr.work.entry.type", store=True)
 
     def _get_undeclared_scope(self):
-        """ Entrées de travail relevant de l'univers non déclaré.
+        """ Work entries belonging to the undeclared side of the mirror setup.
 
-        Le critère porte sur le contrat et non sur la structure de paie : c'est
-        le contrat qui ancre l'entrée de travail. Le double critère
-        (contract_category ET state) est volontaire — la catégorie est la donnée
-        de référence, l'état 'open_not_declared' rattrape les contrats miroirs
-        dont la catégorie n'aurait pas été renseignée.
+        The criterion is the contract, not the payroll structure: the contract is
+        what a work entry is anchored on. Testing both contract_category AND
+        state is deliberate — the category is the reference data, the
+        'open_not_declared' state catches mirror contracts whose category was
+        never filled in.
         """
         return self.filtered(
             lambda entry: entry.contract_id.contract_category == 'not_declared'
@@ -29,100 +29,102 @@ class HrWorkEntry(models.Model):
         )
 
     def action_validate(self):
-        """ Surcharge : seules les entrées de l'univers déclaré atteignent
-        l'état 'validated'.
+        """ Override: only work entries of the declared side ever reach the
+        'validated' state.
 
-        La contrainte d'exclusion du core ('_work_entries_no_validated_conflict',
-        hr_work_entry/models/hr_work_entry.py:55-65) interdit à deux entrées
-        validées et actives de se chevaucher pour un même employee_id ; le
-        contrat ne figure pas dans la clé. Or les deux contrats miroirs d'un même
-        salarié partagent le même calendrier et produisent des entrées sur des
-        créneaux rigoureusement identiques : les valider toutes lève une
-        ExclusionViolation PostgreSQL, que rien ne peut rattraper applicativement.
+        The core exclusion constraint ('_work_entries_no_validated_conflict',
+        hr_work_entry/models/hr_work_entry.py:55-65) forbids two validated and
+        active work entries from overlapping for a single employee_id; the
+        contract is not part of the exclusion key. Yet the two mirror contracts
+        of one employee share the same working calendar and produce work entries
+        on strictly identical time slots: validating them all raises a
+        PostgreSQL ExclusionViolation, which no application-level code can catch
+        up with.
 
-        Pourquoi ne pas simplement restreindre la validation au contrat porteur
-        du bulletin : le bulletin NA est lui aussi un bulletin « régulier » au
-        sens de action_payslip_done (hr_payroll/models/hr_payslip.py:480), la
-        structure NA étant le default_struct_id de son propre type — voir
-        _compute_struct_id, même fichier ligne 1030. Il déclenche donc à son tour
-        la validation de SES entrées, qui heurteraient celles déjà validées par
-        le bulletin déclaré. Et la validation par lot est pire : hr.payslip.run
-        passe tous les bulletins en un seul appel, la boucle des lignes 481-487
-        unionne les recordsets et un unique action_validate() écrit l'ensemble —
-        les deux univers sont alors validés dans la MÊME transaction.
+        Why not simply restrict validation to the contract carrying the payslip:
+        the NA payslip is a 'regular' payslip too as far as action_payslip_done
+        is concerned (hr_payroll/models/hr_payslip.py:480), the NA structure
+        being the default_struct_id of its own structure type — see
+        _compute_struct_id, same file, line 1030. It therefore triggers the
+        validation of ITS OWN entries in turn, which would collide with the ones
+        the declared payslip has already validated. Batch validation is worse
+        still: hr.payslip.run passes every payslip in a single call, the loop at
+        lines 481-487 unions the recordsets and one single action_validate()
+        writes the whole lot — both sides are then validated within the SAME
+        transaction.
 
-        On tranche donc au seul endroit du code qui écrit state='validated' via
-        l'ORM (hr_work_entry/models/hr_work_entry.py:113-124), ce qui couvre
-        d'un coup les deux chemins. Surcharger action_payslip_done aurait imposé
-        d'en recopier le corps — le search visé y est écrit en dur, sans point
-        d'insertion — donc de rompre la chaîne d'héritage, au premier rang de
-        laquelle hr_payroll_account, qui génère la pièce comptable du bulletin.
+        So the cut is made at the only place that writes state='validated'
+        through the ORM (hr_work_entry/models/hr_work_entry.py:113-124), which
+        covers both paths at once. Overriding action_payslip_done would have
+        meant copying its body over — the search at stake is hardcoded in the
+        middle of the method, with no insertion point — hence breaking the
+        inheritance chain, starting with hr_payroll_account, which generates the
+        payslip's accounting entry.
 
-        Les entrées non déclarées restent en 'draft'. C'est déjà leur état
-        aujourd'hui, et il est sans incidence sur les montants : le calcul des
-        heures (hr_payroll/models/hr_contract.py:344-393, _get_work_hours) et
-        celui des jours travaillés (hr_payroll/models/hr_payslip.py:1143-1146)
-        filtrent sur le contrat, jamais sur l'état de l'entrée.
+        Undeclared work entries stay in 'draft'. That is already their state
+        today, and it has no bearing on amounts: work hours
+        (hr_payroll/models/hr_contract.py:344-393, _get_work_hours) and worked
+        days (hr_payroll/models/hr_payslip.py:1143-1146) are both computed by
+        filtering on the contract, never on the entry state.
         """
         undeclared = self._get_undeclared_scope()
         declared = self - undeclared
         if undeclared:
             _logger.info(
-                "Validation des entrées de travail : %s entrée(s) de l'univers "
-                "non déclaré écartée(s) du passage à 'validated'.",
+                "Work entry validation: %s undeclared entry(ies) kept out of "
+                "the transition to 'validated'.",
                 len(undeclared),
             )
         result = super(HrWorkEntry, declared).action_validate()
         if declared and not result:
-            # Le core renvoie False sans rien valider et sans lever : sans cette
-            # trace, un conflit résiduel côté déclaré passerait la validation du
-            # bulletin en 'done' tout en laissant l'intégralité du lot non
-            # validée, silencieusement.
+            # The core returns False without validating anything and without
+            # raising: without this trace, a leftover conflict on the declared
+            # side would let the payslip reach 'done' while silently leaving the
+            # whole batch unvalidated.
             _logger.warning(
-                "Validation des entrées de travail : échec sur le périmètre "
-                "déclaré (chevauchement résiduel ou entrée sans type). Aucune "
-                "des %s entrée(s) n'a été validée ; ids=%s",
+                "Work entry validation: failed on the declared side (leftover "
+                "overlap or entry without a work entry type). None of the %s "
+                "entry(ies) was validated; ids=%s",
                 len(declared), declared.ids[:50],
             )
         return result
 
     def _mark_conflicting_work_entries(self, start, stop):
-        """ Surcharge : neutralise le conflit structurel entre les deux contrats
-        miroirs d'un même employé (déclaré 'open' et non-déclaré
-        'open_not_declared'), qui génèrent des entrées de travail sur des
-        créneaux rigoureusement identiques et seraient donc systématiquement
-        marquées en conflit par le core (qui ne joint que sur employee_id).
+        """ Override: neutralises the structural conflict between the two mirror
+        contracts of one employee (declared 'open' and undeclared
+        'open_not_declared'), which generate work entries on strictly identical
+        time slots and would therefore be systematically marked as conflicting by
+        the core (which only joins on employee_id).
 
-        On réécrit la requête du core à l'identique en y ajoutant deux LEFT JOIN
-        sur hr_contract (hc1 sur b1.contract_id, hc2 sur b2.contract_id) et une
-        clause excluant les paires miroirs. Le lien miroir est porté par le champ
-        custom hr_contract.contract_id ('Source Contract'), renseigné sur le
-        contrat NA et pointant vers le contrat SD.
+        The core query is rewritten as-is, with two extra LEFT JOINs on
+        hr_contract (hc1 on b1.contract_id, hc2 on b2.contract_id) and a clause
+        excluding mirror pairs. The mirror link is carried by the custom
+        hr_contract.contract_id field ('Source Contract'), set on the NA contract
+        and pointing at the SD one.
 
-        NULL-safe : le lien est unidirectionnel (renseigné côté NA seulement) et
-        souvent NULL. Une clause NOT (hc1.contract_id = hc2.id OR hc2.contract_id
-        = hc1.id) vaudrait NULL dès qu'un contract_id est NULL, et PostgreSQL
-        traite une ligne dont le WHERE est NULL comme non retenue : la paire
-        serait alors écartée de la détection à tort (faux négatif de conflit).
-        On enveloppe donc chaque comparaison dans COALESCE(..., FALSE) = FALSE :
-        lien absent (NULL) -> COALESCE rend FALSE -> la condition reste vraie et
-        la paire est conservée pour la détection normale ; seule une égalité
-        miroir avérée (TRUE) fait basculer COALESCE à TRUE et exclut la paire.
+        NULL-safe: the link is one-way (set on the NA side only) and often NULL.
+        A NOT (hc1.contract_id = hc2.id OR hc2.contract_id = hc1.id) clause would
+        evaluate to NULL as soon as one contract_id is NULL, and PostgreSQL
+        discards rows whose WHERE evaluates to NULL: the pair would then be
+        wrongly dropped from detection (false negative). Each comparison is
+        therefore wrapped in COALESCE(..., FALSE) = FALSE: a missing link (NULL)
+        makes COALESCE return FALSE, so the condition stays true and the pair is
+        kept for normal detection; only a proven mirror equality (TRUE) flips
+        COALESCE to TRUE and excludes the pair.
 
-        Second filet, indépendant de la qualité de la donnée : la détection est
-        restreinte aux paires de MÊME univers (contract_category). Le lien miroir
-        hr_contract.contract_id n'est renseigné que côté NA et peut manquer ; une
-        paire miroir orpheline de ce lien resterait alors marquée en conflit,
-        _check_if_error renverrait True et action_validate abandonnerait — sans
-        lever, donc en silence — la validation de TOUT le recordset, c'est-à-dire
-        du lot entier en validation groupée. Un seul contrat mal apparié
-        suffirait à ne rien valider des 566 bulletins.
+        Second safety net, independent of data quality: detection is restricted
+        to pairs on the SAME side (contract_category). The hr_contract.contract_id
+        mirror link is only set on the NA side and may be missing; a mirror pair
+        orphaned from that link would still be marked as conflicting,
+        _check_if_error would return True and action_validate would give up —
+        without raising, hence silently — on validating the WHOLE recordset, that
+        is the entire batch under grouped validation. One badly paired contract
+        would be enough to validate nothing out of the 566 payslips.
 
-        Ce second filet ne peut pas masquer un conflit qui compterait vraiment :
-        depuis action_validate ci-dessus, seul l'univers déclaré atteint
-        'validated', donc un chevauchement inter-univers ne peut par construction
-        jamais être soumis à la contrainte d'exclusion. Les chevauchements
-        intra-univers, eux, restent intégralement détectés.
+        This second net cannot hide a conflict that would actually matter: since
+        action_validate above only lets the declared side reach 'validated', an
+        overlap across sides can by construction never be submitted to the
+        exclusion constraint. Overlaps within one side remain fully detected.
         """
         self.flush_model(['date_start', 'date_stop', 'employee_id', 'active'])
         query = """
