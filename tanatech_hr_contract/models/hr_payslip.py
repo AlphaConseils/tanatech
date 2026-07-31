@@ -163,50 +163,7 @@ class HrPayslip(models.Model):
         res = super().create(vals_list)
         for payslip in res:
             if payslip.contract_id.contract_category == 'declared' and not payslip.payslip_run_id:
-                # contract = vals.get('contract_id')
-                # employee = vals.get('employee_id')
-                non_declared_contract = self.env['hr.contract'].search([
-                    ('company_id', '=', payslip.company_id.id),
-                    ('employee_id', '=', payslip.employee_id.id),
-                    ('contract_category', '=', 'not_declared'),
-                    ('state', 'in', ['open_not_declared', 'close']),
-                ], order='create_date desc')
-                name = ' '
-                non_declared_contract_id = non_declared_contract[0]
-                # Mirror the declared structure on the undeclared side ("Solde
-                # Tout Compte" -> "Solde Tout Compte - NA" for an STC), so the
-                # N.D. elements (overtime, bonuses...) follow the NA structure.
-                non_declared_structure_id = (
-                    (payslip.struct_id and payslip.struct_id._get_category_counterpart('not_declared'))
-                    or non_declared_contract_id.structure_type_id.default_struct_id
-                    or self.env['hr.payroll.structure'].search([('is_declared_type', '=', False)], limit=1)
-                )
-                date_from = payslip.date_from
-                date_to = payslip.date_to
-                state = payslip.state
-                company_id = payslip.company_id.id
-                
-                self.env.cr.execute("""
-                        INSERT INTO hr_payslip (name, employee_id, contract_id, struct_id, date_from, date_to, company_id, state)
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                        RETURNING id
-                    """,
-                    [
-                        name,
-                        payslip.employee_id.id, 
-                        non_declared_contract_id.id, 
-                        non_declared_structure_id.id, 
-                        date_from, 
-                        date_to, 
-                        company_id, 
-                        state
-                    ]
-                )
-                # self.env.cr.execute(query)
-                # self.env.cr.commit()
-                not_declared_payslip_id = self.env.cr.fetchone()
-                created_not_declared_payslip_id = self.env['hr.payslip'].search([('id', '=', not_declared_payslip_id)], limit=1)
-                created_not_declared_payslip_id._compute_worked_days_line_ids()
+                payslip._create_na_mirror_payslip()
         return res
 
     def _create_na_mirror_payslip(self):
