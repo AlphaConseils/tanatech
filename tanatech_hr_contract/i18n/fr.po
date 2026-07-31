@@ -16,6 +16,7 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 3.8\n"
 
 #. module: tanatech_hr_contract
 #: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_contract__family_allowance
@@ -90,7 +91,7 @@ msgid ""
 "Tips : Remove the declared contract."
 msgstr ""
 "Un contrat non affecté ne peut pas être supprimé explicitement! \n"
-"Conseils : Supprimez le contrat affecté."
+"Conseils : Supprimez le contrat déclaré."
 
 #. module: tanatech_hr_contract
 #. odoo-python
@@ -100,7 +101,7 @@ msgid ""
 "Tips : Archive the declared contract."
 msgstr ""
 "Un contrat non affecté ne peut pas être archivé explicitement! \n"
-"Conseils : Archiver le contrat affecté."
+"Conseils : Archivez le contrat déclaré."
 
 #. module: tanatech_hr_contract
 #. odoo-python
@@ -110,7 +111,7 @@ msgid ""
 "Tips : Unarchive the declared contract."
 msgstr ""
 "Un contrat non affecté ne peut pas être désarchivé explicitement! \n"
-"Conseils : Désarchiver le contrat affecté."
+"Conseils : Désarchivez le contrat déclaré."
 
 #. module: tanatech_hr_contract
 #: model:ir.ui.menu,name:tanatech_hr_contract.hr_menu_declared_contracts
@@ -261,6 +262,7 @@ msgstr "Impossible de modifier le statut du contrat non déclaré !"
 
 #. module: tanatech_hr_contract
 #: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_payroll_undeclared_report__company_id
+#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
 #: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
 msgid "Company"
 msgstr "Société"
@@ -486,8 +488,14 @@ msgstr "Congés payés"
 #: model:ir.model,name:tanatech_hr_contract.model_hr_payslip
 msgid "Pay Slip"
 msgstr "Fiche de paie"
+#: model:ir.model,name:tanatech_hr_contract.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Fiche de paie"
 
 #. module: tanatech_hr_contract
+#: model:ir.model,name:tanatech_hr_contract.model_hr_payroll_report
+msgid "Payroll Analysis Report"
+msgstr "Rapport d'analyse de paie"
 #: model:ir.model,name:tanatech_hr_contract.model_hr_payroll_report
 msgid "Payroll Analysis Report"
 msgstr "Rapport d'analyse de paie"
@@ -748,47 +756,6 @@ msgid "You must select employee(s) to generate payslip(s)."
 msgstr ""
 "Vous devez sélectionner un ou des employés pour générer une ou des fiches de"
 " paie."
-
-#. module: tanatech_hr_contract
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.payroll_undeclared_report_view_search
-msgid "Last 365 Days Payslip"
-msgstr "Fiche de paie des 365 derniers jours"
-
-#. module: tanatech_hr_contract
-#. odoo-python
-#: code:tanatech/tanatech/tanatech_hr_contract/models/hr_contract.py:0
-msgid "Cannot modify undeclared contract status !"
-msgstr "Impossible de modifier le statut du contrat non affecté !"
-
-#. module: tanatech_hr_contract
-#: model:ir.actions.server,name:tanatech_hr_contract.action_draft_contracts
-msgid "Set to draft"
-msgstr "Mettre en brouillon"
-
-#. module: tanatech_hr_contract
-#: model:ir.actions.server,name:tanatech_hr_contract.action_run_contracts
-msgid "Set to running"
-msgstr "Mettre en cours"
-
-#. module: tanatech_hr_contract
-#: model:ir.actions.server,name:tanatech_hr_contract.action_expire_contracts
-msgid "Set to expired"
-msgstr "Définir comme expiré"
-
-#. module: tanatech_hr_contract
-#: model:ir.actions.server,name:tanatech_hr_contract.action_cancel_contracts
-msgid "Set to cancelled"
-msgstr "Définir comme annulé"
-
-#. module: tanatech_hr_contract
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.view_hr_payslip_filter_inherit
-msgid "From declared contract"
-msgstr "D'un contrat affecté"
-
-#. module: tanatech_hr_contract
-#: model_terms:ir.ui.view,arch_db:tanatech_hr_contract.view_hr_payslip_filter_inherit
-msgid "From undeclared contract"
-msgstr "D'un contrat non affecté"
 
 #. module: tanatech_hr_contract
 #: model:ir.model.fields,field_description:tanatech_hr_contract.field_hr_salary_attachment__structure_category

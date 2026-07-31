@@ -9,6 +9,8 @@
 
             <xpath expr="//field[@name='type_id']" position="after">
                 <field name="is_declared_type" />
+                <field name="na_structure_id"/>
+                <field name="is_stc"/>
             </xpath>
 
         </field>
