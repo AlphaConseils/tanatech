@@ -386,14 +386,8 @@ msgstr "Congés payés"
 #: model:ir.model,name:tanatech_hr_contract.model_hr_payslip
 msgid "Pay Slip"
 msgstr "Fiche de paie"
-#: model:ir.model,name:tanatech_hr_contract.model_hr_payslip
-msgid "Pay Slip"
-msgstr "Fiche de paie"
 
 #. module: tanatech_hr_contract
-#: model:ir.model,name:tanatech_hr_contract.model_hr_payroll_report
-msgid "Payroll Analysis Report"
-msgstr "Rapport d'analyse de paie"
 #: model:ir.model,name:tanatech_hr_contract.model_hr_payroll_report
 msgid "Payroll Analysis Report"
 msgstr "Rapport d'analyse de paie"
