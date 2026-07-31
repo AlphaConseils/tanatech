@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.tanatech.website.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='website_info_settings']" position="after">
+                <block title="Web Order Follow-up (Tanatech)" id="tanatech_website_activity_settings">
+                    <setting string="Sales Team" company_dependent="1"
+                             help="Activity created on the quotation when the customer confirms their order on the website.">
+                        <field name="website_confirm_sale_activity_user_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting string="Procurement Team" company_dependent="1"
+                             help="Activity created on the delivery order when the customer confirms their order on the website.">
+                        <field name="website_confirm_delivery_activity_user_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting string="Finance Team" company_dependent="1"
+                             help="Activity created on the invoice generated from a web order confirmed by the customer.">
+                        <field name="website_confirm_invoice_activity_user_ids" widget="many2many_tags"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
