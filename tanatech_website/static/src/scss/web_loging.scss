@@ -143,7 +143,50 @@
   padding-left: 5px;
 }
 
-// Navigation du carrousel "Nouveaux produits" : voir front.scss (.new_products_section)
+.new-product-carousel {
+    position: relative;
+    padding-bottom: 40px; /* espace en bas pour navigation */
+}
+
+.new-product-carousel .owl-nav {
+    position: absolute;
+    right: 60px;
+    bottom: -12px;
+    display: flex;
+    gap: 5px;
+}
+
+.new-product-carousel .owl-nav button.owl-prev,
+.new-product-carousel .owl-nav button.owl-next {
+    background: #f1f1f1;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.new-product-carousel .owl-nav button:hover {
+    background: #ddd;
+}
+
+.new-product-carousel {
+    position: relative; /* pour que .owl-nav soit positionné correctement */
+}
+
+/* Centrer les dots à gauche */
+.new-product-carousel .owl-dots {
+    position: absolute;
+    bottom: 0;
+    left: 60px;
+}
+
+
 
 .swiper-bottom-controls {
   display: flex;
