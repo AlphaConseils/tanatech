@@ -679,23 +679,28 @@ form.bg-product {
     padding-bottom: 28px;
 }
 
-// Le carrousel réserve la place de sa barre de navigation (positionnée en absolu)
+// Le carrousel réserve la place de sa barre de navigation (positionnée en absolu).
+// !important : des copies de web_loging.scss personnalisées via l'éditeur web
+// peuvent subsister en base et resservir les anciennes règles (right:60px,
+// bottom:-12px…) — ces déclarations doivent l'emporter quoi qu'il arrive.
 .new-product-carousel {
     position: relative;
-    padding-bottom: 64px;
+    padding-bottom: 64px !important;
 }
 
 // Boutons nav — Nouveaux produits + Promotions (Owl Carousel)
 .new_products_section,
 .promotions_section {
+    .new-product-carousel .owl-nav,
     .owl-nav {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        display: flex;
+        position: absolute !important;
+        right: 0 !important;
+        left: auto !important;
+        bottom: 0 !important;
+        display: flex !important;
         justify-content: flex-end;
-        gap: 8px;
-        margin: 0;
+        gap: 8px !important;
+        margin: 0 !important;
     }
 
     .owl-carousel.owl-theme .owl-nav .owl-prev,
@@ -795,15 +800,17 @@ form.bg-product {
 
 .new_products_section {
     // Points alignés à gauche, sur la même ligne que les flèches (comme la section Promotions)
+    .new-product-carousel .owl-dots,
     .owl-dots {
-        position: absolute;
-        left: 0;
-        bottom: 17px;
-        display: flex;
+        position: absolute !important;
+        left: 0 !important;
+        right: auto !important;
+        bottom: 17px !important;
+        display: flex !important;
         justify-content: flex-start;
         gap: 6px;
-        margin: 0;
-        padding-left: 0;
+        margin: 0 !important;
+        padding-left: 0 !important;
     }
 
     .owl-dot {
