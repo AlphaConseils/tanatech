@@ -1,0 +1,31 @@
+name: pre-commit
+
+on:
+  pull_request:
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history needed for --from-ref/--to-ref below
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # pre-commit/action defaults extra_args to --all-files (checks the
+      # whole repo every run). Scope it to just what changed instead.
+      - name: Compute diff range
+        run: |
+          ZERO_SHA="0000000000000000000000000000000000000000"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "EXTRA_ARGS=--from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
+          elif [ "${{ github.event.before }}" = "$ZERO_SHA" ]; then
+            # First push on a brand-new branch: nothing to diff against yet.
+            echo "EXTRA_ARGS=--all-files" >> "$GITHUB_ENV"
+          else
+            echo "EXTRA_ARGS=--from-ref ${{ github.event.before }} --to-ref ${{ github.sha }}" >> "$GITHUB_ENV"
+          fi
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: ${{ env.EXTRA_ARGS }}
