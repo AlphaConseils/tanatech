@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
+
 from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = "res.config.settings"
+    _inherit = 'res.config.settings'
 
     website_confirm_sale_activity_user_ids = fields.Many2many(
-        related="company_id.website_confirm_sale_activity_user_ids",
+        related='company_id.website_confirm_sale_activity_user_ids',
         readonly=False,
     )
     website_confirm_delivery_activity_user_ids = fields.Many2many(
-        related="company_id.website_confirm_delivery_activity_user_ids",
+        related='company_id.website_confirm_delivery_activity_user_ids',
         readonly=False,
     )
     website_confirm_invoice_activity_user_ids = fields.Many2many(
-        related="company_id.website_confirm_invoice_activity_user_ids",
+        related='company_id.website_confirm_invoice_activity_user_ids',
+        readonly=False,
+    )
+    website_manual_payment_enabled = fields.Boolean(
+        related='company_id.website_manual_payment_enabled',
         readonly=False,
     )
