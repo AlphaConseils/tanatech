@@ -26,7 +26,7 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "tanatech_website/static/src/libs/fontawesome/css/all.min.css",
+            # "tanatech_website/static/src/libs/fontawesome/css/all.min.css",
             "tanatech_website/static/lib/**",
             "tanatech_website/static/src/**/*",
         ],

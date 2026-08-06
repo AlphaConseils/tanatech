@@ -1,74 +1,79 @@
 <?xml version='1.0' encoding='utf-8'?>
-<odoo>
-    <template id="tanatech_slide_template" name="Tanatech Slider section 2">
-        <section class="s_tanatech_slider">
-            <t t-set="slider_images"
-                t-value="request.env['website.slider.image'].search([('website_published', '=', True), ('website_id', '=', request.website.id)], order='sequence')" />
-            <t t-set="carousel_id" t-value="'carouselTanatech%s' % int(time.time() * 1000)" />
+<odoo> 
 
-            <div t-att-id="carousel_id" class="carousel slide" data-bs-ride="carousel">
+    <template id="homepage_template_green_shop" name="template_name" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <section class="s_tanatech_slider home_slide_section">
+                <t t-set="current_website" t-value="request.env['website'].get_current_website()" />
+                <t t-set="slides" t-value="request.env['website.slider.image'].sudo().search([('website_published', '=', True),('website_id', '=', current_website.id)], order='sequence')" />
 
-                <!-- Indicators -->
-                <div class="carousel-indicators">
-                    <t t-foreach="slider_images" t-as="slide">
-                        <button type="button"
-                            t-att-data-bs-target="'#' + carousel_id"
-                            t-att-data-bs-slide-to="slide_index"
-                            t-att-class="'active' if slide_index == 0 else ''"
-                            t-att-aria-current="'true' if slide_index == 0 else None"
-                            t-att-aria-label="'Slide %s' % (slide_index + 1)" />
-                    </t>
-                </div>
+                <t t-if="slides">
+                    <!-- <div class="container-fluid"> -->
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                <!-- Slides -->
-                <div class="carousel-inner">
-                    <t t-foreach="slider_images" t-as="slide">
-                        <div t-att-class="'carousel-item' + (' active' if slide_index == 0 else '')">
-                            <div class="slide-bg"
-                                t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or '/tanatech_website/static/src/img/image1.jpeg'});" />
-                            <div class="carousel-caption-custom container">
-                                <div class="row align-items-center h-100">
-                                    <div class="col-12 col-md-6">
-                                        <p class="title-slider lh-1 mb-3" t-field="slide.title" />
+                            <!-- Slides -->
+                            <div class="carousel-inner">
+                                <t t-foreach="slides" t-as="slide">
+                                    <div t-att-class="'carousel-item' + (' active' if slide_index == 0 else '')">
+                                        <div class="slide-bg"
+                                            t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or '/tanatech_website/static/src/img/image1.jpeg'});" />
+                                        <div class="slide-content container">
+                                            <div class="row align-items-center h-100">
+                                                <div class="col-12 col-md-6">
+                                                    <p class="title-slider lh-1 mb-3 text-white"
+                                                        t-field="slide.title" />
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <p class="slide-note text-white" t-field="slide.note" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        <p class="slide-note" t-field="slide.note" />
-                                    </div>
-                                </div>
+                                </t>
                             </div>
+
+                            <t t-if="len(slides) > 1">
+                                
+                                <!-- Contrôles -->
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                        <i class="fa fa-solid fa-arrow-left" style="color:#000;" />
+                                    </div>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                        <i class="fa fa-solid fa-arrow-right" style="color:#000;" />
+                                    </div>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+
+                            </t>
+                            
                         </div>
-                    </t>
+                    <!-- </div> -->
+                    
+                </t>
+
+                <t t-else="">
+                    <div class="container">
+                        <div class="alert alert-info mt-3">
+                            <h4>No slides configured</h4>
+                            <p>Add slides in Website → Configuration → Slider Images</p>
+                        </div>
+                    </div>
+                </t>
+            </section>
+            <section class="o_website_snippet_drop oe_structure oe_empty">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12"></div>
+                    </div>
                 </div>
-
-                <!-- Contrôles -->
-                <button class="carousel-control-prev" type="button"
-                    t-att-data-bs-target="'#' + carousel_id" data-bs-slide="prev">
-                    <div class="arrow rounded d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-arrow-left" style="color:#000;" />
-                    </div>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button"
-                    t-att-data-bs-target="'#' + carousel_id" data-bs-slide="next">
-                    <div class="arrow rounded d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-arrow-right" style="color:#000;" />
-                    </div>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-
-            <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function () {
-                var el = document.getElementById('<t t-esc="carousel_id"/>');
-                if (!el) return;
-                if (typeof bootstrap !== 'undefined' &amp;&amp; bootstrap.Carousel) {
-                    new bootstrap.Carousel(el, { interval: 5000, ride: 'carousel' });
-                } else if (typeof $ !== 'undefined' &amp;&amp; $.fn.carousel) {
-                    $(el).carousel({ interval: 5000, ride: 'carousel' });
-                }
-            });
-        </script>
-        </section>
+            </section>
+        </xpath>
     </template>
 
     <template id="tanatech_publicity_template" name="Tanatech publicity section">
@@ -78,7 +83,7 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-sun" style="color: #ffffff;"></i>
+                                <i class="fa fa-sun-o" style="color: #ffffff;"></i>
                             </div>
                             <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Who is Tanatech</a></span>
                         </div>
@@ -86,7 +91,7 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-box" style="color: #ffffff;"></i>
+                                <i class="fa fa-archive" style="color: #ffffff;"></i>
                             </div>
                             <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Home delivery</a></span>
                         </div>
@@ -94,7 +99,7 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-basket-shopping" style="color: #ffffff;"></i>
+                                <i class="fa fa-shopping-basket" style="color: #ffffff;"></i>
                             </div>
                             <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Authentic products</a></span>
                         </div>
@@ -102,7 +107,7 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
                             <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-shield" style="color: #ffffff;"></i>
+                                <i class="fa fa-shield" style="color: #ffffff;"></i>
                             </div>
                             <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Guarantee</a></span>
                         </div>
