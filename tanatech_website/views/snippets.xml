@@ -6,45 +6,48 @@
                 t-value="request.env['website.slider.image'].sudo().search([('website_published', '=', True),('website_id', '=', current_website.id)], order='sequence')" />
 
             <t t-if="slides">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="container-fluid">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                    <!-- Slides -->
-                    <div class="carousel-inner">
-                        <t t-foreach="slides" t-as="slide" t-index="i">
-                            <div t-att-class="'carousel-item' + (' active' if i == 0 else '')">
-                                <div class="slide-bg"
-                                    t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or '/tanatech_website/static/src/img/image1.jpeg'});" />
-                                <div class="slide-content container">
-                                    <div class="row align-items-center h-100">
-                                        <div class="col-12 col-md-6">
-                                            <p class="title-slider lh-1 mb-3 text-white"
-                                                t-field="slide.title" />
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <p class="slide-note text-white" t-field="slide.note" />
+                        <!-- Slides -->
+                        <div class="carousel-inner">
+                            <t t-foreach="slides" t-as="slide" t-index="i">
+                                <div t-att-class="'carousel-item' + (' active' if i == 0 else '')">
+                                    <div class="slide-bg"
+                                        t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or '/tanatech_website/static/src/img/image1.jpeg'});" />
+                                    <div class="slide-content container">
+                                        <div class="row align-items-center h-100">
+                                            <div class="col-12 col-md-6">
+                                                <p class="title-slider lh-1 mb-3 text-white"
+                                                    t-field="slide.title" />
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <p class="slide-note text-white" t-field="slide.note" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </t>
-                    </div>
+                            </t>
+                        </div>
 
-                    <!-- Contrôles -->
-                    <button class="carousel-control-prev" type="button"
-                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <div class="arrow rounded d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-arrow-left" style="color:#000;" />
-                        </div>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button"
-                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <div class="arrow rounded d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-arrow-right" style="color:#000;" />
-                        </div>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                        <!-- Contrôles -->
+                        <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-left" style="color:#000;" />
+                            </div>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-arrow-right" style="color:#000;" />
+                            </div>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
+                
             </t>
 
             <t t-else="">
@@ -105,7 +108,7 @@
             <t t-snippet="tanatech_website.category_template_green_shop" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.new_products" t-thumbnail="" t-snippet-category="green_shop"/>
             <t t-snippet="tanatech_website.promotional_products" t-thumbnail="" t-snippet-category="green_shop"/>
-            <t t-snippet="tanatech_website.tanatech_slide_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
+            <!-- <t t-snippet="tanatech_website.tanatech_slide_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/> -->
             <t t-snippet="tanatech_website.tanatech_publicity_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
             <!-- <t t-snippet="tanatech_website.faqs_section" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/> -->
             <t t-snippet="tanatech_website.tanatech_offer_template" t-thumbnail="/website/static/src/img/snippets_thumbs/s_cover.svg"/>
