@@ -145,13 +145,13 @@
 
 .new-product-carousel {
     position: relative;
-    padding-bottom: 40px; /* espace en bas pour navigation */
+    padding-bottom: 60px; /* espace en bas pour navigation (boutons de 44px) */
 }
 
 .new-product-carousel .owl-nav {
     position: absolute;
-    right: 60px;
-    bottom: -12px;
+    right: 0;
+    bottom: 0;
     display: flex;
     gap: 5px;
 }
@@ -179,10 +179,10 @@
     position: relative; /* pour que .owl-nav soit positionné correctement */
 }
 
-/* Centrer les dots à gauche */
+/* Centrer les dots à gauche, alignés verticalement avec les flèches */
 .new-product-carousel .owl-dots {
     position: absolute;
-    bottom: 0;
+    bottom: 17px;
     left: 60px;
 }
 
