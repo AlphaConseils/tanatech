@@ -671,14 +671,31 @@ form.bg-product {
     }
 }
 
+// Espacement vertical des sections homepage — évite que la nav du carrousel
+// touche l'en-tête de la section suivante
+.new_products_section,
+.promotions_section {
+    padding-top: 8px;
+    padding-bottom: 28px;
+}
+
+// Le carrousel réserve la place de sa barre de navigation (positionnée en absolu)
+.new-product-carousel {
+    position: relative;
+    padding-bottom: 64px;
+}
+
 // Boutons nav — Nouveaux produits + Promotions (Owl Carousel)
 .new_products_section,
 .promotions_section {
     .owl-nav {
+        position: absolute;
+        right: 0;
+        bottom: 0;
         display: flex;
         justify-content: flex-end;
         gap: 8px;
-        margin-top: 20px;
+        margin: 0;
     }
 
     .owl-carousel.owl-theme .owl-nav .owl-prev,
@@ -777,12 +794,16 @@ form.bg-product {
 }
 
 .new_products_section {
+    // Points alignés à gauche, sur la même ligne que les flèches (comme la section Promotions)
     .owl-dots {
+        position: absolute;
+        left: 0;
+        bottom: 17px;
         display: flex;
         justify-content: flex-start;
         gap: 6px;
-        margin-top: 16px;
-        padding-left: 4rem;
+        margin: 0;
+        padding-left: 0;
     }
 
     .owl-dot {
