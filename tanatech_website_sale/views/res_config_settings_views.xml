@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.tanatech.website.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="website_shop_checkout" position="after">
+                <block title="Web Order Follow-up (Tanatech)" id="tanatech_website_sale_followup">
+                    <setting id="tanatech_manual_payment_setting"
+                             help="Online payment is disabled: at the payment step the customer is warned that they will be contacted, their cart becomes a quotation, they are redirected to their customer portal and the sales team receives an activity.">
+                        <field name="website_manual_payment_enabled"/>
+                    </setting>
+                    <setting id="tanatech_web_sale_users_setting"
+                             string="Sales Team (Quotation)"
+                             help="Users receiving the activity on the quotation of a web order. If empty, the salesperson of the order is used.">
+                        <field name="website_confirm_sale_activity_user_ids"
+                               widget="many2many_tags"
+                               domain="[('share', '=', False)]"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
+                    </setting>
+                    <setting id="tanatech_web_delivery_users_setting"
+                             string="Procurement Team (Delivery)"
+                             help="Users receiving the activity on the delivery orders of a web order. If empty, the responsible of the transfer is used.">
+                        <field name="website_confirm_delivery_activity_user_ids"
+                               widget="many2many_tags"
+                               domain="[('share', '=', False)]"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
+                    </setting>
+                    <setting id="tanatech_web_invoice_users_setting"
+                             string="Finance Team (Invoicing)"
+                             help="Users receiving the activity on the invoice of a web order. If empty, the accountant of the invoice is used.">
+                        <field name="website_confirm_invoice_activity_user_ids"
+                               widget="many2many_tags"
+                               domain="[('share', '=', False)]"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,301 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_website_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 00:00+0000\n"
+"PO-Revision-Date: 2026-08-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_sale_order__website_manual_payment_requested
+msgid ""
+"Checked when the customer validated their cart while online payment was not "
+"available: the quotation has been sent to the sales team, which will contact "
+"the customer to finalize the order."
+msgstr ""
+"Coché lorsque le client a validé son panier alors que le paiement en ligne "
+"n'était pas disponible : le devis a été transmis à l'équipe commerciale, qui "
+"contactera le client pour finaliser la commande."
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_sale_order__website_customer_confirmed
+msgid ""
+"Checked when the order was confirmed by the customer from the website "
+"(eCommerce payment or signature on the portal)."
+msgstr ""
+"Coché lorsque la commande a été confirmée par le client depuis le site web "
+"(paiement e-commerce ou signature sur le portail)."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid "Close"
+msgstr "Fermer"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_sale_order__website_customer_confirmed
+msgid "Confirmed by Customer (Website)"
+msgstr "Confirmée par le client (site web)"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid ""
+"Customer %(customer)s confirmed order %(order)s on the website. Please follow"
+" up on this sale."
+msgstr ""
+"Le client %(customer)s a confirmé la commande %(order)s sur le site web. "
+"Merci d'assurer le suivi de cette vente."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Customer: %s"
+msgstr "Client : %s"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_company__website_confirm_invoice_activity_user_ids
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_config_settings__website_confirm_invoice_activity_user_ids
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid "Finance Team (Invoicing)"
+msgstr "Équipe financière (facturation)"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid "Go to my customer portal"
+msgstr "Accéder à mon espace client"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid ""
+"Invoice %(move)s has been generated for web order %(order)s of customer "
+"%(customer)s. Please follow up on the invoicing."
+msgstr ""
+"La facture %(move)s a été générée pour la commande web %(order)s du client "
+"%(customer)s. Merci d'assurer le suivi de la facturation."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Invoicing follow-up — web order %s"
+msgstr "Suivi de facturation — commande web %s"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_company__website_manual_payment_enabled
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_config_settings__website_manual_payment_enabled
+msgid "Manual Payment (Online Payment Unavailable)"
+msgstr "Paiement manuel (paiement en ligne indisponible)"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_sale_order__website_manual_payment_requested
+msgid "Manual Payment Requested (Website)"
+msgstr "Paiement manuel demandé (site web)"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid ""
+"Online payment is disabled: at the payment step the customer is warned that "
+"they will be contacted, their cart becomes a quotation, they are redirected "
+"to their customer portal and the sales team receives an activity."
+msgstr ""
+"Le paiement en ligne est désactivé : à l'étape de paiement, le client est "
+"informé qu'il sera contacté, son panier devient un devis, il est redirigé "
+"vers son espace client et l'équipe commerciale reçoit une activité."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid ""
+"Online payment is not available yet: the customer validated their cart on the"
+" website and is waiting to be contacted by the sales team."
+msgstr ""
+"Le paiement en ligne n'est pas encore disponible : le client a validé son "
+"panier sur le site web et attend d'être contacté par l'équipe commerciale."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid ""
+"Online payment is not available yet. When you validate your order, your "
+"quotation is sent to our sales team, which will contact you to finalize your "
+"purchase."
+msgstr ""
+"Le paiement en ligne n'est pas encore disponible. En validant votre commande,"
+" votre devis est transmis à notre équipe commerciale, qui vous contactera "
+"pour finaliser votre achat."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Order total: %s"
+msgstr "Total de la commande : %s"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid "Order validation"
+msgstr "Validation de la commande"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Ordered products:"
+msgstr "Articles commandés :"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.navigation_buttons_manual_payment
+msgid "Pay now"
+msgstr "Payer"
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.payment_manual_message
+msgid ""
+"Payment by API is not available yet, you are going to be redirected to your "
+"customer portal and our sales team will contact you."
+msgstr ""
+"Le paiement par API n'est pas encore disponible, vous allez être redirigé "
+"vers l'espace client et l'équipe commerciale vous contactera."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Prepare delivery — web order %s"
+msgstr "Préparer la livraison — commande web %s"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_company__website_confirm_delivery_activity_user_ids
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_config_settings__website_confirm_delivery_activity_user_ids
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid "Procurement Team (Delivery)"
+msgstr "Équipe approvisionnement (livraison)"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Quotation: %s"
+msgstr "Devis : %s"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_company__website_confirm_sale_activity_user_ids
+#: model:ir.model.fields,field_description:tanatech_website_sale.field_res_config_settings__website_confirm_sale_activity_user_ids
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid "Sales Team (Quotation)"
+msgstr "Équipe commerciale (devis)"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Sales follow-up — web order confirmed"
+msgstr "Suivi commercial — commande web confirmée"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_company__website_manual_payment_enabled
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_config_settings__website_manual_payment_enabled
+msgid ""
+"When enabled, the payment step of the eCommerce checkout does not create any "
+"payment transaction: the customer is warned that online payment is not "
+"available yet, their cart is turned into a quotation, they are redirected to "
+"their customer portal and the sales team receives an activity to contact them."
+msgstr ""
+"Lorsque cette option est activée, l'étape de paiement du site e-commerce ne "
+"crée aucune transaction : le client est informé que le paiement en ligne "
+"n'est pas encore disponible, son panier devient un devis, il est redirigé "
+"vers son espace client et l'équipe commerciale reçoit une activité pour le "
+"contacter."
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid ""
+"Web order %(order)s from customer %(customer)s has been confirmed. Please "
+"process delivery order %(picking)s."
+msgstr ""
+"La commande web %(order)s du client %(customer)s a été confirmée. Merci de "
+"traiter le bon de livraison %(picking)s."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid "Web Order Follow-up (Tanatech)"
+msgstr "Suivi des commandes web (Tanatech)"
+
+#. module: tanatech_website_sale
+#. odoo-python
+#: code:addons/tanatech_website_sale/models/sale_order.py:0
+msgid "Web order to be processed — %s"
+msgstr "Commande web à traiter — %s"
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_company__website_confirm_invoice_activity_user_ids
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_config_settings__website_confirm_invoice_activity_user_ids
+msgid ""
+"Users receiving an activity on the invoice generated from a web order "
+"confirmed by the customer. If empty, the activity is assigned to the "
+"accountant of the invoice or to the salesperson."
+msgstr ""
+"Utilisateurs recevant une activité sur la facture générée à partir d'une "
+"commande web confirmée par le client. Si vide, l'activité est assignée au "
+"comptable de la facture ou au vendeur."
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_company__website_confirm_delivery_activity_user_ids
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_config_settings__website_confirm_delivery_activity_user_ids
+msgid ""
+"Users receiving an activity on the delivery order when a customer confirms "
+"their order on the website. If empty, the activity is assigned to the "
+"responsible of the transfer or to the salesperson."
+msgstr ""
+"Utilisateurs recevant une activité sur le bon de livraison lorsqu'un client "
+"confirme sa commande sur le site web. Si vide, l'activité est assignée au "
+"responsable du transfert ou au vendeur."
+
+#. module: tanatech_website_sale
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_company__website_confirm_sale_activity_user_ids
+#: model:ir.model.fields,help:tanatech_website_sale.field_res_config_settings__website_confirm_sale_activity_user_ids
+msgid ""
+"Users receiving an activity on the quotation when a customer confirms their "
+"order on the website. If empty, the activity is assigned to the salesperson "
+"of the order."
+msgstr ""
+"Utilisateurs recevant une activité sur le devis lorsqu'un client confirme sa "
+"commande sur le site web. Si vide, l'activité est assignée au vendeur de la "
+"commande."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid ""
+"Users receiving the activity on the delivery orders of a web order. If empty,"
+" the responsible of the transfer is used."
+msgstr ""
+"Utilisateurs recevant l'activité sur les bons de livraison d'une commande "
+"web. Si vide, le responsable du transfert est utilisé."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid ""
+"Users receiving the activity on the invoice of a web order. If empty, the "
+"accountant of the invoice is used."
+msgstr ""
+"Utilisateurs recevant l'activité sur la facture d'une commande web. Si vide, "
+"le comptable de la facture est utilisé."
+
+#. module: tanatech_website_sale
+#: model_terms:ir.ui.view,arch_db:tanatech_website_sale.res_config_settings_view_form
+msgid ""
+"Users receiving the activity on the quotation of a web order. If empty, the "
+"salesperson of the order is used."
+msgstr ""
+"Utilisateurs recevant l'activité sur le devis d'une commande web. Si vide, le "
+"vendeur de la commande est utilisé."
