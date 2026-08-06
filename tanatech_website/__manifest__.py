@@ -2,7 +2,7 @@
     "name": "TANATECH Website",
     "description": "Custom website for TANATECH",
     "category": "Website",
-    "version": "18.0.2.1.0",
+    "version": "18.0.2.1.1",
     "author": "A.Maximilien",
     "depends": ["base", "website", "website_sale", "auth_oauth"],
     "data": [

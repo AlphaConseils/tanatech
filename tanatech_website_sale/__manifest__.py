@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Tanatech Website Sale',
-    'version': '1.1',
+    'version': '1.1.1',
     'summary': 'Follow-up activities upon website order confirmation',
     'description': """
 When a customer confirms their order on the website (eCommerce payment or
