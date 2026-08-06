@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Payment step: replace the online payment form by an information message
+         as long as no payment provider is available. -->
+    <template id="payment_manual_message"
+              inherit_id="website_sale.payment"
+              name="Payment - Manual payment message (Tanatech)">
+        <xpath expr="//div[@name='website_sale_non_free_cart']" position="attributes">
+            <attribute name="t-if"
+                       add="not website_sale_order.company_id.website_manual_payment_enabled"
+                       separator="and"/>
+        </xpath>
+        <xpath expr="//div[@name='website_sale_non_free_cart']" position="after">
+            <div name="tanatech_manual_payment"
+                 class="mt-4"
+                 t-if="not errors and website_sale_order.amount_total and website_sale_order.company_id.website_manual_payment_enabled">
+                <div class="alert alert-info" role="status">Online payment is not available yet. When you validate your order, your quotation is sent to our sales team, which will contact you to finalize your purchase.</div>
+                <div class="modal fade"
+                     id="tanatech_manual_payment_modal"
+                     tabindex="-1"
+                     aria-labelledby="tanatech_manual_payment_modal_title"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tanatech_manual_payment_modal_title">Order validation</h5>
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"/>
+                            </div>
+                            <div class="modal-body">
+                                <p>Payment by API is not available yet, you are going to be redirected to your customer portal and our sales team will contact you.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form action="/shop/payment/manual" method="post" class="d-inline">
+                                    <input type="hidden"
+                                           name="csrf_token"
+                                           t-att-value="request.csrf_token()"
+                                           t-nocache="The csrf token must always be up to date."/>
+                                    <button type="submit"
+                                            name="tanatech_manual_payment_confirm"
+                                            class="btn btn-primary">Go to my customer portal</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Payment step: the "Pay now" button opens the information modal instead of
+         starting a payment transaction. -->
+    <template id="navigation_buttons_manual_payment"
+              inherit_id="website_sale.navigation_buttons"
+              name="Navigation buttons - Manual payment (Tanatech)">
+        <xpath expr="//div[@name='o_website_sale_free_cart']" position="before">
+            <t t-if="not errors and website_sale_order.amount_total and website_sale_order.company_id.website_manual_payment_enabled">
+                <t t-set="hide_payment_button" t-value="True"/>
+                <button type="button"
+                        name="tanatech_manual_payment_button"
+                        t-attf-class="btn btn-primary #{_form_send_navigation and 'order-lg-3 w-100 w-lg-auto ms-lg-auto' or 'w-100'}"
+                        data-bs-toggle="modal"
+                        data-bs-target="#tanatech_manual_payment_modal">Pay now</button>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
