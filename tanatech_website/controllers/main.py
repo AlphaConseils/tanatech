@@ -151,6 +151,7 @@ class WebsiteProduct(http.Controller):
             .search_read(
                 [("is_published", "=", True), ("sale_ok", "=", True)],
                 fields=["name", "list_price", "product_variant_ids", "write_date"],
+                order="create_date desc",
                 limit=8,
             )
         )
