@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Website Sale",
-    "version": "1.1.2",
+    "version": "1.0",
     "summary": "Follow-up activities upon website order confirmation",
     "description": """
 When a customer confirms their order on the website (eCommerce payment or
