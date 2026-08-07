@@ -3,6 +3,7 @@
 import { renderToElement } from "@web/core/utils/render";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 import wSaleUtils from "@website_sale/js/website_sale_utils";
 
 publicWidget.registry.NewProduct = publicWidget.Widget.extend({
@@ -119,7 +120,7 @@ publicWidget.registry.NewProduct = publicWidget.Widget.extend({
                 <i class="fa fa-check-circle text-success fa-lg"></i>
                 <div>
                     <div class="fw-bold" style="font-size:13px;">${productName}</div>
-                    <div class="text-muted" style="font-size:12px;">${qty} product(s) added to cart</div>
+                    <div class="text-muted" style="font-size:12px;">${_t("%s product(s) added to cart", qty)}</div>
                 </div>
             </div>
         `);
