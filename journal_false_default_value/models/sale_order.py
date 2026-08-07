@@ -11,8 +11,7 @@ class SaleOrder(models.Model):
             if order.website_id:
                 journal = self.env["account.journal"].search(
                     [
-                        ("code", "=", "FA-NA"),
-                        ("type", "=", "sale"),
+                        ("is_fana", "=", True)
                     ],
                     limit=1,
                 )
@@ -25,9 +24,7 @@ class SaleOrder(models.Model):
         if self.website_id:
             journal = self.env["account.journal"].search(
                 [
-                    ("code", "=", "FA-NA"),
-                    ("type", "=", "sale"),
-                    ("company_id", "=", self.company_id.id),
+                    ("is_fana", "=", True)
                 ],
                 limit=1,
             )

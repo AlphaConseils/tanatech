@@ -9,7 +9,10 @@
 This module remove journal_id default value on account.
     """,
     "depends": ["account_accountant", "sale"],
-    "data": ["views/account_move_views.xml"],
+    "data": [
+        "views/account_move_views.xml",
+        "views/account_journal_views.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "license": "LGPL-3",

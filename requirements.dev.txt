@@ -1,6 +1,0 @@
-pre-commit
-pylint
-pylint-odoo
-ruff
-bandit
-eradicate
