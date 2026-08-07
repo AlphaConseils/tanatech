@@ -158,6 +158,67 @@ msgstr ""
 " cette page. Utilisez '/' pour découvrir plus de fonctionnalités."
 
 #. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "10-year warranty for solar panels"
+msgstr "Garantie de 10 ans pour les panneaux solaires"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"12-month warranty for GROWATT products (off-grid/hybrid) (with full "
+"protections)"
+msgstr "Garantie de 12 mois pour les produits GROWATT (hors réseau/hybride) (avec "
+"protections complètes)"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"12-month warranty for any kit/system installed by our team (hybrid solar "
+"kit, load-shedding, water heater, water pump, freezer, …). Conditions "
+"according to the warranty contract."
+msgstr "Garantie de 12 mois pour tout kit/système installé par notre équipe (kit "
+"solaire hybride, délestage, chauffe-eau, pompe à eau, congélateur, …). "
+"Conditions selon le contrat de garantie."
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "12-month warranty for solar pumps (supplier warranty)"
+msgstr "Garantie de 12 mois pour les pompes solaires (garantie fournisseur)"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "3-month warranty for eco kits"
+msgstr "Garantie de 3 mois pour les éco-kits"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"5-year warranty for VICTRON-FRONIUS-GROWATT products (on-grid) (supplier "
+"warranties)"
+msgstr "Garantie de 5 ans pour les produits VICTRON-FRONIUS-GROWATT (on-grid) "
+"(garanties du fournisseur)"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid ""
+"<strong>WARRANTY and RETURNS:</strong>\n"
+"                     The warranty begins on the delivery date of the product, as stated on the delivery note.\n"
+"                     The customer must keep this document. Warranty excludes damage caused by improper use,\n"
+"                     lack of maintenance, or normal wear and tear.\n"
+"                     All our products have a legal warranty against manufacturing defects:<br/>"
+msgstr ""
+"<strong>GARANTIE et RETOURS :</strong>\n"
+"                     La garantie commence à la date de livraison du produit, telle qu'indiquée sur le bon de livraison.\n"
+"                     Le client doit conserver ce document. La garantie exclut les dommages causés par une utilisation inappropriée,\n"
+"                     un manque d'entretien ou l'usure normale.\n"
+"                     Tous nos produits bénéficient d'une garantie légale contre les défauts de fabrication :<br/>"
+
+#. module: tanatech_website
+#: model_terms:ir.ui.view,arch_db:tanatech_website.tanatech_product_template
+msgid "Delivery condition"
+msgstr "Conditions de livraison"
+
+#. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.faqs_section
 msgid "Achats"
 msgstr "Achats"
