@@ -3,6 +3,7 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement } from "@web/core/utils/render";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 
 publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
     selector: '.promotions_section',
@@ -117,7 +118,7 @@ publicWidget.registry.PromotionalProduct = publicWidget.Widget.extend({
                 <i class="fa fa-check-circle text-success fa-lg"></i>
                 <div>
                     <div class="fw-bold" style="font-size:13px;">${productName}</div>
-                    <div class="text-muted" style="font-size:12px;">${qty} product(s) added to cart</div>
+                    <div class="text-muted" style="font-size:12px;">${_t("%s product(s) added to cart", qty)}</div>
                 </div>
             </div>
         `);
