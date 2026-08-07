@@ -16,6 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: tanatech_website
+#. odoo-javascript
+#: code:addons/tanatech_website/static/src/js/new_product.js:0
+#: code:addons/tanatech_website/static/src/js/promotional_product.js:0
+#: code:addons/tanatech_website/static/src/js/shop_cart.js:0
+msgid "%s product(s) added to cart"
+msgstr "%s produit(s) ajouté(s) au panier"
+
+#. module: tanatech_website
 #: model_terms:ir.ui.view,arch_db:tanatech_website.condition_template
 msgid ""
 "\"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos fuga magni "
