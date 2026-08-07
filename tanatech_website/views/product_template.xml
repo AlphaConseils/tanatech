@@ -86,7 +86,9 @@
                </h2>
                <div id="flush-collapseTwo" class="accordion-collapse collapse"
                   aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div> 
+                  <div class="caccordion-body px-0 text-center">
+                     <a href="/condition" target="_blank" class="text-primary">Delivery condition</a>
+                  </div> 
                </div>
             </div>
             <div class="accordion-item">
@@ -99,7 +101,20 @@
                </h2>
                <div id="flush-collapseThree" class="accordion-collapse collapse"
                   aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body px-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium sint adipisci quam doloremque, omnis debitis quos repudiandae officia perspiciatis suscipit autem, placeat assumenda aliquam molestias voluptatibus doloribus dolores quae id! Magni dolore quo odio quos debitis corrupti ipsum. Labore velit maxime molestias atque, eveniet odit dolorem. Voluptas eligendi molestias architecto!</div>
+                  <div class="accordion-body px-0"><strong>WARRANTY and RETURNS:</strong>
+                     The warranty begins on the delivery date of the product, as stated on the delivery note.
+                     The customer must keep this document. Warranty excludes damage caused by improper use,
+                     lack of maintenance, or normal wear and tear.
+                     All our products have a legal warranty against manufacturing defects:<br/>
+                     <ul>
+                        <li>10-year warranty for solar panels</li>
+                        <li>5-year warranty for VICTRON-FRONIUS-GROWATT products (on-grid) (supplier warranties)</li>
+                        <li>12-month warranty for GROWATT products (off-grid/hybrid) (with full protections)</li>
+                        <li>12-month warranty for solar pumps (supplier warranty)</li>
+                        <li>12-month warranty for any kit/system installed by our team (hybrid solar kit, load-shedding, water heater, water pump, freezer, …). Conditions according to the warranty contract.</li>
+                        <li>3-month warranty for eco kits</li>
+                     </ul>
+                  </div>
                </div>
             </div>
          </div>
