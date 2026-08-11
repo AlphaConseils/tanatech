@@ -83,26 +83,12 @@ class Sanction(models.Model):
         domain=[('available_in_sanction_attachments', '=', True)]
     )
 
-    # hr_leave_id = fields.Many2one(
-    #     comodel_name="hr.leave", string="Time Off"
-    # )
-
     hr_leave_ids = fields.One2many('hr.leave', 'sanction_id', string="Time Off")
 
     @api.model
     def default_get(self, fields_list):
         """Set default value on emp_manager_field"""
         defaults = super().default_get(fields_list)
-
-        # if "emp_manager_domain" in fields_list:
-        #     managers = (
-        #         self.env["hr.employee"]
-        #         .search([("child_ids", "!=", False)])
-        #         .mapped("user_id.id")
-        #     )
-        #     defaults["emp_manager_domain"] = json.dumps(
-        #         [("id", "in", managers)] if managers else [("id", "in", [0])]
-        #     )
 
         if "hr_responsible_domain" in fields_list:
             rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
@@ -116,36 +102,31 @@ class Sanction(models.Model):
 
     @api.onchange('employee_id')
     def _get_employee_manager(self):
-        if self.employee_id.parent_id:
-            # Build domain based on the employee_id
-            domain = [('id', '=', self.employee_id.parent_id.id)]
-            # Search for the records that match the domain
-            records = self.env['hr.employee'].search(domain).mapped("user_id.id")
-            # Store the ids in the helper field
-            self.emp_manager_domain_ids = [('id', 'in', records)]
+        manager = self.employee_id.parent_id
+        if manager:
+            self.emp_manager_domain_ids = [('id', 'in', manager.user_id.ids)]
         else:
-            self.emp_manager_domain_ids = [("id", "in", [0])]
+            self.emp_manager_domain_ids = [('id', 'in', [0])]
 
     def _compute_emp_manager_domain(self):
+        managers = (
+            self.sudo()
+            .env["hr.employee"]
+            .search([("child_ids", "!=", False)])
+            .mapped("user_id")
+            .ids
+        )
+        domain = [("id", "in", managers)] if managers else [("id", "in", [0])]
         for record in self:
-            managers = (
-                self.sudo()
-                .env["hr.employee"]
-                .search([("child_ids", "!=", False)])
-                .mapped("user_id.id")
-            )
-            record.emp_manager_domain = (
-                [("id", "in", managers)] if managers else [("id", "in", [0])]
-            )
+            record.emp_manager_domain = domain
 
     def _compute_hr_responsible_domain(self):
+        rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
+        domain = (
+            [("id", "in", rh_responsible.ids)] if rh_responsible else [("id", "in", [0])]
+        )
         for rec in self:
-            rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
-            rec.hr_responsible_domain = (
-                [("id", "in", rh_responsible.ids)]
-                if rh_responsible
-                else [("id", "in", [0])]
-            )
+            rec.hr_responsible_domain = domain
 
     @api.constrains("employee_id")
     def check_employee_email(self):
