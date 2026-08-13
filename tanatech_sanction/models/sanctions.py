@@ -68,7 +68,11 @@ class Sanction(models.Model):
     is_lay_off = fields.Boolean(related="sanction_type_id.is_lay_off")
 
     emp_manager_domain_ids = fields.Char("Employee Manager")
-    employee_manager = fields.Many2one(comodel_name="res.users", domain=emp_manager_domain_ids, readonly=False)
+    employee_manager = fields.Many2one(
+        comodel_name="hr.employee",
+        domain=emp_manager_domain_ids,
+        readonly=False
+    )
     emp_manager_domain = fields.Binary(compute="_compute_emp_manager_domain")
 
     is_long_duration = fields.Boolean("Is long duration ?")
@@ -83,26 +87,12 @@ class Sanction(models.Model):
         domain=[('available_in_sanction_attachments', '=', True)]
     )
 
-    # hr_leave_id = fields.Many2one(
-    #     comodel_name="hr.leave", string="Time Off"
-    # )
-
     hr_leave_ids = fields.One2many('hr.leave', 'sanction_id', string="Time Off")
 
     @api.model
     def default_get(self, fields_list):
         """Set default value on emp_manager_field"""
         defaults = super().default_get(fields_list)
-
-        # if "emp_manager_domain" in fields_list:
-        #     managers = (
-        #         self.env["hr.employee"]
-        #         .search([("child_ids", "!=", False)])
-        #         .mapped("user_id.id")
-        #     )
-        #     defaults["emp_manager_domain"] = json.dumps(
-        #         [("id", "in", managers)] if managers else [("id", "in", [0])]
-        #     )
 
         if "hr_responsible_domain" in fields_list:
             rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
@@ -114,38 +104,42 @@ class Sanction(models.Model):
 
         return defaults
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals["reference"] = self.env["ir.sequence"].next_by_code("sanction.sanction")
+            if "employee_manager" not in vals and vals.get("employee_id"):
+                vals["employee_manager"] = (
+                    self.env["hr.employee"].browse(vals["employee_id"]).parent_id.id
+                )
+        return super().create(vals_list)
+
     @api.onchange('employee_id')
     def _get_employee_manager(self):
-        if self.employee_id.parent_id:
-            # Build domain based on the employee_id
-            domain = [('id', '=', self.employee_id.parent_id.id)]
-            # Search for the records that match the domain
-            records = self.env['hr.employee'].search(domain).mapped("user_id.id")
-            # Store the ids in the helper field
-            self.emp_manager_domain_ids = [('id', 'in', records)]
+        manager = self.employee_id
+        if manager:
+            self.emp_manager_domain_ids = [('id', 'in', manager.ids)]
         else:
-            self.emp_manager_domain_ids = [("id", "in", [0])]
+            self.emp_manager_domain_ids = [('id', 'in', [0])]
 
     def _compute_emp_manager_domain(self):
+        managers = (
+            self.sudo()
+            .env["hr.employee"]
+            .search([("child_ids", "!=", False)])
+            .ids
+        )
+        domain = [("id", "in", managers)] if managers else [("id", "in", [0])]
         for record in self:
-            managers = (
-                self.sudo()
-                .env["hr.employee"]
-                .search([("child_ids", "!=", False)])
-                .mapped("user_id.id")
-            )
-            record.emp_manager_domain = (
-                [("id", "in", managers)] if managers else [("id", "in", [0])]
-            )
+            record.emp_manager_domain = domain
 
     def _compute_hr_responsible_domain(self):
+        rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
+        domain = (
+            [("id", "in", rh_responsible.ids)] if rh_responsible else [("id", "in", [0])]
+        )
         for rec in self:
-            rh_responsible = self.sudo().env["res.users"].search([("is_rh", "=", True)])
-            rec.hr_responsible_domain = (
-                [("id", "in", rh_responsible.ids)]
-                if rh_responsible
-                else [("id", "in", [0])]
-            )
+            rec.hr_responsible_domain = domain
 
     @api.constrains("employee_id")
     def check_employee_email(self):
@@ -161,20 +155,7 @@ class Sanction(models.Model):
         """Name of model"""
         return [(rec.id, (rec.employee_id.name, rec.sanction_type_id)) for rec in self]
 
-    def create(self, vals_list):
-        """
-        Create record with manager if it's available
-        """
-        ref = self.env["ir.sequence"].next_by_code("sanction.sanction")
-        vals_list["reference"] = ref
-        if "employee_manager" not in vals_list and vals_list["employee_id"]:
-            vals_list["employee_manager"] = (
-                self.env["hr.employee"]
-                .browse(vals_list["employee_id"])
-                .parent_id.user_id.id
-            )
-        sanction = super().create(vals_list)
-        return sanction
+
 
     @api.depends(
         "employee_id",
@@ -190,7 +171,7 @@ class Sanction(models.Model):
             sanction.name = sanction.employee_id.name
             sanction.employee_post = sanction.employee_id.job_id.name
             sanction.employee_manager = (
-                sanction.employee_id.parent_id.user_id.id
+                sanction.employee_id.parent_id.id
                 if not sanction.employee_manager
                 else sanction.employee_manager
             )
@@ -279,30 +260,33 @@ class Sanction(models.Model):
             self._prepare_approval_request(rec=rec)
 
     def _prepare_approval_request(self, rec):
-        """Prepare all data for approval request"""
         if rec.employee_id.company_id.id == 1:
             category_id = self.env.ref("tanatech_sanction.approval_category_sanction")
-        else:
+        elif rec.employee_id.company_id.id == 2:
             category_id = self.env.ref("tanatech_sanction.approval_category_sanction_2")
-        if not rec.employee_manager:
+        else:
+            category_id = self.env.ref("tanatech_sanction.approval_category_sanction_3")
+
+        if not rec.hr_responsible:
             raise ValidationError(
                 _("Set manager for %(employee_name)s")
                 % {"employee_name": rec.employee_id.name}
             )
 
+        manager_user_id = rec.hr_responsible.id
+
         if rec.hr_responsible.id:
-            # case : employee_id.parent_id == hr_responsable
             category_id.approval_minimum = (
-                1 if rec.hr_responsible.id == rec.employee_manager.id else 2
+                1 if rec.hr_responsible.id == manager_user_id else 2
             )
 
             approver_ids = [(0, 0, {"user_id": rec.hr_responsible.id})]
-            if rec.hr_responsible.id != rec.employee_manager.id:
-                approver_ids.append((0, 0, {"user_id": rec.employee_manager.id}))
+            if rec.hr_responsible.id != manager_user_id:
+                approver_ids.append((0, 0, {"user_id": manager_user_id}))
                 category_id.approver_sequence = True
         else:
             category_id.approval_minimum = 1
-            approver_ids = [(0, 0, {"user_id": rec.employee_manager.id})]
+            approver_ids = [(0, 0, {"user_id": manager_user_id})]
 
         approval_request = self.env["approval.request"].create(
             {
@@ -587,10 +571,9 @@ class Sanction(models.Model):
         )
 
     def get_signature_manager(self):
-        """Return manager's signature"""
         return (
-            self.employee_manager.sudo().sign_signature
-            if self.employee_manager.sudo().sign_signature
+            self.employee_manager.sudo().user_id.sign_signature
+            if self.employee_manager and self.employee_manager.sudo().user_id and self.employee_manager.sudo().user_id.sign_signature
             else None
         )
 
