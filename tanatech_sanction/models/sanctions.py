@@ -262,8 +262,10 @@ class Sanction(models.Model):
     def _prepare_approval_request(self, rec):
         if rec.employee_id.company_id.id == 1:
             category_id = self.env.ref("tanatech_sanction.approval_category_sanction")
-        else:
+        elif rec.employee_id.company_id.id == 2:
             category_id = self.env.ref("tanatech_sanction.approval_category_sanction_2")
+        else:
+            category_id = self.env.ref("tanatech_sanction.approval_category_sanction_3")
 
         if not rec.hr_responsible:
             raise ValidationError(

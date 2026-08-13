@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="approval_category_sanction" model="approval.category">
-        <field name="name">Sanction Approval</field>
-        <field name="sequence">20</field>
-        <field name="company_id" eval="1"/>
-    </record>
+  <record id="approval_category_sanction" model="approval.category">
+    <field name="name">Sanction Approval</field>
+    <field name="sequence">20</field>
+    <field name="company_id" eval="1"/>
+  </record>
 
-    <record id="approval_category_sanction_2" model="approval.category">
-        <field name="name">Sanction Approval</field>
-        <field name="sequence">20</field>
-        <field name="company_id" eval="2"/>
-    </record>
+  <record id="approval_category_sanction_2" model="approval.category">
+    <field name="name">Sanction Approval</field>
+    <field name="sequence">20</field>
+    <field name="company_id" eval="2"/>
+  </record>
+
+  <record id="approval_category_sanction_3" model="approval.category">
+    <field name="name">Sanction Approval</field>
+    <field name="sequence">20</field>
+    <field name="company_id" eval="3"/>
+  </record>
 
 </odoo>
