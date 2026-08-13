@@ -9,7 +9,16 @@
     "license": "LGPL-3",
     "category": "Human Resources/Sanction",
     "website": "https://www.nexources.com",
-    "depends": ["approvals", "hr", "hr_payroll", "hr_holidays", "hr_work_entry_contract", "tanatech_base"],
+    "depends": [
+        "base",
+        "sign",
+        "approvals",
+        "hr",
+        "hr_payroll",
+        "hr_holidays",
+        "hr_work_entry_contract",
+        "tanatech_base"
+    ],
     "data": [
         "security/sanction_security_group.xml",
         "security/ir.model.access.csv",
