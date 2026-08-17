@@ -27,12 +27,18 @@ class SanctionType(models.TransientModel):
     def _compute_sanction_duration(self):
         for rec in self:
             if rec.sanction_start_date and rec.sanction_end_date:
-                duration = (rec.sanction_end_date - rec.sanction_start_date).days
-                if duration < 0:
+                duration = (rec.sanction_end_date - rec.sanction_start_date).days + 1
+                if duration < 1:
                     raise UserError("Incorrect sanction interval date !")
                 rec.sanction_duration = float(duration)
             elif rec.sanction_start_date and not rec.sanction_end_date:
-                rec.sanction_duration = float(1)
+                today = fields.Date.context_today(rec)
+                if rec.sanction_start_date > today:
+                    # The sanction begins in the future; the duration has not yet commenced.
+                    rec.sanction_duration = 1.0
+                else:
+                    duration = (today - rec.sanction_start_date).days + 1
+                    rec.sanction_duration = float(duration)
             else:
                 rec.sanction_duration = 0.0
 
