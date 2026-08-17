@@ -13,6 +13,12 @@ class SanctionType(models.Model):
     code = fields.Char(string="Code")
 
     is_taken_into_account_in_time_off = fields.Boolean(string="Include in Time-off ?")
+
+    leave_type_id = fields.Many2one(
+        'hr.leave.type',
+        string="Type de congé associé",
+        help="Type de congé généré automatiquement en Congés/Paie pour ce type de sanction.",
+    )
     
     def _get_default_color(self):
         return randint(1, 5)
