@@ -129,10 +129,10 @@
     <field name="model">sanction.sanction</field>
     <field name="arch" type="xml">
       <list string="">
+        <field name="employee_registration_number"/>
         <field name="employee_id" widget="many2one_avatar_employee"/>
         <field name="reference"/>
         <field name="sanction_date"/>
-        <field name="employee_registration_number"/>
         <field name="employee_agency"/>
         <field name="employee_department"/>
         <field name="employee_post"/>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="hr_work_entry_type_abs_injustifiee" model="hr.work.entry.type">
+      <field name="name">Absence injustifiée</field>
+      <field name="code">ABS</field>
+      <field name="is_leave">True</field>
+    </record>
+
+    <record id="hr_work_entry_type_mise_a_pied" model="hr.work.entry.type">
+      <field name="name">Mise à pied</field>
+      <field name="code">DEDUCTMS</field>
+      <field name="is_leave">True</field>
+    </record>
+  </data>
+</odoo>

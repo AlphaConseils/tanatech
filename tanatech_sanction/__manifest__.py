@@ -30,6 +30,7 @@
         "data/reference_data.xml",
         "data/lay_of_email_template.xml",
         "data/epl_mail_template.xml",
+        "data/hr_work_entry_type_data.xml",
         # REPORT
         "report/ir_actions_report.xml",
         "report/demex_report.xml",

@@ -308,36 +308,39 @@ class Sanction(models.Model):
             self._prepare_unpaid_time_off(record=rec)
 
     def _prepare_unpaid_time_off(self, record):
-        """ Prepare and create an unpaid time-off related to the sanction 
-            in order to have a view in time-off dashboar and payroll work entries 
-        """
-        if record.sanction_type_id.is_taken_into_account_in_time_off:
-            hr_leave_type = self.env["hr.leave.type"].search([('specific_for_sanction', '=', True)], limit=1)
-            if not hr_leave_type:
-                return
-            duration_display = (_(
-                "%(sanction_duration)s days"
-                ) % {"sanction_duration": record.sanction_duration}
-            )
-            hr_leave = self.env["hr.leave"].create(
-                {
-                    "name": _("%(name)s on %(time_off_type)s: %(duration_display)s")
-                    % {"name": record.employee_id.name, "time_off_type": hr_leave_type.name, "duration_display": duration_display},
-                    "employee_id": record.employee_id.id,
-                    "company_id": record.employee_id.company_id.id,
-                    "department_id": record.employee_id.department_id.id,
-                    "holiday_status_id": hr_leave_type.id,
-                    "payslip_state": "normal",
-                    "request_date_from": record.sanction_date if not record.is_long_duration else record.sanction_start_date,
-                    "request_date_to": record.sanction_date if not record.is_long_duration else record.sanction_end_date,
-                    "state": "confirm",
-                }
-            )
-            # record.hr_leave_id = hr_leave.id
-            # hr_leave.action_validate()
-            record.hr_leave_ids = [(4, hr_leave.id)]
-        else:
+        """Prepare and create a time-off related to the sanction
+           in order to have a view in time-off dashboard and payroll work entries"""
+        if not record.sanction_type_id.is_taken_into_account_in_time_off:
             return
+
+        hr_leave_type = record.sanction_type_id.leave_type_id
+        if not hr_leave_type:
+            raise ValidationError(
+                _("Aucun type de congé n'est configuré pour le type de sanction %(name)s. "
+                  "Merci de le paramétrer dans la configuration des sanctions.")
+                % {"name": record.sanction_type_id.name}
+            )
+
+        duration_display = _("%(sanction_duration)s days") % {
+            "sanction_duration": record.sanction_duration
+        }
+        hr_leave = self.env["hr.leave"].create({
+            "name": _("%(name)s on %(time_off_type)s: %(duration_display)s") % {
+                "name": record.employee_id.name,
+                "time_off_type": hr_leave_type.name,
+                "duration_display": duration_display,
+            },
+            "employee_id": record.employee_id.id,
+            "company_id": record.employee_id.company_id.id,
+            "department_id": record.employee_id.department_id.id,
+            "holiday_status_id": hr_leave_type.id,
+            "payslip_state": "normal",
+            "request_date_from": record.sanction_date if not record.is_long_duration else record.sanction_start_date,
+            "request_date_to": record.sanction_date if not record.is_long_duration else record.sanction_end_date,
+            "state": "confirm",
+            "sanction_id": record.id,
+        })
+        record.hr_leave_ids = [(4, hr_leave.id)]
 
     is_related_to_time_off = fields.Boolean("Is related to time-off ?", compute="_check_if_related_to_time_off")
 
