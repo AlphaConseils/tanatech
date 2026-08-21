@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit_id" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='total']/div/table" position="after">
+            <span>Montant total en toutes lettres : </span>
+            <span t-esc="doc.currency_id.amount_to_text(doc.amount_total).replace(',', '')"/>
+        </xpath>
+    </template>
+</odoo>

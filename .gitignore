@@ -52,3 +52,7 @@ docs/_build/
 #vscode
 .vscode/
 .idea/
+.pre-commit-config.yaml
+.pylintrc
+ADDONS_STRATEGY.md
+requirements.dev.txt
