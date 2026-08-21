@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-{
+{  # noqa: B018
     "name": "Tanatech Invoicing",
     "version": "1.2",
     "summary": "Invoices & Payments",
@@ -20,11 +19,8 @@ You could use this simplified accounting in case you work with an (external) acc
         "report/report_invoice.xml",
         "security/res_groups.xml",
         "report/inherit_report_invoice_document.xml",
-        "report/report_fa_delivery_note.xml"
+        "report/report_fa_delivery_note.xml",
+        "report/report_invoice_document_copy_2_inherited.xml",
     ],
-    "demo": [],
-    "installable": True,
-    "application": True,
-    "auto_install": False,
     "license": "LGPL-3",
 }
