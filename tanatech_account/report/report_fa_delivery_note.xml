@@ -282,9 +282,13 @@
                         </td>
                       </tr>
                     </table>
-                    <span>Montant total en toutes lettres : </span>
-                    <span t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')"/>
                   </t>
+                <tr>
+                  <td colspan="2" class="text-right">
+                    <span>Montant total en toutes lettres : </span>
+                    <span t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')" />
+                  </td>
+                </tr>
 
                 <!--Payments-->
                 <t t-if="print_with_payments">
