@@ -14,14 +14,6 @@
     <xpath expr="//t[@t-set='layout_document_title']" position="attributes">
       <attribute name="style">font-size: 16px !important;</attribute>
     </xpath>
-    <xpath expr="//div[@class='mb-3'][2]" position="after">
-      <div>
-        <p>
-          <span>Arrêté à la somme de </span>
-          <span t-esc="o.amount_to_words(o.amount_total)" />
-        </p>
-      </div>
-    </xpath>
     <xpath expr="//p[@name='payment_communication']" position="after">
       <div class="row" style="margin-top:100px">
         <div class="col-8">
