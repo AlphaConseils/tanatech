@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_invoice_document_copy_2_inherited" inherit_id="studio_customization.report_invoice_docum_740f82f0-d905-4843-b490-ed5fd2a81c19">
-        <xpath expr="//div[@id='total']/div/table" position="after">
-            <br/>
-            <span>Montant total en toutes lettres : </span>
-            <span t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')"/>
+        <xpath expr="//div[@id='total']" position="after">
+            <p>
+                <span>Arrêté la présente facture à la somme de : </span>
+                <span style="font-weight: bold;" t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')"/>
+            </p>
         </xpath>
     </template>
 </odoo>

@@ -201,11 +201,14 @@
                   <t t-set="currency" t-value="doc.currency_id"/>
                 </t>
               </table>
-              <span>Montant total en toutes lettres : </span>
-              <span t-esc="doc.currency_id.amount_to_text(doc.amount_total).replace(',', '')"/>
+
             </div>
           </div>
         </div>
+        <p>
+          <span>Arrêté le présent devis à la somme de : </span>
+          <span style="font-weight: bold;" t-esc="doc.currency_id.amount_to_text(doc.amount_total).replace(',', '')"/>
+        </p>
 
         <div class="oe_structure"/>
 

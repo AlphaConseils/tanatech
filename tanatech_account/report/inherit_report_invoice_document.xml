@@ -15,7 +15,7 @@
       <attribute name="style">font-size: 16px !important;</attribute>
     </xpath>
     <xpath expr="//p[@name='payment_communication']" position="after">
-      <div class="row" style="margin-top:100px">
+      <div class="row" style="margin-top:140px">
         <div class="col-8">
           <span>
             <span style="font-weight: bolder; text-decoration-line: underline; font-size: 13px;">
@@ -92,6 +92,15 @@
               t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
         </t>
       </div>
+    </xpath>
+    <xpath expr="//div[@class='clearfix invoice_main']/div/div/div[@id='right-elements']/div[2]" position="attributes">
+      <attribute name="t-if">not o</attribute>
+    </xpath>
+    <xpath expr="//p[@name='payment_communication']" position="before">
+      <p style="margin-top: 120px!important;">
+          <span>Arrêté la présente facture à la somme de : </span>
+          <span style="font-weight: bold;" t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')"/>
+      </p>
     </xpath>
     <!-- End factures sans paiement A4 -->
   </template>
