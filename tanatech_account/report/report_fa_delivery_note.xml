@@ -283,12 +283,6 @@
                       </tr>
                     </table>
                   </t>
-                <tr>
-                  <td colspan="2" class="text-right">
-                    <span>Montant total en toutes lettres : </span>
-                    <span t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')" />
-                  </td>
-                </tr>
 
                 <!--Payments-->
                 <t t-if="print_with_payments">
@@ -364,6 +358,12 @@
           </t>
 
         </div>
+
+        <br/>
+        <p class="text-left">
+          <span>Arrêté la présente facture à la somme de : </span>
+          <strong style="font-weight: bold;" t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')" />
+        </p>
         <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
           name="payment_communication" class="small"> Please use the following communication for
           your payment : <b>
