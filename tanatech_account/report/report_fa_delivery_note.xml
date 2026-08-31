@@ -51,11 +51,6 @@
               <br />
             </span>
           </div>
-          <!-- <div class="col-4 small">
-            <span t-if="o.journal_id.name != 'Factures clients NA'">NIF: </span>
-            <span t-if="o.journal_id.name != 'Factures clients NA'"
-              t-field="o.partner_id.x_studio_nif_1" />
-          </div> -->
         </div>
         <div class="row">
         </div>
@@ -69,11 +64,6 @@
               <br />
             </span>
           </div>
-          <!-- <div class="col-4 small">
-            <span t-if="o.journal_id.name != 'Factures clients NA'">STAT: </span>
-            <span t-if="o.journal_id.name != 'Factures clients NA'"
-              t-field="o.partner_id.x_studio_char_field_d3loF" />
-          </div> -->
         </div>
         <div class="row">
         </div>
@@ -368,6 +358,12 @@
           </t>
 
         </div>
+
+        <br/>
+        <p class="text-left">
+          <span>Arrêté la présente facture à la somme de : </span>
+          <strong style="font-weight: bold;" t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')" />
+        </p>
         <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
           name="payment_communication" class="small"> Please use the following communication for
           your payment : <b>
@@ -395,28 +391,6 @@
             </span>
           </div>
         </div>
-
-        <!-- <p t-if="o.invoice_payment_term_id" name="payment_term">
-          <span t-field="o.invoice_payment_term_id.note" />
-        </p>
-        <div t-if="not is_html_empty(o.narration)" name="comment">
-          <span t-field="o.narration" />
-        </div>
-        <p t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
-          <span t-field="o.fiscal_position_id.note" />
-        </p>
-        <p t-if="o.invoice_incoterm_id" name="incoterm">
-          <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code" /> - <span
-            t-field="o.invoice_incoterm_id.name" />
-        </p>
-        <div id="qrcode" t-if="o.display_qr_code and o.amount_residual &gt; 0">
-          <p t-if="qr_code_urls.get(o.id)">
-            <strong class="text-center">Scan me with your banking app.</strong>
-            <br />
-            <br />
-            <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]" />
-          </p>
-        </div> -->
       </div>
     </t>
   </template>

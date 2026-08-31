@@ -7,16 +7,12 @@
       <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" /> <!-- So that it
       appears in the footer of the report instead of the company VAT if it's set -->
       <t t-set="address">
-        <!-- <div class="row"> -->
-          <!-- <div class="col-4"> -->
             <div t-field="doc.partner_id"
               t-options='{"widget": "contact", "fields": ["name", "street", "phone", "email"], "no_marker": True}' />
             <div t-if="doc.partner_id.x_studio_nif_1" > NIF: <span
               t-field="doc.partner_id.x_studio_nif_1" /></div>
             <div t-if="doc.partner_id.x_studio_char_field_d3loF" > STAT: <span
               t-field="doc.partner_id.x_studio_char_field_d3loF" /></div>
-          <!-- </div> -->
-        <!-- </div> -->
       </t>
       <t
         t-if="doc.partner_shipping_id == doc.partner_invoice_id
@@ -182,7 +178,6 @@
             <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
               <table class="o_total_table table table-borderless">
                 <!--Tax totals-->
-                <!-- <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)" /> -->
                 <table class="table table-sm" style="border-top: 2px solid black; color: #000 !important; font-size: 18px !important; font-weight: bold;">
                   <tr>
                     <td>Total</td>
@@ -195,7 +190,10 @@
             </div>
           </div>
         </div>
-
+        <p>
+          <span>Arrêté le présent devis à la somme de : </span>
+          <strong t-esc="doc.currency_id.amount_to_text(doc.amount_total).replace(',', '')"/>
+        </p>
 
         <div class="oe_structure" />
 
@@ -203,11 +201,6 @@
         <p t-if="not is_html_empty(doc.payment_term_id.note)">
           <span t-field="doc.payment_term_id.note" />
         </p>
-        <!-- <p id="fiscal_position_remark"
-          t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)">
-          <strong>Fiscal Position Remark:</strong>
-          <span t-field="doc.fiscal_position_id.sudo().note" />
-        </p> -->
       </div>
 
       <div style="margin-top: 5%">

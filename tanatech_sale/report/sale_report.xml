@@ -201,9 +201,14 @@
                   <t t-set="currency" t-value="doc.currency_id"/>
                 </t>
               </table>
+
             </div>
           </div>
         </div>
+        <p>
+          <span>Arrêté le présent devis à la somme de : </span>
+          <span style="font-weight: bold;" t-esc="doc.currency_id.amount_to_text(doc.amount_total).replace(',', '')"/>
+        </p>
 
         <div class="oe_structure"/>
 
@@ -211,11 +216,6 @@
         <p style="color: black!important;" t-if="not is_html_empty(doc.payment_term_id.note)">
           <span style="color: black!important;" t-field="doc.payment_term_id.note"/>
         </p>
-        <!-- <p id="fiscal_position_remark"
-            t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)">
-            <strong>Fiscal Position Remark:</strong>
-            <span t-field="doc.fiscal_position_id.sudo().note" />
-        </p> -->
       </div>
 
       <div style="margin-top: 5%">
@@ -246,8 +246,6 @@
         </td>
       </tr>
 
-      <!-- <t t-set="subtotal_to_show" t-value="subtotal['name']" />
-      <t t-call="account.tax_groups_totals" /> -->
       <t t-foreach="subtotal['tax_groups']" t-as="amount_by_group">
         <tr style="border-color: white;">
           <t t-if="len(subtotal['tax_groups']) > 1">
@@ -316,11 +314,6 @@
   </template>
 
   <template id="custom_external_layout_standard" inherit_id="web.external_layout_standard">
-    <!-- <xpath expr="//div[@class='col-3 mb4']" position="replace">
-        <div class="col-3 mb4">
-            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo"/>
-        </div>
-    </xpath> -->
     <xpath expr="//div[1]" position="replace">
       <t t-if="company.name.lower() == 'tanatech'">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
@@ -376,12 +369,6 @@
                 <br/>
                 <span style="font-size: 11px;font-weight: bolder">E-mail: info.masontsika@gmail.com</span>
               </p>
-              <!-- <p t-elif="not is_na" style="margin: 0; padding: 0">
-                  <span t-if="company.company_details" t-field="company.company_details" style="font-size: 11px;font-weight: bolder"></span>
-              </p>
-              <p t-elif="is_na" style="margin: 0; padding: 0">
-                  <span style="font-size: 11px;font-weight: bolder">MASONTSIKA - Lot IVE 32 Bis Behoririka Madagascar</span>
-              </p> -->
             </div>
           </div>
           <div t-if="company.logo or company.report_header" class="row zero_min_height">

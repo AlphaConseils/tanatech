@@ -15,9 +15,9 @@
                     </div>
                     <div  class="col-3">
                         <t t-if="o.journal_id.name!='Factures clients NA'">
-                            <div  t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span 
+                            <div  t-if="o.partner_id.x_studio_nif_1" class="mt16"> NIF: <span
                                     t-field="o.partner_id.x_studio_nif_1" /></div>
-                            <div  t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span 
+                            <div  t-if="o.partner_id.x_studio_char_field_d3loF"> STAT: <span
                                     t-field="o.partner_id.x_studio_char_field_d3loF" /></div>
                         </t>
                     </div>
@@ -150,7 +150,7 @@
                                     <t t-if="o.journal_id.name != 'Factures clients NA'">
                                         <td
                                             t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span 
+                                            <span
                                                 t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
                                                 id="line_tax_ids" />
                                         </td>
@@ -183,7 +183,7 @@
                                 <tr class="is-subtotal text-right">
                                     <td colspan="99">
                                         <strong  class="mr16">Subtotal</strong>
-                                        <span 
+                                        <span
                                             t-esc="current_subtotal"
                                             t-options='{"widget": "monetary", "display_currency": o.currency_id}'
                                         />
@@ -220,7 +220,7 @@
                                 </t>
 
 
-                                <!--Payments--> 
+                                <!--Payments-->
                                 <t t-if="print_with_payments">
                                     <t t-if="o.payment_state != 'invoicing_legacy'">
                                         <t t-set="payments_vals"
@@ -240,7 +240,7 @@
                                             </tr>
                                         </t>
                                         <t t-if="len(payments_vals) > 0">
-                                            <tr class="border-black" style="color: black!important"> 
+                                            <tr class="border-black" style="color: black!important">
                                                 <td>
                                                     <strong >Amount Due</strong>
                                                 </td>
@@ -255,6 +255,10 @@
                         </div>
                     </div>
                 </div>
+                <p>
+                    <span>Arrêté la présente facture à la somme de : </span>
+                    <span style="font-weight: bold;" t-esc="o.currency_id.amount_to_text(o.amount_total).replace(',', '')"/>
+                </p>
                 <p style="color: black!important;" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
                     name="payment_communication"> Please use the following communication for your
                     payment : <b>
