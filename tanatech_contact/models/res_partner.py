@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from lxml import etree
+
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from lxml import etree
+from odoo.tools import SQL
 
 
 class ResPartner(models.Model):
@@ -56,48 +58,21 @@ class ResPartner(models.Model):
         padding = sequence.padding or 0
         
         # Chercher le prochain numéro disponible
-        existing_numbers = self._get_all_existing_client_code_numbers(prefix)
         candidate = sequence.number_next_actual
-        
+        existing_numbers = self._get_all_existing_client_code_numbers(
+            prefix, minimum=candidate
+        )
+
         while candidate in existing_numbers:
             candidate += 1
-            
+
         self.client_code = f"{prefix}{str(candidate).zfill(padding)}"
 
     @api.model
     def _get_next_sequence_client_code(self, company_id=False):
         """Return the next available client code for the given company's sequence,
-        ensuring global uniqueness."""
-        sequence = self._get_sequence_for_company(company_id)
-        if not sequence:
-            return "/"
-
-        prefix = sequence.prefix or ""
-        padding = sequence.padding or 0
-        candidate = sequence.number_next_actual
-
-        # Récupérer tous les codes existants avec ce préfixe
-        existing_numbers = self._get_all_existing_client_code_numbers(prefix)
-
-        # Chercher un code unique (maximum 1000 tentatives pour éviter boucle infinie)
-        max_attempts = 1000
-        attempt = 0
-        while attempt < max_attempts:
-            new_code = f"{prefix}{str(candidate).zfill(padding)}"
-            
-            # Vérifier si ce code existe déjà dans la base
-            existing = self.sudo().search([('client_code', '=', new_code)], limit=1)
-            if not existing:
-                sequence.number_next = candidate + 1
-                return new_code
-            candidate += 1
-            attempt += 1
-        
-        raise ValidationError(
-            _("Impossible de générer un code client unique après %s tentatives. "
-              "Veuillez vérifier la séquence pour le préfixe '%s'.") 
-            % (max_attempts, prefix)
-        )
+        ensuring global uniqueness, and move the sequence past it."""
+        return self._get_unique_client_code(company_id)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -213,6 +188,11 @@ class ResPartner(models.Model):
                     limit=1,
                 )
             )
+        if sequence:
+            # ``number_next_actual`` is computed from the PostgreSQL sequence
+            # and is not refreshed by a write on ``number_next`` within the same
+            # transaction: drop the cached value so callers read the real one.
+            sequence.invalidate_recordset(["number_next_actual"])
         return sequence
 
     @api.model
@@ -224,10 +204,14 @@ class ResPartner(models.Model):
 
         prefix = sequence.prefix or ""
         padding = sequence.padding or 0
-        
-        # Récupérer tous les codes existants
-        existing_numbers = self._get_all_existing_client_code_numbers(prefix)
-        
+
+        # Commencer par le prochain numéro de séquence : seuls les codes
+        # existants à partir de ce numéro peuvent entrer en collision.
+        candidate = sequence.number_next_actual
+        existing_numbers = self._get_all_existing_client_code_numbers(
+            prefix, minimum=candidate
+        )
+
         # Ajouter les codes réservés dans cette transaction
         if reserved_codes:
             for code in reserved_codes:
@@ -239,10 +223,7 @@ class ResPartner(models.Model):
                             existing_numbers.add(number)
                         except (ValueError, TypeError):
                             pass
-        
-        # Commencer par le prochain numéro de séquence
-        candidate = sequence.number_next_actual
-        
+
         # Chercher le premier numéro disponible
         while candidate in existing_numbers:
             candidate += 1
@@ -256,44 +237,93 @@ class ResPartner(models.Model):
         return new_code
 
     @api.model
-    def _get_all_existing_client_code_numbers(self, prefix):
-        """Récupère tous les numéros existants pour un préfixe donné, toutes sociétés confondues."""
-        all_numbers = set()
-        partners = self.sudo().search([('client_code', 'like', f'{prefix}%')])
-        for partner in partners:
-            code = partner.client_code
-            if code and code.startswith(prefix) and not code.startswith('__TMP__'):
-                num_part = code[len(prefix):]
-                if num_part.isdigit():
-                    try:
-                        number = int(num_part)
-                        all_numbers.add(number)
-                    except (ValueError, TypeError):
-                        pass
-        return all_numbers
+    def _client_code_numbers_where(self, prefix, minimum=None, company_id=None):
+        """Build the SQL pieces selecting the numeric part of the client codes
+        that use ``prefix``.
+
+        Returns ``(number_expression, where_clause)``. Codes whose remainder is
+        not purely numeric (including the ``__TMP__`` placeholders used during
+        merges) are excluded by the regular expression. ``company_id`` is only
+        applied when given: ``False`` means partners without company.
+        """
+        like_pattern = (
+            prefix.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_") + "%"
+        )
+        number_expression = SQL(
+            "substring(res_partner.client_code FROM %s)", len(prefix) + 1
+        )
+        where_clause = SQL(
+            "res_partner.client_code LIKE %s ESCAPE '\\' AND %s ~ '^[0-9]+$'",
+            like_pattern,
+            number_expression,
+        )
+        if minimum is not None:
+            where_clause = SQL(
+                "%s AND %s::bigint >= %s", where_clause, number_expression, minimum
+            )
+        if company_id is not None:
+            if company_id:
+                where_clause = SQL(
+                    "%s AND res_partner.company_id = %s", where_clause, company_id
+                )
+            else:
+                where_clause = SQL(
+                    "%s AND res_partner.company_id IS NULL", where_clause
+                )
+        return number_expression, where_clause
+
+    @api.model
+    def _get_all_existing_client_code_numbers(self, prefix, minimum=None):
+        """Return the set of numbers already used with ``prefix``, all companies
+        included. With ``minimum``, only numbers greater or equal are returned.
+
+        Computed in SQL: loading the partners through the ORM took close to a
+        second per call on production volumes (12 000 codes for one prefix).
+        """
+        self.flush_model(["client_code"])
+        number_expression, where_clause = self._client_code_numbers_where(
+            prefix, minimum=minimum
+        )
+        rows = self.env.execute_query(
+            SQL(
+                "SELECT %s::bigint FROM res_partner WHERE %s",
+                number_expression,
+                where_clause,
+            )
+        )
+        return {number for (number,) in rows}
 
     @api.model
     def _get_existing_client_code_numbers(self, prefix, company_id=False):
-        """Récupère les numéros existants pour un préfixe et une société."""
-        domain = [('client_code', 'like', f'{prefix}%'), ('client_code', 'not like', '__TMP__%')]
-        if company_id:
-            domain.append(('company_id', '=', company_id))
-        else:
-            domain.append(('company_id', '=', False))
-        
-        partners = self.sudo().search(domain)
-        numbers = set()
-        for partner in partners:
-            code = partner.client_code
-            if code and code.startswith(prefix):
-                num_part = code[len(prefix):]
-                if num_part.isdigit():
-                    try:
-                        number = int(num_part)
-                        numbers.add(number)
-                    except (ValueError, TypeError):
-                        pass
-        return numbers
+        """Return the set of numbers already used with ``prefix`` for one company
+        (``False`` for partners without company)."""
+        self.flush_model(["client_code", "company_id"])
+        number_expression, where_clause = self._client_code_numbers_where(
+            prefix, company_id=company_id
+        )
+        rows = self.env.execute_query(
+            SQL(
+                "SELECT %s::bigint FROM res_partner WHERE %s",
+                number_expression,
+                where_clause,
+            )
+        )
+        return {number for (number,) in rows}
+
+    @api.model
+    def _get_max_client_code_number(self, prefix):
+        """Return the highest number used with ``prefix``, all companies included,
+        or 0 when the prefix is not used yet."""
+        self.flush_model(["client_code"])
+        number_expression, where_clause = self._client_code_numbers_where(prefix)
+        rows = self.env.execute_query(
+            SQL(
+                "SELECT max(%s::bigint) FROM res_partner WHERE %s",
+                number_expression,
+                where_clause,
+            )
+        )
+        return rows[0][0] or 0
 
     @api.model
     def _realign_client_code_sequence(self, company_id=False):
@@ -302,12 +332,7 @@ class ResPartner(models.Model):
         if not sequence:
             return
 
-        prefix = sequence.prefix or ""
-        
-        # Récupérer tous les numéros avec ce préfixe, toutes sociétés confondues
-        all_numbers = self._get_all_existing_client_code_numbers(prefix)
-        
-        max_number = max(all_numbers, default=0)
+        max_number = self._get_max_client_code_number(sequence.prefix or "")
 
         if sequence.number_next_actual <= max_number:
             sequence.number_next = max_number + 1

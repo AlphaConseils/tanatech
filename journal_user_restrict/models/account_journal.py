@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import api, fields, models
+
 
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
@@ -9,12 +10,24 @@ class AccountJournal(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        self.clear_caches()
-        return super(AccountJournal, self).create(vals_list)
+        journals = super().create(vals_list)
+        if any(vals.get('user_ids') for vals in vals_list):
+            self._clear_allowed_journal_cache()
+        return journals
 
     def write(self, vals):
-        self.clear_caches()
-        return super(AccountJournal, self).write(vals)
+        res = super().write(vals)
+        if 'user_ids' in vals:
+            self._clear_allowed_journal_cache()
+        return res
+
+    def _clear_allowed_journal_cache(self):
+        # The record rules of this module embed ``user.get_allowed_journal()``
+        # in their cached domain, so the rule cache must be refreshed when the
+        # allowed users change. Any other write on a journal leaves the cache
+        # alone (the previous overrides cleared it on every write).
+        self.env.registry.clear_cache()
+
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
