@@ -180,6 +180,7 @@ class HrWorkEntry(models.Model):
                 [("attendance_id", "=", entry.attendance_id.id)]
             )
             work_entries_vals = []
+            unresolved_overtimes = self.env["hr.attendance.overtime.with.datetimes"]
             for overtime in overtimes:
                 # Overtime is an N.D. element: anchor it on the N.D. contract.
                 # For a leaving employee that contract is already closed, hence
@@ -189,6 +190,15 @@ class HrWorkEntry(models.Model):
                     or overtime.employee_id._get_nd_contract(overtime.date)
                 )
                 if not nd_contract:
+                    _logger.warning(
+                        "No undeclared contract found for employee %s (id %s) "
+                        "on %s: overtime work entries of this attendance are "
+                        "left untouched.",
+                        overtime.employee_id.name,
+                        overtime.employee_id.id,
+                        overtime.date,
+                    )
+                    unresolved_overtimes |= overtime
                     continue
                 work_type_domain = []
                 if overtime.overtime_type == "day_work_on_regular_day":
@@ -257,6 +267,21 @@ class HrWorkEntry(models.Model):
                         "state": "draft",
                     }
                 )
+            if unresolved_overtimes:
+                # The rebuild of this attendance is incomplete: at least one
+                # overtime could not be anchored on an N.D. contract.
+                #
+                # Purging existing_work_entries here would delete the generic
+                # overtime entries carrying those hours while nothing recreates
+                # them — the employee would silently lose the hours. Creating
+                # only part of the detailed entries is no better: the generic
+                # entries still cover the same hours, which would then be
+                # counted twice.
+                #
+                # So the attendance is left exactly as it is, and rebuilt in
+                # full on the next run once the contract situation is fixed.
+                continue
+
             start_of_day = datetime.combine(date_start_tz.date(), datetime.min.time())
             end_of_day = datetime.combine(date_start_tz.date(), datetime.max.time())
 
