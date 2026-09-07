@@ -83,19 +83,43 @@ class HrEmployee(models.Model):
             date_start, date_stop, force=force
         )
 
-    def _get_nd_running_contract(self):
-        today = fields.Date.today()
+    def _get_nd_running_contract(self, reference_date=None):
+        """ Return the undeclared (N.D.) contract covering ``reference_date``.
+
+        ``reference_date`` defaults to today so that every existing caller keeps
+        its behaviour. Callers working on a past period (payroll runs, overtime
+        work entries) must pass the date of the period being processed:
+        an employee who left the company has no contract running *today*, and
+        looking the contract up on today's date silently returns nothing.
+
+        The 'close' state is therefore accepted alongside 'open_not_declared':
+        when a declared contract is closed, hr_contract.write() mirrors the
+        closing onto its N.D. twin, which then also sits in 'close'.
+
+        Because that twin shares the declared contract's date_start and
+        date_end, the state alone can no longer tell them apart once both are
+        closed. The category criterion is what keeps this method returning the
+        undeclared side only — same criterion as
+        hr.work.entry._get_undeclared_scope(): contract_category is the
+        reference data, the 'open_not_declared' state catches mirror contracts
+        whose category was never filled in.
+        """
+        reference_date = fields.Date.to_date(reference_date) or fields.Date.today()
         return (
             self.env["hr.contract"]
             .search(
                 [
                     ("employee_id", "=", self.id),
                     ("company_id", "=", self.company_id.id),
-                    ("state", "=", "open_not_declared"),
-                ]
+                    ("state", "in", ["open_not_declared", "close"]),
+                    "|",
+                        ("contract_category", "=", "not_declared"),
+                        ("state", "=", "open_not_declared"),
+                ],
+                order="date_start desc, id desc",
             )
             .filtered(
-                lambda c: c.date_start <= today
-                and (not c.date_end or c.date_end >= today)
-            )
+                lambda c: c.date_start <= reference_date
+                and (not c.date_end or c.date_end >= reference_date)
+            )[:1]
         )

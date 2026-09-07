@@ -166,6 +166,7 @@ class HrWorkEntry(models.Model):
                 [("attendance_id", "=", entry.attendance_id.id)]
             )
             work_entries_vals = []
+            unresolved_overtimes = self.env["hr.attendance.overtime.with.datetimes"]
             for overtime in overtimes:
                 work_type_domain = []
                 if overtime.overtime_type == "day_work_on_regular_day":
@@ -211,6 +212,27 @@ class HrWorkEntry(models.Model):
                 date_stop = pytz.utc.localize(overtime.end_date).astimezone(
                     pytz.timezone(overtime.employee_id._get_tz())
                 )
+                # The contract is looked up on the day the overtime was worked,
+                # not on today: an employee who has left the company has no
+                # contract running today, and the lookup would come back empty.
+                nd_contract = overtime.employee_id._get_nd_running_contract(
+                    reference_date=date_start.date()
+                )
+                if not nd_contract:
+                    # Never fall through with contract_id = False: the core
+                    # _set_current_contract() would then guess the contract,
+                    # find both mirror contracts and raise "Une prestation ne
+                    # peut pas coincider avec plusieurs contrats".
+                    _logger.warning(
+                        "No undeclared contract found for employee %s (id %s) "
+                        "on %s: overtime work entry not regenerated, the "
+                        "existing ones are left untouched.",
+                        overtime.employee_id.name,
+                        overtime.employee_id.id,
+                        date_start.date(),
+                    )
+                    unresolved_overtimes |= overtime
+                    continue
                 work_entries_vals.append(
                     {
                         "name": "%s: %s"
@@ -225,7 +247,7 @@ class HrWorkEntry(models.Model):
                             work_entry_type.id if work_entry_type else False
                         ),
                         "employee_id": overtime.employee_id.id,
-                        "contract_id": overtime.employee_id._get_nd_running_contract().id,
+                        "contract_id": nd_contract.id,
                         "company_id": overtime.employee_id.company_id.id,
                         "attendance_id": overtime.attendance_id.id,
                         "state": "draft",
@@ -241,7 +263,34 @@ class HrWorkEntry(models.Model):
                     ("work_entry_type_id.is_overtime", "=", True),
                 ]
             )
-            work_entries_to_unlink |= existing_work_entries
+            if unresolved_overtimes:
+                # The rebuild is incomplete: at least one overtime could not be
+                # resolved to a contract. Dropping the whole existing set would
+                # destroy work entries no replacement is going to recreate, so
+                # only the slots actually being rewritten are dropped and the
+                # rest is kept as is.
+                replaced_slots = {
+                    (
+                        vals["date_start"],
+                        vals["date_stop"],
+                        vals["work_entry_type_id"],
+                    )
+                    for vals in work_entries_vals
+                }
+                work_entries_to_unlink |= existing_work_entries.filtered(
+                    lambda we: (
+                        we.date_start,
+                        we.date_stop,
+                        we.work_entry_type_id.id,
+                    )
+                    in replaced_slots
+                )
+            else:
+                # Nominal case, unchanged: the regenerated set covers every
+                # overtime of the attendance, so the previous set is replaced
+                # as a whole — this is what clears entries whose overtime has
+                # since moved or disappeared.
+                work_entries_to_unlink |= existing_work_entries
             if work_entries_vals:
                 self.env["hr.work.entry"].create(work_entries_vals)
         work_entries_to_unlink.write({"active": False})
