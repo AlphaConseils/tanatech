@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo> 
+
+    <template id="homepage_template_green_shop" name="template_name" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <section class="s_tanatech_slider home_slide_section">
+                <t t-set="current_website" t-value="request.env['website'].get_current_website()" />
+                <t t-set="slides" t-value="request.env['website.slider.image'].sudo().search([('website_published', '=', True),('website_id', '=', current_website.id)], order='sequence')" />
+
+                <t t-if="slides">
+                    <!-- <div class="container-fluid"> -->
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+                            <!-- Slides -->
+                            <div class="carousel-inner">
+                                <t t-foreach="slides" t-as="slide">
+                                    <div t-att-class="'carousel-item' + (' active' if slide_index == 0 else '')">
+                                        <div class="slide-bg"
+                                            t-attf-style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(#{slide.image and 'data:image/png;base64,' + slide.image.decode() or '/tanatech_website/static/src/img/image1.jpeg'});" />
+                                        <div class="slide-content container">
+                                            <div class="row align-items-center h-100">
+                                                <div class="col-12 col-md-6">
+                                                    <p class="title-slider lh-1 mb-3 text-white"
+                                                        t-field="slide.title" />
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <p class="slide-note text-white" t-field="slide.note" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+
+                            <t t-if="len(slides) > 1">
+                                
+                                <!-- Contrôles -->
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                        <i class="fa fa-solid fa-arrow-left" style="color:#000;" />
+                                    </div>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <div class="arrow rounded d-flex justify-content-center align-items-center">
+                                        <i class="fa fa-solid fa-arrow-right" style="color:#000;" />
+                                    </div>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+
+                            </t>
+                            
+                        </div>
+                    <!-- </div> -->
+                    
+                </t>
+
+                <t t-else="">
+                    <div class="container">
+                        <div class="alert alert-info mt-3">
+                            <h4>No slides configured</h4>
+                            <p>Add slides in Website → Configuration → Slider Images</p>
+                        </div>
+                    </div>
+                </t>
+            </section>
+            <section class="o_website_snippet_drop oe_structure oe_empty">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12"></div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+
+    <template id="tanatech_publicity_template" name="Tanatech publicity section">
+        <section class="s_tanatech_publicity o_colored_level">
+            <div class="container-xl mx-auto py-3 my-5 px-3 px-md-4">
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
+                            <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
+                                <i class="fa fa-sun-o" style="color: #ffffff;"></i>
+                            </div>
+                            <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Who is Tanatech</a></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
+                            <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
+                                <i class="fa fa-archive" style="color: #ffffff;"></i>
+                            </div>
+                            <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Home delivery</a></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
+                            <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
+                                <i class="fa fa-shopping-basket" style="color: #ffffff;"></i>
+                            </div>
+                            <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Authentic products</a></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="pub d-flex justify-content-start align-items-center p-3 rounded h-100">
+                            <div class="icon rounded-circle d-flex justify-content-center align-items-center shadow-sm flex-shrink-0">
+                                <i class="fa fa-shield" style="color: #ffffff;"></i>
+                            </div>
+                            <span class="ms-3 fs-5 fw-light"><a href="" class="text-decoration-none text-dark">Guarantee</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="tanatech_brand_template" name="Grande marque">
+        <section class="s_tanatech_brand o_colored_level">
+            <div class="container-xl mx-auto py-4 px-3 px-md-4">
+                <h2 class="text-center fw-bold mb-4 mb-md-5">Our top brands</h2>
+
+                <!-- Carousel : flèche | slides | flèche -->
+                <div class="brand-carousel-wrap d-flex align-items-center gap-2 gap-md-3">
+                    <button class="brand-nav-prev brand-nav-btn d-none d-sm-flex" type="button" aria-label="Précédent">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+
+                    <div class="swiper swiper_client flex-grow-1 overflow-hidden">
+                        <div class="swiper-wrapper o_not_editable">
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-foreach="request.env['partner.logo'].sudo().search([('website_published','=',True)])"
+                                t-as="logo">
+                                <div class="swiper-slide">
+                                    <div class="brand-logo-card">
+                                        <img t-att-src="'/web/image/partner.logo/%s/image' % logo.id"
+                                            class="img img-fluid"
+                                            t-att-alt="logo.name or ''"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <button class="brand-nav-next brand-nav-btn d-none d-sm-flex" type="button" aria-label="Suivant">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
+                </div>
+
+                <!-- Pagination en dessous -->
+                <div class="swiper-pagination brand-nav-pagination mt-3 text-center"></div>
+            </div>
+        </section>
+    </template>
+    
+</odoo>

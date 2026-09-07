@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Redirect template for MCB Hosted Checkout.
+        The customer is sent to MCB's hosted payment page via a GET redirect.
+        The JS reads the form action (checkout_url) and redirects immediately.
+    -->
+    <template id="payment_form" name="MCB - Hosted Checkout">
+        <form t-att-action="checkout_url" method="GET" id="mcb-checkout-redirect-form"/>
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Redirecting...</span>
+            </div>
+            <p class="mt-3 text-muted">
+                Redirecting to MCB secure payment page...
+            </p>
+        </div>
+    </template>
+</odoo>

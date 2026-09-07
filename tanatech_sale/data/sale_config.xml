@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--
+        Active la facturation automatique après paiement en ligne.
+        La méthode native sale._post_process() crée la facture, la valide
+        et envoie l'email avec le PDF au client dès que le paiement est confirmé.
+    -->
+    <record id="param_sale_automatic_invoice" model="ir.config_parameter">
+        <field name="key">sale.automatic_invoice</field>
+        <field name="value">True</field>
+    </record>
+</odoo>

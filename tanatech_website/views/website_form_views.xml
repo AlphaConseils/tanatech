@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tanatech_website_form" model="ir.ui.view">
+        <field name="name">tanatech.website.form</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Image home page" groups="base.group_no_one">
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

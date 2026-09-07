@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="cdv_template" name="Condition de livraison">
+        <t t-call="website.layout">
+            <div id="warp" class="">
+                <div class="container privacy-container" style="padding: 50px 100px;">
+                    <div class="cdv row my-2 d-flex flex-warp justify-content-center">
+                       <p class="text-center">
+                         <h1 class="text-center">CONDITION DE LIVRAISON</h1>
+                         <img src="tanatech_website/static/src/img/Logo.png" style="width: 300px;"/>
+                       </p>
+                        <h2 class="mt-5">Conditionnalités et coûts de livraisons</h2>
+                        <p>
+                            • Gratuit pour achat à partir de Ar 150,000 sur Antananarivo pour les colis
+                            de moins
+                            de 15Kg<br/>
+                            • Antananarivo : Ar 10,000 / livraison<br/>
+                            • Hors-Tanà : sur devis<br/>
+                        </p>
+                        <h4>1. Zones de livraison</h4>
+                        <p>Les produits sont livrés :<br/>
+                        • Sur l’ensemble du territoire national<br/></p>
+                        <h4>2. Modes de livraison</h4>
+                        <p>Les livraisons sont effectuées via :<br/>
+                        • Coursier<br/>
+                        • Retrait en point relais (Behoririka) :<br/>
+                            <span class="ms-5"> ▪ Pour Antananarivo<br/></span>
+                        • Services de colis acceptés sur la base d’un devis<br/>
+                        <span class="ms-5">▪ Pour les livraisons en dehors d’Antananarivo<br/></span></p>
+                        <h4>3. Délais de livraison</h4>
+                        <p>
+                            Les délais sont donnés à titre indicatif et commencent à courir après
+                        paiement<br/>
+                        Délais de livraison :<br/>
+                        • Antananarivo : <b>1 à 2 jours</b><br/>
+                        • Hors Tana : sur devis<br/>
+                        </p>
+                        <h4>4. Transfert de responsabilité</h4>
+                        <p>La propriété du colis reste sous la responsabilité de Tanatech jusqu’à la
+                        livraison effective au client ou jusqu’au transporteur mandaté par ce dernier.</p>
+                        <h4>5. Force majeure</h4>
+                        <p>Le vendeur ne peut être tenu responsable des retards ou échecs de livraison
+                        dus à des événementsindépendants de sa volonté (grèves, intempéries, conflits, etc.).</p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <!-- Page qui pointe sur le template -->
+    <record id="cdv_page" model="website.page">
+        <field name="name">Condition de livraison</field>
+        <field name="url">/condition</field>
+        <field name="is_published">True</field>
+        <field name="view_id" ref="tanatech_website.cdv_template" />
+    </record>
+
+</odoo>

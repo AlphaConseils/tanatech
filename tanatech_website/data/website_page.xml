@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="assistance_page" model="website.page">
+        <field name="url">/assistance</field>
+        <field name="is_published">True</field>
+        <field name="view_id" ref="page_assistance"/>
+    </record>
+</odoo>
+

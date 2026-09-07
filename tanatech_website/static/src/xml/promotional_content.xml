@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="tanatech_website.promotional_snippet">
+        <section class="promotions_section o_colored_level">
+            <div class="container-xl mx-auto px-3 px-md-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h2 class="fw-bold mb-1" t-out="labels.ourPromotionalOffers"/>
+                        <p class="text-muted mb-0" t-out="labels.discoverDiscounted"/>
+                    </div>
+                    <a href="/shop" class="btn btn-primary px-3 py-1 small" t-out="labels.seeAll"/>
+                </div>
+
+                <div class="swiper promotions-carousel">
+                    <div class="swiper-wrapper">
+                        <t t-foreach="result.products" t-as="product" t-key="product.id">
+                            <div class="swiper-slide">
+                                <div class="tana-product-card position-relative" t-att-data-product-id="product.id">
+
+                                    <span class="tana-badge tana-badge-discount position-absolute" style="z-index: 2; left: 10px; top: 10px;">
+                                        -<t t-esc="product.discount"/>%
+                                    </span>
+
+                                    <div class="tana-card-img ratio ratio-1x1">
+                                        <img t-att-src="product.image_url" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="product.name" loading="lazy" decoding="async"/>
+                                    </div>
+
+                                    <div class="tana-card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                            <span class="fw-bold text-truncate" style="max-width:60%; font-size:14px;">
+                                                <t t-esc="product.name"/>
+                                            </span>
+                                            <del class="text-muted" style="font-size:12px; white-space:nowrap;">
+                                                <t t-if="result.currency_position === 'before'">
+                                                    <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.compare_list_price.toLocaleString('fr-FR')"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="product.compare_list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
+                                                </t>
+                                            </del>
+                                        </div>
+
+                                        <div class="text-end mb-2">
+                                            <strong style="font-size:15px;">
+                                                <t t-if="result.currency_position === 'before'">
+                                                    <t t-esc="result.currency_symbol"/>&#160;<t t-esc="product.list_price.toLocaleString('fr-FR')"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="product.list_price.toLocaleString('fr-FR')"/>&#160;<t t-esc="result.currency_symbol"/>
+                                                </t>
+                                            </strong>
+                                        </div>
+
+                                        <div class="d-flex align-items-stretch gap-2 overflow-hidden">
+                                            <button type="button"
+                                                class="btn btn-primary btn-sm flex-grow-1 tana-add-to-cart d-flex align-items-center justify-content-center gap-1"
+                                                t-att-title="labels.addToCart">
+                                                <span class="text-nowrap fw-bold text-white tana-btn-label" t-out="labels.addToCart"/>
+                                            </button>
+                                            <div class="tana-qty-group d-flex align-items-stretch overflow-hidden" contenteditable="false">
+                                                <a href="#" class="tana-qty-minus text-white"
+                                                    t-att-aria-label="labels.removeOne" t-att-title="labels.removeOne">
+                                                    <i class="fa fa-minus"/>
+                                                </a>
+                                                <input type="text"
+                                                    class="tana-qty text-center text-white border-0 bg-transparent fw-bold"
+                                                    data-min="1" value="1"/>
+                                                <a href="#" class="tana-qty-plus text-white"
+                                                    t-att-aria-label="labels.addOne" t-att-title="labels.addOne">
+                                                    <i class="fa fa-plus"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="promo-pagination"></div>
+                    <div class="d-flex gap-2">
+                        <div class="promo-nav-prev promo-nav-div" role="button" aria-label="Précédent">
+                            <i class="fa fa-chevron-left"/>
+                        </div>
+                        <div class="promo-nav-next promo-nav-div" role="button" aria-label="Suivant">
+                            <i class="fa fa-chevron-right"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+</templates>

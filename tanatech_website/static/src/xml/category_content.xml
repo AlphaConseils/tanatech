@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="tanatech_website.category_data">
+        <section class="categories_section o_colored_level py-3">
+            <div class="container-xl mx-auto px-3 px-md-4">
+                <div class="mb-3">
+                    <h2 class="fw-bold mb-1" t-out="labels.categories"/>
+                    <p class="text-muted mb-0" t-out="labels.discoverSelection"/>
+                </div>
+
+                <div class="row g-3">
+                    <t t-foreach="result.categories" t-as="category" t-key="category.id" t-if="category_index &lt; 8">
+                        <div class="col-6 col-md-3">
+                            <a t-att-href="'/shop/category/'+ category.id" class="text-decoration-none text-dark">
+                                <div class="ratio ratio-1x1 rounded-item overflow-hidden">
+                                    <img t-att-src="category.image_url" class="img-fluid object-fit-cover w-100 h-100" t-att-alt="category.name" loading="lazy" decoding="async"/>
+                                </div>
+                                <p class="fw-semibold text-center mt-2 mb-0 small">
+                                    <t t-esc="category.name"/>
+                                </p>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="text-center mt-3">
+                    <a href="/shop" class="btn btn-warning px-4 py-2 fw-semibold small" t-out="labels.seeAll"/>
+                </div>
+            </div>
+        </section>
+    </t>
+</templates>

@@ -1,0 +1,32 @@
+/* Mobile Header Styles */
+@media (max-width: 991.98px) {
+    #navbarOffcanvasMobile.offcanvas-start {
+        width: 280px;
+    }
+    
+    .navbar-nav .nav-link {
+        font-weight: 500;
+    }
+    
+    .search-green-color {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+    
+    .search-green-color:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    
+    /* Éviter les doublons de header */
+    header nav.d-none.d-lg-block {
+        display: none !important;
+    }
+    
+    @media (min-width: 992px) {
+        header nav.d-lg-none {
+            display: none !important;
+        }
+    }
+}

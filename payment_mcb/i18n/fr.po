@@ -1,0 +1,223 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_mcb
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20250320\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-24 14:17+0000\n"
+"PO-Revision-Date: 2026-04-24 14:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<i class=\"fa fa-info-circle me-1\"/>\n"
+"                            Configuration guide"
+msgstr ""
+"<i class=\"fa fa-info-circle me-1\"/>\n"
+"                            Guide de configuration"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "<span class=\"visually-hidden\">Redirecting...</span>"
+msgstr "<span class=\"visually-hidden\">Redirection...</span>"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<strong>3DS return URL: </strong>\n"
+"                            <code>/payment/mcb/return</code>\n"
+"                            (prefixed with your domain)"
+msgstr ""
+"<strong>URL de retour 3DS : </strong>\n"
+"                            <code>/payment/mcb/return</code>\n"
+"                            (précédé de votre domaine)"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<strong>API Password</strong> —\n"
+"                                generated in <em>Admin &gt; Integration &gt; New API Password</em>"
+msgstr ""
+"<strong>API Password</strong> —\n"
+"                                généré dans <em>Admin &gt; Integration &gt; New API Password</em>"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<strong>Merchant ID</strong> —\n"
+"                                shown in the top-right corner of your dashboard"
+msgstr ""
+"<strong>Merchant ID</strong> —\n"
+"                                affiché en haut à droite de votre tableau de bord"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<strong>Webhook Secret</strong> —\n"
+"                                optional — configured in <em>Admin &gt; Notifications</em>"
+msgstr ""
+"<strong>Webhook Secret</strong> —\n"
+"                                optionnel — configuré dans <em>Admin &gt; Notifications</em>"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid ""
+"<strong>Webhook URL: </strong>\n"
+"                            <code>/payment/mcb/webhook</code>\n"
+"                            (prefixed with your domain)"
+msgstr ""
+"<strong>URL Webhook : </strong>\n"
+"                            <code>/payment/mcb/webhook</code>\n"
+"                            (précédé de votre domaine)"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "API Credentials"
+msgstr "Identifiants API"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_api_password
+msgid "API Password"
+msgstr "Mot de passe API"
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_api_password
+msgid "API password provided by MCB Payment Gateway."
+msgstr "Mot de passe API fourni par MCB Payment Gateway."
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_auth_code
+msgid "Authorization Code"
+msgstr "Code d'autorisation"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__code
+msgid "Code"
+msgstr "Code"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_3ds_enabled
+msgid "Enable 3-D Secure"
+msgstr "Activer 3-D Secure"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Go to <strong>Admin &gt; Integration</strong>"
+msgstr "Allez dans <strong>Admin &gt; Integration</strong>"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Log in to your MCB Payment Gateway dashboard"
+msgstr "Connectez-vous à votre tableau de bord MCB Payment Gateway"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_order_id
+msgid "MCB Order ID"
+msgstr "ID commande MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields.selection,name:payment_mcb.selection__payment_provider__code__mcb
+#: model:payment.provider,name:payment_mcb.payment_provider_mcb
+msgid "MCB Payment Gateway"
+msgstr "MCB Payment Gateway"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_session_id
+msgid "MCB Session ID"
+msgstr "ID de session MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_success_indicator
+msgid "MCB Success Indicator"
+msgstr "Indicateur de succès MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_transaction__mcb_transaction_id
+msgid "MCB Transaction ID"
+msgstr "ID transaction MCB"
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_merchant_id
+msgid "Merchant ID"
+msgstr "Identifiant commerçant"
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_merchant_id
+msgid "Merchant identifier provided by MCB Payment Gateway."
+msgstr "Identifiant commerçant fourni par MCB Payment Gateway."
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Options"
+msgstr "Options"
+
+#. module: payment_mcb
+#: model:ir.model,name:payment_mcb.model_payment_provider
+msgid "Payment Provider"
+msgstr "Fournisseur de paiement"
+
+#. module: payment_mcb
+#: model:ir.model,name:payment_mcb.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Transaction de paiement"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_form
+msgid "Redirecting to MCB secure payment page..."
+msgstr "Redirection vers la page de paiement sécurisée MCB..."
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__mcb_webhook_secret
+msgid "Secret used to validate MCB webhook notifications."
+msgstr "Secret utilisé pour valider les notifications Webhook de MCB."
+
+#. module: payment_mcb
+#: model:ir.model.fields,help:payment_mcb.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "Le code technique de ce fournisseur de paiement."
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "URLs to configure in your MCB dashboard"
+msgstr "URLs à configurer dans votre tableau de bord MCB"
+
+#. module: payment_mcb
+#: model_terms:payment.provider,cancel_msg:payment_mcb.payment_provider_mcb
+msgid "Votre paiement a été annulé."
+msgstr "Votre paiement a été annulé."
+
+#. module: payment_mcb
+#: model_terms:payment.provider,auth_msg:payment_mcb.payment_provider_mcb
+msgid "Votre paiement a été autorisé."
+msgstr "Votre paiement a été autorisé."
+
+#. module: payment_mcb
+#: model_terms:payment.provider,pending_msg:payment_mcb.payment_provider_mcb
+msgid ""
+"Votre paiement a été traité avec succès mais est en attente de validation."
+msgstr ""
+"Votre paiement a été traité avec succès mais est en attente de validation."
+
+#. module: payment_mcb
+#: model_terms:payment.provider,done_msg:payment_mcb.payment_provider_mcb
+msgid "Votre paiement a été traité avec succès."
+msgstr "Votre paiement a été traité avec succès."
+
+#. module: payment_mcb
+#: model:ir.model.fields,field_description:payment_mcb.field_payment_provider__mcb_webhook_secret
+msgid "Webhook Secret"
+msgstr "Secret Webhook"
+
+#. module: payment_mcb
+#: model_terms:ir.ui.view,arch_db:payment_mcb.payment_provider_form_mcb
+msgid "Where to find your credentials"
+msgstr "Où trouver vos identifiants"

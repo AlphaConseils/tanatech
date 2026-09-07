@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Mvola Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position="inside">
+                <group invisible="code != 'mvola'" name="mvola_credentials">
+                    <button string="Generate token"
+                                type="object"
+                                invisible="code != 'mvola'"
+                                name="button_generate_token"
+                                class="btn-primary"
+                                colspan="2"/>
+                    <field name="mvola_status" required="code == 'mvola' and state != 'disabled'"/>
+                    <field name="mvola_url" required="code == 'mvola' and state != 'disabled'"/>
+                    <field name="mvola_consumer_key" required="code == 'mvola' and state != 'disabled'"/>
+                    <field name="mvola_consumer_secret" required="code == 'mvola' and state != 'disabled'" password="True"/>
+                    <field name="mvola_phone" required="code == 'mvola' and state != 'disabled'"/>
+                    <label for="mvola_token"/>
+                    <div class="o_row" col="2">
+                        <field name="mvola_token"/>
+                    </div>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--    <template id="method_form" inherit_id="payment.method_form" name="Payment Method Form">-->
+<!--        <xpath expr="//div[@name='o_payment_tokenize_container']" position="after">-->
+<!--            <div t-if="provider_sudo.code == 'mvola'">-->
+<!--                <input name="provider_id" type="hidden" id="provider_id" t-att-value="id"/>-->
+<!--                <input name="partner_id" type="hidden" t-att-value="partner_id"/>-->
+<!--                <div class="col-12 col-md mt-0 mb-0">-->
+<!--                    <label for="o_payment_mvola_num" class="mt-0">-->
+<!--                        <small>Phone number</small>-->
+<!--                    </label>-->
+<!--                    <input id="o_payment_mvola_num"-->
+<!--                        name="o_payment_mvola_num"-->
+<!--                               type="tel"-->
+<!--                           placeholder="ex: 034 12 345 67"-->
+<!--                        required="required"-->
+<!--                        pattern="0[23][2-9][0-9]{7}"-->
+<!--                        />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+</odoo>

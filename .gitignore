@@ -11,7 +11,7 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
+# lib/ i comment this because in my project i need a folder lib
 lib64/
 parts/
 sdist/

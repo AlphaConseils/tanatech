@@ -1,0 +1,198 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tanatech_theme
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20250320\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-24 14:17+0000\n"
+"PO-Revision-Date: 2026-04-24 14:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid ". All rights reserved."
+msgstr ". Tous droits réservés."
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid ""
+"<span class=\"s_website_form_label_content\">Subscribe to</span>\n"
+"                                                            <span class=\"s_website_form_mark\"> *</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">S'abonner à</span>\n"
+"                                                            <span class=\"s_website_form_mark\"> *</span>"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.dynamic_filter_template_product_product_borderless_3
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Best Sellers"
+msgstr "Meilleures ventes"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "By subscribing, you agree to our"
+msgstr "En vous abonnant, vous acceptez notre"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Cookie Settings"
+msgstr "Paramètres des cookies"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Current Promotions"
+msgstr "Promotions actuelles"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Customer Reviews"
+msgstr "Avis clients"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Delivery condition"
+msgstr "Conditions de livraison"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Facebook"
+msgstr "Facebook"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Follow us"
+msgstr "Suivez-nous"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.green_snippet_options
+msgid "GREEN FOOTER"
+msgstr "PIED DE PAGE VERT"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.green_snippet_options
+msgid "GREEN HEADER"
+msgstr "EN-TÊTE VERT"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Instagram"
+msgstr "Instagram"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Kit Hybrid"
+msgstr "Kit Hybride"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Kit Pompe à eau solaire"
+msgstr "Kit Pompe à eau solaire"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Kit anti-délestage"
+msgstr "Kit anti-délestage"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Kit off-grid"
+msgstr "Kit off-grid"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Kit on-grid"
+msgstr "Kit on-grid"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.newsletter_success
+msgid "Merci ! Vous êtes inscrit à la newsletter."
+msgstr "Merci ! Vous êtes inscrit à la newsletter."
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "New products"
+msgstr "Nouveaux produits"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Nos Offres"
+msgstr "Nos Offres"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Nos Produits"
+msgstr "Nos Produits"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Privacy Policy"
+msgstr "Politique de confidentialité"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.dynamic_filter_template_product_product_borderless_3
+msgid "Sample"
+msgstr "Exemple"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Sign up for our newsletter to stay informed about features and news."
+msgstr "Inscrivez-vous à notre newsletter pour rester informé des nouveautés et des actualités."
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Subscribe"
+msgstr "S'abonner"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Tanatech"
+msgstr "Tanatech"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "Terms of Use"
+msgstr "Conditions d'utilisation"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid ""
+"Thank you for subscribing! You will now be informed about the latest news."
+msgstr ""
+"Merci pour votre inscription ! Vous serez désormais informé des dernières actualités."
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "and give your consent to receive updates from our company."
+msgstr "et donnez votre consentement pour recevoir des mises à jour de notre entreprise."
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "johnsmith@example.com"
+msgstr "prenom.nom@exemple.com"
+
+#. module: tanatech_theme
+#: model_terms:ir.ui.view,arch_db:tanatech_theme.template_footer_green
+msgid "© 2024"
+msgstr "© 2024"

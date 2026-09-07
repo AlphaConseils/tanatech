@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+
+    <template id="mvola_payment_form_number">
+      <div class="o_mvola_field mt8">
+            <label for="o_payment_mvola_num">
+                <small>Phone number</small>
+            </label>
+
+            <div class="o_mvola_input_wrapper">
+                <span class="o_mvola_icon">
+                    <i class="fa fa-phone-alt"></i>
+                </span>
+                <input id="o_payment_mvola_num"
+                       name="o_payment_mvola_num"
+                       type="tel"
+                       placeholder="ex: 034 12 345 67"
+                       pattern="0[23][2-9][0-9]{7}"
+                       required="" />
+            </div>
+
+            <div id="o_mvola_error" class="o_mvola_error"></div>
+        </div>
+
+      <input type="hidden" name="provider_id" t-att-value="id"/>
+      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+      <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
+    </template>
+  </data>
+</odoo>
