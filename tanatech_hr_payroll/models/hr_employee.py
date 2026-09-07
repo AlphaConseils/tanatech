@@ -99,3 +99,24 @@ class HrEmployee(models.Model):
                 and (not c.date_end or c.date_end >= today)
             )
         )
+
+    def _get_nd_contract(self, day=None):
+        """ N.D. contract of the employee covering ``day`` (today by default),
+        whatever its state: a leaving employee's N.D. contract is already
+        closed, but must still anchor their N.D. elements (overtime...) so
+        they land on the "STC NA" payslip.
+        """
+        self.ensure_one()
+        day = day or fields.Date.today()
+        return self.env["hr.contract"].search(
+            [
+                ("employee_id", "=", self.id),
+                ("company_id", "=", self.company_id.id),
+                ("contract_category", "=", "not_declared"),
+                ("state", "!=", "cancel"),
+                ("date_start", "<=", day),
+                "|", ("date_end", "=", False), ("date_end", ">=", day),
+            ],
+            order="date_start desc",
+            limit=1,
+        )
