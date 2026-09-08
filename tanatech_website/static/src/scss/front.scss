@@ -79,7 +79,7 @@
 .s_tanatech_slider .slide-bg {
     position: absolute;
     inset: 0;
-    background-size: cover;        /* ← cover et non contain */
+    background-size: 100% 100%;        /* ← cover et non contain */
     background-position: center;
     background-repeat: no-repeat;
 }
