@@ -104,10 +104,26 @@
                 <td style="width:50%; vertical-align:top; padding-right:8px;">
                   <table style="width:100%; border-collapse:collapse;">
                     <thead>
+                      <!-- PAS de colonne de taux unitaire, et ne pas en rajouter une :
+                           - line.rate vaut toujours 100. Il ne porte un taux que sur les
+                             regles en amount_select = 'percentage', et il n'y en a aucune
+                             cote gains sur les structures STC (verifie sur les 32 lignes
+                             de gains des bulletins d'aout 2026 : zero taux different de 100).
+                             Les seules regles en pourcentage, CNaPS et OSTIE, sont des
+                             retenues, et la table des retenues n'a deja pas de colonne
+                             de taux.
+                           - line.amount ne convient pas non plus : l'Ariary est parametre
+                             avec rounding=100, donc le montant unitaire est STOCKE arrondi
+                             a la centaine alors que line.total derive de la valeur pleine.
+                             Quantite x taux ne retomberait pas sur le montant (jusqu'a
+                             900 Ar d'ecart constate), ce qui donnerait au salarie
+                             l'apparence d'une erreur sur son solde de tout compte.
+                           La quantite et un libelle explicite suffisent : une ligne
+                           "Allocation conges payes | 18,50 | 238 300" se comprend sans
+                           qu'aucune multiplication soit a verifier. -->
                       <tr style="background-color:#c9d6f0;">
                         <th style="border:1px solid #2952a3; padding:5px; text-transform:uppercase;">Total salaire</th>
                         <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Quantité</th>
-                        <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Calcule</th>
                         <th class="text-end" style="border:1px solid #2952a3; padding:5px;">Montant</th>
                       </tr>
                     </thead>
@@ -121,9 +137,6 @@
                             <span t-field="line.quantity"/>
                           </td>
                           <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
-                            <span t-field="line.rate"/>
-                          </td>
-                          <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
                             <span t-field="line.total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                           </td>
                         </tr>
@@ -131,7 +144,6 @@
                       <!-- Empty filler rows so this table matches the height of the deductions table -->
                       <t t-foreach="range(max_rows - len(salary_lines))" t-as="filler">
                         <tr>
-                          <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
                           <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
                           <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
                           <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
@@ -143,7 +155,6 @@
                         <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
                           <span t-esc="total_salary_qty"/>
                         </td>
-                        <td style="border:1px solid #2952a3; padding:5px;">&#160;</td>
                         <td class="text-end" style="border:1px solid #2952a3; padding:5px;">
                           <span t-esc="total_salary_amount"
                                 t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
