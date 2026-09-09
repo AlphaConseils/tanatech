@@ -74,7 +74,11 @@
             <!-- ===== Salary / Deductions tables block ===== -->
             <!-- Pull the line recordsets once, both columns share the same data source -->
             <!-- Gains: n'affiche que les lignes non nulles; GROSS/NET (totaux) exclus car hors liste -->
-            <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM', 'HSUPP', 'HSUPPEXO30', 'ALW'] and l.total != 0)"/>
+            <!-- PRIME est indispensable: c'est la categorie de CPALLOC (allocation
+                 conges payes), qui sur un solde de tout compte indemnise le solde de
+                 conges acquis et non pris. Sans elle l'indemnite entre dans le brut et
+                 dans le net sans qu'aucune ligne ne l'explique au salarie. -->
+            <t t-set="salary_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['BASIC', 'INDEM', 'HSUPP', 'HSUPPEXO30', 'ALW', 'PRIME'] and l.total != 0)"/>
             <!-- Retenues: DED/IRSA02 conservés pour les bulletins déclarés; AJUST/ABS pour les N.D. -->
             <t t-set="deduction_lines" t-value="o.line_ids.filtered(lambda l: l.category_id.code in ['DED', 'IRSA02', 'AJUST', 'ABS'] and l.total != 0)"/>
 
