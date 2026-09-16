@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Payroll",
-    "version": "1.2.22",
+    "version": "1.2.23",
     "summary": "Manage your Payroll activities",
     "description": "",
     "website": "https://www.nexources.com/",
@@ -25,6 +25,7 @@
 
         # views
         "views/hr_employee_view.xml",
+        "views/hr_contract_views.xml",
         "views/report_payslip_templates.xml",
         "views/report_payslip_nd_templates.xml",
         "views/hr_payslip_view.xml",
