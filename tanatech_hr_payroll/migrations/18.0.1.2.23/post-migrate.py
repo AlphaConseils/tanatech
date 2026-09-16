@@ -316,6 +316,37 @@ def _write_rule(rule, values, what):
 # Sondage du localdict : ce que les corps cibles supposent de la base
 # ---------------------------------------------------------------------------
 
+def _result_rules_in_source(env):
+    """ Repli : « result_rules » apparaît-il dans le moteur de paie lui-même ?
+
+    Quand un localdict réel n'a pas pu être construit (aucun bulletin en base,
+    ou méthode interne renommée d'une version à l'autre), on lit la source des
+    méthodes de hr.payslip qui construisent le localdict et évaluent les règles.
+    C'est une lecture, elle ne touche à rien, et elle évite de refuser le volet
+    C sur le seul motif qu'un nom de méthode privée d'Odoo a bougé.
+    """
+    import inspect
+
+    Payslip = env["hr.payslip"]
+    for name in ("_get_localdict", "_get_payslip_lines", "_compute_payslip_lines"):
+        method = getattr(Payslip, name, None)
+        if not callable(method):
+            continue
+        try:
+            source = inspect.getsource(method)
+        except (OSError, TypeError):
+            continue
+        if "result_rules" in source:
+            _logger.info(
+                "%s « result_rules » trouvé dans la source de hr.payslip.%s : "
+                "le volet C peut s'appuyer dessus.", _LOG, name)
+            return True
+    _logger.warning(
+        "%s « result_rules » est introuvable, tant dans un localdict réel que "
+        "dans la source du moteur de paie.", _LOG)
+    return False
+
+
 def _probe_localdict(env):
     """ Vérifier SUR LA BASE CIBLE ce que les corps cibles supposent.
 
@@ -329,8 +360,10 @@ def _probe_localdict(env):
         total déjà calculé de FRAISBANC, sans lequel le volet C n'a pas de
         source.
 
-    Sans bulletin en base (environnement vierge), on se rabat sur la présence
-    des méthodes sur le modèle : le volet C est alors refusé par prudence.
+    Sans bulletin en base, ou si la méthode interne qui construit le localdict
+    a changé de nom d'une version à l'autre, « result_rules » est cherché dans
+    la SOURCE du moteur de paie (_result_rules_in_source) : le volet C n'est
+    refusé que s'il est vraiment introuvable, jamais sur un simple renommage.
     """
     Payslip = env["hr.payslip"]
     needed = [
@@ -351,18 +384,19 @@ def _probe_localdict(env):
         _logger.warning(
             "%s aucun bulletin en base : impossible de sonder un localdict "
             "réel. Les volets A, B et D sont appliqués (ils n'utilisent que des "
-            "méthodes du module, vérifiées présentes), le volet C est REFUSÉ "
-            "faute d'avoir pu confirmer la présence de « result_rules ».", _LOG)
-        return True, False
+            "méthodes du module, vérifiées présentes), et « result_rules » est "
+            "cherché dans la source du moteur de paie.", _LOG)
+        return True, _result_rules_in_source(env)
 
     try:
         localdict = slip._get_localdict()
     except Exception:
         _logger.warning(
             "%s le sondage du localdict a échoué sur le bulletin id %s — les "
-            "volets A, B et D restent appliqués, le volet C est REFUSÉ.\n%s",
+            "volets A, B et D restent appliqués, « result_rules » est cherché "
+            "dans la source du moteur de paie.\n%s",
             _LOG, slip.id, traceback.format_exc())
-        return True, False
+        return True, _result_rules_in_source(env)
 
     wrapper = localdict.get("payslip")
     _logger.info(
@@ -372,11 +406,17 @@ def _probe_localdict(env):
 
     result_rules_ok = "result_rules" in localdict
     if not result_rules_ok:
+        # Le localdict initial peut être complété par le moteur au fil des
+        # règles : l'absence de la clé ici n'est pas une preuve.
         _logger.warning(
-            "%s « result_rules » ne figure pas dans le localdict de cette "
-            "version d'Odoo : le total déjà calculé de FRAISBANC n'est pas "
-            "lisible depuis la règle SALARR. Le volet C (assiette d'arrondi) "
-            "est REFUSÉ, les autres restent appliqués.", _LOG)
+            "%s « result_rules » ne figure pas dans le localdict INITIAL — "
+            "vérification de repli sur la source du moteur de paie.", _LOG)
+        result_rules_ok = _result_rules_in_source(env)
+    if not result_rules_ok:
+        _logger.warning(
+            "%s le total déjà calculé de FRAISBANC n'est pas lisible depuis la "
+            "règle SALARR sur cette version d'Odoo. Le volet C (assiette "
+            "d'arrondi) est REFUSÉ, les autres restent appliqués.", _LOG)
 
     # L'appel exact que les corps cibles vont faire.
     try:
