@@ -454,6 +454,91 @@ class TestPattyAout(TransactionCase):
         self.assertFalse(tana_contract.tanatech_mission_eligible)
 
     # ------------------------------------------------------------------
+    # D. Écriture de la condition sur la règle MISS
+    # ------------------------------------------------------------------
+
+    def _miss_rule(self, condition_select='python', condition_python=False):
+        """Une règle MISS de test, sur une structure à nous.
+
+        La structure porte un nom neutre : la résolution par nom de la migration
+        ne doit pas la confondre avec les structures réelles de la base.
+        """
+        struct_type = self.env['hr.payroll.structure.type'].create({
+            'name': 'Type Test Patty',
+        })
+        structure = self.env['hr.payroll.structure'].create({
+            'name': 'Structure Test Patty',
+            'type_id': struct_type.id,
+        })
+        category = self.env['hr.salary.rule.category'].create({
+            'name': 'Prime Test Patty',
+            'code': 'PRIMETESTPATTY',
+        })
+        return self.env['hr.salary.rule'].create({
+            'name': 'Prime de mission',
+            'code': 'MISS',
+            'sequence': 1100,
+            'category_id': category.id,
+            'struct_id': structure.id,
+            'amount_select': 'fix',
+            'amount_fix': 120000.0,
+            'condition_select': condition_select,
+            'condition_python': condition_python,
+        })
+
+    def test_d_condition_existante_conservee_et_durcie(self):
+        """Une garde métier déjà en place est conservée, le critère s'ajoute.
+
+        C'est le cas réel constaté au build de stage_2 : les deux règles MISS
+        portaient déjà condition_select = 'python', et la première version du
+        script refusait d'écrire, si bien qu'aucune éligibilité n'était posée.
+        """
+        migration = self._load_migration()
+        garde = "result = bool(inputs.get('MISS'))"
+        rule = self._miss_rule(condition_python=garde)
+
+        self.assertTrue(migration._apply_miss_rule(self.env, rule, 'test'))
+
+        condition = rule.condition_python
+        self.assertIn(garde, condition,
+                      "la garde d'origine doit être conservée telle quelle")
+        self.assertIn('_tanatech_mission_eligible', condition)
+        self.assertIn('result = result and', condition)
+        self.assertTrue(condition.index(garde)
+                        < condition.index('_tanatech_mission_eligible'),
+                        "le critère doit venir APRÈS la garde d'origine")
+        compile(condition, '<test>', 'exec')
+        self.assertNotIn('__', condition)
+
+        # Seconde exécution : le critère ne doit pas être ajouté une seconde fois.
+        apres_premier_passage = condition
+        self.assertFalse(migration._apply_miss_rule(self.env, rule, 'test'))
+        self.assertEqual(rule.condition_python, apres_premier_passage)
+        self.assertEqual(condition.count('_tanatech_mission_eligible'), 1)
+
+    def test_d_condition_absente_pose_le_critere_seul(self):
+        """condition_select = 'none' : le critère devient la condition."""
+        migration = self._load_migration()
+        rule = self._miss_rule(condition_select='none')
+
+        self.assertTrue(migration._apply_miss_rule(self.env, rule, 'test'))
+        self.assertEqual(rule.condition_select, 'python')
+        self.assertIn('_tanatech_mission_eligible', rule.condition_python)
+        self.assertNotIn('result = result and', rule.condition_python)
+
+        self.assertFalse(migration._apply_miss_rule(self.env, rule, 'test'))
+
+    def test_d_condition_par_intervalle_refusee(self):
+        """condition_select = 'range' : on ne touche à rien."""
+        migration = self._load_migration()
+        rule = self._miss_rule(condition_select='range')
+        avant = rule.condition_python
+
+        self.assertFalse(migration._apply_miss_rule(self.env, rule, 'test'))
+        self.assertEqual(rule.condition_select, 'range')
+        self.assertEqual(rule.condition_python, avant)
+
+    # ------------------------------------------------------------------
     # Chargement du script de migration
     # ------------------------------------------------------------------
 
@@ -486,6 +571,7 @@ class TestPattyAout(TransactionCase):
             migration._MATOFF_CONDITION % (repr('MATOFF'), 30),
             'to_pay = (categories.get("NET") or 0)\n' + migration._SALARR_RESULT,
             migration._MISS_CONDITION,
+            "result = True\n" + migration._MISS_EXTRA_CONDITION,
         ]
         for body in bodies:
             compile(body, '<test>', 'exec')

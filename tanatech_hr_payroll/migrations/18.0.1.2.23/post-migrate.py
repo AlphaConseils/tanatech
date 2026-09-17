@@ -182,6 +182,32 @@ _MISS_CONDITION = "\n".join([
     "result = %s._tanatech_mission_eligible()" % _SLIP,
 ])
 
+# Critère AJOUTÉ à une condition existante, sans la toucher.
+#
+# Constaté au build de stage_2 : les règles MISS des deux structures NA portent
+# déjà condition_select = 'python' et une garde métier. La première version de ce
+# script refusait alors d'écrire pour ne pas perdre ce critère, et le résultat
+# était qu'aucune éligibilité n'était posée nulle part. On conserve donc la
+# condition d'origine VERBATIM et on la durcit d'une ligne en fin de corps.
+#
+# « result » est toujours défini quand cette ligne s'exécute : le moteur de paie
+# le remet à None dans le localdict avant chaque règle, et la condition d'origine
+# l'a renseigné. Le « and » ne peut donc pas lever de NameError, et il ne peut
+# qu'ajouter une restriction, jamais en lever une.
+_MISS_EXTRA_CONDITION = "\n".join([
+    "",
+    "# Prime de mission : critère d'éligibilité ajouté par la migration",
+    "# 18.0.1.2.23. La condition d'origine ci-dessus est conservée telle quelle,",
+    "# ce critère ne fait que la durcir. Voir",
+    "# tanatech_hr_payroll/models/hr_payslip.py.",
+    "result = result and %s._tanatech_mission_eligible()" % _SLIP,
+])
+
+# Marqueur d'un critère d'éligibilité déjà posé, quelle que soit la forme.
+# C'est LUI qui rend l'écriture de la condition idempotente, pas le marqueur
+# d'initialisation du champ.
+_MISS_MARKER = "_tanatech_mission_eligible"
+
 # ---------------------------------------------------------------------------
 # Reconnaissance des corps en base
 # ---------------------------------------------------------------------------
@@ -769,6 +795,13 @@ def _init_mission_eligible(env):
     Posée UNE SEULE FOIS, sous marqueur ir.config_parameter. Un rejeu ne doit
     pas écraser les décochages manuels du client (la liste des responsables
     TANATECH à exclure est cochée à la main).
+
+    Le marqueur ne couvre QUE la valeur du champ. L'écriture de la condition sur
+    la règle MISS en est indépendante et reste rejouée à chaque passage, son
+    idempotence venant du test de texte de _apply_miss_rule.
+
+    Renvoie False seulement si le champ est absent du modèle : la condition ne
+    doit alors pas être posée non plus, la méthode n'aurait rien à lire.
     """
     what = "D prime de mission"
     Contract = env["hr.contract"]
@@ -816,12 +849,75 @@ def _init_mission_eligible(env):
     return True
 
 
+def _apply_miss_rule(env, rule, name):
+    """ Poser le critère d'éligibilité sur UNE règle MISS.
+
+    Trois cas, et un seul refus :
+      - une condition python porte DÉJÀ le critère  -> rien à faire, c'est ce
+        test de texte qui rend l'écriture idempotente ;
+      - condition_select vaut 'none', ou la condition python est vide ou
+        trivialement vraie                          -> le critère seul ;
+      - une condition python porte une garde métier -> la garde est conservée
+        VERBATIM et le critère est AJOUTÉ en fin de corps ;
+      - tout autre type ('range' et suivants)       -> WARNING, rien n'est écrit.
+
+    L'ancienne et la nouvelle condition sont journalisées en entier.
+    """
+    what = "D prime de mission"
+    condition = rule.condition_python or ""
+    select = rule.condition_select
+
+    if select == "python" and _MISS_MARKER in condition:
+        _logger.info(
+            "%s %s — règle %s de %r porte déjà le critère d'éligibilité, "
+            "inchangée.\n--- condition en base ---\n%s",
+            _LOG, what, _MISS_RULE_CODE, name, condition)
+        return False
+
+    if select not in ("none", "python"):
+        _logger.warning(
+            "%s %s — règle %s de %r est conditionnée par %r : basculer en "
+            "python perdrait ce critère. RIEN N'EST ÉCRIT, l'éligibilité doit "
+            "y être ajoutée à la main.\n--- condition en base ---\n%s",
+            _LOG, what, _MISS_RULE_CODE, name, select, condition)
+        return False
+
+    vide = _normalize_code(condition).lower() in _EMPTY_CONDITIONS
+    if select == "none" or vide:
+        # Rien à préserver : le critère devient la condition.
+        target = _MISS_CONDITION
+        geste = ("aucune condition à préserver, le critère devient la condition"
+                 if select == "none"
+                 else "condition vide ou trivialement vraie, remplacée")
+    else:
+        # Une garde métier existe : elle est conservée telle quelle et durcie.
+        target = _normalize_code(condition) + "\n" + _MISS_EXTRA_CONDITION
+        geste = "condition d'origine conservée, critère ajouté en fin de corps"
+
+    if not _compiles(target, "%s condition (%s)" % (_MISS_RULE_CODE, name)):
+        return False
+
+    values = {"condition_python": target}
+    if select != "python":
+        values["condition_select"] = "python"
+
+    _logger.info(
+        "%s %s — règle %s de %r : %s (condition_select %r).\n"
+        "--- ancienne condition_python ---\n%s\n"
+        "--- nouvelle condition_python ---\n%s",
+        _LOG, what, _MISS_RULE_CODE, name, geste, select, condition, target)
+    return _write_rule(rule, values, what)
+
+
 def _apply_miss(env, structures):
     what = "D prime de mission"
-    if not _init_mission_eligible(env):
-        return
 
-    if not _compiles(_MISS_CONDITION, "%s condition" % _MISS_RULE_CODE):
+    # Le marqueur d'initialisation ne protège QUE la valeur du champ sur le parc
+    # existant. L'écriture de la condition, elle, est rejouée à chaque passage :
+    # son idempotence vient du test de texte sur _MISS_MARKER, pas du marqueur.
+    # Seule l'absence du champ sur hr.contract empêche de poser la condition, la
+    # méthode ne pourrait alors rien lire.
+    if not _init_mission_eligible(env):
         return
 
     for name in _MISS_STRUCTURES:
@@ -834,37 +930,7 @@ def _apply_miss(env, structures):
                 "%s %s — pas de règle %s sur %r, rien à conditionner.",
                 _LOG, what, _MISS_RULE_CODE, name)
             continue
-
-        condition = rule.condition_python or ""
-        select = rule.condition_select
-        replaceable = (
-            select != "python"
-            or _normalize_code(condition).lower() in _EMPTY_CONDITIONS
-            or _MODULE_MARKER in condition)
-        if not replaceable:
-            _logger.warning(
-                "%s %s — règle %s de %r porte déjà une condition (%s). La "
-                "remplacer perdrait un critère métier : RIEN N'EST ÉCRIT, le "
-                "critère d'éligibilité doit y être ajouté à la main.\n"
-                "--- condition en base ---\n%s",
-                _LOG, what, _MISS_RULE_CODE, name, select, condition)
-            continue
-        if select == "range":
-            _logger.warning(
-                "%s %s — règle %s de %r est conditionnée par intervalle "
-                "(condition_select = 'range') : basculer en python perdrait "
-                "l'intervalle. RIEN N'EST ÉCRIT.",
-                _LOG, what, _MISS_RULE_CODE, name)
-            continue
-
-        values = {"condition_python": _MISS_CONDITION}
-        if select != "python":
-            values["condition_select"] = "python"
-            _logger.info(
-                "%s %s — règle %s de %r : condition_select passe de %r à "
-                "'python' (le barème, lui, n'est pas touché).",
-                _LOG, what, _MISS_RULE_CODE, name, select)
-        _write_rule(rule, values, what)
+        _apply_miss_rule(env, rule, name)
 
 
 # ---------------------------------------------------------------------------
