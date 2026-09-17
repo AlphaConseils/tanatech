@@ -396,6 +396,40 @@ class TestPattyAout(TransactionCase):
         prime = bareme if na_payslip._tanatech_mission_eligible() else 0.0
         self.assertEqual(prime, 0.0)
 
+    def test_d_defaut_suit_la_societe_du_contrat(self):
+        """Un contrat créé APRÈS la migration naît non éligible chez MASONTSIKA.
+
+        La valeur posée par la migration ne vaut que pour le parc existant :
+        sans ce défaut, chaque embauche chez MASONTSIKA repartirait éligible.
+        """
+        Contract = self.env['hr.contract']
+
+        maso = self._employee('Embauche Masontsika', self.company_maso)
+        contrat_maso = Contract.with_context(
+            default_company_id=self.company_maso.id).create({
+                'name': 'Embauche Masontsika',
+                'employee_id': maso.id,
+                'company_id': self.company_maso.id,
+                'date_start': date(2026, 9, 1),
+                'wage': 200000.0,
+                'family_allowance': 0.0,
+                'state': 'draft',
+            })
+        self.assertFalse(contrat_maso.tanatech_mission_eligible)
+
+        tana = self._employee('Embauche Tanatech', self.company_tana)
+        contrat_tana = Contract.with_context(
+            default_company_id=self.company_tana.id).create({
+                'name': 'Embauche Tanatech',
+                'employee_id': tana.id,
+                'company_id': self.company_tana.id,
+                'date_start': date(2026, 9, 1),
+                'wage': 200000.0,
+                'family_allowance': 0.0,
+                'state': 'draft',
+            })
+        self.assertTrue(contrat_tana.tanatech_mission_eligible)
+
     def test_d_initialisation_du_parc(self):
         """La migration pose False sur MASONTSIKA, True ailleurs, UNE seule fois.
 
