@@ -33,9 +33,11 @@ import unicodedata
 import unittest
 
 from datetime import date
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase, tagged
+from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.tanatech_hr_payroll.models import hr_payslip as payslip_module
 
@@ -689,20 +691,121 @@ class TestPattyAout(TransactionCase):
         self.assertEqual(rule.condition_python, avant)
 
     # ------------------------------------------------------------------
+    # E. Heures travaillées un jour férié (migration 18.0.1.2.24)
+    # ------------------------------------------------------------------
+
+    def test_e_ferie_majoration_seule_50(self):
+        """Un bulletin NA avec des heures WORKONPUBLICHOLIDAYS paie la seule
+        majoration de 50 % : 0,5 x heures x (salaire déclaré + NA) / 173,33.
+
+        Décision client du 21/09/2026. Les heures d'un jour férié sont déjà
+        payées par le salaire de base, qui couvre tout le mois : ne reste due
+        que la majoration.
+
+        C'est la VRAIE règle de la base qui est évaluée, par le vrai safe_eval
+        du moteur de paie, sur un vrai bulletin NA et les vrais contrats du
+        salarié. Seules les heures sont fournies par un objet minimal : la
+        règle n'en lit que number_of_hours, et les faire naître par des
+        présences un jour férié ferait dépendre le test de tout le calendrier.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_na.id),
+            ('code', '=', 'WORKONPUBLICHOLIDAYS'),
+        ])
+        if len(rules) != 1:
+            self.skipTest(
+                "La structure %r ne porte pas exactement une règle "
+                "WORKONPUBLICHOLIDAYS (%s trouvée(s))."
+                % (self.struct_na.name, len(rules)))
+        self.assertIn(
+            'PATTY_FERIE', rules.amount_python_compute,
+            "la migration 18.0.1.2.24 n'a pas posé la majoration seule sur "
+            "cette règle : voir les logs « PATTY_FERIE : » du build")
+
+        employee = self._employee('Salarié Férié Test Patty', self.company_tana)
+        declared = self._contract(employee, 300000.0, self.struct_sd)
+        na_contract = self._contract(
+            employee, 100000.0, self.struct_na, category='not_declared',
+            source=declared)
+        na_payslip = self._payslip(employee, na_contract, self.struct_na,
+                                   AOUT_DEBUT, AOUT_FIN)
+
+        heures = 10.0
+        localdict = {
+            'employee': na_payslip.employee_id,
+            'contract': na_payslip.contract_id,
+            'payslip': na_payslip,
+            'worked_days': {
+                'WORKONPUBLICHOLIDAYS': SimpleNamespace(number_of_hours=heures),
+            },
+            'result': None,
+            'result_qty': 1.0,
+            'result_rate': 100,
+            'result_name': False,
+        }
+        safe_eval(rules.amount_python_compute, localdict, mode='exec', nocopy=True)
+
+        salaires = declared.wage + na_contract.wage
+        attendu = 0.5 * heures * salaires / 173.33
+        self.assertAlmostEqual(localdict['result'], attendu, places=2)
+        # 0,5 x 10 x 400 000 / 173,33 : la moitié de ce que payait l'ancienne règle.
+        self.assertAlmostEqual(localdict['result'], 11538.68, places=2)
+
+    def test_e_migration_ferie_une_seule_ligne(self):
+        """La migration 18.0.1.2.24 ne remplace que la ligne visée, une fois.
+
+        Fonction pure, sans base : le code de production, la variante refusée,
+        et le second passage qui ne doit rien réécrire.
+        """
+        migration = self._load_migration('18.0.1.2.24')
+        prod = (
+            "wages = sum(employee.contract_ids.filtered(lambda c: c.state in "
+            "['open', 'open_not_declared']).mapped('wage'))\n"
+            "res = 0\n"
+            "if worked_days.get(\"WORKONPUBLICHOLIDAYS\"):\n"
+            "    total_amount = (worked_days.get(\"WORKONPUBLICHOLIDAYS\")"
+            ".number_of_hours* wages / 173.33)\n"
+            "    res = total_amount\n"
+            "result = res"
+        )
+
+        cible, motif = migration._transform(prod)
+        self.assertIsNone(motif)
+        self.assertIn(
+            "    res = total_amount * 0.5  # PATTY_FERIE : majoration seule de "
+            "50 %, décision client du 21/09/2026", cible)
+        changees = [a for a, b in zip(prod.splitlines(), cible.splitlines())
+                    if a != b]
+        self.assertEqual(changees, ["    res = total_amount"],
+                         "seule la ligne visée doit changer")
+        self.assertNotIn('__', cible)
+        compile(cible, '<test>', 'exec')
+
+        # Idempotence : un corps déjà migré n'est pas réécrit.
+        self.assertEqual(migration._transform(cible), (None, None))
+
+        # Une variante n'est pas reconnue : rien n'est écrit, un motif est donné.
+        variante, motif = migration._transform(
+            prod.replace("    res = total_amount", "    res=total_amount"))
+        self.assertIsNone(variante)
+        self.assertTrue(motif)
+
+    # ------------------------------------------------------------------
     # Chargement du script de migration
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _load_migration():
-        """Le post-migrate de 18.0.1.2.23, chargé par chemin.
+    def _load_migration(version='18.0.1.2.23'):
+        """Le post-migrate de la version demandée, chargé par chemin.
 
         Le répertoire porte des points et le fichier un tiret : il n'est pas
         importable comme un module ordinaire.
         """
         path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            'migrations', '18.0.1.2.23', 'post-migrate.py')
-        spec = importlib.util.spec_from_file_location('patty_aout_migration', path)
+            'migrations', version, 'post-migrate.py')
+        spec = importlib.util.spec_from_file_location(
+            'migration_%s' % version.replace('.', '_'), path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
