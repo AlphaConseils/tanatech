@@ -441,6 +441,69 @@ class HrPayslip(models.Model):
         return target - base
 
     # ------------------------------------------------------------------
+    # Base salariale de la période
+    # ------------------------------------------------------------------
+
+    def _tanatech_period_wages(self):
+        """Somme des salaires qui couvrent la PÉRIODE de ce bulletin.
+
+        Les règles salariales calculaient jusqu'ici leur base ainsi :
+
+            wages = sum(employee.contract_ids.filtered(
+                lambda c: c.state in ['open', 'open_not_declared']).mapped('wage'))
+
+        Ce filtre porte sur l'état du contrat AUJOURD'HUI, pas sur la période
+        payée. Le jour où un salarié sort, ses contrats passent en 'close' et
+        tous ses bulletins passés perdent ces lignes au moindre recalcul.
+        Constaté le 23/09/2026 : RANDRIANIRINA Falisoa Patrick, sorti ce
+        jour-là, voyait ses 4,65 heures du 15/08 passer de 4 100 Ar à 0 alors
+        que les entrées de travail étaient toujours là. Même motif que le
+        correctif 1.2.18 sur les heures supplémentaires.
+
+        La base retenue ici est celle du contrat du bulletin ET de son contrat
+        JUMEAU (déclaré <-> NA), à condition qu'ils couvrent la période, et
+        quel que soit leur état hormis 'cancel'. Pour un salarié dont les deux
+        contrats sont en cours, le résultat est identique à l'ancienne formule.
+
+        UN SEUL contrat par catégorie est retenu, le plus récent par date de
+        début (voir hr.employee._get_period_contract). C'est ce qui protège le
+        renouvellement en cours de mois : deux contrats déclarés successifs ne
+        sont jamais additionnés, et c'est le nouveau qui porte le salaire,
+        exactement ce que faisait l'ancienne formule puisque l'ancien contrat y
+        était déjà exclu par son état 'close'.
+        """
+        self.ensure_one()
+        employee = self.employee_id
+        if not employee or not self.date_from or not self.date_to:
+            return 0.0
+
+        contracts = self.env['hr.contract']
+
+        # Le contrat du bulletin fait foi pour sa propre catégorie : c'est lui
+        # qui est payé, inutile d'aller en chercher un autre du même côté.
+        own = self.contract_id
+        if own and own.state != 'cancel' and self._tanatech_covers_period(own):
+            contracts |= own
+
+        for category in ('declared', 'not_declared'):
+            if any(c.contract_category == category for c in contracts):
+                continue
+            twin = employee._get_period_contract(
+                category, self.date_from, self.date_to)
+            if twin:
+                contracts |= twin
+
+        return sum(contracts.mapped('wage'))
+
+    def _tanatech_covers_period(self, contract):
+        """Le contrat couvre-t-il, même partiellement, la période du bulletin ?"""
+        self.ensure_one()
+        if not contract or not contract.date_start:
+            return False
+        return (contract.date_start <= self.date_to
+                and (not contract.date_end or contract.date_end >= self.date_from))
+
+    # ------------------------------------------------------------------
     # Prime de mission
     # ------------------------------------------------------------------
 
