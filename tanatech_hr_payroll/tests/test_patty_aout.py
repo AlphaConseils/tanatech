@@ -791,6 +791,145 @@ class TestPattyAout(TransactionCase):
         self.assertTrue(motif)
 
     # ------------------------------------------------------------------
+    # F. Frais de tenue de compte (migration 18.0.1.2.25)
+    # ------------------------------------------------------------------
+
+    def _bank_account(self, employee):
+        """Un compte bancaire de test rattaché au salarié.
+
+        La règle FRAISBANC ne lit bank_account_id qu'en booléen ; le numéro n'a
+        pas d'importance, il est seulement choisi assez improbable pour ne pas
+        heurter la contrainte d'unicité de la base.
+        """
+        partner = self.env['res.partner'].with_company(
+            employee.company_id).with_context(**SILENCIEUX).create({
+                'name': 'Banque test Patty %s' % employee.id,
+                'company_id': employee.company_id.id,
+            })
+        account = self.env['res.partner.bank'].with_company(
+            employee.company_id).with_context(**SILENCIEUX).create({
+                'acc_number': 'TEST-PATTY-FRAIS-%s' % employee.id,
+                'partner_id': partner.id,
+                'company_id': employee.company_id.id,
+            })
+        employee.bank_account_id = account
+        return account
+
+    def _eval_rule(self, rule, employee, contract):
+        """Évaluer le corps d'une règle comme le fait le moteur de paie."""
+        localdict = {
+            'employee': employee,
+            'contract': contract,
+            'result': None,
+            'result_qty': 1.0,
+            'result_rate': 100,
+            'result_name': False,
+        }
+        safe_eval(rule.amount_python_compute, localdict, mode='exec', nocopy=True)
+        return localdict['result']
+
+    def test_f_frais_bancaires_sans_seuil_de_salaire(self):
+        """Salaire déclaré 533 700 avec compte bancaire : 3 000 Ar.
+
+        Décision client du 23/09/2026 : les frais de tenue de compte
+        s'appliquent à tout salarié payé par virement, sans condition de
+        salaire. Avant, le seuil de 400 000 privait ce salarié des 3 000 Ar.
+
+        C'est la VRAIE règle de la base qui est évaluée, par le vrai safe_eval
+        du moteur de paie.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest(
+                "La structure %r ne porte pas exactement une règle FRAISBANC "
+                "(%s trouvée(s))." % (self.struct_sd.name, len(rules)))
+        self.assertIn(
+            'PATTY_FRAIS', rules.amount_python_compute,
+            "la migration 18.0.1.2.25 n'a pas retiré le seuil de salaire sur "
+            "cette règle : voir les logs « PATTY_FRAIS : » du build")
+
+        employee = self._employee('Salarié Frais Test Patty', self.company_tana)
+        contract = self._contract(employee, 533700.0, self.struct_sd)
+        self._bank_account(employee)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 3000)
+
+    def test_f_frais_bancaires_petit_salaire_inchange(self):
+        """Sous l'ancien seuil, rien ne change : toujours 3 000 Ar."""
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest("Règle FRAISBANC introuvable sur %r."
+                          % self.struct_sd.name)
+
+        employee = self._employee('Salarié Petit Salaire Patty', self.company_tana)
+        contract = self._contract(employee, 300000.0, self.struct_sd)
+        self._bank_account(employee)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 3000)
+
+    def test_f_frais_bancaires_sans_compte_rien(self):
+        """Payé en espèces : aucun frais, la condition de compte reste.
+
+        Seule la condition de SALAIRE a sauté. Un salarié sans compte bancaire
+        ne doit toujours rien porter, quel que soit son salaire.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest("Règle FRAISBANC introuvable sur %r."
+                          % self.struct_sd.name)
+
+        employee = self._employee('Salarié Espèces Test Patty', self.company_tana)
+        contract = self._contract(employee, 533700.0, self.struct_sd)
+        self.assertFalse(employee.bank_account_id)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 0)
+
+    def test_f_migration_frais_corps_attendu_seulement(self):
+        """La migration 18.0.1.2.25 ne réécrit que le corps qu'elle attend.
+
+        Fonction pure, sans base : le corps de production, l'idempotence, et
+        les corps qui doivent être refusés.
+        """
+        migration = self._load_migration('18.0.1.2.25')
+        prod = ("result = 3000 if ( employee.bank_account_id "
+                "and contract.wage < 400000) else 0")
+
+        cible, motif = migration._transform(prod)
+        self.assertIsNone(motif)
+        self.assertIn('PATTY_FRAIS', cible)
+        self.assertIn('employee.bank_account_id', cible)
+        self.assertNotIn('400000', cible)
+        self.assertNotIn('contract.wage', cible)
+        self.assertNotIn('__', cible)
+        compile(cible, '<test>', 'exec')
+
+        # Idempotence : un corps déjà migré n'est pas réécrit.
+        self.assertEqual(migration._transform(cible), (None, None))
+
+        # La mise en forme est indifférente, le sens ne l'est pas.
+        sans_espace, motif = migration._transform(prod.replace('( employee', '(employee'))
+        self.assertIsNone(motif)
+        self.assertIsNotNone(sans_espace)
+        for refuse in (
+            prod.replace('400000', '500000'),
+            prod.replace('3000', '5000'),
+            "result = 0",
+            "",
+        ):
+            corps, motif = migration._transform(refuse)
+            self.assertIsNone(corps)
+            self.assertTrue(motif)
+
+    # ------------------------------------------------------------------
     # Chargement du script de migration
     # ------------------------------------------------------------------
 
