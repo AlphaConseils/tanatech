@@ -33,9 +33,11 @@ import unicodedata
 import unittest
 
 from datetime import date
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase, tagged
+from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.tanatech_hr_payroll.models import hr_payslip as payslip_module
 
@@ -170,7 +172,8 @@ class TestPattyAout(TransactionCase):
 
     @classmethod
     def _contract(cls, employee, wage, structure, category='declared',
-                  source=None, mission_eligible=True):
+                  source=None, mission_eligible=True, state=None,
+                  date_start=None, date_end=False):
         # Les contrats sont créés dans leur état final : hr.contract.write fait
         # un cr.commit() sur les changements d'état (miroir NA), ce qui casserait
         # le point de sauvegarde du test.
@@ -179,10 +182,12 @@ class TestPattyAout(TransactionCase):
                 'name': '%s (%s)' % (employee.name, category),
                 'employee_id': employee.id,
                 'company_id': employee.company_id.id,
-                'date_start': date(2020, 1, 1),
+                'date_start': date_start or date(2020, 1, 1),
+                'date_end': date_end,
                 'wage': wage,
                 'family_allowance': 0.0,
-                'state': 'open' if category == 'declared' else 'open_not_declared',
+                'state': state or (
+                    'open' if category == 'declared' else 'open_not_declared'),
                 'contract_category': category,
                 'structure_type_id': structure.type_id.id,
                 'resource_calendar_id': employee.resource_calendar_id.id,
@@ -689,20 +694,453 @@ class TestPattyAout(TransactionCase):
         self.assertEqual(rule.condition_python, avant)
 
     # ------------------------------------------------------------------
+    # E. Heures travaillées un jour férié (migration 18.0.1.2.24)
+    # ------------------------------------------------------------------
+
+    def test_e_ferie_majoration_seule_50(self):
+        """Un bulletin NA avec des heures WORKONPUBLICHOLIDAYS paie la seule
+        majoration de 50 % : 0,5 x heures x (salaire déclaré + NA) / 173,33.
+
+        Décision client du 21/09/2026. Les heures d'un jour férié sont déjà
+        payées par le salaire de base, qui couvre tout le mois : ne reste due
+        que la majoration.
+
+        C'est la VRAIE règle de la base qui est évaluée, par le vrai safe_eval
+        du moteur de paie, sur un vrai bulletin NA et les vrais contrats du
+        salarié. Seules les heures sont fournies par un objet minimal : la
+        règle n'en lit que number_of_hours, et les faire naître par des
+        présences un jour férié ferait dépendre le test de tout le calendrier.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_na.id),
+            ('code', '=', 'WORKONPUBLICHOLIDAYS'),
+        ])
+        if len(rules) != 1:
+            self.skipTest(
+                "La structure %r ne porte pas exactement une règle "
+                "WORKONPUBLICHOLIDAYS (%s trouvée(s))."
+                % (self.struct_na.name, len(rules)))
+        self.assertIn(
+            'PATTY_FERIE', rules.amount_python_compute,
+            "la migration 18.0.1.2.24 n'a pas posé la majoration seule sur "
+            "cette règle : voir les logs « PATTY_FERIE : » du build")
+
+        employee = self._employee('Salarié Férié Test Patty', self.company_tana)
+        declared = self._contract(employee, 300000.0, self.struct_sd)
+        na_contract = self._contract(
+            employee, 100000.0, self.struct_na, category='not_declared',
+            source=declared)
+        na_payslip = self._payslip(employee, na_contract, self.struct_na,
+                                   AOUT_DEBUT, AOUT_FIN)
+
+        heures = 10.0
+        localdict = {
+            'employee': na_payslip.employee_id,
+            'contract': na_payslip.contract_id,
+            'payslip': na_payslip,
+            'worked_days': {
+                'WORKONPUBLICHOLIDAYS': SimpleNamespace(number_of_hours=heures),
+            },
+            'result': None,
+            'result_qty': 1.0,
+            'result_rate': 100,
+            'result_name': False,
+        }
+        safe_eval(rules.amount_python_compute, localdict, mode='exec', nocopy=True)
+
+        salaires = declared.wage + na_contract.wage
+        attendu = 0.5 * heures * salaires / 173.33
+        self.assertAlmostEqual(localdict['result'], attendu, places=2)
+        # 0,5 x 10 x 400 000 / 173,33 : la moitié de ce que payait l'ancienne règle.
+        self.assertAlmostEqual(localdict['result'], 11538.68, places=2)
+
+    def test_e_migration_ferie_une_seule_ligne(self):
+        """La migration 18.0.1.2.24 ne remplace que la ligne visée, une fois.
+
+        Fonction pure, sans base : le code de production, la variante refusée,
+        et le second passage qui ne doit rien réécrire.
+        """
+        migration = self._load_migration('18.0.1.2.24')
+        prod = (
+            "wages = sum(employee.contract_ids.filtered(lambda c: c.state in "
+            "['open', 'open_not_declared']).mapped('wage'))\n"
+            "res = 0\n"
+            "if worked_days.get(\"WORKONPUBLICHOLIDAYS\"):\n"
+            "    total_amount = (worked_days.get(\"WORKONPUBLICHOLIDAYS\")"
+            ".number_of_hours* wages / 173.33)\n"
+            "    res = total_amount\n"
+            "result = res"
+        )
+
+        cible, motif = migration._transform(prod)
+        self.assertIsNone(motif)
+        self.assertIn(
+            "    res = total_amount * 0.5  # PATTY_FERIE : majoration seule de "
+            "50 %, décision client du 21/09/2026", cible)
+        changees = [a for a, b in zip(prod.splitlines(), cible.splitlines())
+                    if a != b]
+        self.assertEqual(changees, ["    res = total_amount"],
+                         "seule la ligne visée doit changer")
+        self.assertNotIn('__', cible)
+        compile(cible, '<test>', 'exec')
+
+        # Idempotence : un corps déjà migré n'est pas réécrit.
+        self.assertEqual(migration._transform(cible), (None, None))
+
+        # Une variante n'est pas reconnue : rien n'est écrit, un motif est donné.
+        variante, motif = migration._transform(
+            prod.replace("    res = total_amount", "    res=total_amount"))
+        self.assertIsNone(variante)
+        self.assertTrue(motif)
+
+    # ------------------------------------------------------------------
+    # F. Frais de tenue de compte (migration 18.0.1.2.25)
+    # ------------------------------------------------------------------
+
+    def _bank_account(self, employee):
+        """Un compte bancaire de test rattaché au salarié.
+
+        La règle FRAISBANC ne lit bank_account_id qu'en booléen ; le numéro n'a
+        pas d'importance, il est seulement choisi assez improbable pour ne pas
+        heurter la contrainte d'unicité de la base.
+        """
+        partner = self.env['res.partner'].with_company(
+            employee.company_id).with_context(**SILENCIEUX).create({
+                'name': 'Banque test Patty %s' % employee.id,
+                'company_id': employee.company_id.id,
+            })
+        account = self.env['res.partner.bank'].with_company(
+            employee.company_id).with_context(**SILENCIEUX).create({
+                'acc_number': 'TEST-PATTY-FRAIS-%s' % employee.id,
+                'partner_id': partner.id,
+                'company_id': employee.company_id.id,
+            })
+        employee.bank_account_id = account
+        return account
+
+    def _eval_rule(self, rule, employee, contract, **extra):
+        """Évaluer le corps d'une règle comme le fait le moteur de paie."""
+        localdict = {
+            'employee': employee,
+            'contract': contract,
+            'result': None,
+            'result_qty': 1.0,
+            'result_rate': 100,
+            'result_name': False,
+        }
+        localdict.update(extra)
+        safe_eval(rule.amount_python_compute, localdict, mode='exec', nocopy=True)
+        return localdict['result']
+
+    def test_f_frais_bancaires_sans_seuil_de_salaire(self):
+        """Salaire déclaré 533 700 avec compte bancaire : 3 000 Ar.
+
+        Décision client du 23/09/2026 : les frais de tenue de compte
+        s'appliquent à tout salarié payé par virement, sans condition de
+        salaire. Avant, le seuil de 400 000 privait ce salarié des 3 000 Ar.
+
+        C'est la VRAIE règle de la base qui est évaluée, par le vrai safe_eval
+        du moteur de paie.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest(
+                "La structure %r ne porte pas exactement une règle FRAISBANC "
+                "(%s trouvée(s))." % (self.struct_sd.name, len(rules)))
+        self.assertIn(
+            'PATTY_FRAIS', rules.amount_python_compute,
+            "la migration 18.0.1.2.25 n'a pas retiré le seuil de salaire sur "
+            "cette règle : voir les logs « PATTY_FRAIS : » du build")
+
+        employee = self._employee('Salarié Frais Test Patty', self.company_tana)
+        contract = self._contract(employee, 533700.0, self.struct_sd)
+        self._bank_account(employee)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 3000)
+
+    def test_f_frais_bancaires_petit_salaire_inchange(self):
+        """Sous l'ancien seuil, rien ne change : toujours 3 000 Ar."""
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest("Règle FRAISBANC introuvable sur %r."
+                          % self.struct_sd.name)
+
+        employee = self._employee('Salarié Petit Salaire Patty', self.company_tana)
+        contract = self._contract(employee, 300000.0, self.struct_sd)
+        self._bank_account(employee)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 3000)
+
+    def test_f_frais_bancaires_sans_compte_rien(self):
+        """Payé en espèces : aucun frais, la condition de compte reste.
+
+        Seule la condition de SALAIRE a sauté. Un salarié sans compte bancaire
+        ne doit toujours rien porter, quel que soit son salaire.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_sd.id),
+            ('code', '=', 'FRAISBANC'),
+        ])
+        if len(rules) != 1:
+            self.skipTest("Règle FRAISBANC introuvable sur %r."
+                          % self.struct_sd.name)
+
+        employee = self._employee('Salarié Espèces Test Patty', self.company_tana)
+        contract = self._contract(employee, 533700.0, self.struct_sd)
+        self.assertFalse(employee.bank_account_id)
+
+        self.assertEqual(self._eval_rule(rules, employee, contract), 0)
+
+    def test_f_migration_frais_corps_attendu_seulement(self):
+        """La migration 18.0.1.2.25 ne réécrit que le corps qu'elle attend.
+
+        Fonction pure, sans base : le corps de production, l'idempotence, et
+        les corps qui doivent être refusés.
+        """
+        migration = self._load_migration('18.0.1.2.25')
+        prod = ("result = 3000 if ( employee.bank_account_id "
+                "and contract.wage < 400000) else 0")
+
+        cible, motif = migration._transform(prod)
+        self.assertIsNone(motif)
+        self.assertIn('PATTY_FRAIS', cible)
+        self.assertIn('employee.bank_account_id', cible)
+        self.assertNotIn('400000', cible)
+        self.assertNotIn('contract.wage', cible)
+        self.assertNotIn('__', cible)
+        compile(cible, '<test>', 'exec')
+
+        # Idempotence : un corps déjà migré n'est pas réécrit.
+        self.assertEqual(migration._transform(cible), (None, None))
+
+        # La mise en forme est indifférente, le sens ne l'est pas.
+        sans_espace, motif = migration._transform(prod.replace('( employee', '(employee'))
+        self.assertIsNone(motif)
+        self.assertIsNotNone(sans_espace)
+        for refuse in (
+            prod.replace('400000', '500000'),
+            prod.replace('3000', '5000'),
+            "result = 0",
+            "",
+        ):
+            corps, motif = migration._transform(refuse)
+            self.assertIsNone(corps)
+            self.assertTrue(motif)
+
+    # ------------------------------------------------------------------
+    # G. Base salariale de la période (migration 18.0.1.2.26)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _ancienne_base(employee):
+        """La formule que portaient les règles avant 1.2.26, pour comparaison."""
+        return sum(employee.contract_ids.filtered(
+            lambda c: c.state in ['open', 'open_not_declared']).mapped('wage'))
+
+    def _salarie_deux_contrats(self, nom, declare=300000.0, na=100000.0,
+                               state=None, date_end=False):
+        """Un salarié, ses deux contrats et son bulletin NA d'août."""
+        employee = self._employee(nom, self.company_tana)
+        declared = self._contract(
+            employee, declare, self.struct_sd,
+            state='close' if state == 'close' else None, date_end=date_end)
+        na_contract = self._contract(
+            employee, na, self.struct_na, category='not_declared',
+            source=declared,
+            state='close' if state == 'close' else None, date_end=date_end)
+        payslip = self._payslip(employee, na_contract, self.struct_na,
+                                AOUT_DEBUT, AOUT_FIN)
+        return employee, declared, na_contract, payslip
+
+    def test_g_base_identique_quand_les_contrats_sont_en_cours(self):
+        """Contrats en cours : la nouvelle base vaut exactement l'ancienne.
+
+        C'est l'exigence de non régression : le correctif ne doit rien changer
+        pour un salarié présent.
+        """
+        employee, declared, na_contract, payslip = self._salarie_deux_contrats(
+            'Base En Cours Test Patty')
+
+        self.assertEqual(payslip._tanatech_period_wages(), 400000.0)
+        self.assertEqual(payslip._tanatech_period_wages(),
+                         self._ancienne_base(employee))
+
+    def test_g_base_survit_a_la_sortie_du_salarie(self):
+        """Contrats clos en septembre : le bulletin d'août garde sa base.
+
+        C'est le bug du 23/09/2026. L'ancienne formule tombait à zéro le jour où
+        le salarié sortait, parce qu'elle lisait l'état du contrat au présent.
+        """
+        employee, declared, na_contract, payslip = self._salarie_deux_contrats(
+            'Base Sorti Test Patty', state='close', date_end=date(2026, 9, 23))
+
+        self.assertEqual(declared.state, 'close')
+        self.assertEqual(na_contract.state, 'close')
+        # L'ancienne formule ne trouve plus rien : c'est exactement le bug.
+        self.assertEqual(self._ancienne_base(employee), 0.0)
+        # La nouvelle base, elle, est celle de la période payée.
+        self.assertEqual(payslip._tanatech_period_wages(), 400000.0)
+
+    def test_g_contrat_termine_avant_la_periode_exclu(self):
+        """Un contrat fini avant le mois payé ne compte pas."""
+        employee = self._employee('Base Hors Periode Patty', self.company_tana)
+        self._contract(employee, 300000.0, self.struct_sd, state='close',
+                       date_end=date(2026, 6, 30))
+        na_contract = self._contract(
+            employee, 100000.0, self.struct_na, category='not_declared',
+            state='close', date_end=date(2026, 6, 30))
+        payslip = self._payslip(employee, na_contract, self.struct_na,
+                                AOUT_DEBUT, AOUT_FIN)
+
+        self.assertEqual(payslip._tanatech_period_wages(), 0.0)
+
+    def test_g_renouvellement_ne_cumule_pas_deux_contrats_declares(self):
+        """Renouvellement en cours de mois : un seul contrat déclaré compte.
+
+        L'ancien contrat s'arrête le 14/08, le nouveau démarre le 15/08 : les
+        deux chevauchent le bulletin d'août. Les additionner gonflerait la base
+        de tout un salaire. Le plus récent l'emporte, ce que faisait déjà
+        l'ancienne formule puisque l'ancien contrat y était exclu par son état.
+        """
+        employee = self._employee('Base Renouvellement Patty', self.company_tana)
+        ancien = self._contract(
+            employee, 200000.0, self.struct_sd, state='close',
+            date_start=date(2020, 1, 1), date_end=date(2026, 8, 14))
+        nouveau = self._contract(
+            employee, 300000.0, self.struct_sd,
+            date_start=date(2026, 8, 15))
+        na_contract = self._contract(
+            employee, 100000.0, self.struct_na, category='not_declared',
+            source=nouveau)
+        payslip = self._payslip(employee, na_contract, self.struct_na,
+                                AOUT_DEBUT, AOUT_FIN)
+
+        base = payslip._tanatech_period_wages()
+        self.assertEqual(base, 400000.0,
+                         "le nouveau contrat déclaré (300 000) plus le NA "
+                         "(100 000), et surtout pas l'ancien en plus")
+        self.assertNotEqual(base, 600000.0)
+        self.assertEqual(base, self._ancienne_base(employee))
+
+    def test_g_ferie_meme_montant_apres_la_sortie(self):
+        """La règle jour férié donne le même montant, salarié sorti ou non.
+
+        C'est le symptôme d'origine : 4,65 heures du 15/08 qui passaient de
+        4 100 Ar à 0 au recalcul, une fois le salarié sorti.
+        """
+        rules = self.env['hr.salary.rule'].with_context(active_test=False).search([
+            ('struct_id', '=', self.struct_na.id),
+            ('code', '=', 'WORKONPUBLICHOLIDAYS'),
+        ])
+        if len(rules) != 1:
+            self.skipTest(
+                "La structure %r ne porte pas exactement une règle "
+                "WORKONPUBLICHOLIDAYS (%s trouvée(s))."
+                % (self.struct_na.name, len(rules)))
+        self.assertIn(
+            'PATTY_BASE', rules.amount_python_compute,
+            "la migration 18.0.1.2.26 n'a pas basculé cette règle sur la base "
+            "de la période : voir les logs « PATTY_BASE : » du build")
+
+        heures = 4.65
+        montants = {}
+        for etiquette, state, fin in (('en cours', None, False),
+                                      ('sorti', 'close', date(2026, 9, 23))):
+            employee, declared, na_contract, payslip = self._salarie_deux_contrats(
+                'Férié %s Test Patty' % etiquette, state=state, date_end=fin)
+            montants[etiquette] = self._eval_rule(
+                rules, employee, na_contract,
+                payslip=payslip,
+                worked_days={
+                    'WORKONPUBLICHOLIDAYS': SimpleNamespace(
+                        number_of_hours=heures),
+                },
+            )
+
+        self.assertAlmostEqual(montants['sorti'], montants['en cours'], places=2,
+                               msg="la sortie du salarié ne doit rien changer "
+                                   "à un bulletin déjà payé")
+        self.assertGreater(montants['sorti'], 0.0)
+        # 0,5 x 4,65 x 400 000 / 173,33, la majoration seule posée en 1.2.24.
+        self.assertAlmostEqual(montants['sorti'],
+                               0.5 * heures * 400000.0 / 173.33, places=2)
+
+    def test_g_migration_base_decouvre_et_reecrit(self):
+        """La migration 18.0.1.2.26 reconnaît la ligne de base et la remplace.
+
+        Fonction pure, sans base : le corps de la règle jour férié, les
+        variantes de mise en forme, l'idempotence et les corps refusés.
+        """
+        migration = self._load_migration('18.0.1.2.26')
+        ferie = (
+            "wages = sum(employee.contract_ids.filtered(lambda c: c.state in "
+            "['open', 'open_not_declared']).mapped('wage'))\n"
+            "res = 0\n"
+            "if worked_days.get(\"WORKONPUBLICHOLIDAYS\"):\n"
+            "    total_amount = (worked_days.get(\"WORKONPUBLICHOLIDAYS\")"
+            ".number_of_hours* wages / 173.33)\n"
+            "    res = total_amount * 0.5\n"
+            "result = res"
+        )
+
+        cible, motif = migration._transform(ferie)
+        self.assertIsNone(motif)
+        self.assertIn('PATTY_BASE', cible)
+        self.assertIn('_tanatech_period_wages()', cible)
+        self.assertNotIn('open_not_declared', cible)
+        self.assertNotIn('__', cible)
+        compile(cible, '<test>', 'exec')
+        # Le reste du corps est intact : seule la ligne de base change.
+        self.assertIn('total_amount * 0.5', cible)
+        self.assertIn('173.33', cible)
+
+        # Idempotence.
+        self.assertEqual(migration._transform(cible), (None, None))
+
+        # Mise en forme indifférente.
+        for variante in (
+            ferie.replace("['open', 'open_not_declared']",
+                          '["open", "open_not_declared"]'),
+            ferie.replace("lambda c: c.state", "lambda ct: ct.state"),
+            ferie.replace("wages =", "base =").replace("* wages /", "* base /"),
+        ):
+            corps, motif = migration._transform(variante)
+            self.assertIsNotNone(corps)
+            self.assertIsNone(motif)
+
+        # Une règle sans le motif n'est pas touchée.
+        self.assertEqual(
+            migration._transform("result = 3000 if employee.bank_account_id else 0"),
+            (None, None))
+
+        # Motif présent mais forme non reconnue : rien n'est écrit, motif donné.
+        corps, motif = migration._transform(
+            ferie.replace("employee.contract_ids", "employee.other_ids"))
+        self.assertIsNone(corps)
+        self.assertTrue(motif)
+
+    # ------------------------------------------------------------------
     # Chargement du script de migration
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _load_migration():
-        """Le post-migrate de 18.0.1.2.23, chargé par chemin.
+    def _load_migration(version='18.0.1.2.23'):
+        """Le post-migrate de la version demandée, chargé par chemin.
 
         Le répertoire porte des points et le fichier un tiret : il n'est pas
         importable comme un module ordinaire.
         """
         path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            'migrations', '18.0.1.2.23', 'post-migrate.py')
-        spec = importlib.util.spec_from_file_location('patty_aout_migration', path)
+            'migrations', version, 'post-migrate.py')
+        spec = importlib.util.spec_from_file_location(
+            'migration_%s' % version.replace('.', '_'), path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module

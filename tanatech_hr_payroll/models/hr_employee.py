@@ -100,23 +100,44 @@ class HrEmployee(models.Model):
             )
         )
 
+    def _get_period_contract(self, category, date_from, date_to):
+        """ The employee's contract of ``category`` covering [date_from, date_to],
+        whatever its state except 'cancel'.
+
+        Coverage is an OVERLAP, not a state: a leaving employee's contracts are
+        closed the day they go, but they still covered the periods already paid.
+        Any rule that looks at ``state in ['open', 'open_not_declared']`` reads
+        the contract as it stands TODAY and silently drops those periods when
+        recomputing an old payslip (see 1.2.18, and 1.2.26 for the salary base).
+
+        At most ONE contract is returned, the most recent one by start date.
+        That matters on a renewal mid-period: two successive declared contracts
+        must never be added up, and the new one is the one that carries the
+        salary going forward.
+        """
+        self.ensure_one()
+        return self.env["hr.contract"].search(
+            [
+                ("employee_id", "=", self.id),
+                ("company_id", "=", self.company_id.id),
+                ("contract_category", "=", category),
+                ("state", "!=", "cancel"),
+                ("date_start", "<=", date_to),
+                "|", ("date_end", "=", False), ("date_end", ">=", date_from),
+            ],
+            order="date_start desc",
+            limit=1,
+        )
+
     def _get_nd_contract(self, day=None):
         """ N.D. contract of the employee covering ``day`` (today by default),
         whatever its state: a leaving employee's N.D. contract is already
         closed, but must still anchor their N.D. elements (overtime...) so
         they land on the "STC NA" payslip.
+
+        A single day is just a one-day period: the lookup itself lives in
+        _get_period_contract, shared with the salary base of a payslip period.
         """
         self.ensure_one()
         day = day or fields.Date.today()
-        return self.env["hr.contract"].search(
-            [
-                ("employee_id", "=", self.id),
-                ("company_id", "=", self.company_id.id),
-                ("contract_category", "=", "not_declared"),
-                ("state", "!=", "cancel"),
-                ("date_start", "<=", day),
-                "|", ("date_end", "=", False), ("date_end", ">=", day),
-            ],
-            order="date_start desc",
-            limit=1,
-        )
+        return self._get_period_contract("not_declared", day, day)
