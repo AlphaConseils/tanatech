@@ -104,6 +104,13 @@ class HrPayslipEmployees(models.TransientModel):
             ('payslip_run_id', '!=', payslip_run.id),
         ])
         if existing:
+            # Libellés calculés hors du générateur : _() appelé dans un
+            # générateur ne trouve pas la langue et journalise un avertissement.
+            run_labels = {
+                slip.id: (self.env._("lot « %s »", slip.payslip_run_id.name)
+                          if slip.payslip_run_id else self.env._("hors lot"))
+                for slip in existing
+            }
             raise UserError(_(
                 "Impossible de générer les bulletins : les salariés suivants ont déjà un bulletin "
                 "pour cette période dans un autre lot.\n%(payslips)s\n\n"
@@ -113,7 +120,7 @@ class HrPayslipEmployees(models.TransientModel):
                         slip.employee_id.name,
                         slip.number or slip.name,
                         slip.struct_id.name,
-                        _("lot « %s »", slip.payslip_run_id.name) if slip.payslip_run_id else _("hors lot"),
+                        run_labels[slip.id],
                     )
                     for slip in existing.sorted(lambda s: (s.employee_id.name or '', s.id))
                 ),
