@@ -990,11 +990,13 @@ class TestPattyAout(TransactionCase):
     def test_g_contrat_termine_avant_la_periode_exclu(self):
         """Un contrat fini avant le mois payé ne compte pas."""
         employee = self._employee('Base Hors Periode Patty', self.company_tana)
-        self._contract(employee, 300000.0, self.struct_sd, state='close',
-                       date_end=date(2026, 6, 30))
+        declared = self._contract(employee, 300000.0, self.struct_sd, state='close',
+                                  date_end=date(2026, 6, 30))
+        # Le NA est rattaché à son contrat déclaré, comme dans l'application :
+        # sans ce lien, la contrainte « un seul contrat à la fois » les oppose.
         na_contract = self._contract(
             employee, 100000.0, self.struct_na, category='not_declared',
-            state='close', date_end=date(2026, 6, 30))
+            source=declared, state='close', date_end=date(2026, 6, 30))
         payslip = self._payslip(employee, na_contract, self.struct_na,
                                 AOUT_DEBUT, AOUT_FIN)
 
@@ -1015,9 +1017,11 @@ class TestPattyAout(TransactionCase):
         nouveau = self._contract(
             employee, 300000.0, self.struct_sd,
             date_start=date(2026, 8, 15))
+        # Le NA démarre avec son contrat déclaré, comme le miroir créé par
+        # l'application : sinon il chevaucherait l'ancien contrat déclaré.
         na_contract = self._contract(
             employee, 100000.0, self.struct_na, category='not_declared',
-            source=nouveau)
+            source=nouveau, date_start=date(2026, 8, 15))
         payslip = self._payslip(employee, na_contract, self.struct_na,
                                 AOUT_DEBUT, AOUT_FIN)
 
