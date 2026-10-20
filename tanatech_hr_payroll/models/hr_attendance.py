@@ -247,6 +247,10 @@ class HrAttendanceInherit(models.Model):
             company_threshold = attendance.employee_id.company_id.overtime_threshold / 60.0
 
             # ---- BEFORE START OF WORK ----
+            # Nuit du dimanche = dimanche 20 h - lundi 5 h : un pointage le lundi
+            # (weekday() == 0) avant 5 h relève de cette nuit, d'où le test
+            # « == 0 » ci-dessous. Le dimanche 20 h - 24 h est traité dans
+            # _get_overtime_out_of_work_day (weekday() == 6).
             if local_check_in_emp_tz < planned_start_dt:
                 # Case 1: Overtime fully before 5 AM
                 if local_check_out_emp_tz <= five_am:
@@ -370,6 +374,17 @@ class HrAttendanceInherit(models.Model):
         overtime_after_8_pm_working_time_vals_list = self._remove_already_existing_records(overtime_after_8_pm_working_time_vals_list)
         return attendance_ids, overtime_before_5_am_working_time_vals_list, overtime_after_5_am_working_time_vals_list, overtime_before_8_pm_working_time_vals_list, overtime_after_8_pm_working_time_vals_list
 
+    @api.model
+    def _tanatech_overtime_excluded(self, employee, day):
+        """ Le salarié est-il au forfait (pas d'heures sup) le jour ``day`` ?
+
+        Oui si la case est cochée sur l'un de ses contrats en vigueur ce jour-là,
+        déclaré OU NA : la case est propagée au miroir NA, mais un miroir créé
+        avant ce champ, ou modifié à la main, ne doit pas réintroduire d'heures
+        sup. """
+        contracts = employee._get_contracts(day, day, states=['open', 'open_not_declared', 'close'])
+        return any(contracts.mapped('tanatech_overtime_excluded'))
+
     def _update_overtime(self, employee_attendance_dates=None):
         if employee_attendance_dates is None:
             employee_attendance_dates = self._get_attendances_dates()
@@ -437,6 +452,10 @@ class HrAttendanceInherit(models.Model):
 
                 # No overtime computed for fully flexible employees
                 if emp.is_fully_flexible:
+                    continue
+
+                # Ni pour un salarié au forfait ce jour-là
+                if self._tanatech_overtime_excluded(emp, attendance_date):
                     continue
 
                 if not unfinished_shifts and attendances:
