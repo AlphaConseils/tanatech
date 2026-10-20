@@ -36,6 +36,7 @@ from datetime import date
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from odoo import Command
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools.safe_eval import safe_eval
 
@@ -85,6 +86,16 @@ class TestPattyAout(TransactionCase):
         # absence ne doit pas faire sauter toute la classe.
         cls.struct_stc_sd = cls._find_structure('Solde Tout Compte', required=False)
         cls.struct_stc_na = cls._find_structure('Solde Tout Compte - NA', required=False)
+
+        # Horaire propre aux tests : les horaires réels des sociétés évoluent en
+        # production (le samedi est passé de 0,5 à 1 jour le 20/10/2026), et ces
+        # tests tournent sur une copie de la production à chaque build.
+        # Créés ICI, au niveau de la classe : un horaire créé pendant un test
+        # serait annulé à la fin de ce test, et le test suivant réutiliserait un
+        # enregistrement supprimé.
+        cls.test_calendars = {}
+        for company in (cls.company_tana, cls.company_maso):
+            cls._test_calendar(company)
 
         cls.leave_type = cls._leave_type('LEAVE120', 'Congé payé (test Patty)')
         cls.matoff_type = cls._leave_type('MATOFF', 'Maternité (test Patty)')
@@ -158,12 +169,43 @@ class TestPattyAout(TransactionCase):
             })
 
     @classmethod
+    def _test_calendar(cls, company):
+        """Un horaire FIGÉ, créé par le test, dans la société voulue : lundi au
+        vendredi 8 h-12 h et 13 h-17 h, samedi 8 h-12 h.
+
+        Le salarié de test recevait jusqu'ici l'horaire réel de sa société
+        (« Hors Magasin » pour TANATECH) : toute modification de cet horaire en
+        production changeait les congés de test, à l'insu des assertions. Le
+        décompte de paie testé ne lit que les dates des congés ; l'horaire n'a
+        donc pas à être celui du client, seulement à être stable.
+        """
+        if not cls.test_calendars.get(company.id, cls.env['resource.calendar']).exists():
+            lines = []
+            for day in '01234':
+                lines += [
+                    Command.create({'name': 'Matin', 'dayofweek': day, 'hour_from': 8.0,
+                                    'hour_to': 12.0, 'day_period': 'morning'}),
+                    Command.create({'name': 'Après-midi', 'dayofweek': day, 'hour_from': 13.0,
+                                    'hour_to': 17.0, 'day_period': 'afternoon'}),
+                ]
+            lines.append(Command.create({'name': 'Samedi matin', 'dayofweek': '5', 'hour_from': 8.0,
+                                         'hour_to': 12.0, 'day_period': 'morning'}))
+            cls.test_calendars[company.id] = cls.env['resource.calendar'].with_company(
+                company).with_context(**SILENCIEUX).create({
+                    'name': 'Horaire test Patty (%s)' % company.name,
+                    'company_id': company.id,
+                    'tz': 'Indian/Antananarivo',
+                    'attendance_ids': [Command.clear()] + lines,
+                })
+        return cls.test_calendars[company.id]
+
+    @classmethod
     def _employee(cls, name, company):
         employee = cls.env['hr.employee'].with_company(company).with_context(
             **SILENCIEUX).create({
                 'name': name,
                 'company_id': company.id,
-                'resource_calendar_id': company.resource_calendar_id.id,
+                'resource_calendar_id': cls._test_calendar(company).id,
             })
         # Madagascar : UTC+3. Le fuseau décide de quel jour local un jour férié
         # stocké en UTC recouvre.
