@@ -68,6 +68,35 @@ class HrContract(models.Model):
              "correspondant : il suffit de décocher le contrat déclaré.",
     )
 
+    # Salarié au forfait (DAT) : aucune heure sup ne doit naître de ses
+    # pointages (cas RANAIVOSON, 29/09/2026 : 2,37 h payées à 130 %).
+    # Contrairement à la case mission, la valeur est PROPAGÉE au contrat NA
+    # miroir (voir write) ; hr.attendance._tanatech_overtime_excluded lit en
+    # plus les deux contrats, par sécurité pour les miroirs créés avant.
+    tanatech_overtime_excluded = fields.Boolean(
+        string="Forfait (pas d'heures sup)",
+        default=False,
+        tracking=True,
+        help="Cochée, aucune heure supplémentaire n'est générée à partir des "
+             "pointages de ce salarié tant que ce contrat est en vigueur. "
+             "La valeur est reportée sur le contrat NA correspondant.",
+    )
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'tanatech_overtime_excluded' in vals:
+            # Écriture ORM ciblée sur le seul champ : la surcharge de
+            # tanatech_hr_contract ne déclenche ni SQL brut ni cr.commit()
+            # quand vals ne contient aucun des champs qu'elle synchronise.
+            mirrors = self.search([
+                ('contract_id', 'in', self.filtered(lambda c: c.contract_category == 'declared').ids),
+                ('contract_category', '=', 'not_declared'),
+            ])
+            for mirror in mirrors:
+                if mirror.tanatech_overtime_excluded != mirror.contract_id.tanatech_overtime_excluded:
+                    mirror.write({'tanatech_overtime_excluded': mirror.contract_id.tanatech_overtime_excluded})
+        return res
+
     def generate_work_entries(self, date_start, date_stop, force=False):
         work_entries = super().generate_work_entries(date_start, date_stop, force)
         work_entries.auto_update_overtime_work_entry_type()
