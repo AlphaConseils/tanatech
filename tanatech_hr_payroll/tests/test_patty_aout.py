@@ -90,7 +90,12 @@ class TestPattyAout(TransactionCase):
         # Horaire propre aux tests : les horaires réels des sociétés évoluent en
         # production (le samedi est passé de 0,5 à 1 jour le 20/10/2026), et ces
         # tests tournent sur une copie de la production à chaque build.
+        # Créés ICI, au niveau de la classe : un horaire créé pendant un test
+        # serait annulé à la fin de ce test, et le test suivant réutiliserait un
+        # enregistrement supprimé.
         cls.test_calendars = {}
+        for company in (cls.company_tana, cls.company_maso):
+            cls._test_calendar(company)
 
         cls.leave_type = cls._leave_type('LEAVE120', 'Congé payé (test Patty)')
         cls.matoff_type = cls._leave_type('MATOFF', 'Maternité (test Patty)')
@@ -174,7 +179,7 @@ class TestPattyAout(TransactionCase):
         décompte de paie testé ne lit que les dates des congés ; l'horaire n'a
         donc pas à être celui du client, seulement à être stable.
         """
-        if company.id not in cls.test_calendars:
+        if not cls.test_calendars.get(company.id, cls.env['resource.calendar']).exists():
             lines = []
             for day in '01234':
                 lines += [
