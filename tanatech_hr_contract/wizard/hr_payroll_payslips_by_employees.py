@@ -39,6 +39,20 @@ class HrPayslipEmployees(models.TransientModel):
         if not employees:
             raise UserError(_("You must select employee(s) to generate payslip(s)."))
 
+        # La liste proposée par l'assistant standard suit la société ACTIVE de
+        # l'utilisateur (env.company), pas celle du lot : un lot MASONTSIKA ouvert
+        # avec TANATECH active a ainsi reçu les 220 bulletins TANATECH de
+        # septembre 2026 (lot 140), en double du lot TANATECH 141.
+        wrong_company = employees.filtered(lambda e: e.company_id != payslip_run.company_id)
+        if wrong_company:
+            raise UserError(_(
+                "Impossible de générer les bulletins : les salariés suivants n'appartiennent pas "
+                "à la société du lot « %(company)s ».\n%(employees)s\n\n"
+                "Retirez-les de la sélection, ou générez leurs bulletins depuis un lot de leur société.",
+                company=payslip_run.company_id.name,
+                employees='\n'.join('- %s (%s)' % (e.name, e.company_id.name) for e in wrong_company),
+            ))
+
         #Prevent a payslip_run from having multiple payslips for the same employee
         employees -= payslip_run.slip_ids.employee_id
         success_result = {
@@ -58,6 +72,41 @@ class HrPayslipEmployees(models.TransientModel):
         contracts = employees._get_contracts(
             payslip_run.date_start, payslip_run.date_end, states=['open', 'open_not_declared', 'close']
         ).filtered(lambda c: c.active)
+
+        # Le contrôle ci-dessus ne regarde que les bulletins de CE lot : un
+        # bulletin du même contrat sur la même période dans un autre lot (ou
+        # hors lot, comme un STC saisi à la main) n'était pas vu. Les avoirs
+        # restent autorisés : ce sont des régularisations voulues.
+        existing = Payslip.search([
+            ('contract_id', 'in', contracts.ids),
+            ('state', '!=', 'cancel'),
+            ('credit_note', '=', False),
+            ('date_from', '<=', payslip_run.date_end),
+            ('date_to', '>=', payslip_run.date_start),
+            ('payslip_run_id', '!=', payslip_run.id),
+        ])
+        if existing:
+            # Libellés calculés hors du générateur : _() appelé dans un
+            # générateur ne trouve pas la langue et journalise un avertissement.
+            run_labels = {
+                slip.id: (self.env._("lot « %s »", slip.payslip_run_id.name)
+                          if slip.payslip_run_id else self.env._("hors lot"))
+                for slip in existing
+            }
+            raise UserError(_(
+                "Impossible de générer les bulletins : les salariés suivants ont déjà un bulletin "
+                "pour cette période dans un autre lot.\n%(payslips)s\n\n"
+                "Annulez l'ancien bulletin, ou retirez ces salariés de la sélection.",
+                payslips='\n'.join(
+                    '- %s : %s (%s, %s)' % (
+                        slip.employee_id.name,
+                        slip.number or slip.name,
+                        slip.struct_id.name,
+                        run_labels[slip.id],
+                    )
+                    for slip in existing.sorted(lambda s: (s.employee_id.name or '', s.id))
+                ),
+            ))
         contracts.generate_work_entries(payslip_run.date_start, payslip_run.date_end)
         work_entries = self.env['hr.work.entry'].search([
             ('date_start', '<=', payslip_run.date_end + relativedelta(days=1)),
