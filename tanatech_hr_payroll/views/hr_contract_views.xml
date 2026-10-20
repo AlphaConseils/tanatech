@@ -17,6 +17,7 @@
       <xpath expr="//group[@name='allowance_info']" position="inside">
         <group name="mission">
           <field name="tanatech_mission_eligible"/>
+          <field name="tanatech_overtime_excluded"/>
         </group>
       </xpath>
 
