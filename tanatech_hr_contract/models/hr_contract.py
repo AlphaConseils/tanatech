@@ -43,21 +43,40 @@ class HrContract(models.Model):
         store=True
     )
 
-    @api.constrains('employee_id', 'state', 'kanban_state', 'date_start', 'date_end')
+    @api.constrains('employee_id', 'state', 'kanban_state', 'date_start', 'date_end', 'contract_id')
     def _check_current_contract(self):
-        """ Two contracts in state [incoming | open | close] cannot overlap """
-        for contract in self.filtered(lambda c: (c.state not in ['draft', 'open_not_declared', 'cancel'] or c.state == 'draft' and c.kanban_state == 'done') and c.employee_id):
+        """ Two contracts in state [incoming | open | open_not_declared | close]
+        cannot overlap.
+
+        Seule exception : un contrat NA et SON contrat déclaré (lié par
+        contract_id), qui se chevauchent par construction. Face à tout autre
+        contrat du salarié (un autre contrat déclaré, ou un autre NA), le
+        contrôle reste entier.
+
+        L'ancienne version écartait TOUS les NA du contrôle, sauf un NA clos,
+        qu'elle opposait alors à son propre contrat déclaré : un NA clos créé
+        par l'ORM était refusé (l'application, elle, clôt les NA en SQL brut,
+        sans passer par la contrainte), et deux NA qui se chevauchent étaient
+        acceptés.
+        """
+        for contract in self.filtered(lambda c: (c.state in ['open', 'open_not_declared', 'close'] or c.state == 'draft' and c.kanban_state == 'done') and c.employee_id):
             domain = [
                 ('id', '!=', contract.id),
                 ('employee_id', '=', contract.employee_id.id),
                 ('company_id', '=', contract.company_id.id),
-                ('contract_category', '!=', 'not_declared'),
                 '|',
-                    ('state', 'in', ['open', 'close']),
+                    ('state', 'in', ['open', 'open_not_declared', 'close']),
                     '&',
                         ('state', '=', 'draft'),
                         ('kanban_state', '=', 'done') # replaces incoming
             ]
+            if contract.contract_category == 'not_declared' and contract.contract_id:
+                # Le NA ne s'oppose pas à son propre contrat déclaré.
+                domain = expression.AND([domain, [('id', '!=', contract.contract_id.id)]])
+            elif contract.contract_category != 'not_declared':
+                # Le contrat déclaré ne s'oppose pas à ses propres NA miroirs.
+                domain = expression.AND([domain, ['|', ('contract_category', '!=', 'not_declared'),
+                                                  ('contract_id', '!=', contract.id)]])
 
             if not contract.date_end:
                 start_domain = []

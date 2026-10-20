@@ -92,20 +92,17 @@ class HrAttendanceInherit(models.Model):
         return main_list
 
     def _remove_already_existing_records(self, element_list):
-        """ Take existing overtime out of the vals list """
-        for element in element_list:
-            # domain = [
-            #     ('employee_id', '=', element['employee_id']),
-            #     ('start_date', '=', element['start_date']),
-            #     ('end_date', '=', element['end_date']),
-            #     ('attendance_id', '=', element['attendance_id']),
-            #     ('company_id', '=', element['company_id']),
-            # ]
-            domain = [(key, '=', value) for key, value in element.items()]
-            existing_overtime = self.env['hr.attendance.overtime.with.datetimes'].search(domain)
-            if existing_overtime:
-                element_list.remove(element)
-        return element_list
+        """ Take existing overtime out of the vals list.
+
+        Retourne une NOUVELLE liste : l'ancienne version retirait les éléments
+        de la liste pendant qu'elle la parcourait, ce qui sautait l'élément
+        suivant chaque suppression (une HS déjà enregistrée pouvait alors être
+        recréée en double). """
+        Overtime = self.env['hr.attendance.overtime.with.datetimes']
+        return [
+            element for element in element_list
+            if not Overtime.search_count([(key, '=', value) for key, value in element.items()], limit=1)
+        ]
 
     def _get_public_holidays(self):
         """
@@ -465,19 +462,22 @@ class HrAttendanceInherit(models.Model):
                         # overtimes on sundays or public holidays
                         attendance_ofwd_ids, m, n, o, p = self._get_overtime_out_of_work_day(attendances)
                         att_ids += attendance_ofwd_ids
-                        overtime_on_sunday_before_5_am_vals_list = m
-                        overtime_on_sunday_between_5am_and_8pm_vals_list = n
-                        overtime_on_sunday_after_8_pm_vals_list = o
-                        overtime_on_public_hoilday_vals_list = p
+                        # Compléter (et non réaffecter) : sinon seules les HS du
+                        # DERNIER jour / salarié traité étaient créées lors d'un
+                        # recalcul portant sur plusieurs jours ou salariés.
+                        overtime_on_sunday_before_5_am_vals_list += m
+                        overtime_on_sunday_between_5am_and_8pm_vals_list += n
+                        overtime_on_sunday_after_8_pm_vals_list += o
+                        overtime_on_public_hoilday_vals_list += p
                     # The employee usually work on that day
                     else:
                         # Count time before, during and after 'working hours'
                         attendance_ids, pre_work_time_overtime_before_5_am_vals_list, pre_work_time_overtime_after_5_am_vals_list, post_work_time_overtime_before_8_pm_vals_list, post_work_time_overtime_after_8_pm_vals_list = attendances._get_overtime_pre_post_work_time(emp, working_times, attendance_date)
                         att_ids += attendance_ids
-                        overtime_before_5_am_vals_list = pre_work_time_overtime_before_5_am_vals_list
-                        overtime_after_5_am_vals_list = pre_work_time_overtime_after_5_am_vals_list
-                        overtime_before_8_pm_vals_list = post_work_time_overtime_before_8_pm_vals_list
-                        overtime_after_8_pm_vals_list = post_work_time_overtime_after_8_pm_vals_list
+                        overtime_before_5_am_vals_list += pre_work_time_overtime_before_5_am_vals_list
+                        overtime_after_5_am_vals_list += pre_work_time_overtime_after_5_am_vals_list
+                        overtime_before_8_pm_vals_list += post_work_time_overtime_before_8_pm_vals_list
+                        overtime_after_8_pm_vals_list += post_work_time_overtime_after_8_pm_vals_list
 
         # remove duplicate dicts
         # regular overtime
