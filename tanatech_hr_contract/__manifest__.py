@@ -3,11 +3,11 @@
 
 {
     "name": "Tanatech Contracts",
-    "version": "1.7",
+    "version": "1.8",
     "summary": "Manage your Contracts activities",
     "description": "",
     "website": "https://www.nexources.com/",
-    "depends": ["hr", "hr_contract", "hr_payroll", "tanatech_base"],
+    "depends": ["hr", "hr_contract", "hr_payroll", "hr_holidays_contract", "tanatech_base"],
     "category": "Human Resources/Contracts",
     "data": [
         # security
