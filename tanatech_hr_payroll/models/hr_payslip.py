@@ -31,7 +31,7 @@ FRAIS_HORS_ARRONDI = ("FRAISBANC",)
 ARRONDI_PAS = 5000
 ARRONDI_DEMI_PAS = 2500
 
-# Préavis non effectué par le salarié (solde de tout compte, 1.2.29).
+# Préavis non effectué par le salarié (solde de tout compte, 1.2.30).
 #
 # Saisie sur le bulletin STC DÉCLARÉ : PREAVIS_NON_EFFECTUE. Les deux saisies
 # avec lesquelles elle ferait double compte sont refusées au calcul :
@@ -586,7 +586,7 @@ class HrPayslip(models.Model):
         return True
 
     # ------------------------------------------------------------------
-    # Préavis non effectué (solde de tout compte, 1.2.29)
+    # Préavis non effectué (solde de tout compte, 1.2.30)
     # ------------------------------------------------------------------
 
     def _tanatech_declared_stc_payslip(self):
@@ -731,17 +731,19 @@ class HrPayslip(models.Model):
         positifs.
 
         La retenue TOTALE est lue sur la ligne RETPREAV du STC NA, qui porte
-        les paramètres (montant = salaire / diviseur, quantité = jours, taux =
-        part imputée sur le NA) : une seule source pour la formule. Sans STC
-        NA, elle est calculée ici avec les valeurs par défaut (30, déclaré +
-        NA). 'sd' est la ligne RETPREAV du STC déclaré, s'il est calculé.
+        les paramètres (montant = retenue totale, taux = part imputée sur le
+        NA) : une seule source pour la formule. Le montant stocké est arrondi à
+        la centaine par la devise (MGA, rounding = 100), comme tout montant de
+        ligne. Sans STC NA, la retenue est calculée ici avec les valeurs par
+        défaut (30, déclaré + NA). 'sd' est la ligne RETPREAV du STC déclaré,
+        s'il est calculé.
         """
         self.ensure_one()
         declared = self._tanatech_declared_stc_payslip()
         na_slip = declared._tanatech_stc_na_twin() if declared else self.env['hr.payslip']
         na_line = self._tanatech_preavis_na_line(na_slip)
         if na_line:
-            totale = -(na_line.amount * na_line.quantity)
+            totale = -na_line.amount
             na = -na_line.total
         else:
             totale = declared._tanatech_preavis_split()['reste'] \
