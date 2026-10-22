@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-"""Préavis non effectué sur le solde de tout compte (migration 18.0.1.2.29).
+"""Préavis non effectué sur le solde de tout compte (migration 18.0.1.2.30).
 
 Deux cas client de septembre 2026 :
 - RANOMENJANAHARY : solde 27,5 j, préavis 15 j -> 12,5 j payés, rien retenu ;
@@ -153,7 +153,7 @@ class TestRetenuePreavis(TransactionCase):
         if len(rule) != 1 or MARQUEUR not in (rule.amount_python_compute or ''):
             self.skipTest(
                 "La règle %s de %r n'est pas (ou pas une seule fois) passée par "
-                "la migration 18.0.1.2.29 : voir les logs « PATTY_PREAVIS : »."
+                "la migration 18.0.1.2.30 : voir les logs « PATTY_PREAVIS : »."
                 % (code, structure.name))
         return rule
 
@@ -222,7 +222,8 @@ class TestRetenuePreavis(TransactionCase):
             line = self._ligne(slip, 'CPALLOC')
             self.assertEqual(len(line), 1)
             self.assertAlmostEqual(line.quantity, 12.5)
-            self.assertAlmostEqual(line.total, 12.5 * wage / 24.0, places=0)
+            # Total arrondi à la centaine par la devise (MGA, rounding = 100).
+            self.assertAlmostEqual(line.total, 12.5 * wage / 24.0, delta=50)
         self.assertFalse(self._ligne(na, 'RETPREAV'))
 
     def _nets(self, slip):
@@ -245,13 +246,17 @@ class TestRetenuePreavis(TransactionCase):
         self.assertEqual(net_na, 0.0, "le net à payer NA est entièrement absorbé")
         self.assertLess(retenue_na, 0.0)
         self.assertLess(retenue_sd, 0.0, "le reste déborde sur le STC déclaré")
-        self.assertAlmostEqual(retenue_na + retenue_sd, -372448.0, places=0)
+        # 372 448 arrondi à la centaine par la devise : chaque ligne est stockée
+        # à 100 Ar près (MGA, rounding = 100), le total retenu aussi.
+        self.assertAlmostEqual(retenue_na + retenue_sd, -372448.0, delta=100)
         self.assertGreaterEqual(net_sd, 0.0)
 
-        # Le STC NA porte la formule : 16,95 j au taux journalier de 659 200 / 30.
+        # Le STC NA porte la formule : la retenue totale de 16,95 j, et la part
+        # imputée sur son net en taux.
         line_na = self._ligne(na, PREAVIS_RETENUE)
-        self.assertAlmostEqual(line_na.quantity, 16.95)
-        self.assertAlmostEqual(line_na.amount, -659200.0 / 30.0, places=2)
+        self.assertIn('16,95 j', line_na.name)
+        self.assertAlmostEqual(line_na.amount, -372448.0, delta=50)
+        self.assertLess(line_na.rate, 100.0)
         # Le STC déclaré n'affiche qu'un montant : ni jours, ni taux, ni base.
         line_sd = self._ligne(sd, PREAVIS_RETENUE)
         self.assertEqual(line_sd.name, 'Retenue préavis non effectué')
@@ -338,8 +343,8 @@ class TestRetenuePreavis(TransactionCase):
         import os
         path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            'migrations', '18.0.1.2.29', 'post-migrate.py')
-        spec = importlib.util.spec_from_file_location('migration_18_0_1_2_29', path)
+            'migrations', '18.0.1.2.30', 'post-migrate.py')
+        spec = importlib.util.spec_from_file_location('migration_18_0_1_2_30', path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module

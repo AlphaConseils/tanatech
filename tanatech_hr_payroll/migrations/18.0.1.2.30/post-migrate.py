@@ -60,9 +60,9 @@ _logger = logging.getLogger(__name__)
 #   import importlib.util
 #   spec = importlib.util.spec_from_file_location(
 #       "patty_preavis", "/home/odoo/src/user/tanatech_hr_payroll/"
-#       "migrations/18.0.1.2.29/post-migrate.py")
+#       "migrations/18.0.1.2.30/post-migrate.py")
 #   mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
-#   mod.migrate(env.cr, "18.0.1.2.28")
+#   mod.migrate(env.cr, "18.0.1.2.29")
 #   env.cr.commit()
 
 _LOG = "PATTY_PREAVIS :"
@@ -78,7 +78,7 @@ _SLIP = "payslip.env['hr.payslip'].browse(payslip.id)"
 # CPALLOC : la ligne insérée, avant la ligne d'ancrage, à la même indentation.
 _CP_HOOK = (
     "# %s : les jours de préavis non effectués sont d'abord pris sur le solde\n"
-    "# de congés (1.2.29). Jours payés = max(solde - préavis, 0).\n"
+    "# de congés (1.2.30). Jours payés = max(solde - préavis, 0).\n"
     "cp_days = %s._tanatech_preavis_split(cp_days)['conges_payes']\n"
 ) % (_MARKER, _SLIP)
 _CP_ANCHORS = {
@@ -90,6 +90,8 @@ _CP_ANCHORS = {
 _RET_CODE = "RETPREAV"
 _RET_NAME = "Retenue préavis non effectué"
 _RET_SEQUENCE = 7100
+# Marque des corps de la version de développement 1.2.29 (staging uniquement).
+_PRERELEASE = "(1.2.29)"
 _RET_CATEGORY_FROM = ["AVASP", "AVA15"]
 _RET_CONDITION = (
     "# %s : des jours de préavis restent après déduction du solde de congés.\n"
@@ -105,7 +107,7 @@ _DISPONIBLE = (
 ) % _SLIP
 # STC NA : porte la formule et ses paramètres, impute d'abord sur son net.
 _RET_BODY = (
-    "# %s : retenue pour préavis non effectué (1.2.29), À CONFIRMER PAR LE CLIENT.\n"
+    "# %s : retenue pour préavis non effectué (1.2.30), À CONFIRMER PAR LE CLIENT.\n"
     "# ---- Paramètres -----------------------------------------------------------\n"
     "DIVISEUR = 30.0         # retenue d'un jour = salaire mensuel / DIVISEUR\n"
     "BASE_SD_PLUS_NA = True  # True : salaire déclaré + salaire NA ; False : salaire NA seul\n"
@@ -120,11 +122,13 @@ _RET_BODY = (
     "totale = jours * base / DIVISEUR\n"
     "%s"
     "impute = min(totale, max(disponible, 0.0))\n"
-    "# Montant = salaire / diviseur, quantité = jours, taux = part imputée ici :\n"
-    "# total = montant x quantité x taux / 100 = - impute.\n"
-    "result = -(base / DIVISEUR)\n"
-    "result_qty = jours\n"
+    "# Montant = retenue TOTALE, taux = part imputée ici : total = - impute.\n"
+    "# Le montant porte la retenue entière parce que l'Ariary arrondit le montant\n"
+    "# stocké à la centaine : un taux journalier arrondi (22 000 au lieu de\n"
+    "# 21 973,33) fausserait la part que le STC déclaré relit sur cette ligne.\n"
+    "result = -totale\n"
     "result_rate = (100.0 * impute / totale) if totale else 0.0\n"
+    "result_name = 'Retenue préavis non effectué (%%s j)' %% ('%%.2f' %% jours).replace('.', ',')\n"
 ) % (_MARKER, _SLIP, _DISPONIBLE)
 # STC déclaré : le reste, dans la limite de son net. Un montant seul, sans
 # taux ni base : rien ne mentionne le salaire NA sur le bulletin déclaré.
@@ -134,7 +138,7 @@ _RET_SD_CONDITION = (
     "result = %s._tanatech_preavis_debordement(disponible) > 0\n"
 ) % (_MARKER, _DISPONIBLE, _SLIP)
 _RET_SD_BODY = (
-    "# %s : retenue pour préavis non effectué (1.2.29), part non absorbée par le\n"
+    "# %s : retenue pour préavis non effectué (1.2.30), part non absorbée par le\n"
     "# STC NA. Les paramètres de la formule sont en tête de RETPREAV du STC NA.\n"
     "%s"
     "result = -%s._tanatech_preavis_debordement(disponible)\n"
@@ -240,6 +244,24 @@ def _apply_retenue(env, structure, condition, body):
     Rule = env["hr.salary.rule"].with_context(active_test=False)
     existing = Rule.search([("struct_id", "=", structure.id), ("code", "=", _RET_CODE)])
     if existing:
+        if len(existing) == 1 and _MARKER in (existing.amount_python_compute or "") \
+                and _PRERELEASE in existing.amount_python_compute:
+            # Corps d'une version de développement (1.2.29, staging seulement) :
+            # remplacé par le corps final. Un corps marqué mais modifié depuis
+            # (paramètres ajustés en base) n'est jamais réécrit.
+            for code in (condition, body):
+                problem = _check(code)
+                if problem:
+                    _logger.warning("%s %s : %s. RIEN N'EST ÉCRIT.", _LOG, _RET_CODE, problem)
+                    return False
+            previous = (existing.condition_python, existing.amount_python_compute)
+            existing.write({"condition_python": condition, "amount_python_compute": body,
+                            "name": _RET_NAME})
+            _logger.info(
+                "%s %s de %r (id %s) : corps de développement 1.2.29 remplacé.\n"
+                "--- ancienne condition ---\n%s\n--- ancien corps ---\n%s",
+                _LOG, _RET_CODE, structure.name, existing.id, previous[0], previous[1])
+            return True
         if any(_MARKER in (r.amount_python_compute or "") for r in existing):
             _logger.info("%s %s déjà présente sur %r : inchangée.",
                          _LOG, _RET_CODE, structure.name)
