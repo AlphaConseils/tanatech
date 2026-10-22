@@ -3,7 +3,7 @@
 
 {
     "name": "Tanatech Payroll",
-    "version": "1.2.28",
+    "version": "1.2.29",
     "summary": "Manage your Payroll activities",
     "description": "",
     "website": "https://www.nexources.com/",

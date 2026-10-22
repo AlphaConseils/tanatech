@@ -33,6 +33,17 @@ ARRONDI_DEMI_PAS = 2500
 
 from .hr_work_entry import OVERTIME_WORK_ENTRY_CODES
 
+# Préavis non effectué par le salarié (solde de tout compte, 1.2.29).
+#
+# Saisie sur le bulletin STC DÉCLARÉ : PREAVIS_NON_EFFECTUE. Les deux saisies
+# avec lesquelles elle ferait double compte sont refusées au calcul :
+# LIC02 (congés non pris saisis à la main, déjà payés par CPALLOC) et PREAV01
+# (préavis payé par l'employeur, l'inverse de celui-ci).
+PREAVIS_NON_EFFECTUE = "PREAVNE"
+PREAVIS_INCOMPATIBLES = ("LIC02", "PREAV01")
+# Code de la règle de retenue, sur les deux structures STC.
+PREAVIS_RETENUE = "RETPREAV"
+
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
@@ -102,6 +113,16 @@ class HrPayslip(models.Model):
             payslip.overtime_hours_count = mapped_validated_overtimes.get(payslip.employee_id, 0)
 
     def compute_sheet(self):
+        # Avant toute régénération : un double compte de préavis arrête le calcul.
+        self._tanatech_check_preavis_non_effectue()
+
+        # Préavis non effectué : la retenue du STC déclaré dépend de ce que le
+        # STC NA a pu absorber. Les deux jumeaux sont donc toujours recalculés
+        # ensemble, le NA d'abord (voir plus bas).
+        twins = self._tanatech_preavis_twins() - self
+        if twins:
+            return (self | twins).compute_sheet()
+
         # generate_work_entries(force=True) court-circuite le garde-fou
         # date_generated_from/to et NE supprime PAS l'existant : sans nettoyage
         # préalable, chaque recalcul de bulletin empile un jeu complet d'entrées
@@ -144,7 +165,16 @@ class HrPayslip(models.Model):
             )
             slip._anchor_overtime_on_nd_contract()
 
-        return super().compute_sheet()
+        # Le moteur crée toutes les lignes d'un appel en une fois, à la fin :
+        # le STC NA doit donc être calculé dans un appel PRÉCÉDENT pour que le
+        # STC déclaré lise sa retenue (RETPREAV) et n'impute que le reste.
+        first = self.filtered(lambda s: s.struct_id.is_stc and s.is_from_undeclared_contract)
+        if first and first != self:
+            super(HrPayslip, first).compute_sheet()
+            self.env.flush_all()
+        res = super(HrPayslip, self - first if first != self else self).compute_sheet()
+        self._tanatech_post_preavis_non_retenu()
+        return res
 
     def _anchor_overtime_on_nd_contract(self):
         """ Overtime (HS) is an N.D. element: its work entries must be anchored
@@ -588,3 +618,201 @@ class HrPayslip(models.Model):
         if declared and not declared.tanatech_mission_eligible:
             return False
         return True
+
+    # ------------------------------------------------------------------
+    # Préavis non effectué (solde de tout compte, 1.2.29)
+    # ------------------------------------------------------------------
+
+    def _tanatech_declared_stc_payslip(self):
+        """Le bulletin STC DÉCLARÉ qui porte la saisie de préavis, ou un vide.
+
+        Le bulletin lui-même s'il est déclaré. Pour un bulletin NA, son jumeau :
+        même salarié, même période, structure dont la structure NA est celle du
+        bulletin, non annulé. Aucun champ ne relie les deux bulletins ; si
+        plusieurs jumeaux existent (lot en double), le plus récent fait foi.
+        """
+        self.ensure_one()
+        if not self.struct_id.is_stc:
+            return self.env['hr.payslip']
+        if not self.is_from_undeclared_contract:
+            return self
+        return self.search([
+            ('employee_id', '=', self.employee_id.id),
+            ('date_from', '=', self.date_from),
+            ('date_to', '=', self.date_to),
+            ('struct_id.na_structure_id', '=', self.struct_id.id),
+            ('is_from_undeclared_contract', '=', False),
+            ('state', '!=', 'cancel'),
+        ], order='id desc', limit=1)
+
+    @staticmethod
+    def _tanatech_input_amount(payslip, code):
+        return sum(payslip.input_line_ids.filtered(
+            lambda line: line.input_type_id.code == code).mapped('amount'))
+
+    def _tanatech_preavis_days(self):
+        """Jours de préavis non effectués, saisis sur le bulletin STC déclaré."""
+        self.ensure_one()
+        declared = self._tanatech_declared_stc_payslip()
+        if not declared:
+            return 0.0
+        return max(self._tanatech_input_amount(declared, PREAVIS_NON_EFFECTUE), 0.0)
+
+    def _tanatech_cp_balance(self):
+        """Solde de congés payés acquis et non pris : même calcul que CPALLOC."""
+        self.ensure_one()
+        allocations = self.env['hr.leave.allocation'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('state', '=', 'validate'),
+            ('holiday_status_id.work_entry_type_id.code', '=', 'LEAVE120'),
+        ])
+        return sum(a.number_of_days - a.leaves_taken for a in allocations)
+
+    def _tanatech_preavis_split(self, cp_days=None):
+        """Répartir les jours de préavis non effectués.
+
+        Règle 1 : ils sont d'abord pris sur le solde de congés, le salarié
+        n'est payé que du reste du solde (CPALLOC).
+        Règle 2 : ce que le solde ne couvre pas est retenu (RETPREAV).
+
+        Renvoie {'solde', 'preavis', 'conges_payes', 'reste'} en jours, arrondis
+        au centième comme le solde imprimé.
+        """
+        self.ensure_one()
+        solde = self._tanatech_cp_balance() if cp_days is None else cp_days
+        preavis = self._tanatech_preavis_days()
+        pris = min(preavis, max(solde, 0.0))
+        return {
+            'solde': round(solde, 2),
+            'preavis': round(preavis, 2),
+            'conges_payes': round(solde - pris, 2),
+            'reste': round(preavis - pris, 2),
+        }
+
+    def _tanatech_check_preavis_non_effectue(self):
+        """Refuser un préavis non effectué saisi avec LIC02 ou PREAV01.
+
+        Les saisies sont lues sur le bulletin et sur son jumeau déclaré : sur
+        un STC, LIC02 et PREAV01 sont proposées aux deux structures.
+        """
+        for slip in self.filtered(lambda s: s.struct_id.is_stc):
+            if not slip._tanatech_preavis_days():
+                continue
+            slips = slip | slip._tanatech_declared_stc_payslip()
+            conflicts = [code for code in PREAVIS_INCOMPATIBLES
+                         if any(self._tanatech_input_amount(s, code) for s in slips)]
+            if conflicts:
+                raise UserError(_(
+                    "Bulletin %(slip)s (%(employee)s) : des jours de préavis non "
+                    "effectués sont saisis avec %(codes)s. Ce serait un double "
+                    "compte : LIC02 paie des congés déjà payés par l'allocation de "
+                    "congés du solde de tout compte, PREAV01 paie un préavis que "
+                    "le salarié n'a pas effectué. Retirez l'une des saisies.",
+                    slip=slip.number or slip.name, employee=slip.employee_id.name,
+                    codes=", ".join(conflicts)))
+
+    def _tanatech_stc_na_twin(self):
+        """Le bulletin STC NA jumeau de ce STC déclaré, ou un vide."""
+        self.ensure_one()
+        if not self.struct_id.is_stc or self.is_from_undeclared_contract \
+                or not self.struct_id.na_structure_id:
+            return self.env['hr.payslip']
+        return self.search([
+            ('employee_id', '=', self.employee_id.id),
+            ('date_from', '=', self.date_from),
+            ('date_to', '=', self.date_to),
+            ('struct_id', '=', self.struct_id.na_structure_id.id),
+            ('state', '!=', 'cancel'),
+        ], order='id desc', limit=1)
+
+    def _tanatech_preavis_twins(self):
+        """Les STC (déclaré et NA) à recalculer ensemble : ceux de ``self`` qui
+        portent des jours de préavis non effectués, et leurs jumeaux."""
+        twins = self.env['hr.payslip']
+        for slip in self.filtered(lambda s: s.struct_id.is_stc):
+            if not slip._tanatech_preavis_days():
+                continue
+            declared = slip._tanatech_declared_stc_payslip()
+            twins |= declared | declared._tanatech_stc_na_twin()
+        return twins.filtered(lambda s: s.state in ('draft', 'verify'))
+
+    def _tanatech_preavis_base(self, base_sd_plus_na=True):
+        """Salaire mensuel de la retenue : déclaré + NA, ou NA seul."""
+        self.ensure_one()
+        if base_sd_plus_na:
+            return self._tanatech_period_wages()
+        na_contract = self.employee_id._get_period_contract(
+            'not_declared', self.date_from, self.date_to)
+        return na_contract.wage if na_contract else 0.0
+
+    def _tanatech_preavis_disponible(self, to_pay, result_rules=None):
+        """Ce qu'une retenue peut prendre sur ce net sans le rendre négatif.
+
+        ``to_pay`` est NET + OPCOMP + AJUST au moment de la règle, comme pour
+        SALARR. Les frais bancaires (FRAIS_HORS_ARRONDI) en sont exclus : SALARR
+        arrondit le net SANS eux puis les rajoute. Une assiette ramenée à 0 est
+        arrondie à 0, le net à payer reste donc >= 0 (frais compris).
+        """
+        self.ensure_one()
+        return max(float(to_pay or 0.0) - self._tanatech_rounding_exclusion(result_rules), 0.0)
+
+    @staticmethod
+    def _tanatech_preavis_na_line(na_slip):
+        return na_slip.line_ids.filtered(lambda line: line.code == PREAVIS_RETENUE)[:1]
+
+    def _tanatech_preavis_amounts(self):
+        """Retenue de préavis d'un STC déclaré : {'totale', 'na', 'sd'} en Ar,
+        positifs.
+
+        La retenue TOTALE est lue sur la ligne RETPREAV du STC NA, qui porte
+        les paramètres (montant = salaire / diviseur, quantité = jours, taux =
+        part imputée sur le NA) : une seule source pour la formule. Sans STC
+        NA, elle est calculée ici avec les valeurs par défaut (30, déclaré +
+        NA). 'sd' est la ligne RETPREAV du STC déclaré, s'il est calculé.
+        """
+        self.ensure_one()
+        declared = self._tanatech_declared_stc_payslip()
+        na_slip = declared._tanatech_stc_na_twin() if declared else self.env['hr.payslip']
+        na_line = self._tanatech_preavis_na_line(na_slip)
+        if na_line:
+            totale = -(na_line.amount * na_line.quantity)
+            na = -na_line.total
+        else:
+            totale = declared._tanatech_preavis_split()['reste'] \
+                * declared._tanatech_preavis_base() / 30.0 if declared else 0.0
+            na = 0.0
+        sd = -sum(declared.line_ids.filtered(
+            lambda line: line.code == PREAVIS_RETENUE).mapped('total')) if declared else 0.0
+        return {'totale': totale, 'na': na, 'sd': sd}
+
+    def _tanatech_preavis_debordement(self, disponible):
+        """Part de la retenue que le STC NA n'a pas absorbée, imputée sur ce
+        STC déclaré dans la limite de son net disponible (jamais négatif).
+
+        Même principe que les avances (_split_salary_attachment_amounts) : le
+        NA absorbe d'abord, le reste déborde sur le déclaré.
+        """
+        self.ensure_one()
+        amounts = self._tanatech_preavis_amounts()
+        reste = max(amounts['totale'] - amounts['na'], 0.0)
+        return min(reste, max(disponible, 0.0))
+
+    def _tanatech_post_preavis_non_retenu(self):
+        """Avertir sur les deux STC quand la retenue a été plafonnée."""
+        for declared in self.filtered(
+                lambda s: s.struct_id.is_stc and not s.is_from_undeclared_contract):
+            if not declared._tanatech_preavis_days():
+                continue
+            amounts = declared._tanatech_preavis_amounts()
+            non_retenu = amounts['totale'] - amounts['na'] - amounts['sd']
+            if non_retenu < 1.0:
+                continue
+            body = _(
+                "Retenue pour préavis non effectué plafonnée : %(amount)s Ar n'ont "
+                "pas pu être retenus, les nets à payer étant épuisés (retenue "
+                "calculée %(total)s Ar, retenue appliquée %(applied)s Ar).",
+                amount='{:,.0f}'.format(non_retenu).replace(',', ' '),
+                total='{:,.0f}'.format(amounts['totale']).replace(',', ' '),
+                applied='{:,.0f}'.format(amounts['na'] + amounts['sd']).replace(',', ' '))
+            for slip in declared | declared._tanatech_stc_na_twin():
+                slip.message_post(body=body)
